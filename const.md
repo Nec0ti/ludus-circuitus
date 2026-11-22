@@ -1,26 +1,44 @@
-# Project constants
+# Değişmeyen proje kuralları
 
-These are the project's stable rules. A change to this file requires Necati's explicit agreement; keep evolving ideas and task details in `notes.md` and `backlog.md` instead.
+Bu dosya kalıcı ürün ve çalışma kurallarını tutar. Bu kurallar Necati'nin açık onayı olmadan değiştirilmez. Gelişen fikirleri, taslakları ve görev ayrıntılarını `notes.md` ile `backlog.md` içine yaz.
 
-## Product and learning
+## Ürün
 
-- The project teaches digital logic and Verilog by letting beginners build circuits visually.
-- A visual construction must correspond to understandable digital logic; generated Verilog and circuit behavior must agree.
-- Keep the first working scope small. Begin with combinational logic; sequential logic, clocks, registers, and physical FPGA programming are out of scope until explicitly agreed.
-- Treat the current feature list and research framing as hypotheses until the team and project requirements are discussed and recorded.
+- Proje, Verilog ve dijital mantık öğrenmeyi görsel bloklarla daha anlaşılır hâle getiren bir web uygulamasıdır.
+- Web sitesi GitHub Pages'te Jekyll ile yayımlanır ve üç ana bölümden oluşur: tanıtım, dokümantasyon ve Devre Atölyesi.
+- İlk sürüm için sunucu tarafı bileşen gerekmez. Devre Atölyesi'nin tarayıcı içinde etkileşimli çalışması bu statik yayın kararına aykırı değildir.
+- Ana uygulama ve istemcinin gördüğü bütün metinler Türkçe olmalıdır; buna arayüz, tanıtım ve yayımlanan dokümantasyon dahildir. İç geliştirme notları Türkçe veya İngilizce olabilir. Standart Verilog sözdizimi, teknik özel adlar ve `.bp` gibi dosya uzantıları özgün yazımlarıyla kalabilir.
+- Tasarım estetik, sürükleyici ve anlaşılır olmalı; öğrenme aracı karmaşık bir profesyonel EDA arayüzüne dönüşmemelidir.
+- Blok kümesi olabildiğince küçük tutulmalı ve başlangıç düzeyinde kolay kullanılmalıdır.
 
-## Correctness and evidence
+## Blueprint ve Devre Atölyesi modeli
 
-- Do not claim generated Verilog or a circuit works without a suitable check or clearly label it unverified.
-- Preserve links and attribution for external facts, guidance, and research claims recorded in project notes.
-- Separate confirmed decisions, proposals, assumptions, and unanswered questions in project records.
+- Devre projeleri modüllere ayrılabilir; kullanıcı arayüzündeki blueprint belgeleri `top.bp`, `adder.bp` gibi `.bp` uzantılı dosyalar olarak düşünülür. Üretilen gerçek donanım dili Verilog'dur.
+- Devre Atölyesi'nin çalışma alanı; sol blok araçlığı, üst menü ve benzetim araçları, ortada birden çok blueprint açılabilen tuval, sağda gerçek zamanlı devre görünümü ve Verilog çıktısı, altta değişkenler paneli fikrine dayanır.
+- Üst menüde Dosya, Görünüm, Yeni BP gibi klasik düzenleme girişleri bulunur. Benzetim araçlarında Oynat, Duraklat, Durdur ve tik hızı kontrolü yer alır.
+- Görsel devre, üretilen Verilog ve blueprint aynı tasarımın tutarlı gösterimleri olmalıdır.
+- Tik kontrolleri istenen arayüz yönüdür; tek başına saat/register veya sıralı mantık dilinin kararlaştırıldığı anlamına gelmez. Zaman ve durum semantiği uygulanmadan önce ayrıca tanımlanır.
+- Devre animasyonunda gösterilen akışın mantıksal sinyal akışı mı yoksa gerçek elektrik akımı mı olduğu açıkça belirlenmeden fiziksel akım benzetimi iddia edilmez.
 
-## Participants and privacy
+## Doğruluk ve iddialar
 
-- Do not collect, store, or publish identifiable student or participant data as part of project work without the necessary school approvals and consent being established first.
-- Keep credentials, tokens, and private personal information out of the repository.
+- Üretilen Verilog ile blueprint ve devre davranışı birbirini tutmalıdır. Uygun test veya benchmark olmadan doğru çalıştığı iddia edilmez.
+- Tanıtım sayfasındaki öğrenme etkisi ve hız iddiaları, ölçüm yapılmadan kanıtlanmış sonuç gibi yazılmaz.
+- Dış kaynaklardan gelen bilgiler ve araştırma iddiaları kaynaklarıyla kaydedilir; karar, öneri, varsayım ve soru birbirinden ayrılır.
 
-## Project memory
+## Test, benchmark ve yayın
 
-- `AGENTS.md` is the entry point; it points to the records that should be consulted as needed.
-- Update `backlog.md` and append to `backloglog.md` after each completed or interrupted task so work does not disappear between sessions.
+- Uygulama geliştirme sırasında uygun alt görevlerde alt ajanlardan yararlan; bütünleştirme öncesi çıktıları gözden geçir.
+- Verilog üretimi, benzetim tutarlılığı, blueprint kaydetme/yükleme, modül bileşimi ve kullanıcı iş akışları için zorlayıcı test/benchmarklar oluştur.
+- Zorunlu kontroller başarısızsa ilgili değişikliği push etme.
+- Küçük ve anlamlı değişiklikleri sık commit et. Büyük ürün veya mimari güncellemelerini çekme isteği (PR) ile aç; gerekli benchmarklar geçmeden birleştirme.
+
+## Katılımcılar ve gizlilik
+
+- Gerekli okul izinleri ve onamlar alınmadan öğrencilere veya katılımcılara ait tanımlanabilir verileri toplama, saklama ya da yayımlama.
+- Kimlik bilgilerini, tokenları ve özel kişisel bilgileri depoya koyma.
+
+## Proje belleği
+
+- `AGENTS.md` giriş noktasıdır ve başvurulacak kayıtları açıklar.
+- Her görevden sonra backlog'u ve görev günlüğünü güncelle; bağlamı sohbet geçmişine bağımlı bırakma.

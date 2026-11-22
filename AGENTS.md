@@ -1,25 +1,33 @@
-# Project working guide
+# Proje çalışma rehberi
 
-This file is the entry point for project work. Read the relevant reference before making a related change; do not keep the project context only in chat.
+Bu dosya proje çalışmalarına giriş noktasıdır. İşe başlamadan önce ilgili kayıtlara bak; proje bağlamını yalnızca sohbet içinde bırakma.
 
-## References
+## Başvurulacak kayıtlar
 
-- [`const.md`](const.md): stable project rules and boundaries.
-- [`backlog.md`](backlog.md): current work, status, and next steps.
-- [`backloglog.md`](backloglog.md): dated record of what happened for each task, including unfinished work.
-- [`notes.md`](notes.md): incoming project information, organized decisions, assumptions, and source links.
-- [`raports/`](raports/): project reports and review documents; read prior reports when relevant.
-- [`README.md`](README.md): short public-facing project overview.
+- [`const.md`](const.md): kalıcı ürün, dil, kalite ve çalışma kuralları.
+- [`backlog.md`](backlog.md): güncel işler, durumları ve sıradaki adımlar.
+- [`backloglog.md`](backloglog.md): her görevde yapılanların ve yarım kalanların tarihli kaydı.
+- [`notes.md`](notes.md): proje fikri, arayüz taslağı, kararlar, varsayımlar, açık sorular ve kaynaklar.
+- [`raports/`](raports/): saklanmaya değer proje raporları ve incelemeler.
+- [`README.md`](README.md): projenin kısa tanıtımı.
 
-## Working loop
+## Her görevde izlenecek sıra
 
-1. Read `const.md`, then the relevant parts of `notes.md`, `backlog.md`, and prior reports.
-2. Before starting a task, mark its scope and status in `backlog.md`.
-3. Finish the requested work as a coherent unit. If anything remains, state exactly what and why.
-4. After every task, update `backlog.md` and append a dated entry to `backloglog.md`, including changed files, verification performed, and remaining work.
-5. When Necati provides a project information dump, organize it in `notes.md`, preserve uncertainty and source attribution, and update relevant backlog items. Do not silently turn a suggestion into a decision.
-6. Keep reports in `raports/` only when there is a useful report to preserve; link relevant reports from `notes.md` or the backlog.
+1. `const.md` dosyasını, ardından konuyla ilgili `notes.md`, `backlog.md` ve eski raporları oku.
+2. Başlamadan önce kapsamı ve durumu `backlog.md` içinde işaretle.
+3. İstenen işi tamamlanabilir bir bütün olarak bitir. Bir şey açık kalırsa neyin ve neden kaldığını yaz.
+4. Her görevden sonra `backlog.md` dosyasını güncelle ve `backloglog.md` dosyasına tarihli kayıt ekle. Değişen dosyaları, yapılan doğrulamayı ve kalan işleri yaz.
+5. Necati proje bilgisi paylaştığında bilgileri `notes.md` içinde düzenle; kaynağı ve belirsizliği koru. Bir öneriyi sessizce karara dönüştürme.
+6. `raports/` içine yalnızca saklanmaya değer rapor koy; ilgili kayıtları notlardan veya backlog'dan bağla.
 
-## Project scope at startup
+## Geliştirme ve yayın akışı
 
-The current working idea is a beginner-friendly, block-based way to build digital logic and see the matching Verilog and circuit behavior. This is an initial direction, not a finalized research plan. See `notes.md` for the initial MVP hypothesis and open decisions.
+- Yazılım geliştirme görevlerinde işi uygun, sınırları belli alt görevlere ayır ve alt ajanlardan yararlan. Sonuçları ana uygulamaya almadan önce incele ve bütünleştir.
+- Gerçek mantık, Verilog üretimi, `.bp` kaydetme/yükleme, modül bağlantısı ve arayüz iş akışları için zorlayıcı testler ve benchmarklar tasarla. Zorunlu test veya benchmark başarısızsa Git'e push etme.
+- Küçük ve anlamlı adımları sık commit et. Büyük ürün veya mimari değişikliklerini çekme isteği (PR) üzerinden yürüt; gerekli benchmarklar geçmeden birleştirme.
+- Başlangıç ürünü GitHub Pages üzerinde Jekyll ile sunulan statik bir sitedir. Devre Atölyesi etkileşimli olabilir; sunucu tarafı bileşen ekleme kararını ayrıca kaydet.
+- Ürün arayüzü ve proje dokümantasyonundaki kullanıcıya dönük yazılar Türkçe olmalı. Standart Verilog sözdizimini, teknik adları ve dosya uzantılarını çevirmeye çalışma.
+
+## Güncel proje yönü
+
+Ludus Circuitus; tanıtım, dokümantasyon ve Devre Atölyesi bölümlerinden oluşan, görsel bloklarla Verilog ve devre davranışını ilişkilendiren bir öğrenme projesidir. Ürün kapsamının ve araştırma yönteminin ayrıntıları için `notes.md` dosyasındaki doğrulanmış kararları ve açık soruları esas al.

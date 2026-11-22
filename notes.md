@@ -1,50 +1,117 @@
-# Project notes
+# Proje notları
 
-This is the project's working knowledge base. New information from Necati should be organized here with its source and confidence preserved. Keep decisions, hypotheses, and questions distinct.
+Bu dosya proje hakkında paylaşılan bilgilerin düzenlendiği çalışma belleğidir. Her yeni bilgi için kaynağı, karar durumunu ve belirsizliği koru. Necati'nin açıkça kararlaştırmadığı ayrıntıları kesinleşmiş gibi yazma.
 
-## Project idea
+## Proje fikri
 
-**Working description:** a beginner-friendly visual tool that makes learning Verilog and digital logic feel approachable like Scratch. A learner assembles logic visually and can inspect the corresponding Verilog and what the circuit does.
+**Çalışma tanımı:** Ludus Circuitus, Verilog öğrenmeye görsel bloklarla başlanan; kullanıcının oluşturduğu blueprint'i gerçek Verilog kodu ve devre davranışıyla yan yana gösteren açık kaynaklı bir eğitim projesidir. Unreal Engine Blueprint fikri, çok modüllü proje kurma deneyimine ilham veriyor.
 
-This wording captures the idea, not a finalized product specification or TÜBİTAK application.
+Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde öğrenmeyi zorlaştırabilir. Ürün; görsel kurulumdan gerçek HDL'e geçişi görünür kılarak bu öğrenme eşiğini düşürmeyi hedefliyor. Bu bir amaç ve tanıtım yönüdür; öğrenme etkisi ölçülmeden kanıtlanmış sonuç olarak sunulmayacak.
 
-## Initial MVP hypothesis
+## Ürün ve yayın kararı
 
-The smallest useful demonstration may support:
+- Site GitHub Pages ve Jekyll ile yayımlanacak.
+- Sunucu tarafı dinamik sisteme gerek yok. Devre Atölyesi etkileşimli olacaksa bu etkileşim tarayıcıda çalışabilir; sunucu tarafı bileşen gereksinimi şu an yok.
+- Ana uygulama ve istemcinin gördüğü her içerik Türkçe olacak: tanıtım metni, yayımlanan dokümantasyon, menüler, araç ipuçları, hatalar ve Devre Atölyesi etiketleri. İç geliştirme notları İngilizce olabilir. Verilog anahtar sözcükleri, kod örnekleri, `top.bp` gibi dosya adları ve teknik özel adlar çevrilmeyecek.
+- Ana site üç bölüm: **Tanıtım**, **Dokümantasyon**, **Devre Atölyesi**. Bunlar Türkçe arayüz için geçici adlardır.
 
-- named input and output signals;
-- AND, OR, NOT, and XOR gates with visual connections;
-- a readable circuit/logic view;
-- generated Verilog corresponding to the visual circuit;
-- a truth table or simple simulation to show behavior.
+### Tanıtım sayfasında anlatılacaklar
 
-Begin with combinational logic. Add clocks, registers, sequential behavior, or programming a physical FPGA only after the core demonstration is working and the team agrees it is needed.
+- Verilog öğrenirken görülen başlangıç güçlükleri ve dijital mantıkla HDL arasındaki geçiş.
+- Bloklarla kurulan devrenin nasıl gerçek Verilog'a dönüştüğü.
+- Görsel devre, benzetim ve HDL çıktısının birlikte öğrenmeye nasıl hizmet ettiği.
+- Projenin açık kaynaklı oluşu ve katkı biçimi.
+- Öğrenme sürecini hızlandırma/öğrenme eğrisini dikleştirme hedefi. İddia sonuç gibi değil, projenin hedefi olarak anlatılacak; etki araştırma/benchmark ile ölçülürse sonuç sonradan eklenir.
 
-## Possible research direction
+## Site haritası ve dokümantasyon
 
-**Question to refine:** Does constructing simple logic with visual blocks, alongside immediate circuit and Verilog views, help beginner learners understand basic digital logic?
+Dokümantasyon kısa tutulacak ama temel parçaları kapsayacak. Her blok kendi amacı, giriş/çıkışları ve örneğiyle açıklanacak.
 
-Possible measures to evaluate later include pre/post concept questions, circuit correctness, completion time, and errors. This is only a candidate study design; learner group, method, and approvals are unresolved.
+| Bölüm | İçerik taslağı |
+|---|---|
+| Başlangıç | Devre Atölyesi'ni açma, ilk blueprint'i oluşturma, giriş ve çıkış ekleyip ilk devreyi çalıştırma |
+| Kullanım | Arayüzün ana bölgeleri, dosya/sekme düzeni, benzetim kontrolleri ve kaydetme |
+| Bloklar | Desteklenen her bloğun ne yaptığı, portları ve kısa kullanım örneği |
+| Yerel Kullanım ve Kurulum | Depoyu indirme, Jekyll bağımlılıkları, yerel önizleme ve değişiklik katkısı |
 
-## Confirmed decisions
+Bu sayfa başlıkları Türkçe arayüz için geçici karşılıklardır; asıl bölüm kapsamları kullanıcının verdiği taslağı izler.
 
-- None recorded yet.
+## Görsel yön ve referanslar
 
-## Assumptions and proposals
+- Genel hedef: estetik, sürükleyici, teknik ama yeni başlayanları ürkütmeyen bir görünüm. Arayüz, oyun motoru editörlerinin tanıdık düzeninden esinlenebilir; doğrudan Unreal arayüzünü kopyalamak şart değil.
+- Dokümantasyon için Unity yardımının başlık/konu hiyerarşisi ve gezinme düzeni referans olabilir.
+- Hamartia yardım sayfası da referans: üstte ürün/gezinme çubuğu, solda konu ağacı, ortada okunabilir içerik, sağda sayfa içi başlıklar; koyu arka plan ve mavi vurgu kullanımı. Bu yapı Ludus Circuitus'un görsel kimliğine göre uyarlanacak.
+- Hamartia adresinde yazım önemli: Necati'nin verdiği `https://necoti.github.io/hamartia/` adresi `o` harfi nedeniyle 404 veriyor. Depo sahibi `Nec0ti` (sıfır); etkin GitHub Pages adresi `https://nec0ti.github.io/hamartia/`. Sayfa Playwright ile 2026-11-22 tarihinde açılarak incelendi.
+- Unity referansı: [Unity User Manual](https://docs.unity3d.com/Manual/index.html). Hamartia: [Hamartia yardım sayfası](https://nec0ti.github.io/hamartia/).
 
-- The first prototype can focus on combinational circuits and introductory gates.
-- Showing both generated Verilog and circuit behavior may be a useful distinction from block programming alone.
+## Devre Atölyesi arayüz taslağı
 
-## Open questions
+İstenen masaüstü düzeni, birden fazla panelden oluşan klasik editör hissi verir:
 
-- Who is the first learner group, and what should they learn by the end of a short activity?
-- Which visual editor interaction is simplest for a first demo: snap-together blocks, a gate canvas, or another format?
-- Should Verilog be generated from a circuit model, or should learners also be able to edit the code?
-- What is the simplest trustworthy way to simulate/check generated circuits?
-- What exact deliverable, timeline, team roles, and research method does the team want?
-- What current TÜBİTAK and school requirements apply, including approvals and consent if learners participate?
+1. **Üst menü:** sol üstte Dosya, Görünüm, Yeni BP gibi menüler; sekme/dosya işlemleri.
+2. **Benzetim araçlığı:** Oynat, Duraklat, Durdur, tik hızı ve benzetimle ilgili kontroller.
+3. **Sol araçlık:** seçilebilir/tuvale yerleştirilebilir küçük blok kümesi.
+4. **Orta blueprint tuvali:** birden fazla `.bp` sayfası/sekmesi açılır; bağlantılar burada kurulur.
+5. **Sağ panel:** blueprint ile eşzamanlı devre/kapı görünümü; altında gerçek Verilog çıktısı.
+6. **Alt panel:** kullanıcı değişkenlerini ekleyip düzenlediği değişkenler alanı.
 
-## Sources
+Blueprint modülleri Unreal Blueprint'in modüler çalışma fikrinden esinlenerek `top.bp`, `adder.bp` gibi ayrı belgeler olacak. Kullanıcı `.v` dosyalarını elle kurmak yerine `.bp` modülleri arasında geçiş yapar; sistem bunların karşılığında gerçek Verilog üretir. Dosya biçiminin iç şeması henüz kararlaştırılmadı.
 
-- Prior project planning captured in the Second Brain note `notes/tubitak-fpga-egitim-araci.md` (historical handoff; not copied here as a primary source). Its MVP suggestion was inputs/outputs, AND/OR/NOT/XOR, circuit visualization, live Verilog, and truth-table/simulation; its research framing and participant safeguards remain proposals to verify.
-- Current official project-guide and school requirements have not yet been rechecked for this workspace. Confirm them before relying on deadlines, eligibility, or approval claims.
+### Açık teknik ayrımlar
+
+- Devre animasyonundaki "akımın nereden nereye aktığı" mantıksal 0/1 sinyalinin devre boyunca yayılması mı, yoksa elektriksel akım modeli mi? İlk yorum dijital mantık simülasyonuna daha uygundur; fiziksel akım benzetimi ayrı kapsam ve fizik modeli gerektirir.
+- Oynat/Duraklat/Durdur/tik hızı, animasyon zamanlamasını mı kontrol edecek yoksa clock/register gibi sıralı mantık da mı çalıştıracak? Mevcut tercih yalnızca bu kontrollerin arayüzde istenmiş olduğudur; sıralı mantık kararı açık.
+- Değişken paneli hangi kavramları tutacak: giriş/çıkış, ara kablo, sabitler, parametreler veya durum/register değerleri? Ayrı kavramlar gereksiz blok çeşitliliği yaratmayacak şekilde seçilmeli.
+- `.bp` belgesi nasıl kaydedilecek, başka bir modülü nasıl çağıracak ve Verilog modülüne nasıl eşlenecek?
+- İlk sürüm için hangi en küçük blok kümesi yeterli olacak?
+- Editörün telefon/tablet desteği hedefleniyor mu, yoksa Devre Atölyesi masaüstü öncelikli mi?
+
+## İlk sürüm için önceki taslak
+
+Henüz ekip kararı olarak doğrulanmamış önceki öneri: giriş/çıkış sinyalleri, AND/OR/NOT/XOR, görsel bağlantılar, devre görünümü, canlı Verilog ve doğruluk tablosu/benzetim. Yeni arayüz taslağı çok modüllü `.bp` dosyalarını, değişken panelini ve tik kontrollerini ekledi; bunların ilk sürüme mi yoksa sonraki aşamaya mı gireceği ekipçe netleşecek.
+
+Başlangıçta kombinasyonel mantık kapsamı korunabilir. Tik kontrolleri isteniyor ama clock/register kapsamını tek başına kesinleştirmiyor.
+
+## Test ve benchmark yaklaşımı
+
+Necati'nin kuralı: zorlayıcı test veya benchmark başarısızsa değişikliği Git'e push etme. Benchmarklar yalnızca kod biçimlendirmesini değil, ürünün gerçekten doğru çalışmasını ölçmeli.
+
+İlk taslak ölçümler (henüz benchmark şartnamesi değil):
+
+- Desteklenen küçük devrelerde bütün giriş birleşimlerini değerlendir; simülatör sonucu, doğruluk tablosu ve üretilmiş Verilog simülasyonu eşleşmeli.
+- Birden fazla `.bp` modülünün bağlantısı ve üst modülden alt modüle port eşlemesi doğru olmalı.
+- Kaydet/yükle döngüsünde bağlantılar, değişkenler ve modül ilişkileri kaybolmamalı; geçersiz dosya anlaşılır hata vermeli.
+- Devre Atölyesi'nde blok ekleme/bağlama/silme ve canlı sağ panel üretimi tutarlı kalmalı.
+- Büyük veya hatalı blueprint'lerde süre, bellek ve doğrulama hataları ölçülmeli; eşikler ve benchmark veri kümesi ayrıca yazılmalı.
+
+Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan sonra kurulacak. Eşikler belirlenmeden performans sonucu iddia edilmez.
+
+## Kararlar
+
+- Site üç bölümden oluşacak: tanıtım, dokümantasyon ve Devre Atölyesi.
+- Yayın platformu GitHub Pages; site üretimi Jekyll.
+- Kullanıcıya dönük metinler ve dokümantasyon Türkçe.
+- Devre Atölyesi çok modüllü `.bp` blueprint dosyalarını ve bunlardan üretilen gerçek Verilog'u gösterecek.
+- Arayüzde sol blok araçlığı, üst menü/benzetim kontrolleri, orta çok sayfalı blueprint tuvali, sağ canlı devre ve Verilog paneli, alt değişkenler paneli fikri var.
+- Blok sayısı en aza yakın ve öğrenmesi kolay tutulacak.
+- Geliştirme sırasında alt ajanlar, zorlayıcı benchmark/test kapıları, sık commit ve büyük değişikliklerde çekme isteği (PR) kullanılacak. Başarısız kapıyla push veya birleştirme yapılmayacak.
+
+## Açık ürün ve araştırma soruları
+
+- İlk öğrenen grubu ve ölçülecek temel öğrenme kazanımı ne?
+- Öğrenme eğrisi hedefi nasıl ölçülecek; tanıtım sayfasında ne kadar iddialı yazılabilir?
+- İlk blok kümesi ve her bloğun davranış/port sözleşmesi ne?
+- `.bp` veri modeli ve modül bağlantı kuralları ne olacak?
+- Değişkenler, sinyaller, parametreler ve sıralı durum birbirinden nasıl ayrılacak?
+- Tik, durdurma, reset ve zaman adımı ne anlama gelecek?
+- Devre paneli mantık sinyali animasyonu mu gösterecek; fiziksel akım kesinlikle kapsam dışında mı?
+- Zorlayıcı benchmarkların veri kümesi, süre/performans eşikleri ve sürekli tümleşim kapıları ne?
+- Masaüstü önceliği ve dar ekran davranışı nasıl olacak?
+- TÜBİTAK gereklilikleri, ekip kararı ve katılımcı çalışması izinleri neler?
+
+## Kaynak ve dayanak
+
+- Ürün kapsamı, `.bp` fikri, ekran düzeni, Türkçe gereksinimi ve geliştirme akışı Necati'nin 2026-11-22 tarihli bu oturumdaki proje dump'ından alınmıştır.
+- Görsel/dokümantasyon örnekleri: [Hamartia yardım sayfası](https://nec0ti.github.io/hamartia/) (Playwright ile 2026-11-22 tarihinde incelendi) ve [Unity User Manual](https://docs.unity3d.com/Manual/index.html).
+- Önceki proje taslağı: İkinci Beyin içindeki `notes/tubitak-fpga-egitim-araci.md` kaydı. Oradaki kapı/doğruluk tablosu önerileri bu depoda henüz uygulama kararı değildir.
+- Güncel TÜBİTAK kuralları ve okul/veli izinleri bu çalışma sırasında yeniden doğrulanmadı; bunlara dair son tarih veya kesin hüküm iddiasında bulunma.

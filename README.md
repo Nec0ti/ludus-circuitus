@@ -1,7 +1,11 @@
 # Ludus Circuitus
 
-An early-stage learning project exploring a visual, beginner-friendly path from digital logic to Verilog.
+Ludus Circuitus, görsel bloklarla dijital mantık kurmayı ve bunun gerçek Verilog karşılığını görmeyi amaçlayan açık kaynaklı bir öğrenme projesidir.
 
-The working idea is to let learners assemble simple circuits and inspect both the corresponding Verilog and circuit behavior. The scope and research plan are still being discussed.
+Site üç bölümden oluşur:
 
-See [notes.md](notes.md) for the current idea and open questions, [backlog.md](backlog.md) for next steps, and [AGENTS.md](AGENTS.md) for project record-keeping.
+- **Tanıtım:** Projenin amacı, Verilog öğrenirken karşılaşılan güçlük ve yaklaşımımız.
+- **Dokümantasyon:** Başlangıç, kullanım, bloklar ve yerel kurulum için Türkçe kılavuz.
+- **Devre Atölyesi:** Blueprint dosyalarıyla devre kurma, benzetme, devreyi görme ve üretilen Verilog'u inceleme alanı.
+
+Site Jekyll ile hazırlanıp GitHub Pages'te yayımlanır. Proje kapsamı ve açık kararlar [`notes.md`](notes.md), güncel işler [`backlog.md`](backlog.md), çalışma kuralları [`AGENTS.md`](AGENTS.md) ve [`const.md`](const.md) içindedir.

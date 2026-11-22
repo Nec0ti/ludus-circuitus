@@ -1,26 +1,41 @@
-# Backlog log
+# Görev günlüğü
 
-Append one dated entry after each task. Record what changed, what was checked, and anything still unfinished.
+Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontrollerin yapıldığını ve açık kalanları yaz.
 
-## 2026-11-22 — Project workspace bootstrap
+## 2026-11-22 — Çalışma alanının kurulması
 
-- Created `AGENTS.md`, `const.md`, `backlog.md`, `backloglog.md`, `notes.md`, `README.md`, and `raports/.gitkeep`.
-- Captured the initial block-based Verilog learning concept and kept unconfirmed scope as hypotheses in `notes.md`.
-- Checked the workspace: it was empty and had no Git repository metadata. `gh auth status` reports the configured GitHub token is invalid.
-- Remaining: create the GitHub repository and connect this directory; then discuss and confirm project scope with the team.
+- `AGENTS.md`, `const.md`, `backlog.md`, `backloglog.md`, `notes.md`, `README.md` ve `raports/.gitkeep` oluşturuldu.
+- Blok tabanlı Verilog öğrenme fikri, ilk sürüm önerisi ve açık sorular `notes.md` içine alındı.
+- Başlangıçta Git metadata'sı yoktu ve `gh` kimlik doğrulaması geçersizdi.
 
-### Follow-up — GitHub creation attempt
+### GitHub ve Playwright denemeleri
 
-- Confirmed the GitHub connector can read the account, but it exposes no repository-creation action. `Nec0ti/ludus-circuitus` currently returns 404.
-- Tried the in-app browser route; no browser is available. Playwright and its Chromium download exist, but Chromium cannot launch because `libglib-2.0.so.0` is missing. The local `.git` directory is empty and read-only, so this session cannot initialize/connect a local Git repository either.
-- Repository creation and local Git connection remain blocked until a GitHub-capable browser/session and writable Git metadata are available.
-- Follow-up: resolved Chromium's missing runtime libraries from `/nix/store`. Launch still fails in `sandbox_host_linux` with `Operation not permitted`, including under user/pid namespaces with Chromium sandbox enabled. No sandbox bypass or new GitHub CLI OAuth session has been authorized.
-- 2026-11-22 follow-up: Necati explicitly approved a Chromium sandbox bypass and GitHub CLI device OAuth. `gh auth login --web` failed before issuing a device code because the command could not connect to github.com. Playwright was retried with the approved no-sandbox setting and locally resolved Nix libraries; Chromium still terminated with `SIGTRAP` / sandbox-host `Operation not permitted` (regular Chromium also hit a restricted crashpad socket). Repo remains uncreated; no OAuth credential was issued or stored.
+- GitHub bağlantısının depo okuma/yazma araçları yeni depo oluşturamıyordu; ilk denemede `Nec0ti/ludus-circuitus` bulunamadı.
+- İlk Playwright Chromium denemeleri Nix kütüphaneleri ve süreç yalıtımı kısıtları nedeniyle açılamadı.
+- Daha sonra `gh auth status` geçerli hesaba döndü. `npx --yes playwright@1.56.1 --version` 1.56.1 verdi. Yeni Chromium arşivi indi, ancak çıkartma alt süreci ilerlemediği için durduruldu.
+- Playwright 1.56.1, mevcut Chromium headless-shell 1255 ve onaylanmış `chromiumSandbox: false` ayarıyla çalıştırıldı; GitHub giriş sayfasına ulaştı.
+- Yerel Git `main` dalında başlatıldı. İlk commit `df98ea45699295f03412b815ba0bca4dfb5bbfc8` ile özel `https://github.com/Nec0ti/ludus-circuitus` deposu oluşturulup push edildi.
+- GitHub deposunun özel olduğu ve varsayılan dalın `main` olduğu; uzak `main` SHA'sinin yerel HEAD ile eşleştiği doğrulandı.
 
-### 2026-11-22 — Repository created and Playwright run
+## 2026-11-22 — Ürün ve arayüz dump'ının kaydı
 
-- `npx --yes playwright@1.56.1 --version` returned 1.56.1. `npx --yes playwright@1.56.1 install chromium` downloaded the official archive, but extraction stopped making progress; after confirming the process had been idle for several minutes, it was interrupted.
-- Ran Playwright 1.56.1 against the existing Chromium headless-shell build 1255 using the explicitly approved `chromiumSandbox: false` setting. Browser launch succeeded and navigation reached GitHub's sign-in page.
-- Initialized local Git on `main`, committed the project records (`df98ea45699295f03412b815ba0bca4dfb5bbfc8`), created private repo `https://github.com/Nec0ti/ludus-circuitus`, and pushed `main`.
-- Verified GitHub reports the repository as private with default branch `main`; `git ls-remote origin refs/heads/main` matches local `HEAD`, and the local worktree is clean.
-- Remaining: choose the learner group, confirm the MVP and research direction with the team, then define the implementation stack.
+- Site üç ana bölüm olarak kaydedildi: tanıtım, dokümantasyon ve Devre Atölyesi. Yayın kararı GitHub Pages + Jekyll; sunucu tarafı bileşen gerekmiyor.
+- Necati'nin ek yönlendirmesiyle tüm kullanıcıya dönük ürün yazılarının ve dokümantasyonun Türkçe olması kalıcı kurala eklendi.
+- Tanıtım içeriği, dört dokümantasyon başlığı, çok panelli blueprint editörü, `.bp` modülleri, değişkenler, gerçek zamanlı devre/Verilog çıktısı ve az sayıda blok hedefi `notes.md` içine düzenlendi.
+- Playwright ile Hamartia sayfası incelendi. Verilen `necoti` URL'sinde `o` harfi vardı ve 404 verdi; doğru kullanıcı adı `nec0ti` (sıfır), doğru sayfa `https://nec0ti.github.io/hamartia/`. Hamartia yardım sayfasının üst gezinme + sol konu ağacı + ana içerik + sağ sayfa içi başlık düzeni not edildi.
+- Unity User Manual dokümantasyon gezinmesi için ikinci referans olarak eklendi.
+- Saat/tik kontrollerinin sıralı mantığı kesinleştirmediği; mantık sinyali ile fiziksel akımın farklı kapsamlar olduğu açık soru olarak işaretlendi.
+- `AGENTS.md`, `const.md`, `README.md`, `notes.md`, `backlog.md` ve bu günlük Türkçeleştirildi/güncellendi.
+- Doğrulama: `git fetch origin` temiz `main` üzerinde yeni upstream commit göstermedi. Dokümantasyon değişiklikleri için benchmark çalıştırılmadı; kod uygulanmadı.
+- Kalan işler yeni `backlog.md` içinde sıralandı.
+
+## 2026-11-22–23 — Ürün dump'ı dosyalara işlendi
+
+- `const.md` içine üç bölümlü Jekyll/GitHub Pages sitesi, Türkçe içerik kuralı, blueprint modülleri, editör bölgeleri, doğruluk ilkeleri ve test/benchmark/PR akışı işlendi.
+- `notes.md` içine tanıtım sayfasının mesajları, dört Türkçe dokümantasyon konusu, Devre Atölyesi düzeni, `.bp` dosyaları, değişken paneli, görsel referanslar ve çözülmemiş zaman/sinyal soruları eklendi.
+- `AGENTS.md`, `README.md`, `backlog.md` ve görev günlüğü Türkçeleştirildi. Yeni işler ve benchmark taslağı backlog'a eklendi.
+- Hamartia adresini düzeltip Playwright ile doğru sayfayı açtım: `https://nec0ti.github.io/hamartia/`. Sayfada üst gezinme, sol konu listesi, orta içerik ve sağ sayfa içi gezinme; koyu tema ve mavi vurgu kullanılıyor. Verilen `necoti` adresi 404 veriyor.
+- Unity User Manual sayfası açılarak konu hiyerarşisi/gezinme örneği olarak kaydedildi.
+- Kontrol: `git fetch origin` öncesinde yerel çalışma ağacı temizdi; fetch sonrası `main` ile `origin/main` arasında gelen commit yoktu. Kod değişmediği için uygulama benchmarkı çalıştırılmadı.
+- Açık teknik ve araştırma kararları `backlog.md` içinde sıralandı.
+- 2026-11-23 açıklaması: Necati, iç geliştirme notlarının İngilizce olabileceğini; ana uygulama ve istemcinin gördüğü bütün yazıların Türkçe olması gerektiğini netleştirdi. Kural `const.md` ve `notes.md` içinde bu ayrımla güncellendi.
