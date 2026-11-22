@@ -4,7 +4,7 @@ This file is the current task board. Keep items small enough to finish and make 
 
 ## In progress
 
-- [ ] Create the private GitHub repository `Nec0ti/ludus-circuitus` and push this workspace to `main`.
+- None.
 
 ## Next
 
@@ -18,3 +18,5 @@ This file is the current task board. Keep items small enough to finish and make 
 
 - [x] Create project working guide and persistent project records.
 - [x] Record the initial project direction, MVP hypothesis, and open questions in `notes.md`.
+- [x] Create private GitHub repository `Nec0ti/ludus-circuitus`, connect this folder as `origin`, and push `main`.
+- [x] Run Playwright 1.56.1 through `npx` with the cached Chromium build and verify it reaches GitHub.
