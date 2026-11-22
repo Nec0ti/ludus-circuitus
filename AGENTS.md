@@ -8,6 +8,7 @@ Bu dosya proje çalışmalarına giriş noktasıdır. İşe başlamadan önce il
 - [`backlog.md`](backlog.md): güncel işler, durumları ve sıradaki adımlar.
 - [`backloglog.md`](backloglog.md): her görevde yapılanların ve yarım kalanların tarihli kaydı.
 - [`notes.md`](notes.md): proje fikri, arayüz taslağı, kararlar, varsayımlar, açık sorular ve kaynaklar.
+- [`research/`](research/): TÜBİTAK kuralları, tasarım/dil kaynakları ve etiketlenmiş özgün Verilog örnekleri.
 - [`raports/`](raports/): saklanmaya değer proje raporları ve incelemeler.
 - [`README.md`](README.md): projenin kısa tanıtımı.
 
@@ -27,7 +28,8 @@ Bu dosya proje çalışmalarına giriş noktasıdır. İşe başlamadan önce il
 - Küçük ve anlamlı adımları sık commit et. Büyük ürün veya mimari değişikliklerini çekme isteği (PR) üzerinden yürüt; gerekli benchmarklar geçmeden birleştirme.
 - Başlangıç ürünü GitHub Pages üzerinde Jekyll ile sunulan statik bir sitedir. Devre Atölyesi etkileşimli olabilir; sunucu tarafı bileşen ekleme kararını ayrıca kaydet.
 - Ürün arayüzü ve proje dokümantasyonundaki kullanıcıya dönük yazılar Türkçe olmalı. Standart Verilog sözdizimini, teknik adları ve dosya uzantılarını çevirmeye çalışma.
+- Arayüz geliştirmeden önce yerel `.codex/skills/frontend-design/SKILL.md` ve `.codex/skills/daisyui/SKILL.md` becerilerini (kuruluysa) oku; DaisyUI seçilirse ilgili kurulum/kullanım rehberlerini de gözden geçir. Kurulum bilgisi `research/references/frontend-skills.md` içindedir.
 
 ## Güncel proje yönü
 
-Ludus Circuitus; tanıtım, dokümantasyon ve Devre Atölyesi bölümlerinden oluşan, görsel bloklarla kombinasyonel ve sıralı mantığı, gerçek Verilog'u ve devre davranışını ilişkilendiren bir öğrenme projesidir. FPGA'daki bağımsız donanım yollarının paralel çalışmasını doğru biçimde öğret; görselleştirmede fiziksel akım yerine mantıksal sinyal değişimlerini canlandır. Ürün kapsamının ve araştırma yönteminin ayrıntıları için `notes.md` dosyasındaki doğrulanmış kararları ve açık soruları esas al.
+Ludus Circuitus; lise proje ekibinin ortaokul düzeyindeki yeni başlayanlara kombinasyonel ve sıralı mantığı bloklarla kurdurup gerçek Verilog ve mantıksal sinyal davranışıyla ilişkilendiren, quiz/test ile öğrenme kazanımı ölçmeyi hedefleyen tarayıcı tabanlı bir projedir. FPGA'daki bağımsız donanım yollarının paralel çalışmasını doğru biçimde öğret; görselleştirmede fiziksel akım yerine mantıksal sinyal değişimlerini canlandır. Ürün kapsamı için `const.md`, proje kararları için `notes.md`, kanıt ve kurallar için `research/` altındaki etiketli kaynakları esas al.

@@ -10,10 +10,14 @@ Bu dosya kalıcı ürün ve çalışma kurallarını tutar. Bu kurallar Necati'n
 - Ana uygulama ve istemcinin gördüğü bütün metinler Türkçe olmalıdır; buna arayüz, tanıtım ve yayımlanan dokümantasyon dahildir. İç geliştirme notları Türkçe veya İngilizce olabilir. Standart Verilog sözdizimi, teknik özel adlar ve `.bp` gibi dosya uzantıları özgün yazımlarıyla kalabilir.
 - Tasarım estetik, sürükleyici ve anlaşılır olmalı; öğrenme aracı karmaşık bir profesyonel EDA arayüzüne dönüşmemelidir.
 - Blok kümesi olabildiğince küçük tutulmalı ve başlangıç düzeyinde kolay kullanılmalıdır.
+- İçerik ve etkileşimler ortaokul düzeyindeki bir başlangıç öğrencisinin de takip edebileceği sadelikte tasarlanmalıdır. Arayüzde onluk değerlerle çalışmak uygundur; donanımın ikili mantıkla çalıştığı saklanmamalı, ikilik gösterim gerektiğinde sade bir köprüyle açıklanmalıdır.
+- İlk ürün web tarayıcısında çalışır; masaüstü uygulaması ve fiziksel FPGA kartına yükleme MVP kapsamı dışındadır. Tarayıcıda benzetim ve Verilog çıktısı yeterlidir.
+- Öğrenme kazanımı bir quiz/test ile ölçülebilir olacak şekilde kurulmalıdır. Ölçülmemiş bir etki iddiası sonuç gibi sunulmaz.
 
 ## Blueprint ve Devre Atölyesi modeli
 
 - Devre projeleri modüllere ayrılabilir; kullanıcı arayüzündeki blueprint belgeleri `top.bp`, `adder.bp` gibi `.bp` uzantılı dosyalar olarak düşünülür. Üretilen gerçek donanım dili Verilog'dur.
+- İlk MVP'de `.bp` belgeleri tarayıcıda yerel olarak saklanabilir ve içe/dışa aktarılabilir.
 - Sıralı mantık bu projenin kapsamındadır; clock ve register/yazmaç davranışları anlatımda ve benzetimde yer alacaktır.
 - Devre Atölyesi'nin çalışma alanı; sol blok araçlığı, üst menü ve benzetim araçları, ortada birden çok blueprint açılabilen tuval, sağda gerçek zamanlı devre görünümü ve Verilog çıktısı, altta değişkenler paneli fikrine dayanır.
 - Üst menüde Dosya, Görünüm, Yeni BP gibi klasik düzenleme girişleri bulunur. Benzetim araçlarında Oynat, Duraklat, Durdur ve tik hızı kontrolü yer alır.
@@ -21,6 +25,7 @@ Bu dosya kalıcı ürün ve çalışma kurallarını tutar. Bu kurallar Necati'n
 - Devre görünümü fiziksel elektrik akımını değil, mantıksal sinyallerin devredeki ilerleyişini canlandırır.
 - FPGA anlatımı, bağımsız donanım yollarının eşzamanlı çalışabilmesini ve saat kenarında register'ların durum saklamasını vurgular. Veri bağımlılıkları yol boyunca sıralı yayılıma neden olur; kaynaklar ve clock zamanlaması da paralelliği sınırlar. "Her işlem aynı anda olur" gibi yanlış bir iddia kullanılmaz.
 - Tik hızı, clock kenarları ve durdurma/sıfırlama davranışlarının tam anlamı uygulanmadan önce tanımlanır.
+- Onaylı başlangıç semantiği: bir tik tek yükselen clock kenarıdır; Duraklat/Durdur register durumunu korur; Reset ayrı eylemdir; başlangıçta bilinmeyen `X` görünür.
 
 ## Doğruluk ve iddialar
 

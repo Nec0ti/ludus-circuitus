@@ -15,6 +15,12 @@ Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde ö
 - Ana uygulama ve istemcinin gördüğü her içerik Türkçe olacak: tanıtım metni, yayımlanan dokümantasyon, menüler, araç ipuçları, hatalar ve Devre Atölyesi etiketleri. İç geliştirme notları İngilizce olabilir. Verilog anahtar sözcükleri, kod örnekleri, `top.bp` gibi dosya adları ve teknik özel adlar çevrilmeyecek.
 - Ana site üç bölüm: **Tanıtım**, **Dokümantasyon**, **Devre Atölyesi**. Bunlar Türkçe arayüz için geçici adlardır.
 - Sıralı mantık bu projenin ilk ürün kapsamındadır; clock/register davranışı temel öğrenme başlıklarından biridir.
+- İlk kullanıcı seviyesi lise öğrencileriyle sınırlı tutulmayacak: ortaokul öğrencilerinin ve ortalama başlangıç seviyesindeki kişilerin anlayabileceği açıklık hedefleniyor. Değerleri onluk biçimde göstermek/işletmek başlangıç yükünü azaltabilir; gerçek Verilog'un bitli/ikili donanım modelini yanlış anlatmamak için onluk gösterim ile donanım gösterimi gerektiğinde açıkça eşleştirilecek.
+- Ölçülebilir ilk öğrenme kazanımı basit bir test/quiz ile değerlendirilecek. Soru havuzu, ölçüm planı ve araştırma sorusu henüz kesinleşmedi; insan katılımcılı denemeden önce `research/tubitak/2027-2204-a.md` içindeki izin ve onam koşulları izlenecek.
+- İlk MVP tarayıcıda çalışacak; masaüstü uygulaması ve fiziksel FPGA kartına programlama kapsam dışı. Tarayıcı benzetimi, `.bp` blueprint ve Verilog çıktısı hedefleniyor.
+- Özgünlük için kritik erken bulgu: CircuitVerse browser schematic editing/simulation, sequential parts, subcircuits/multiple tabs, local save, decimal converter ve Verilog export özelliklerini resmî dokümanlarında anlatıyor; export deneysel uyarısı var. VPLAS da web tabanlı Verilog öğretim ve otomatik alıştırma sistemi. “Bunları ilk yapan” iddiası yapılmayacak; Ludus'un ölçülebilir dar farkı araştırma ve uygulamalı kıyasla bulunacak. Ayrıntı `research/references/related-tools.md` içinde.
+- Simülasyon başlangıç tercihi onaylandı: bir tik bir yükselen clock kenarıdır; duraklatma/durdurma register durumunu korur; reset ayrı eylemdir; başlangıçta bilinmeyen `X` sinyalleri görünürdür. `.bp` için yerel saklama ile içe/dışa aktarma tercih edildi. Ayrıntılı kullanım sözleşmesi uygulama öncesi yazılacak.
+- TÜBİTAK başvuru hedefi lise kategorisi 2204-A, mevcut ekip şimdilik iki öğrencidir. 2026-11-23 tarihinde yayımlanmış 2026–2027 çağrısı ve rehber incelendi; doğrulanmış yükümlülükler `research/tubitak/2027-2204-a.md` içindedir. Ekip üyelerinin güncel lise kaydı/yaşı henüz ayrı ayrı teyit edilmedi.
 - FPGA'nın paralel donanım modeli özellikle görünür ve anlaşılır anlatılacaktır. Bağımsız donanım yolları aynı anda çalışabilir; register'lar durumu clock kenarında günceller, veri bağımlılıkları ise mantıksal yollarda sıralı ilerleyiş yaratır. Tanıtım "her işlem aynı anda olur" diye genelleme yapmayacak.
 - Devre Atölyesi fiziksel elektrik akımını değil, mantıksal sinyallerin akışını ve clock kenarında register durumlarının değişimini gösterecek.
 
@@ -62,14 +68,11 @@ Blueprint modülleri Unreal Blueprint'in modüler çalışma fikrinden esinlener
 
 ### Açık teknik ayrımlar
 
-- Oynat/Duraklat/Durdur/tik hızı simülasyon clock'unu nasıl ilerletecek; bir tik tek yükselen kenar mı, yarım periyot mu olacak?
-- Durdur ile sıfırlama ayrı eylemler mi? Başlangıç register değerleri ve senkron/asenkron reset davranışı ne olacak?
-- Sinyal görünümünde 0/1 dışında bilinmeyen (`X`) değerler gösterilecek mi; mantıksal yayılma animasyonunun hızı/timing'i neyi temsil edecek?
+- Onaylı başlangıçta bir tik tek yükselen kenar; duraklatma/durdurma durumu korur, reset ayrıdır ve `X` görünür. Resetin aktif seviyesi, senkron/asenkron seçimi, ilk değer ayarları ve animasyonun fiziksel zamanla ilişkisi uygulama sözleşmesine bağlanmalı.
 - Değişken paneli hangi kavramları tutacak: giriş/çıkış, ara kablo, sabitler, parametreler veya durum/register değerleri? Ayrı kavramlar gereksiz blok çeşitliliği yaratmayacak şekilde seçilmeli.
 - `.bp` belgesi nasıl kaydedilecek, başka bir modülü nasıl çağıracak ve Verilog modülüne nasıl eşlenecek?
-- İlk sürüm için en küçük blok kümesi ne olacak; register, clock, reset ve modül örneği için hangi bloklar zorunlu?
-- Editörün telefon/tablet desteği hedefleniyor mu, yoksa Devre Atölyesi masaüstü öncelikli mi?
-- İlk sürüm gerçek bir FPGA kartına programlama içerecek mi, yoksa tarayıcı benzetimi ve Verilog dışa aktarımıyla mı sınırlı?
+- Sadeleştirilmiş başlangıçta onluk sayı gösterimi hangi genişlik/sınır kurallarıyla gerçek Verilog bit vektörlerine çevrilecek?
+- Ortaokul öğrencileriyle quiz/ön-son test yapılmadan önce MEB izni, veli onamı ve gönüllü katılım belgeleri nasıl alınacak; bu döngü 2204-A takvimine yetişecek mi?
 
 ## İlk sürüm için önceki taslak
 
@@ -103,22 +106,25 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 
 ## Açık ürün ve araştırma soruları
 
-- İlk öğrenen grubu ve ölçülecek temel öğrenme kazanımı ne?
+- Ortaokul başlangıç düzeyi erişilebilir hedef olarak net; quiz/test ile ölçülecek tam kazanım ve araştırma sorusu ne olacak?
+- CircuitVerse ve VPLAS gibi mevcut araçlardan sonra Ludus'un kanıtlanabilir özgün katkısı hangi tam öğrenme problemidir?
 - Öğrenme eğrisi hedefi nasıl ölçülecek; tanıtım sayfasında ne kadar iddialı yazılabilir?
 - İlk blok kümesi ve her bloğun davranış/port sözleşmesi ne?
 - `.bp` veri modeli ve modül bağlantı kuralları ne olacak?
 - Değişkenler, sinyaller, parametreler ve sıralı durum birbirinden nasıl ayrılacak?
-- Bir tik hangi clock kenarını çalıştıracak; durdurma, sıfırlama ve başlangıç durumu nasıl işleyecek?
-- Register reset türü ve başlangıç değeri ne olacak; sinyal paneli `X` durumunu gösterecek mi?
-- İlk sürüm fiziksel FPGA kartı programlayacak mı, yoksa tarayıcı benzetimi ve Verilog dışa aktarımıyla mı başlayacak?
+- Resetin seviyesi/türü ve başlangıç değerleri nasıl ayarlanacak; animasyon temposu gerçek donanım gecikmesi iddia edecek mi?
+- İlk eğitimde onluk kullanıcı değerleriyle bit genişliği/ikilik gösterim arasındaki bağlantı nasıl anlaşılır kılınacak?
 - Zorlayıcı benchmarkların veri kümesi, süre/performans eşikleri ve sürekli tümleşim kapıları ne?
 - Masaüstü önceliği ve dar ekran davranışı nasıl olacak?
-- TÜBİTAK gereklilikleri, ekip kararı ve katılımcı çalışması izinleri neler?
+- İki ekip üyesinin 2204-A lise/yaş uygunluğu ve danışman seçeneği nasıl doğrulanacak; MEB ve etik izin takvimi ne?
+- 2026–2027 çağrısının 4 Ocak 2027 son tarihine kadar tamamlanmış proje ve izinli öğrenme ölçümü yetiştirilebilir mi?
 
 ## Kaynak ve dayanak
 
 - Ürün kapsamı, `.bp` fikri, ekran düzeni, Türkçe gereksinimi ve geliştirme akışı Necati'nin 2026-11-22 tarihli bu oturumdaki proje dump'ından alınmıştır.
 - Görsel/dokümantasyon örnekleri: [Hamartia yardım sayfası](https://nec0ti.github.io/hamartia/) (Playwright ile 2026-11-22 tarihinde incelendi) ve [Unity User Manual](https://docs.unity3d.com/Manual/index.html).
+- Genişletilmiş etiketli kaynaklar, Verilog örnekleri ve 2027 çağrı notu: [`research/README.md`](research/README.md), [`research/references/index.md`](research/references/index.md) ve [`research/tubitak/2027-2204-a.md`](research/tubitak/2027-2204-a.md).
+- Yakın eğitim çalışmaları: web tabanlı Verilog alıştırma sistemi VPLAS (Hsieh vd., 2025) ve blok tabanlı programlamaya dair meta-analiz/karşılaştırma. Bunlar benzer ürünleri ve ölçüm tasarımını anlamak için kaynak; Ludus'un ortaokul seviyesinde etkisini ispatlamaz. İnceleme notu [`research/references/education-studies.md`](research/references/education-studies.md) içindedir.
 - Paralel ve clock'lu FPGA donanımını anlatırken yararlanılacak birincil kaynaklar: [Intel FPGA'da paralellik modellerinin donanıma eşlenmesi](https://www.intel.com/content/www/us/en/docs/oneapi-fpga-add-on/developer-guide/2024-0/mapping-parallelism-models-to-fpga-hardware.html) ve [FPGA donanım tasarımı kavramları](https://www.intel.com/content/www/us/en/docs/oneapi-fpga-add-on/developer-guide/2024-2/concepts-of-fpga-hardware-design.html). Bu kaynaklar bağımsız işlemlerin aynı anda çalışmasını, clock/register davranışını, bağımlılıkları ve pipeline ödünleşimlerini açıklıyor.
 - Önceki proje taslağı: İkinci Beyin içindeki `notes/tubitak-fpga-egitim-araci.md` kaydı. Oradaki kapı/doğruluk tablosu önerileri bu depoda henüz uygulama kararı değildir.
-- Güncel TÜBİTAK kuralları ve okul/veli izinleri bu çalışma sırasında yeniden doğrulanmadı; bunlara dair son tarih veya kesin hüküm iddiasında bulunma.
+- 2026–2027 2204-A çağrısı ile 2025 MEB Araştırma Uygulama İzinleri Yönergesi/TTKB kılavuzu 2026-11-23'te resmî sayfalardan doğrulandı ve `research/` altında özetlendi. Uygunluk, seçilecek örneklem ili, okul süreçleri ve güncel başvuru belgeleri başvuru anında yeniden teyit edilmeli.
