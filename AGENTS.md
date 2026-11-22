@@ -30,4 +30,4 @@ Bu dosya proje çalışmalarına giriş noktasıdır. İşe başlamadan önce il
 
 ## Güncel proje yönü
 
-Ludus Circuitus; tanıtım, dokümantasyon ve Devre Atölyesi bölümlerinden oluşan, görsel bloklarla Verilog ve devre davranışını ilişkilendiren bir öğrenme projesidir. Ürün kapsamının ve araştırma yönteminin ayrıntıları için `notes.md` dosyasındaki doğrulanmış kararları ve açık soruları esas al.
+Ludus Circuitus; tanıtım, dokümantasyon ve Devre Atölyesi bölümlerinden oluşan, görsel bloklarla kombinasyonel ve sıralı mantığı, gerçek Verilog'u ve devre davranışını ilişkilendiren bir öğrenme projesidir. FPGA'daki bağımsız donanım yollarının paralel çalışmasını doğru biçimde öğret; görselleştirmede fiziksel akım yerine mantıksal sinyal değişimlerini canlandır. Ürün kapsamının ve araştırma yönteminin ayrıntıları için `notes.md` dosyasındaki doğrulanmış kararları ve açık soruları esas al.

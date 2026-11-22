@@ -14,11 +14,13 @@ Bu dosya kalıcı ürün ve çalışma kurallarını tutar. Bu kurallar Necati'n
 ## Blueprint ve Devre Atölyesi modeli
 
 - Devre projeleri modüllere ayrılabilir; kullanıcı arayüzündeki blueprint belgeleri `top.bp`, `adder.bp` gibi `.bp` uzantılı dosyalar olarak düşünülür. Üretilen gerçek donanım dili Verilog'dur.
+- Sıralı mantık bu projenin kapsamındadır; clock ve register/yazmaç davranışları anlatımda ve benzetimde yer alacaktır.
 - Devre Atölyesi'nin çalışma alanı; sol blok araçlığı, üst menü ve benzetim araçları, ortada birden çok blueprint açılabilen tuval, sağda gerçek zamanlı devre görünümü ve Verilog çıktısı, altta değişkenler paneli fikrine dayanır.
 - Üst menüde Dosya, Görünüm, Yeni BP gibi klasik düzenleme girişleri bulunur. Benzetim araçlarında Oynat, Duraklat, Durdur ve tik hızı kontrolü yer alır.
 - Görsel devre, üretilen Verilog ve blueprint aynı tasarımın tutarlı gösterimleri olmalıdır.
-- Tik kontrolleri istenen arayüz yönüdür; tek başına saat/register veya sıralı mantık dilinin kararlaştırıldığı anlamına gelmez. Zaman ve durum semantiği uygulanmadan önce ayrıca tanımlanır.
-- Devre animasyonunda gösterilen akışın mantıksal sinyal akışı mı yoksa gerçek elektrik akımı mı olduğu açıkça belirlenmeden fiziksel akım benzetimi iddia edilmez.
+- Devre görünümü fiziksel elektrik akımını değil, mantıksal sinyallerin devredeki ilerleyişini canlandırır.
+- FPGA anlatımı, bağımsız donanım yollarının eşzamanlı çalışabilmesini ve saat kenarında register'ların durum saklamasını vurgular. Veri bağımlılıkları yol boyunca sıralı yayılıma neden olur; kaynaklar ve clock zamanlaması da paralelliği sınırlar. "Her işlem aynı anda olur" gibi yanlış bir iddia kullanılmaz.
+- Tik hızı, clock kenarları ve durdurma/sıfırlama davranışlarının tam anlamı uygulanmadan önce tanımlanır.
 
 ## Doğruluk ve iddialar
 

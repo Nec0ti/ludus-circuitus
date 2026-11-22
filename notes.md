@@ -14,6 +14,9 @@ Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde ö
 - Sunucu tarafı dinamik sisteme gerek yok. Devre Atölyesi etkileşimli olacaksa bu etkileşim tarayıcıda çalışabilir; sunucu tarafı bileşen gereksinimi şu an yok.
 - Ana uygulama ve istemcinin gördüğü her içerik Türkçe olacak: tanıtım metni, yayımlanan dokümantasyon, menüler, araç ipuçları, hatalar ve Devre Atölyesi etiketleri. İç geliştirme notları İngilizce olabilir. Verilog anahtar sözcükleri, kod örnekleri, `top.bp` gibi dosya adları ve teknik özel adlar çevrilmeyecek.
 - Ana site üç bölüm: **Tanıtım**, **Dokümantasyon**, **Devre Atölyesi**. Bunlar Türkçe arayüz için geçici adlardır.
+- Sıralı mantık bu projenin ilk ürün kapsamındadır; clock/register davranışı temel öğrenme başlıklarından biridir.
+- FPGA'nın paralel donanım modeli özellikle görünür ve anlaşılır anlatılacaktır. Bağımsız donanım yolları aynı anda çalışabilir; register'lar durumu clock kenarında günceller, veri bağımlılıkları ise mantıksal yollarda sıralı ilerleyiş yaratır. Tanıtım "her işlem aynı anda olur" diye genelleme yapmayacak.
+- Devre Atölyesi fiziksel elektrik akımını değil, mantıksal sinyallerin akışını ve clock kenarında register durumlarının değişimini gösterecek.
 
 ### Tanıtım sayfasında anlatılacaklar
 
@@ -59,18 +62,18 @@ Blueprint modülleri Unreal Blueprint'in modüler çalışma fikrinden esinlener
 
 ### Açık teknik ayrımlar
 
-- Devre animasyonundaki "akımın nereden nereye aktığı" mantıksal 0/1 sinyalinin devre boyunca yayılması mı, yoksa elektriksel akım modeli mi? İlk yorum dijital mantık simülasyonuna daha uygundur; fiziksel akım benzetimi ayrı kapsam ve fizik modeli gerektirir.
-- Oynat/Duraklat/Durdur/tik hızı, animasyon zamanlamasını mı kontrol edecek yoksa clock/register gibi sıralı mantık da mı çalıştıracak? Mevcut tercih yalnızca bu kontrollerin arayüzde istenmiş olduğudur; sıralı mantık kararı açık.
+- Oynat/Duraklat/Durdur/tik hızı simülasyon clock'unu nasıl ilerletecek; bir tik tek yükselen kenar mı, yarım periyot mu olacak?
+- Durdur ile sıfırlama ayrı eylemler mi? Başlangıç register değerleri ve senkron/asenkron reset davranışı ne olacak?
+- Sinyal görünümünde 0/1 dışında bilinmeyen (`X`) değerler gösterilecek mi; mantıksal yayılma animasyonunun hızı/timing'i neyi temsil edecek?
 - Değişken paneli hangi kavramları tutacak: giriş/çıkış, ara kablo, sabitler, parametreler veya durum/register değerleri? Ayrı kavramlar gereksiz blok çeşitliliği yaratmayacak şekilde seçilmeli.
 - `.bp` belgesi nasıl kaydedilecek, başka bir modülü nasıl çağıracak ve Verilog modülüne nasıl eşlenecek?
-- İlk sürüm için hangi en küçük blok kümesi yeterli olacak?
+- İlk sürüm için en küçük blok kümesi ne olacak; register, clock, reset ve modül örneği için hangi bloklar zorunlu?
 - Editörün telefon/tablet desteği hedefleniyor mu, yoksa Devre Atölyesi masaüstü öncelikli mi?
+- İlk sürüm gerçek bir FPGA kartına programlama içerecek mi, yoksa tarayıcı benzetimi ve Verilog dışa aktarımıyla mı sınırlı?
 
 ## İlk sürüm için önceki taslak
 
-Henüz ekip kararı olarak doğrulanmamış önceki öneri: giriş/çıkış sinyalleri, AND/OR/NOT/XOR, görsel bağlantılar, devre görünümü, canlı Verilog ve doğruluk tablosu/benzetim. Yeni arayüz taslağı çok modüllü `.bp` dosyalarını, değişken panelini ve tik kontrollerini ekledi; bunların ilk sürüme mi yoksa sonraki aşamaya mı gireceği ekipçe netleşecek.
-
-Başlangıçta kombinasyonel mantık kapsamı korunabilir. Tik kontrolleri isteniyor ama clock/register kapsamını tek başına kesinleştirmiyor.
+Önceki taslak giriş/çıkış sinyalleri, AND/OR/NOT/XOR, devre görünümü, canlı Verilog ve doğruluk tablosunu önermişti. 2026-11-23'te Necati bunu netleştirdi: sıralı mantık ilk ürün kapsamındadır ve FPGA'daki paralel donanım modeli özellikle öğretilmelidir. Çok modüllü `.bp` belgeleri ve değişken paneli de ürün yönünün parçasıdır; ilk gösterimdeki kesin blok kümesi hâlâ seçilecek.
 
 ## Test ve benchmark yaklaşımı
 
@@ -79,6 +82,8 @@ Necati'nin kuralı: zorlayıcı test veya benchmark başarısızsa değişikliğ
 İlk taslak ölçümler (henüz benchmark şartnamesi değil):
 
 - Desteklenen küçük devrelerde bütün giriş birleşimlerini değerlendir; simülatör sonucu, doğruluk tablosu ve üretilmiş Verilog simülasyonu eşleşmeli.
+- Clock kenarlarında register durum geçişlerini, reset davranışını ve oluşan sinyal izlerini beklenen sonuçlarla karşılaştır.
+- Bağımsız mantık kollarının aynı clock aralığında birlikte ilerleyişini ve bağımlı kolların doğru sinyal sırasını doğrula; paralel anlatımı ardışık yazılım adımıymış gibi modelleme.
 - Birden fazla `.bp` modülünün bağlantısı ve üst modülden alt modüle port eşlemesi doğru olmalı.
 - Kaydet/yükle döngüsünde bağlantılar, değişkenler ve modül ilişkileri kaybolmamalı; geçersiz dosya anlaşılır hata vermeli.
 - Devre Atölyesi'nde blok ekleme/bağlama/silme ve canlı sağ panel üretimi tutarlı kalmalı.
@@ -103,8 +108,9 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - İlk blok kümesi ve her bloğun davranış/port sözleşmesi ne?
 - `.bp` veri modeli ve modül bağlantı kuralları ne olacak?
 - Değişkenler, sinyaller, parametreler ve sıralı durum birbirinden nasıl ayrılacak?
-- Tik, durdurma, reset ve zaman adımı ne anlama gelecek?
-- Devre paneli mantık sinyali animasyonu mu gösterecek; fiziksel akım kesinlikle kapsam dışında mı?
+- Bir tik hangi clock kenarını çalıştıracak; durdurma, sıfırlama ve başlangıç durumu nasıl işleyecek?
+- Register reset türü ve başlangıç değeri ne olacak; sinyal paneli `X` durumunu gösterecek mi?
+- İlk sürüm fiziksel FPGA kartı programlayacak mı, yoksa tarayıcı benzetimi ve Verilog dışa aktarımıyla mı başlayacak?
 - Zorlayıcı benchmarkların veri kümesi, süre/performans eşikleri ve sürekli tümleşim kapıları ne?
 - Masaüstü önceliği ve dar ekran davranışı nasıl olacak?
 - TÜBİTAK gereklilikleri, ekip kararı ve katılımcı çalışması izinleri neler?
@@ -113,5 +119,6 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 
 - Ürün kapsamı, `.bp` fikri, ekran düzeni, Türkçe gereksinimi ve geliştirme akışı Necati'nin 2026-11-22 tarihli bu oturumdaki proje dump'ından alınmıştır.
 - Görsel/dokümantasyon örnekleri: [Hamartia yardım sayfası](https://nec0ti.github.io/hamartia/) (Playwright ile 2026-11-22 tarihinde incelendi) ve [Unity User Manual](https://docs.unity3d.com/Manual/index.html).
+- Paralel ve clock'lu FPGA donanımını anlatırken yararlanılacak birincil kaynaklar: [Intel FPGA'da paralellik modellerinin donanıma eşlenmesi](https://www.intel.com/content/www/us/en/docs/oneapi-fpga-add-on/developer-guide/2024-0/mapping-parallelism-models-to-fpga-hardware.html) ve [FPGA donanım tasarımı kavramları](https://www.intel.com/content/www/us/en/docs/oneapi-fpga-add-on/developer-guide/2024-2/concepts-of-fpga-hardware-design.html). Bu kaynaklar bağımsız işlemlerin aynı anda çalışmasını, clock/register davranışını, bağımlılıkları ve pipeline ödünleşimlerini açıklıyor.
 - Önceki proje taslağı: İkinci Beyin içindeki `notes/tubitak-fpga-egitim-araci.md` kaydı. Oradaki kapı/doğruluk tablosu önerileri bu depoda henüz uygulama kararı değildir.
 - Güncel TÜBİTAK kuralları ve okul/veli izinleri bu çalışma sırasında yeniden doğrulanmadı; bunlara dair son tarih veya kesin hüküm iddiasında bulunma.
