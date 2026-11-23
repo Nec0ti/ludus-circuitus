@@ -17,6 +17,39 @@ Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde ö
 
 Detay, alternatifler ve sınırlılıklar: [`research/measurement/learning-study.md`](research/measurement/learning-study.md) ve [`research/privacy/data-collection-plan.md`](research/privacy/data-collection-plan.md).
 
+## İlk etkileşimli atölye dilimi: 2026-11-23
+
+- Devre Atölyesi site nav/footer'ından ayrıldı ve tam ekran koyu endüstriyel CAD/CAM çalışma alanına alındı. Izgara, araçlık, belge sekmeleri, saat kontrolü, değişken şeridi, sinyal görünümü ve Verilog paneli aynı ekranda yer alıyor.
+- 1-bit blueprint JSON'u saf motorla doğrulanıp simüle ediliyor. 0/1/X kapı mantığı, kombinasyonel döngü reddi, gerçek Verilog üretimi, başlangıç X yazmaç, eşzamanlı yükselen kenar, ayrı reset, tarayıcı localStorage ve `.bp` JSON içe/dışa aktarımı çalışıyor.
+- Araçlık blokları mouse/keyboard ile eklenebilir; çıkıştan girişe tıklayarak bağlanır; canvas'ta 20 birimlik ızgarada taşınır. Bu ilk dilimde alt blueprint dosyaları tablarda açılabilir; modül örneği çağırma/bileştirme henüz yok.
+- Her blokta kısa hover/focus yardımı var; yardım bağlantısı ilgili Bloklar başlığını yeni sekmede açıyor.
+- Atölye verileri tarayıcıda yerel kalır. Quiz yalnız açık sayfa belleğinde puanlanan anonim bir öğrenme alıştırmasıdır; cevap/puan/süre kaydetmez ve API isteği yapmaz. Okul/MEB/KVKK onayı beklemeden insan katılımcılı araştırma verisi toplanmayacak.
+- Genel site koyu ve yumuşak palete alındı; Devre Atölyesi ayrı endüstriyel temasını koruyor. Landing'de yarım toplayıcı etkileşimi var; docs eğitim portalı, quiz yerel anonim prototip olarak eklendi.
+
+## Görsel dil ve etkileşim araştırması: 2026-11-23
+
+- Kaynaklı tasarım araştırması [`research/design/visual-engagement.md`](research/design/visual-engagement.md) içinde. Seçilen palet: sayfa `#1B232B`, yüzey `#232E37`, yükseltilmiş yüzey `#2D3B44`, metin `#F1F3EE`, ikincil metin `#B5C0C0`, mantık sinyali `#72D6B5`, clock/odak `#F1B866`, hata `#E8897B`. Tema genel landing/docs/quiz'e uygulandı; Devre Atölyesi `ludus-cad` temasını kullanıyor.
+- Renk rolleri okunabilirlik, düzen ve durum ayrımı içindir; eğitim etkisi kanıtı değildir. 0/1/X metinsel olarak da gösterilir. İlk ekran görüntüleri desktop/mobile landing, docs ve atölyede incelendi; bağımsız görsel incelemeleri sürüyor.
+- Landing yarım toplayıcı önizlemesinde A ve B girişleri değiştirilebilir; AND taşıma ve XOR toplam sonuçlarıyla sinyal yolları anlık güncellenir. Dört giriş çifti için sınırlı, yalnızca açık sayfa belleğinde kalan keşif göstergesi var. Verilog satırları devre tanımını gösterir ve giriş değerleri değişince değişmez.
+- Etkileşim önerileri: kullanıcının seçim ve duraklatma/çıkış kontrolü, açıklayıcı ve nazik doğruluk geri bildirimi, sonu görünür kısa görevler; streak kaybı, geri sayım baskısı, değişken ödül, zorunlu bildirim, leaderboard ve sonsuz akış kullanılmaması. Bunlar literatürün Ludus üzerindeki sonuçları değil, eğitim/çocuk iyi oluşu kaynaklarına dayalı tasarım hipotezleridir.
+- Renk ve gamification bulgularını başarı/bağımlılık iddiasına çevirmemek; öğrenci görüşlerini izinli biçimde alıp örneklem sınırını korumak gerekir.
+
+## Çoklu `.bp` modül birleşimi: 2026-11-23
+
+- Bir açık blueprint'in `name` alanı modül kimliğidir. Bir modül örneği `{ type: "module", module: <hedef blueprint name>, name: <örnek adı> }` biçimindedir.
+- Modül giriş portları hedef blueprint'teki `input` bloklarının adları, çıkış portları `output` bloklarının adlarıdır. Araçlıktaki `BP MODÜLLERİ` listesi diğer açık blueprint'leri modül olarak ekler.
+- Bir proje 1–8 benzersiz `.bp` sekmesi taşır; modül adları benzersiz, bağımlılıklar döngüsüz olmalı. Modül başına en fazla 8 giriş ve 8 çıkış portu desteklenir.
+- Simülasyon ve Verilog, `.bp` hiyerarşisini düzleştirip tek üst Verilog modülünde birleştirir. İç modül register/yazmaç durumları da üst tasarımla aynı tick/reset geçişlerine katılır.
+- Her açık BP yerel depolamada birlikte saklanır. Dışa aktarma hâlâ etkin `.bp` dosyasını verir; başka cihaza proje taşırken bağımlı BP dosyaları ayrı ayrı içe aktarılmalıdır.
+- Doğrulama: tüm yarım toplayıcı giriş vektörleri, modül portları, eksik modül, modül döngüsü, iç içe register tick/reset, 320–1440 px atölye akışı, yerel saklama/yükleme ve Icarus ile kombinasyonel + sıralı modül simülasyonu.
+
+
+## Yerel quiz prototipi
+
+- `/quiz/` sayfasında sekiz soruluk A ve B formları bulunur. İki form da aynı dağılımı izler: dört paralel mantık yolu tahmini (birincil puan), iki blok-Verilog eşleme ve iki clock/yazmaç sorusu (ikincil puanlar).
+- Sonuçlar form toplamı ve üç alt puan olarak sayfada gösterilir; yanlış yanıtlara kısa açıklama verilir. Yanıtlar yalnız açık sayfanın JavaScript belleğinde durur; sonuç/katılımcı/süre saklanmaz. API isteği veya analitik kodu yoktur.
+- A/B formlarının konu dağılımı ve doğru yanıt konumları otomatik testle eşleştirilir. Bu, pedagojik geçerliği veya saha uygulamasında gerçek test eşdeğerliğini kanıtlamaz. İnsan katılımcılı ölçümden önce danışman ve MEB izin dosyasıyla gözden geçirilmeli; gerekirse soru ve puanlama değiştirilmelidir.
+
 ## Ürün ve yayın kararı
 
 - Site GitHub Pages ve Jekyll ile yayımlanacak.
@@ -151,3 +184,11 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - Önceki proje taslağı: İkinci Beyin içindeki `notes/tubitak-fpga-egitim-araci.md` kaydı. Oradaki kapı/doğruluk tablosu önerileri bu depoda henüz uygulama kararı değildir.
 - 2026–2027 2204-A çağrısı ile 2025 MEB Araştırma Uygulama İzinleri Yönergesi/TTKB kılavuzu 2026-11-23'te resmî sayfalardan doğrulandı ve `research/` altında özetlendi. Uygunluk, seçilecek örneklem ili, okul süreçleri ve güncel başvuru belgeleri başvuru anında yeniden teyit edilmeli.
 - TÜBİTAK ön değerlendirme kriter bağlantısı şu anda 2025 formuna yönleniyor. Formun görünen ağırlıkları (problem/soru %20, yöntem %20, yaratıcılık/etki %30, sonuç/tartışma %30) 2027 için kesinleşmiş kabul edilmemeli; yeni form başvurudan önce kontrol edilmeli.
+
+
+### 2026-11-23 — Üç yüzey için görsel kalite kapıları
+
+- Landing, docs ve Devre Atölyesi ayrı worktree'lerde bağımsız görsel ajanlarca masaüstü ve mobil boyutlarda incelendi; bulunan mobil etiket, docs menü yüksekliği/okuma süresi ve atölye ikincil metin okunabilirliği sorunları düzeltildi.
+- Son ekran kontrolleri: landing mobil devre etiketleri yaklaşık 11–12 px; docs ana başlığı 390×844'te y=643; docs yatay taşmasız ve tek etkin bölüm açık; atölye değiştirilen yardımcı metinleri koyu yüzeylerde 6.5:1 üstü kontrastla okunuyor.
+- Playwright hizalama ve mobil içerik konumu eşiği ile WCAG kontrast eşikleri `npm test`/`npm run test:e2e` kapılarına eklendi; mevcut Pages workflow bu testleri PR'da çalıştırır.
+- İnceleme raporu: [`raports/visual-review-2026-11-23.md`](raports/visual-review-2026-11-23.md). Açık kullanım notu: atölye mobil tuvali yatay kaydırılır ve kaydırma gereksinimi görsel olarak belirtilmiyor.

@@ -15,6 +15,7 @@
       <div class="desktop-links" aria-label="Bölümler">
         <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>Tanıtım</a>
         <a href="{{ '/docs/' | relative_url }}" {% if page.url contains '/docs' %}aria-current="page"{% endif %}>Dokümantasyon</a>
+        <a href="{{ '/quiz/' | relative_url }}" {% if page.url contains '/quiz' %}aria-current="page"{% endif %}>Quiz</a>
         <a class="btn btn-sm btn-primary nav-action" href="{{ '/playground/' | relative_url }}">Devre Atölyesi</a>
       </div>
       <details class="mobile-menu">
@@ -22,6 +23,7 @@
         <div class="mobile-menu-panel">
           <a href="{{ '/' | relative_url }}">Tanıtım</a>
           <a href="{{ '/docs/' | relative_url }}">Dokümantasyon</a>
+          <a href="{{ '/quiz/' | relative_url }}">Quiz</a>
           <a href="{{ '/playground/' | relative_url }}">Devre Atölyesi</a>
         </div>
       </details>

@@ -3,3 +3,5 @@ node_modules/
 _site/
 .jekyll-cache/
 .sass-cache/
+playwright-report/
+test-results/

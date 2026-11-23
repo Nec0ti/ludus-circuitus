@@ -22,3 +22,7 @@ exclude:
   - Gemfile
   - README.md
   - assets/css/input.css
+  - tests
+  - playwright.config.mjs
+  - playwright-report
+  - test-results

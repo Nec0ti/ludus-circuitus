@@ -24,7 +24,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build:css
+      - run: npm test
+      - run: sudo apt-get update && sudo apt-get install -y iverilog
+      - run: npm run test:verilog
       - uses: actions/jekyll-build-pages@v1
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
       - uses: actions/upload-pages-artifact@v5
 
   deploy:
