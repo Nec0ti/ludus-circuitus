@@ -1,6 +1,6 @@
 # Ludus Circuitus
 
-Ludus Circuitus, başlangıç düzeyindeki öğrenenlerin görsel bloklarla dijital mantık kurmasını, mantıksal sinyalleri izlemesini ve gerçek Verilog karşılığını görmesini amaçlayan bir eğitim projesidir. Açık kaynaklı bir araç olarak yayımlanması ve ortaokul düzeyindeki öğrenenlerin de takip edebileceği bir web deneyimi sunması hedeflenir. Öğrenme katkısı quiz/test ile ölçülmeden kanıtlanmış sayılmaz.
+Ludus Circuitus, başlangıç düzeyindeki öğrenenlerin görsel bloklarla dijital mantık kurmasını, mantıksal sinyalleri izlemesini ve gerçek Verilog karşılığını görmesini amaçlayan bir eğitim projesidir. MIT lisanslıdır. Ortaokul düzeyindeki öğrenenlerin de takip edebileceği bir web deneyimi hedeflenir; öğrenme katkısı quiz/test ile ölçülmeden kanıtlanmış sayılmaz.
 
 Site üç bölümden oluşur:
 

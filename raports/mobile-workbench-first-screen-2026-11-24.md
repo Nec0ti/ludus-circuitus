@@ -14,6 +14,8 @@
 - Tam E2E: 28/28 geçti; mevcut masaüstü sürükle-bırak regresyonu da kapsamda.
 - Node: 27/27; Tailwind CSS derlemesi ve `git diff --check` başarılı.
 - 390 px ekran görüntüleri: `/tmp/ludus-mobile-shelf-collapsed.png`, `/tmp/ludus-mobile-shelf-open.png`.
+- Ana özellik dalındaki güncel tema ile son görsel geri kontrolü ayrıca yapıldı: `/tmp/ludus-final-mobile.png`. Bağımsız inceleme, 390 px'te örnek devre ve tuvalin ilk ekran içinde kaldığını; landing/footer/docs hizalama, renk kontrastı ve görsel kimliğinde bloklayıcı sorun olmadığını doğruladı.
+- Birleştirilmiş dal son kapıları: Node 27/27, Playwright 35/35, Icarus scalar/hiyerarşik ve çok-bit oracle, Tailwind CSS ve Jekyll build geçti.
 
 ## Sınır
 
