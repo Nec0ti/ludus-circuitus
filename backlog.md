@@ -10,6 +10,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 - [ ] Basit quiz/test ile ölçülecek tek öğrenme kazanımını ve araştırma sorusunu ekip/danışmanla netleştir.
 - [ ] CircuitVerse ve VPLAS'ı aynı başlangıç göreviyle uygulamalı karşılaştır; Ludus'un kanıtlanabilir farkını ürün ve araştırma sorusuna bağla.
+- [ ] Birincil öğrenme sonucu, quiz formu/cevap anahtarı ve mümkünse karşılaştırma grubunu danışmanla kesinleştir; başvuru için son yayımlanmış kriter formunu tekrar kontrol et.
 - [ ] En küçük blok kümesini ve blokların giriş/çıkış davranışını tanımla.
 - [ ] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle.
 - [ ] Onluk kullanıcı değerleri, Verilog bit genişliği ve ikilik fiziksel davranış arasındaki pedagojik eşlemeyi tasarla.
@@ -22,6 +23,8 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [ ] Yerel kurulum, önizleme, katkı ve yayın akışını dokümantasyonda açıkla.
 - [ ] İki öğrencinin 2204-A lise/yaş uygunluğunu ve varsa danışman koşulunu teyit et.
 - [ ] Öğrencilerle öğrenme testi yapılacaksa MEB izni, veli onamı ve gönüllü katılım akışını başlat.
+- [ ] İnsan katılımcılı quiz için KVKK aydınlatma, gerekiyorsa ayrı açık rıza, öğrenci/veli gönüllü katılım ve veri saklama-imha belgelerini danışmanla tamamla; quiz aracında katılımcı adı/kişisel bilgi isteme.
+- [ ] Veriyi alacak veri sorumlusunu, araştırma örneklemini, sunucu erişimini ve kişisel veri güvenliği tedbirlerini belirlemeden API endpoint'i veya canlı veri toplamayı açma.
 - [ ] Başvuruda yalnızca tamamlanmış proje sunulması şartına göre MVP, quiz, analiz ve rapor takvimini doğrula.
 - [ ] Tanıtım sayfasındaki öğrenme etkisi iddialarını araştırma/ölçüm sonuçlarıyla destekle; sonuç yoksa hedef olarak ifade et.
 
@@ -37,3 +40,4 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] Öncelikli TÜBİTAK ve frontend becerileri araştırması için kapsam belirle.
 - [x] 2026–2027 TÜBİTAK 2204-A kurallarını ve etiketli ürün/dil kaynaklarını `research/` altında araştırıp düzenle.
 - [x] DaisyUI ve ek frontend-design becerilerini proje ortamına kur; ön koşulları ve Jekyll entegrasyon notlarını kaydet.
+- [x] TÜBİTAK öğrenme ölçümü, KVKK/MEB katılımcı verisi ve GitHub Pages POST sınırları için kaynaklı araştırma taslağı hazırla; özgün katkı hipotezini daralt.
