@@ -24,7 +24,7 @@ Birden fazla kazanım ölçmek daha geniş bir resim verebilir; fakat bütün so
 | **İkincil A** | Görsel blok/bağlantı ile gerçek Verilog'daki `assign` veya modül bağlantısını eşleme/okuma | Bir blokta görülen ilişkiyi iki kısa Verilog ifadesinden seçme veya bir Verilog satırının çıkışını açıklama |
 | **İkincil B** | Sıralı devrede register değerinin clock'un yükselen kenarında değiştiğini anlama | Clock kenarı gelmeden önce/sonra register'da hangi değer tutulur? |
 
-100 üzerinden puan toplamı kullanılabilir; cevap anahtarı ve her boyutun puanı baştan sabitlenmeli. Birincil sonuç tek başına raporlanmalı; toplam ve alt boyutlar onu tamamlayıcı biçimde gösterilmeli. Birincil kazanımın içeriği sabitlenmeden soru yazımına geçilmemeli.
+100 üzerinden puan toplamı kullanılabilir; cevap anahtarı ve her boyutun puanı baştan sabitlenmeli. Birincil sonuç tek başına raporlanmalı; toplam ve alt boyutlar onu tamamlayıcı biçimde gösterilmeli. Birincil kazanım uygulamadaki soru taslağına bağlandı; bu yalnızca ürün prototipidir. Soru eşleme ve sınırlılıklar [`quiz-blueprint.md`](quiz-blueprint.md) içinde kayıtlıdır; danışman ve öğrenci incelemesi olmadan araştırma aracı olarak kullanılmamalı.
 
 ### Lise örnekleminin ortaokul hedefine sınırı
 

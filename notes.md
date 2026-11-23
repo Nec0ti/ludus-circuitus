@@ -48,7 +48,7 @@ Detay, alternatifler ve sınırlılıklar: [`research/measurement/learning-study
 
 - `/quiz/` sayfasında sekiz soruluk A ve B formları bulunur. İki form da aynı dağılımı izler: dört paralel mantık yolu tahmini (birincil puan), iki blok-Verilog eşleme ve iki clock/yazmaç sorusu (ikincil puanlar).
 - Sonuçlar form toplamı ve üç alt puan olarak sayfada gösterilir; yanlış yanıtlara kısa açıklama verilir. Yanıtlar yalnız açık sayfanın JavaScript belleğinde durur; sonuç/katılımcı/süre saklanmaz. API isteği veya analitik kodu yoktur.
-- A/B formlarının konu dağılımı ve doğru yanıt konumları otomatik testle eşleştirilir. Bu, pedagojik geçerliği veya saha uygulamasında gerçek test eşdeğerliğini kanıtlamaz. İnsan katılımcılı ölçümden önce danışman ve MEB izin dosyasıyla gözden geçirilmeli; gerekirse soru ve puanlama değiştirilmelidir.
+- A/B formlarının konu ve beceri eşlemesi, her formda A–D doğru konumu dengesi ve form çiftleri arasında doğru konumun değişmesi otomatik testle doğrulanır. Bu, pedagojik geçerliği veya saha uygulamasında gerçek test eşdeğerliğini kanıtlamaz. İnsan katılımcılı ölçümden önce danışman ve MEB izin dosyasıyla gözden geçirilmeli; gerekirse soru ve puanlama değiştirilmelidir.
 
 ## Ürün ve yayın kararı
 
@@ -198,3 +198,8 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 
 - Görsel benchmarklar ve bağımsız incelemeler geçtikten sonra PR #2 `bfaf4b18` merge commit'iyle `main`e alındı. Main Pages build, Verilog oracle'ı, E2E ve deploy başarılı. Canlı site `https://nec0ti.github.io/ludus-circuitus/`.
 - Deploy sonrası canlı Chromium kontrolü mobil landing/docs ve Devre Atölyesi'ni açtı; docs ilk ekran başlığı y=642.875, açık grup sayısı 1, taşma ve JS hatası yok. Atölyede 7 blok yardım bağlantısı var. Ayrıntı görev günlüğünde.
+
+### 2026-11-23 — Quiz araç taslağı gözden geçirmesi
+
+- Ayrı worktree'de yapılan quiz denetimi, ilk sürümde cevap konumlarının yalnızca B/C'de kaldığını ve birincil maddelerin çoğunlukla kapı doğruluk tablosu sorduğunu buldu. Yerel prototipte seçenekler A–D arasında dengelendi; birincil havuza iki bağımsız `assign` yolunun hem çıkışlarını hem paralel ilişkisini birlikte sorması sağlandı; A/B beceri anahtarı ve test eşikleri tanımlandı.
+- [`research/measurement/quiz-blueprint.md`](research/measurement/quiz-blueprint.md) kazanım belirtkesi, soru çifti eşlemesi, cevap anahtarı, puanlama ve sınırlılıkları içerir. A/B formları hâlâ aday taslaklardır; istatistiksel eşdeğerlik, madde güçlüğü, geçerlik veya ortaokul/lise anlaşılabilirliği kanıtlanmış değildir. Katılımcı verisi toplama/API yoktur.

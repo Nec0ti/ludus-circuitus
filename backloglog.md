@@ -188,3 +188,13 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR #2, tüm bölüm incelemeleri ve benchmarklar geçince `bfaf4b18` merge commit'iyle `main`e birleştirildi. PR CI (`45229055964`) başarılıydı; `main` Pages build + Icarus + E2E (`45229361530`) ve deploy adımı da başarılı tamamlandı.
 - Yayın adresi `https://nec0ti.github.io/ludus-circuitus/` üzerinde landing ve docs 200 döndü. Canlı Playwright 390×844'te landing temasını ve 20 px SVG yazısını; docs başlığını y=642.875, tek açık grubu ve taşmasızlığı; atölyede `ludus-cad` temasını, 7 blok yardım işaretini ve site nav/footer bulunmadığını doğruladı. Üç sayfada tarayıcı hatası yok.
 - Yerel çalışma ağacı `origin/main` ile fast-forward eşitlendi ve temiz. İnsan katılımcılı araştırma/kişisel veri toplama ve API işleri gerekli danışman-okul-MEB/KVKK koşulları tamamlanana kadar açık backlog'da.
+
+
+## 2026-11-23 — Quiz belirtkesi ve dengeli A/B cevap anahtarı
+
+- Bağımsız quiz denetimi ilk sürümde doğru seçeneklerin yalnız B/C olduğunu, birincil havuzun paralellikten çok doğruluk tablosu hesapladığını buldu. A/B anahtar konumları A–D arasında form başına 2/2/2/2 dengelendi, eşli maddelerin doğru seçeneği farklılaştırıldı; soru beceri anahtarı eklendi.
+- p2 iki `assign` ifadesindeki AND/XOR sonuçlarını tahmin eder. Denetim p2'nin ilk düzeltmesinde paralellik bilgisinin doğru seçenek için gerekli olmadığını ayrıca fark etti; artık her seçenek hem değerleri hem yol ilişkisini içeriyor ve doğru cevap ikisini birden gerektiriyor. Bu gereklilik test edildi.
+- `research/measurement/quiz-blueprint.md` kazanım belirtkesi, A/B madde haritası, cevap anahtarı, puanlama, geçerlik/eşdeğerlik sınırları ve izin öncesi gereken adımları kaydeder. Kaynak önerileri araştırma dosyasında. Quiz yerel ve anonim kalır; araştırma uygulaması değildir.
+- Değişenler: `assets/js/quiz-data.mjs`, `tests/quiz.test.mjs`, `research/measurement/quiz-blueprint.md`, `research/measurement/learning-study.md`, `research/README.md`, `backlog.md`, `notes.md`, bu günlük.
+- Doğrulama: CSS build ve Jekyll build geçti; `npm test` 15/15; tüm Playwright E2E 17/17; Icarus Verilog oracle'ları geçti; quiz E2E 3/3; `git diff --check` temiz. Ayrı worktree'deki quiz denetimi anahtarları/form eşlemesini kontrol etti; p2 eleştirisi uygulanıp yeni koda test eklendi.
+- Kalan: danışman/alan öğretmeni, öğrencilerle anlaşılabilirlik incelemesi, madde güçlük/eşdeğerlik kanıtı, okul/MEB onaylı protokol ve örneklem. Bunlar tamamlanana kadar quiz araştırma aracı veya öğrenme etkisi kanıtı olarak kullanılmayacak. Bu özellik dalı henüz commit/push edilmedi.
