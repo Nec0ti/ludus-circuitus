@@ -372,3 +372,11 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR #18 `a217bf3` yeşil CI sonrası `492a008` olarak birleştirildi. Pages run `45287278491` build ve deploy adımlarını başarıyla tamamladı.
 - Canlı Playwright kontrolü 390×844 ölçüsünde `#export-bp` görünürlüğünü doğruladı ve `top.bp` indirmesini aldı; JavaScript hatası yok, document scroll width 390 px kaldı. Aynı smoke turunda landing, docs, playground ve quiz HTTP 200 döndü.
 - Ekran görüntüsü `/tmp/ludus-mobile-export-live.png` yerel geçici QA kanıtıdır; öğrenci/quiz verisi kullanılmadı.
+
+
+## 2026-11-24 — TÜBİTAK 2204-A çağrı ve kriter bağlantılarını yeniden kontrol etme
+
+- Resmî 2026–2027 (58. yarışma) 2204-A sayfası canlı olarak yeniden kontrol edildi. Çağrı 23 Eylül 2026–4 Ocak 2027 tarih aralığını ve 4 Ocak saat 17.30 kapanışını koruyor.
+- Sayfadaki ön değerlendirme PDF'si `on_degerlendirme_kriterleri_2025_web.pdf`, bölge/final PDF'si `sergi_kriterleri_2025_web.pdf`; erişilebilir formlardaki puan ağırlıkları 2027 sürümü olarak teyit edilmedi. Araştırma notlarına erişim tarihi ve sürüm belirsizliği eklendi.
+- Kaynak: [resmî 2204-A çağrı sayfası](https://tubitak.gov.tr/tr/yarismalar/2204-lise-ogrencileri-arastirma-projeleri-yarismasi) ve sayfadaki kriter PDF bağlantıları.
+- Değişenler: `research/tubitak/2027-2204-a.md`, `research/tubitak/evaluation-alignment-2027.md`, `backlog.md`, bu günlük. Ürün kodu ve katılımcı verisi yok.
