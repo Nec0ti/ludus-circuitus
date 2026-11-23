@@ -286,3 +286,11 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Değişenler: `playground/index.html`, `assets/css/input.css`, derlenmiş `assets/css/site.css`, `assets/js/playground.mjs`, `tests/e2e/playground.spec.mjs`, bu rapor, backlog ve bu günlük.
 - Doğrulama: Tailwind CSS ve Jekyll build geçti; Node **21/21**; Icarus 252 seeded kapı vektörü ve hiyerarşik `.bp` oracle'ları geçti; Playwright **27/27**; `git diff --check` temiz.
 - Kalan: commit/push, ayrı worktree'de son masaüstü/mobil görsel geri kontrolü, güncel PR CI ve Pages yayın doğrulaması.
+
+## 2026-11-23 — Son atölye masaüstü/mobil görsel kontrolü
+
+- Bağımsız ajan temiz worktree'de `94350c0` commitini inceledi. Ana çalışma SVG'sinde desktop ve mobilde altı kablonun tamamı görünür; uçlar fit/zoom/dokunmatik pan sonrasında gerçek port merkezlerine kayan hata olmadan oturuyor ve yollar tuval dışına taşmıyor. Kablolar yumuşak dirsekli; mobil etiketler okunur; yatay taşma/toolbar çakışması yok.
+- Ekran görüntüleri: `/tmp/ludus-wire-94350c0-1440-viewport.png`, `/tmp/ludus-wire-94350c0-390-viewport.png`, `/tmp/ludus-wire-94350c0-1440-canvas.png`, `/tmp/ludus-wire-94350c0-390-canvas.png`, `/tmp/ludus-wire-94350c0-1440-signal.png`. Yalnız küçük akış notu: 390×844 ilk görünüm node sırasının az üstünde biter; kullanıcı biraz kaydırınca tüm devre görünür.
+- Güncel PR build'i geçti (`45260520482`). Yerel kontroller: CSS/Jekyll build, Node **21/21**, Icarus **252** seeded kapı vektörü ve hiyerarşik `.bp` oracle'ları, Playwright **27/27**, `git diff --check`.
+- Değişenler: bu rapor, backlog ve günlük.
+- Kalan: bu inceleme kaydını küçük commit/push yapmak; PR #11'i birleştirmek ve Pages deploy/live smoke kontrolünü kaydetmek.

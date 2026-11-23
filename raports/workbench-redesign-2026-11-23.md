@@ -38,5 +38,5 @@ MUX, sabit kaynak, çok bitli sinyaller, portlar arası sürükleyerek kablo çi
 - [x] Drop, arama kutusu, klavye erişimi ve wheel zoom E2E
 - [x] NAND/NOR/XNOR için X semantiği, Verilog ve Icarus: 12 sabit tohumlu × 40 kapı, 252 vektör
 - [x] Ana SVG çalışma alanı görünür ve altı örnek bağlantının başlangıç/bitiş noktaları E2E ile gerçek port merkezlerine oturuyor
-- [~] Küçük ve mobil görünümde hizalama, clipping, focus: eski mobil fit ve dokunma sorunları bulundu; fit alanı içerik boyutuna göre ve en az %58 ölçekli, dokunmatik pan eklendi. Masaüstü/mobil son geri incelemesi bekleniyor.
+- [x] Küçük ve mobil görünümde hizalama, clipping, focus: içerik fit'i, %58 en düşük ilk görünüm, dokunmatik pan ve sabit ekran boyutlu etiketler uygulandı. Bağımsız son inceleme desktop/mobile'da kabloları görünür ve gerçek port merkezlerine bağlı doğruladı; clipping veya taşma yok. 390×844 ilk ekranda node sırası alt kenarın biraz altında kaldığından kısa kaydırma gerekiyor.
 - [ ] Ana CI/Pages yayın kanıtı
