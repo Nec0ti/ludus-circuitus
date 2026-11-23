@@ -6,8 +6,8 @@ Site üç bölümden oluşur:
 
 - **Tanıtım:** Projenin amacı, Verilog öğrenirken karşılaşılan güçlük ve yaklaşımımız.
 - **Dokümantasyon:** Başlangıç, kullanım, bloklar ve yerel kurulum için Türkçe kılavuz.
-- **Devre Atölyesi:** Etkileşimli yarım toplayıcı taslağı; giriş birleşimlerini, mantık yollarını ve Verilog örneğini birlikte gösterir. Blok düzenleme ve blueprint kaydetme henüz uygulanmadı.
+- **Devre Atölyesi:** Tam ekran, CAD/CAM esintili çalışma alanı. Blokları ekleyip bağla, mantıksal sinyal değerlerini ve üretilen Verilog'u izle; `.bp` belgelerini bu cihazda sakla veya içe/dışa aktar.
 
-Site Jekyll ile hazırlanıp GitHub Pages'te yayımlanır. Proje kapsamı ve açık kararlar [`notes.md`](notes.md), güncel işler [`backlog.md`](backlog.md), çalışma kuralları [`AGENTS.md`](AGENTS.md) ve [`const.md`](const.md) içindedir.
+Site Jekyll ile hazırlanıp GitHub Pages'te yayımlanır: [ludus-circuitus](https://nec0ti.github.io/ludus-circuitus/). Atölye verileri tarayıcıda kalır; sunucu/API veya katılımcı veri toplama yoktur. Sıralı mantık, başlangıç quiz'i ve birden çok `.bp` modülü geliştirme kapsamındadır; tamamlanma durumu [`backlog.md`](backlog.md) içinde izlenir. Proje kararları [`notes.md`](notes.md), çalışma kuralları [`AGENTS.md`](AGENTS.md) ve [`const.md`](const.md) içindedir.
 
 TÜBİTAK 2204-A kuralları, kaynak haritası ve özgün Verilog örnekleri [`research/`](research/) altında etiketlenmiştir. İnsan katılımcılı öğrenme ölçümü gerekli okul/veli izinleri alınmadan yapılmaz.

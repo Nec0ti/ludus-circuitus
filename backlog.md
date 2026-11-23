@@ -4,13 +4,18 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
-- İlk çalışan uygulama MVP'si: pure graph motoru ve Node benchmark'ları başlatıldı; henüz arayüze bağlı değil. Sonraki sıra: etkileşimli editör, canlı Verilog/sinyal görünümü, .bp saklama ve clock/register; sonra quiz/docs.
-- GitHub Pages yayını: workflow build'i geçti; değişken build başlarken ayarlandığı için ilk deploy adımı atlandı. Manuel yayın desteği eklenecek, site URL'si doğrulanacak.
+- İlk çalışan uygulama MVP'si: tam ekran etkileşimli Devre Atölyesi ve pure graph motoru hazır. Kalan ana parçalar: çok modüllü `.bp` bileşimi, quiz, düzenli eğitim dokümanları ve görsel inceleme kapıları.
 
 ## Sıradaki işler
 
 - [ ] Birincil kazanım ve ikincil quiz alt sonuçlarını (paralel yollar; blok↔Verilog; clock/register) danışmanla ve örneklem düzeyiyle uyumlu kesinleştir.
 - [ ] CircuitVerse ve VPLAS'ı aynı başlangıç göreviyle uygulamalı karşılaştır; Ludus'un kanıtlanabilir farkını ürün ve araştırma sorusuna bağla.
+- [ ] Renk/okunabilirlik ve çocuklarda öğrenme motivasyonu için kaynaklı tasarım notu yaz; palet kararı öncesinde aşırı genelleme yapma.
+- [ ] Landing'i koyu ama yumuşak, somut devre etkileşimli bir hikâyeye dönüştür; tamamlanan görev ve merak ilerlemesi kullan, baskılı streak/infinite scroll ekleme.
+- [ ] Docs'u eğitim portalı olarak yeniden kur: açılır/kapanır ana gruplar, alt başlıklar, içerik içi gezinme ve her sayfa/bölüm için yaklaşık okuma süresi.
+- [ ] Ana sayfa, docs ve atölye için ayrı iş-kopyası worktree'lerinde görsel alt ajan incelemesi yap; hizalama/taşma/kontrast benchmarklarını CI'a ekle.
+- [ ] Araçlık bloklarının yanında hover/focus yardım özeti ve yeni sekmede hedef docs anchor'ı doğrula.
+- [ ] Çocuklara uygun ama manipülatif olmayan motivasyon etkileşimlerini öğrenme kanıtı hipoteziyle eşleştir.
 - [ ] Quiz belirtke tablosu, eşdeğer ön/son formlar, cevap anahtarı ve puanlamayı hazırla; okul içinde yeterli gönüllü/karşılaştırma koşulunu danışmanla belirle.
 - [ ] En küçük blok kümesini ve blokların giriş/çıkış davranışını tanımla.
 - [ ] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle.
@@ -45,3 +50,5 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] Öğrenme ölçümü için yeterli gönüllüde eşit süreli karşılaştırma, yetersiz örneklemde nedensel iddiasız tek grup pilotu ve ad-soyadsız kaba sınıf bandı tercihlerini kaydet.
 - [x] Pure grafik motorunun ilk katmanı: half-adder evaluation, X dahil kapı semantiği, döngü/eksik port/çoklu sürücü reddi, register reset ve toplu kenar güncellemesi, başlangıç Verilog codegen; Node test kapısı.
 - [x] `Nec0ti/ludus-circuitus` deposunu açıkça onaylanan şekilde public yap; Git geçmişindeki merge commit kişisel yazar metadatasını kullanıcıya bildir.
+- [x] Tam ekran çalışma alanı: blok ekleme, grid taşıma, port bağlama, canlı sinyal paneli, Verilog codegen, yerel belge kaydı ve `.bp` içe/dışa aktarma.
+- [x] Araçlık bloklarının yanında Türkçe hover/focus yardım özeti ve yeni sekmede hedef docs anchor'ı.

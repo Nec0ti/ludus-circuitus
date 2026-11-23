@@ -100,6 +100,15 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Hazırlık doğrulaması: `git diff --check` geçti; gitleaks 8.30.1 mevcut dosyalar ve tüm yerel Git geçmişinde bulgu döndürmedi. İlk merge commit'inde kişisel yazar metadatası bulunduğu için public depoda görünür; geçmiş yeniden yazılmadı. Araştırma kararları `e92e0a7` ile gönderildi. Repo public yapıldı ve Pages workflow ayarı etkinleştirildi.
 - İlk Pages build'i geçti, ancak değişken workflow başlatıldıktan sonra ayarlandığı için deploy işi atlandı; `workflow_dispatch` deploy desteği eklendi. Kalan: bu workflow değişikliğini doğrula ve yayın URL'sini kontrol et. MVP uygulama hedefi açıldı.
 
+## 2026-11-23 — Tam ekran Devre Atölyesi ilk çalışan dilimi
+
+- `playground/` site nav/footer'ından ayrıldı; `_layouts/workbench.html` tam ekran çalışma alanı sağlıyor. Koyu teknik panel düzeni, canlı ızgaralı blueprint tuvali, araçlık, dosya tabları, değişken şeridi, sinyal görünümü ve canlı Verilog paneli eklendi.
+- `assets/js/playground.mjs` blok ekleme, 20-birim ızgara sürükleme, port bağlama, giriş değiştirme, kombinasyonel/playclock akışı, duraklat/durdur/reset, localStorage, `.bp` JSON içe/dışa aktarım, kopyalama ve her blok için yeni sekmede hedef docs yardımı sağlıyor. API veya katılımcı verisi yok.
+- `assets/js/engine.mjs` dört-durumlu simülasyon ve codegen için doğrulayıcı, 0/1/X kapı mantığı, comb-cycle reddi, yükselen kenarda eşzamanlı yazmaç ve async resetli Verilog üretimi içeriyor. `tests/` altında Node testleri, Icarus oracle ve Playwright uçtan uca akışları eklendi. README ve mevcut kullanım/blok/kurulum dokümanları güncellendi; test dosyaları Pages yayınının dışında bırakıldı.
+- Doğrulama: temiz `npm ci` (0 npm vulnerability); `npm test` 6/6; Icarus 4 binary + 4 X yarım-toplayıcı vektörü ve yazmaç reset/tik izi; CSS derlemesi; Jekyll build; `npm run test:e2e` 7/7 (desktop tam yükseklik, 320/390/768/1440 taşma, port kablolama, localStorage, import/export, clock, drag, yardım tooltip/hedef); `actionlint`, `git diff --check` geçti.
+- Görsel benchmark ilk turda 320 px'de tooltip'in layout genişliğini taşırdığını yakaladı. Tooltip viewport'a sabitlenip JS ile sınır içinde konumlandırıldı; aynı test turu temiz geçti. Yerel Playwright Chromium için Nix binary kullanıldı çünkü dağıtılan Playwright chromium NixOS'ta `libglib` olmadan açılamıyordu.
+- Açık: alt `.bp` belgelerini modül instance olarak çağırma/bileştirme yok; quiz yok; docs henüz içindekiler/süreli modüler eğitim portalı değil; landing ve genel palet araştırma/redesign bekliyor. Bu nedenle henüz MVP değil.
+
 ## 2026-11-23 — Saf simülasyon ve Verilog motoru
 
 - `assets/js/engine.mjs` eklendi. Tek bir blueprint JSON'u doğrulanıp 1-bit 0/1/X değerlendirmesi, kombinasyonel döngü reddi, açık reset, yükselen kenarda eşzamanlı register güncellemesi ve Verilog çıktısı üretebiliyor. İlk sabit yarım toplayıcı bu motorun JSON fixture'ı oldu.

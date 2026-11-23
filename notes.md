@@ -17,6 +17,15 @@ Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde ö
 
 Detay, alternatifler ve sınırlılıklar: [`research/measurement/learning-study.md`](research/measurement/learning-study.md) ve [`research/privacy/data-collection-plan.md`](research/privacy/data-collection-plan.md).
 
+## İlk etkileşimli atölye dilimi: 2026-11-23
+
+- Devre Atölyesi site nav/footer'ından ayrıldı ve tam ekran koyu endüstriyel CAD/CAM çalışma alanına alındı. Izgara, araçlık, belge sekmeleri, saat kontrolü, değişken şeridi, sinyal görünümü ve Verilog paneli aynı ekranda yer alıyor.
+- 1-bit blueprint JSON'u saf motorla doğrulanıp simüle ediliyor. 0/1/X kapı mantığı, kombinasyonel döngü reddi, gerçek Verilog üretimi, başlangıç X yazmaç, eşzamanlı yükselen kenar, ayrı reset, tarayıcı localStorage ve `.bp` JSON içe/dışa aktarımı çalışıyor.
+- Araçlık blokları mouse/keyboard ile eklenebilir; çıkıştan girişe tıklayarak bağlanır; canvas'ta 20 birimlik ızgarada taşınır. Bu ilk dilimde alt blueprint dosyaları tablarda açılabilir; modül örneği çağırma/bileştirme henüz yok.
+- Her blokta kısa hover/focus yardımı var; yardım bağlantısı ilgili Bloklar başlığını yeni sekmede açıyor.
+- Veriler yalnız yerel tarayıcıda. Quiz, API ve öğrenci kaydı henüz yok; okul/MEB/KVKK onayı beklemeden kişisel veri toplama yapılmayacak.
+- Genel site için yumuşak koyu tema, renk/okunabilirlik ve çocuklarda öğrenme motivasyonu kaynak incelemesi bekliyor; dokümantasyon modüler eğitim portalına dönüşecek.
+
 ## Ürün ve yayın kararı
 
 - Site GitHub Pages ve Jekyll ile yayımlanacak.

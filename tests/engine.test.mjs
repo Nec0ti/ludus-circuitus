@@ -72,3 +72,15 @@ test("generated Verilog describes the same half adder", () => {
   assert.match(verilog, /endmodule/);
 });
 
+test("sanitizes internal names and rejects keyword or clock-port collisions", () => {
+  const bp = halfAdderBlueprint();
+  bp.nodes[0].name = "n_2";
+  assert.match(generateVerilog(bp), /wire n_2_;/);
+  bp.nodes[0].name = "wire";
+  assert.throws(() => generateVerilog(bp), /Verilog için geçerli/);
+  bp.nodes[0].name = "clk";
+  bp.nodes.push({ id: "reg", type: "register", name: "", x: 350, y: 300 });
+  bp.wires.push({ from: { node: "sum", port: "out" }, to: { node: "reg", port: "d" } });
+  assert.throws(() => generateVerilog(bp), /clk\/reset ile çakışıyor/);
+});
+

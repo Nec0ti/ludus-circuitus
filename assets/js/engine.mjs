@@ -3,7 +3,7 @@ export const X = "X";
 export function halfAdderBlueprint() {
   return {
     version: 1,
-    name: "yarim_toplayici",
+    name: "top",
     nodes: [
       { id: "a", type: "input", name: "a", x: 48, y: 80 },
       { id: "b", type: "input", name: "b", x: 48, y: 220 },
@@ -27,18 +27,19 @@ const inputPorts = (node) => ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"]
 const outputPorts = (node) => node.type === "input" || ["and", "or", "xor", "not", "register"].includes(node.type) ? ["out"] : [];
 const validTypes = new Set(["input", "output", "and", "or", "xor", "not", "register"]);
 const validName = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+const verilogWords = new Set("always and assign begin buf case casex casez cell cmos config deassign default defparam design disable edge else end endcase endfunction endgenerate endmodule endprimitive endspecify endtable endtask event for force forever fork function generate genvar highz0 highz1 if ifnone incdir include initial inout input integer join large liblist library localparam macromodule medium module nand negedge nmos nor not notif0 notif1 or output parameter pmos posedge primitive pull0 pull1 pulldown pullup pulmos rcmos real realtime reg release repeat rnmos rpmos rtran rtranif0 rtranif1 scalared signed small specify specparam strong0 strong1 supply0 supply1 table task time tran tranif0 tranif1 tri tri0 tri1 triand trior trireg unsigned use vectored wait wand weak0 weak1 while wire wor xnor xor".split(" "));
 
 export function validateBlueprint(bp) {
-  if (!bp || bp.version !== 1 || typeof bp.name !== "string" || !Array.isArray(bp.nodes) || !Array.isArray(bp.wires)) throw new Error("Blueprint biçimi veya sürümü geçersiz.");
+  if (!bp || bp.version !== 1 || typeof bp.name !== "string" || bp.name.length > 80 || !validName.test(bp.name) || verilogWords.has(bp.name) || !Array.isArray(bp.nodes) || !Array.isArray(bp.wires) || bp.nodes.length > 500 || bp.wires.length > 2000) throw new Error("Blueprint biçimi, adı, boyutu veya sürümü geçersiz.");
   const ids = new Set();
   const nodes = new Map();
   const names = new Set();
   for (const node of bp.nodes) {
-    if (!node || !validTypes.has(node.type) || typeof node.id !== "string" || !node.id || ids.has(node.id)) throw new Error("Blok türü veya kimliği geçersiz.");
+    if (!node || !validTypes.has(node.type) || typeof node.id !== "string" || !node.id || node.id.length > 100 || ids.has(node.id)) throw new Error("Blok türü veya kimliği geçersiz.");
     ids.add(node.id);
     nodes.set(node.id, node);
     if (["input", "output"].includes(node.type)) {
-      if (!validName.test(node.name || "") || names.has(node.name)) throw new Error("Giriş ve çıkış adları geçerli ve benzersiz olmalı.");
+      if (!validName.test(node.name || "") || node.name.length > 40 || verilogWords.has(node.name) || names.has(node.name)) throw new Error("Giriş ve çıkış adları Verilog için geçerli ve benzersiz olmalı.");
       names.add(node.name);
     }
   }
@@ -91,28 +92,28 @@ function logic(type, a, b) {
   if (type === "not") return a === X ? X : 1 - a;
 }
 
-function readInputs(bp, node, values) {
-  const result = {};
-  for (const wire of bp.wires) if (wire.to.node === node.id) result[wire.to.port] = values.get(wire.from.node);
-  return result;
-}
-
 export function createState(bp) {
-  validateBlueprint(bp);
-  return Object.fromEntries(bp.nodes.filter((node) => node.type === "register").map((node) => [node.id, X]));
+  return Object.fromEntries((Array.isArray(bp?.nodes) ? bp.nodes : []).filter((node) => node?.type === "register" && typeof node.id === "string").map((node) => [node.id, X]));
 }
 
 export function evaluate(bp, inputs = {}, registers = createState(bp)) {
   validateBlueprint(bp);
   for (const value of [...Object.values(inputs), ...Object.values(registers)]) if (![0, 1, X].includes(value)) throw new Error("Sinyal değeri 0, 1 veya X olmalı.");
   const values = new Map();
+  const nodes = new Map(bp.nodes.map((node) => [node.id, node]));
+  const incoming = new Map();
+  for (const wire of bp.wires) {
+    if (!incoming.has(wire.to.node)) incoming.set(wire.to.node, {});
+    incoming.get(wire.to.node)[wire.to.port] = wire.from.node;
+  }
   for (const node of bp.nodes) {
     if (node.type === "input") values.set(node.id, Object.hasOwn(inputs, node.name) ? inputs[node.name] : 0);
     if (node.type === "register") values.set(node.id, registers[node.id] ?? X);
   }
   for (const id of topologicalOrder(bp)) {
-    const node = bp.nodes.find((item) => item.id === id);
-    const args = readInputs(bp, node, values);
+    const node = nodes.get(id);
+    const sources = incoming.get(id) || {};
+    const args = Object.fromEntries(Object.entries(sources).map(([port, source]) => [port, values.get(source)]));
     if (node.type === "output") values.set(node.id, args.in);
     else values.set(node.id, logic(node.type, args.a ?? args.in, args.b));
   }
@@ -123,13 +124,13 @@ export function evaluate(bp, inputs = {}, registers = createState(bp)) {
 export function tick(bp, inputs, registers = createState(bp)) {
   const before = evaluate(bp, inputs, registers);
   const next = { ...registers };
-  for (const node of bp.nodes) if (node.type === "register") next[node.id] = before.values[bp.wires.find((wire) => wire.to.node === node.id && wire.to.port === "d").from.node];
+  const inputsByRegister = new Map(bp.wires.filter((wire) => wire.to.port === "d").map((wire) => [wire.to.node, wire.from.node]));
+  for (const node of bp.nodes) if (node.type === "register") next[node.id] = before.values[inputsByRegister.get(node.id)];
   return next;
 }
 
 export function reset(bp) {
-  validateBlueprint(bp);
-  return Object.fromEntries(bp.nodes.filter((node) => node.type === "register").map((node) => [node.id, 0]));
+  return Object.fromEntries((Array.isArray(bp?.nodes) ? bp.nodes : []).filter((node) => node?.type === "register" && typeof node.id === "string").map((node) => [node.id, 0]));
 }
 
 function hdlName(value) {
@@ -143,9 +144,19 @@ export function generateVerilog(bp) {
   const inputs = nodes.filter((node) => node.type === "input");
   const outputs = nodes.filter((node) => node.type === "output");
   const regs = nodes.filter((node) => node.type === "register");
-  const names = [...inputs, ...outputs].map((node) => hdlName(node.name));
-  if (new Set(names).size !== names.length) throw new Error("Verilog adları dönüştürüldüğünde çakışıyor.");
-  const vars = new Map(nodes.map((node, index) => [node.id, node.type === "input" ? hdlName(node.name) : node.type === "output" ? hdlName(node.name) : `n_${index}`]));
+  const names = [...inputs, ...outputs, ...(regs.length ? [{ name: "clk" }, { name: "reset" }] : [])].map((node) => hdlName(node.name));
+  if (new Set(names).size !== names.length) throw new Error("Sinyal adı clk/reset ile çakışıyor veya Verilog adı yineleniyor.");
+  const used = new Set(names);
+  const vars = new Map();
+  nodes.forEach((node, index) => {
+    if (node.type === "input" || node.type === "output") vars.set(node.id, hdlName(node.name));
+    else {
+      let candidate = `n_${index}`;
+      while (used.has(candidate)) candidate += "_";
+      used.add(candidate);
+      vars.set(node.id, candidate);
+    }
+  });
   const wireByPort = new Map(bp.wires.map((wire) => [`${wire.to.node}:${wire.to.port}`, vars.get(wire.from.node)]));
   const ports = [...inputs.map((node) => node.name), ...outputs.map((node) => node.name), ...(regs.length ? ["clk", "reset"] : [])].map(hdlName);
   const lines = [`module ${hdlName(bp.name)} (${ports.join(", ")});`];
@@ -159,7 +170,7 @@ export function generateVerilog(bp) {
     if (["and", "or", "xor"].includes(node.type)) lines.push(`  assign ${variable} = ${wireByPort.get(`${node.id}:a`)} ${node.type === "and" ? "&" : node.type === "or" ? "|" : "^"} ${wireByPort.get(`${node.id}:b`)};`);
     if (node.type === "not") lines.push(`  assign ${variable} = ~${wireByPort.get(`${node.id}:in`)};`);
     if (node.type === "output") lines.push(`  assign ${variable} = ${wireByPort.get(`${node.id}:in`)};`);
-    if (node.type === "register") lines.push(`  always @(posedge clk) if (reset) ${variable} <= 1'b0; else ${variable} <= ${wireByPort.get(`${node.id}:d`)};`);
+    if (node.type === "register") lines.push(`  always @(posedge clk or posedge reset) if (reset) ${variable} <= 1'b0; else ${variable} <= ${wireByPort.get(`${node.id}:d`)};`);
   }
   lines.push("endmodule");
   return lines.join("\n");
