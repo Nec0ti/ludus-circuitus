@@ -58,3 +58,24 @@ test("local setup guide lists test tools and builds the static site before E2E",
   await expect(article).toContainText("bundle exec jekyll build");
   await expect(article).toContainText("npx playwright install --with-deps chromium");
 });
+
+test("block catalog documents exact ports and distinguishes named wires from register state", async ({ page }) => {
+  await page.goto("/docs/bloklar/");
+  await expect(page.locator(".docs-reading-time")).toHaveText("Yaklaşık 7 dakika");
+  const table = page.getByRole("table", { name: "Blueprint bloklarının giriş ve çıkış portları" });
+  await expect(table.locator("tbody tr")).toHaveCount(7);
+  await expect(table).toContainText("a");
+  await expect(table).toContainText("b");
+  await expect(table).toContainText("Belgede tanımlı girişler");
+  const portsExplanation = page.locator("#portlar").locator("xpath=following-sibling::p[2]");
+  await expect(portsExplanation).toContainText("Ara Sinyal yalnızca isim verilmiş bir");
+  await expect(portsExplanation).toContainText("aktif-yüksek asenkron reset");
+  await expect(page.locator(".docs-callout")).toContainText("fiziksel kapı gecikmesini");
+  await expect(page.locator(".docs-callout")).toContainText("Ekrandaki 0/1 değerleri onluk gösterimdir");
+  await expect(page.locator(".docs-callout")).toContainText("ikilik 0/1 ile aynıdır");
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    const overflowing = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+    expect(overflowing, `block catalog overflow at ${width}px`).toBe(false);
+  }
+});

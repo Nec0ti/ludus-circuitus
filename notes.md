@@ -228,3 +228,12 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - `npm run test:e2e`, Jekyll'i çalıştırmaz; güncel `npm run build:css` ve `bundle exec jekyll build` ardından `_site` klasörünü Python sunucusuyla açar. Linux Playwright kurulumunda OS bağımlılıkları `--with-deps` ile kurulabilir. Ayrıntı güncel `docs/yerel-kurulum.md` içinde.
 
 - Yerel katkı kılavuzu PR #5 (`6276373`) ile main'e alındı; PR build, main Pages build/deploy başarılı. Canlı `/docs/yerel-kurulum/` içeriği güncel Node 22/Python/Icarus/Jekyll/Playwright komutlarını içeriyor. Ayrıntı `backloglog.md`.
+
+
+### 2026-11-23 — MVP blok kataloğu ve davranış sözleşmesi
+
+- **Katalog kararı:** Giriş, Çıkış, AND, OR, XOR, NOT, Ara Sinyal, Yazmaç; başka açık `.bp` dosyaları araçlıkta dinamik modül bloğu olur. Yeni mux, sabit, bus/çok bitli aritmetik veya bağımsız clock bloğu eklenmedi. AND/OR/NOT temel işlemleri, XOR parite/yarım-toplayıcı öğrenimini, Ara Sinyal adlı ara noktayı incelemeyi, Yazmaç ise clock'lu durumu kapsar. Bu, başlangıç MVP'si için ürün kapsamı kararıdır; matematiksel olarak en küçük Boolean taban iddiası değildir.
+- **Port sözleşmesi:** `input: —→out`; `output: in→—`; `and/or/xor: a,b→out`; `not: in→out`; `signal: in→out`; `register: d→out/Q`; `module: child input names→child output names`. Port dokümanı `docs/bloklar.md` içindedir.
+- **Reset/izleme:** Atölye Reset eylemi saati beklemeden register'ı 0 yapar. Verilog çıktısı 1 olduğunda asenkron çalışan aktif-yüksek `reset` portu üretir. Register ilk başta `X`; input ilk başta 0. Ara Sinyal combinational wire'dır, state saklamaz. Sinyal renkleri mantıksal değerlerin durumunu gösterir; propagation delay/gerçek hız değildir.
+
+- **Onluk/bit eşlemesi:** İlk MVP'de her sinyal tek bit. Arayüzde 0 veya 1 onluk değer olarak görünür; Verilog'da bu doğrudan 1-bit `0` veya `1` değerine karşılık gelir. Arada sayı tabanı dönüşümü veya çok bitli bus yoktur. Başlangıçta değerini bilmediğimiz register `X` olur; girişler başlangıçta 0'dır. Çok bitli değerler pedagojik gereksinim doğduğunda ayrı tasarlanacak.
