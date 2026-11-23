@@ -20,7 +20,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] Çocuklara uygun ama manipülatif olmayan motivasyon etkileşimlerini öğrenme kanıtı hipoteziyle eşleştir. (Özerklik, yetkinlik, sınırlı görev ve sağlıklı durma önerileri araştırma notunda; Ludus etkisi kanıtlanmış değil.)
 - [x] Quiz belirtke tablosu, madde beceri eşlemesi, dengeli cevap anahtarı ve puanlama protokolü taslağını oluştur; A/B formları hâlâ araştırma geçerliği/eşdeğerliği kanıtlı değildir. Ayrıntı: [`research/measurement/quiz-blueprint.md`](research/measurement/quiz-blueprint.md).
 - [ ] Danışman/alan öğretmeniyle kazanımları ve maddeleri gözden geçir; okul içinde gönüllü/karşılaştırma koşulunu belirle ve MEB izin dosyasında onaylat.
-- [ ] En küçük blok kümesini ve blokların giriş/çıkış davranışını tanımla.
+- [x] MVP blok kümesini ve port sözleşmesini tanımla. Giriş/çıkış + AND/OR/XOR/NOT + adlandırılmış ara sinyal + yazmaç + dinamik `.bp` modülü; sabit/MUX/çok bit/clock bloğu MVP dışında.
 - [x] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle ve çalışan editör akışına bağla.
 - [ ] Onluk kullanıcı değerleri, Verilog bit genişliği ve ikilik fiziksel davranış arasındaki pedagojik eşlemeyi tasarla.
 - [x] Değişken paneli kapsamını belirle ve adlandırılmış Ara Sinyal bloğunu ekle. Giriş/çıkış/yazmaç ve ara sinyallerin canlı değerleri görünür; sabit/parametre yönetimi MVP dışında.

@@ -222,3 +222,11 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 
 
 - PR #5, CI build kapısı ve görsel inceleme geçtikten sonra `6276373` merge commit’iyle `main`e alındı. Main Pages build ve deploy (`45238310345`) başarılı. Canlı `docs/yerel-kurulum/` sayfasında Node.js 22, Python 3, Icarus, `bundle exec jekyll build`, Linux Chromium komutu ve 6 dk okuma süresi `curl` ile doğrulandı.
+
+
+## 2026-11-23 — MVP blok kümesi ve port sözleşmesi
+
+- Bağımsız kod/pedagoji denetimi mevcut blokları MVP kazanımları için yeterli buldu; yeni mantık bloğu eklenmedi. AND/OR/NOT temel işlemleri, XOR parite/yarım toplayıcıyı; Ara Sinyal adlandırılmış gözlemlenebilir `wire`'ı; Yazmaç saatli durumu; açık `.bp` modülü yeniden kullanımı sağlar.
+- `docs/bloklar.md` artık giriş/çıkış portlarını tablo halinde tanımlar: kapı girişleri `a`/`b` veya `in`, tek çıkış `out`; yazmaçta `d` ve Q; modül portları açık belgedeki Giriş/Çıkış adlarından türetilir. Ara Sinyal'in state saklamadığı, yalnız Yazmaç'ın sakladığı; saat/reset, `X` başlangıcı, 1-bit değer, mantıksal paralel görünümün fiziksel kapı gecikmesi olmadığı açıklanır. Reset eylemi ile generated Verilog'un aktif-yüksek asenkron reseti eşleştirilir.
+- MVP kapsamı sabit, MUX, çok bit ve fiziksel FPGA yüklemesini içermiyor; herhangi biri öğrenme gereksinimi doğurursa ayrı gerekçeyle ele alınacak.
+- Docs E2E port tablosunu, süreyi, reset/wire ayrımını ve 320/390/768/1440 px taşmasızlığını doğruluyor. Jekyll build ve docs E2E 4/4 geçti. Kalan: bağımsız görsel kontrol ve PR CI.
