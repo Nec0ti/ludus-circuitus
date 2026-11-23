@@ -123,3 +123,109 @@ test("sanitizes internal names and rejects keyword or clock-port collisions", ()
   assert.throws(() => generateVerilog(bp), /clk\/reset ile çakış/);
 });
 
+function vectorBlueprint(type, width = 4) {
+  const bp = { version: 1, name: "vector_test", nodes: [
+    { id: "a", type: "input", name: "a", width, x: 0, y: 0 },
+    { id: "b", type: "input", name: "b", width, x: 0, y: 100 },
+    { id: "gate", type, name: "", width, x: 100, y: 0 },
+    { id: "out", type: "output", name: "y", width, x: 200, y: 0 }
+  ], wires: [] };
+  const ports = type === "mux" ? ["sel", "a", "b"] : type === "not" ? ["in"] : ["a", "b"];
+  if (type === "mux") bp.nodes.push({ id: "sel", type: "input", name: "sel", x: 0, y: 200 });
+  bp.wires.push(
+    ...(type === "mux" ? [{ from: { node: "sel", port: "out" }, to: { node: "gate", port: "sel" } }] : []),
+    ...ports.filter((port) => port !== "sel").map((port) => ({ from: { node: port === "in" ? "a" : port, port: "out" }, to: { node: "gate", port } })),
+    { from: { node: "gate", port: "out" }, to: { node: "out", port: "in" } }
+  );
+  return bp;
+}
+
+test("legacy scalar signals stay compatible and vector gates preserve per-bit X semantics", () => {
+  const a = "10X1", b = "011X";
+  assert.deepEqual(["and", "nand", "or", "nor", "xor", "xnor"].map((type) => evaluate(vectorBlueprint(type), { a, b }).outputs.y), ["00XX", "11XX", "1111", "0000", "11XX", "00XX"]);
+  const not = vectorBlueprint("not");
+  assert.equal(evaluate(not, { a }).outputs.y, "01X0");
+  assert.deepEqual(evaluate(halfAdderBlueprint(), { a: 1, b: 0 }).outputs, { toplam: 1, tasima: 0 });
+});
+
+test("validates vector widths, values, and equal-width connections without coercion", () => {
+  const wide = { version: 1, name: "wide", nodes: [
+    { id: "a", type: "input", name: "a", width: 32, x: 0, y: 0 },
+    { id: "y", type: "output", name: "y", width: 32, x: 100, y: 0 }
+  ], wires: [{ from: { node: "a", port: "out" }, to: { node: "y", port: "in" } }] };
+  const allOnes = "1".repeat(32);
+  assert.equal(evaluate(wide, { a: allOnes }).outputs.y, allOnes);
+  for (const width of [0, 33, 1.5, "4"]) {
+    const invalid = structuredClone(wide);
+    invalid.nodes[0].width = width;
+    assert.throws(() => validateBlueprint(invalid), /1–32 bit/);
+  }
+  assert.throws(() => evaluate(wide, { a: "1" }), /genişliğiyle uyumlu/);
+  assert.throws(() => evaluate(wide, { a: "1".repeat(31) + "Z" }), /genişliğiyle uyumlu/);
+  const mismatch = structuredClone(wide);
+  mismatch.nodes[1].width = 31;
+  assert.throws(() => validateBlueprint(mismatch), /port genişlikleri eşleşmeli/);
+});
+
+test("constants, vector mux and unknown-select bit merging follow Verilog semantics", () => {
+  const bp = { version: 1, name: "mux_test", nodes: [
+    { id: "sel", type: "input", name: "sel", x: 0, y: 0 },
+    { id: "b", type: "input", name: "b", width: 4, x: 0, y: 100 },
+    { id: "zero", type: "constant", value: "10X1", width: 4, x: 100, y: 0 },
+    { id: "mux", type: "mux", width: 4, x: 200, y: 0 },
+    { id: "out", type: "output", name: "y", width: 4, x: 300, y: 0 }
+  ], wires: [
+    { from: { node: "sel", port: "out" }, to: { node: "mux", port: "sel" } },
+    { from: { node: "zero", port: "out" }, to: { node: "mux", port: "a" } },
+    { from: { node: "b", port: "out" }, to: { node: "mux", port: "b" } },
+    { from: { node: "mux", port: "out" }, to: { node: "out", port: "in" } }
+  ] };
+  assert.equal(evaluate(bp, { sel: 0, b: "1111" }).outputs.y, "10X1");
+  assert.equal(evaluate(bp, { sel: 1, b: "1111" }).outputs.y, "1111");
+  assert.equal(evaluate(bp, { sel: X, b: "1111" }).outputs.y, "1XX1");
+  bp.nodes.find((node) => node.id === "b").width = 3;
+  assert.throws(() => validateBlueprint(bp), /port genişlikleri eşleşmeli/);
+  bp.nodes.find((node) => node.id === "b").width = 4;
+  bp.nodes.find((node) => node.id === "zero").value = "10Z1";
+  assert.throws(() => validateBlueprint(bp), /Sabit değer/);
+});
+
+test("vector register state starts unknown, resets to width-sized zero and ticks atomically", () => {
+  const bp = { version: 1, name: "vector_register", nodes: [
+    { id: "d", type: "input", name: "d", width: 8, x: 0, y: 0 },
+    { id: "r", type: "register", width: 8, x: 100, y: 0 },
+    { id: "q", type: "output", name: "q", width: 8, x: 200, y: 0 }
+  ], wires: [
+    { from: { node: "d", port: "out" }, to: { node: "r", port: "d" } },
+    { from: { node: "r", port: "out" }, to: { node: "q", port: "in" } }
+  ] };
+  assert.equal(evaluate(bp).outputs.q, "XXXXXXXX");
+  const zero = reset(bp);
+  assert.deepEqual(zero, { r: "00000000" });
+  const next = tick(bp, { d: "1010X100" }, zero);
+  assert.deepEqual(next, { r: "1010X100" });
+  assert.equal(evaluate(bp, {}, next).outputs.q, "1010X100");
+  assert.match(generateVerilog(bp), /reg \[7:0\] n_1;/);
+  assert.match(generateVerilog(bp), /n_1 <= 8'b00000000/);
+});
+
+test("vector Verilog keeps widths on ports and emits constant and ternary mux", () => {
+  const bp = { version: 1, name: "vector_verilog", nodes: [
+    { id: "sel", type: "input", name: "sel", x: 0, y: 0 },
+    { id: "a", type: "input", name: "a", width: 4, x: 0, y: 100 },
+    { id: "one", type: "constant", value: "10X1", width: 4, x: 100, y: 0 },
+    { id: "mux", type: "mux", width: 4, x: 200, y: 0 },
+    { id: "out", type: "output", name: "y", width: 4, x: 300, y: 0 }
+  ], wires: [
+    { from: { node: "sel", port: "out" }, to: { node: "mux", port: "sel" } },
+    { from: { node: "one", port: "out" }, to: { node: "mux", port: "a" } },
+    { from: { node: "a", port: "out" }, to: { node: "mux", port: "b" } },
+    { from: { node: "mux", port: "out" }, to: { node: "out", port: "in" } }
+  ] };
+  const verilog = generateVerilog(bp);
+  assert.match(verilog, /input wire \[3:0\] a;/);
+  assert.match(verilog, /output wire \[3:0\] y;/);
+  assert.match(verilog, /assign n_2 = 4'b10x1;/);
+  assert.match(verilog, /assign n_3 = sel \? a : n_2;/);
+});
+

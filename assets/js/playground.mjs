@@ -1,4 +1,4 @@
-import { createState, halfAdderBlueprint, isValidSignalName, X } from "./engine.mjs";
+import { createState, halfAdderBlueprint, isValidSignalName, nodeWidth, X } from "./engine.mjs";
 import { createProjectState, evaluateProject, flattenProject, generateProjectVerilog, resetProject, tickProject, validateProject } from "./project.mjs";
 
 const $ = (selector) => document.querySelector(selector);
@@ -8,41 +8,62 @@ const el = (tag, className, text) => {
   if (text !== undefined) node.textContent = text;
   return node;
 };
-const icons = { input: "IN", output: "OUT", and: "&", nand: "&○", or: "≥1", nor: "≥1○", xor: "=1", xnor: "=1○", not: "¬", signal: "SIG", register: "D" };
-const labels = { input: "GİRİŞ", output: "ÇIKIŞ", and: "AND", nand: "NAND", or: "OR", nor: "NOR", xor: "XOR", xnor: "XNOR", not: "NOT", signal: "ARA SİNYAL", register: "YAZMAÇ" };
+const icons = { input: "IN", output: "OUT", constant: "#", and: "&", nand: "&○", or: "≥1", nor: "≥1○", xor: "=1", xnor: "=1○", not: "¬", mux: "MUX", signal: "SIG", register: "D" };
+const labels = { input: "GİRİŞ", output: "ÇIKIŞ", constant: "SABİT", and: "AND", nand: "NAND", or: "OR", nor: "NOR", xor: "XOR", xnor: "XNOR", not: "NOT", mux: "SEÇİCİ", signal: "ARA SİNYAL", register: "YAZMAÇ" };
 const storeKey = "ludus-circuitus-documents-v1";
 const maxImportBytes = 1024 * 1024;
+const snapToGrid = (value) => Math.round(value / 20) * 20;
+
+function snapBlueprintPositions(bp) {
+  if (Array.isArray(bp?.nodes)) for (const node of bp.nodes) {
+    if (Number.isFinite(node?.x)) node.x = snapToGrid(node.x);
+    if (Number.isFinite(node?.y)) node.y = snapToGrid(node.y);
+  }
+  return bp;
+}
 
 function basicBlueprint(name = "yeni_devre") {
   return {
     version: 1, name,
     nodes: [
-      { id: crypto.randomUUID(), type: "input", name: "giris", x: 70, y: 200 },
-      { id: crypto.randomUUID(), type: "output", name: "cikis", x: 690, y: 200 }
+      { id: crypto.randomUUID(), type: "input", name: "giris", x: 80, y: 200 },
+      { id: crypto.randomUUID(), type: "output", name: "cikis", x: 700, y: 200 }
     ],
     wires: []
   };
 }
 
-let documents = [{ id: crypto.randomUUID(), name: "top.bp", bp: halfAdderBlueprint() }];
+let documents = [{ id: crypto.randomUUID(), name: "top.bp", bp: snapBlueprintPositions(halfAdderBlueprint()) }];
 let activeId = documents[0].id;
-let selectedId = null;
+let selectedIds = new Set();
 let pendingSource = null;
 let camera = { x: 0, y: 0, zoom: 1 };
 let cameraReady = false;
 let cameraEngaged = false;
+let signalAnimation = "stopped";
 const renderedNodes = new Map();
 let pointCache = new Map();
-let state = { registers: projectState(documents[0]), inputs: {}, timer: null, tick: 0, vector: -1 };
+let state = { registers: projectState(documents[0]), inputs: {}, tick: 0 };
 
 function activeDocument() { return documents.find((doc) => doc.id === activeId); }
 function projectState(doc) { try { return createProjectState(documents, doc.bp.name); } catch { return createState(doc.bp); } }
 function moduleBlueprint(node) { return documents.find((doc) => doc.bp.name === node.module)?.bp; }
 function inputNodes(bp) { return bp.nodes.filter((node) => node.type === "input"); }
 function hasRegisters(bp) { try { return flattenProject(documents, bp.name).bp.nodes.some((node) => node.type === "register"); } catch { return bp.nodes.some((node) => node.type === "register"); } }
-function currentInputs(bp) { return Object.fromEntries(inputNodes(bp).map((node) => [node.name, state.inputs[node.name] ?? 0])); }
-function portInputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "input").map((item) => item.name) || []) : ({ and: ["a", "b"], nand: ["a", "b"], or: ["a", "b"], nor: ["a", "b"], xor: ["a", "b"], xnor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] })[node.type] || []; }
-function portOutputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "output").map((item) => item.name) || []) : ["input", "and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register"].includes(node.type) ? ["out"] : []; }
+function currentInputs(bp) { return Object.fromEntries(inputNodes(bp).map((node) => [node.name, state.inputs[node.name] ?? (nodeWidth(node) === 1 ? 0 : "0".repeat(nodeWidth(node)))])); }
+function portInputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "input").map((item) => item.name) || []) : ({ and: ["a", "b"], nand: ["a", "b"], or: ["a", "b"], nor: ["a", "b"], xor: ["a", "b"], xnor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"], mux: ["sel", "a", "b"] })[node.type] || []; }
+function portOutputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "output").map((item) => item.name) || []) : ["input", "constant", "and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register", "mux"].includes(node.type) ? ["out"] : []; }
+
+function displayValue(value, width) {
+  const bits = String(value ?? X);
+  if (width === 1 || /[^01]/.test(bits)) return bits;
+  return `${Number.parseInt(bits, 2)} · ${bits}`;
+}
+
+function signalClass(value) {
+  const bits = String(value ?? X);
+  return bits.includes("X") ? "x" : bits.includes("1") ? "1" : "0";
+}
 
 function safeEvaluate(doc) {
   try {
@@ -66,27 +87,56 @@ function renderTabs() {
   const tabs = $("#document-tabs");
   tabs.replaceChildren();
   for (const doc of documents) {
+    const wrap = el("div", `cad-tab-wrap${doc.id === activeId ? " is-active" : ""}`);
     const button = el("button", `cad-document-tab${doc.id === activeId ? " is-active" : ""}`, doc.name);
     button.type = "button";
     button.role = "tab";
     button.setAttribute("aria-selected", String(doc.id === activeId));
     button.addEventListener("click", () => switchDocument(doc.id));
-    button.addEventListener("dblclick", () => {
-      const next = window.prompt("Blueprint dosya adı", doc.name);
-      if (!next) return;
-      const name = next.endsWith(".bp") ? next : `${next}.bp`;
-      if (documents.some((item) => item.id !== doc.id && item.name === name)) return announce("Bu adla açık bir blueprint zaten var.");
-      doc.name = name;
-      render();
-      persist();
-    });
-    tabs.append(button);
+    button.addEventListener("dblclick", () => renameDocument(doc));
+    const close = el("button", "cad-tab-close", "×");
+    close.type = "button";
+    close.setAttribute("aria-label", `${doc.name} dosyasını kapat`);
+    close.disabled = documents.length === 1;
+    close.addEventListener("click", () => deleteDocument(doc));
+    wrap.append(button, close);
+    tabs.append(wrap);
   }
   const add = el("button", "cad-add-tab", "+");
   add.type = "button";
   add.setAttribute("aria-label", "Yeni blueprint aç");
   add.addEventListener("click", newDocument);
   tabs.append(add);
+}
+
+function renameDocument(doc) {
+  const entered = window.prompt("Blueprint adı (uzantı olmadan)", doc.bp.name);
+  if (!entered) return;
+  const name = entered.trim().replace(/\.bp$/i, "");
+  if (name.length > 80 || !isValidSignalName(name) || documents.some((item) => item.id !== doc.id && item.bp.name === name)) return announce("Ad 1–80 karakter olmalı, Verilog'da geçerli ve benzersiz olmalı.");
+  const previous = doc.bp.name;
+  doc.bp.name = name;
+  doc.name = `${name}.bp`;
+  for (const item of documents) for (const node of item.bp.nodes) if (node.type === "module" && node.module === previous) {
+    node.module = name;
+    node.name = node.name.replace(previous, name);
+  }
+  render(); persist(); announce(`${previous}.bp yeniden adlandırıldı.`);
+}
+
+function deleteDocument(doc) {
+  if (documents.length === 1) return announce("Son blueprint dosyası kapatılamaz.");
+  const users = documents.flatMap((item) => item.bp.nodes.filter((node) => node.type === "module" && node.module === doc.bp.name).map((node) => `${item.bp.name} içindeki ${node.name}`));
+  if (!window.confirm(users.length ? `${doc.name} silinsin mi? Bağlı modül blokları da kaldırılır:\n${users.join("\n")}` : `${doc.name} silinsin mi?`)) return;
+  for (const item of documents) {
+    const removed = new Set(item.bp.nodes.filter((node) => node.type === "module" && node.module === doc.bp.name).map((node) => node.id));
+    item.bp.nodes = item.bp.nodes.filter((node) => !removed.has(node.id));
+    item.bp.wires = item.bp.wires.filter((wire) => !removed.has(wire.from.node) && !removed.has(wire.to.node));
+  }
+  documents = documents.filter((item) => item.id !== doc.id);
+  if (activeId === doc.id) switchDocument(documents[0].id);
+  else render();
+  persist();
 }
 
 function renderModuleTools() {
@@ -126,11 +176,11 @@ function positionTooltip(link) {
 }
 
 function switchDocument(id) {
-  stopTimer();
+  stopSignalAnimation();
   activeId = id;
-  selectedId = null;
+  selectedIds.clear();
   pendingSource = null;
-  state = { registers: projectState(activeDocument()), inputs: {}, timer: null, tick: 0, vector: -1 };
+  state = { registers: projectState(activeDocument()), inputs: {}, tick: 0 };
   render();
 }
 
@@ -143,7 +193,7 @@ function render() {
   $("#canvas-mode").textContent = hasRegisters(bp) ? "SIRALI DEVRE · YÜKSELEN KENAR" : "KOMBİNASYONEL DEVRE · PARALEL YOLLAR";
   $(".cad-clock").classList.toggle("is-hidden", !hasRegisters(bp));
   $("#graph-status").textContent = result.error ? result.error.message : "Tüm girişler bağlı · Blueprint geçerli";
-  $("#selection-info").textContent = selectedId ? `${labels[bp.nodes.find((node) => node.id === selectedId)?.type] || "BLOK"} seçili · Delete ile sil` : "Blok seçili değil";
+  $("#selection-info").textContent = selectedIds.size ? `${selectedIds.size} blok seçili · Delete ile sil` : "Blok seçili değil";
   renderTabs();
   renderModuleTools();
   renderNodes(bp, result.values);
@@ -154,7 +204,12 @@ function render() {
   try { $("#verilog-code").textContent = generateProjectVerilog(documents, bp.name); }
   catch (error) { $("#verilog-code").textContent = `// ${error.message}\n// Tüm portları bağladıktan sonra Verilog oluşur.`; }
   $("#tick-count").textContent = String(state.tick).padStart(3, "0");
-  $("#step-sim").disabled = state.timer !== null;
+  $("#step-sim").disabled = !hasRegisters(bp);
+  $("#signal-view").classList.toggle("is-playing", signalAnimation === "playing");
+  $("#signal-view").classList.toggle("is-paused", signalAnimation === "paused");
+  $("#play-sim").setAttribute("aria-pressed", String(signalAnimation === "playing"));
+  $("#pause-sim").disabled = signalAnimation !== "playing";
+  $("#stop-sim").disabled = signalAnimation === "stopped";
 }
 
 function fitCamera() {
@@ -189,7 +244,7 @@ function renderNodes(bp, values) {
   layer.replaceChildren();
   renderedNodes.clear();
   for (const node of bp.nodes) {
-    const card = el("article", `cad-node node-${node.type}${selectedId === node.id ? " is-selected" : ""}`);
+    const card = el("article", `cad-node node-${node.type}${selectedIds.has(node.id) ? " is-selected" : ""}`);
     card.style.left = `${node.x}px`;
     card.style.top = `${node.y}px`;
     if (node.type === "module") card.style.height = `${Math.max(88, 36 + Math.max(portInputs(node).length, portOutputs(node).length) * 16)}px`;
@@ -211,6 +266,17 @@ function renderNodes(bp, values) {
       render(); persist();
     });
     header.append(title);
+    if (node.type !== "module" && selectedIds.has(node.id)) {
+      const width = el("select", "cad-node-width");
+      width.setAttribute("aria-label", `${labels[node.type]} bit genişliği`);
+      Array.from({ length: 32 }, (_, index) => index + 1).forEach((bits) => {
+        const option = el("option", "", `${bits} bit`); option.value = String(bits); option.selected = bits === nodeWidth(node); width.append(option);
+      });
+      width.addEventListener("pointerdown", (event) => event.stopPropagation());
+      width.addEventListener("click", (event) => event.stopPropagation());
+      width.addEventListener("change", () => setNodeWidth(node, Number(width.value)));
+      header.append(width);
+    }
     const remove = el("button", "cad-node-remove", "×");
     remove.type = "button";
     remove.setAttribute("aria-label", `${node.name || labels[node.type]} bloğunu sil`);
@@ -220,14 +286,51 @@ function renderNodes(bp, values) {
     const ports = el("div", "cad-node-ports");
     for (const port of portInputs(node)) ports.append(makePort(node, port, "input"));
     const value = values[node.id] ?? X;
-    ports.append(el("span", `cad-node-value value-${String(value).toLowerCase()}`, String(value)));
+    const valueBadge = el(node.type === "constant" ? "button" : "span", `cad-node-value value-${signalClass(value)}`, displayValue(value, nodeWidth(node)));
+    if (node.type === "constant") {
+      valueBadge.type = "button";
+      valueBadge.setAttribute("aria-label", `Sabit değerini düzenle: ${displayValue(value, nodeWidth(node))}`);
+      valueBadge.addEventListener("pointerdown", (event) => event.stopPropagation());
+      valueBadge.addEventListener("click", (event) => { event.stopPropagation(); editConstant(node); });
+    }
+    ports.append(valueBadge);
     for (const port of portOutputs(node)) ports.append(makePort(node, port, "output"));
     card.append(ports);
     card.addEventListener("pointerdown", (event) => beginDrag(event, node));
-    card.addEventListener("click", () => { selectedId = node.id; render(); });
+    card.addEventListener("click", () => { selectedIds = new Set([node.id]); render(); });
     layer.append(card);
     renderedNodes.set(node.id, card);
   }
+}
+
+function setNodeWidth(node, width) {
+  if (!Number.isInteger(width) || width < 1 || width > 32) return announce("Bit genişliği 1–32 arasında olmalı.");
+  const oldWidth = nodeWidth(node), oldValue = node.type === "constant" ? String(node.value ?? 0) : null;
+  node.width = width;
+  if (node.type === "constant") node.value = width === 1 ? Number(oldValue.at(-1) === "1") : oldValue.padStart(width, "0").slice(-width);
+  if (node.type === "input" && state.inputs[node.name] !== undefined && width !== oldWidth) {
+    const oldBits = oldWidth === 1 ? String(state.inputs[node.name]) : String(state.inputs[node.name]);
+    state.inputs[node.name] = width === 1 ? Number(oldBits.at(-1) === "1") : oldBits.replace(/[^01]/g, "0").padStart(width, "0").slice(-width);
+  }
+  if (node.type === "register") state.registers = projectState(activeDocument());
+  render(); persist();
+}
+
+function decimalBits(value, width) {
+  if (!/^\d+$/.test(value)) return null;
+  const number = BigInt(value);
+  if (number < 0n || number >= (1n << BigInt(width))) return null;
+  const bits = number.toString(2).padStart(width, "0");
+  return width === 1 ? Number(bits) : bits;
+}
+
+function editConstant(node) {
+  const raw = window.prompt(`Sabit değeri (0–${(1n << BigInt(nodeWidth(node))) - 1n})`, String(BigInt(`0b${String(node.value).replaceAll("X", "0")}`)));
+  if (raw === null) return;
+  const value = decimalBits(raw.trim(), nodeWidth(node));
+  if (value === null) return announce(`0 ile ${(1n << BigInt(nodeWidth(node))) - 1n} arasında bir tam sayı gir.`);
+  node.value = nodeWidth(node) === 1 ? value : value.toString(2).padStart(nodeWidth(node), "0");
+  render(); persist();
 }
 
 function makePort(node, port, direction) {
@@ -263,6 +366,7 @@ function point(node, port, direction) {
 function miniPoint(node, port, direction) {
   if (node.type === "module") return point(node, port, direction);
   if (direction === "output") return { x: node.x + 150, y: node.y + 44 };
+  if (node.type === "mux") return { x: node.x, y: node.y + ({ sel: 27, a: 44, b: 61 }[port] || 44) };
   if (port === "a") return { x: node.x, y: node.y + 27 };
   if (port === "b") return { x: node.x, y: node.y + 59 };
   return { x: node.x, y: node.y + 44 };
@@ -275,7 +379,7 @@ function makePath(from, to, className, value) {
   const d = `M${from.x} ${from.y} H${mid - radius} Q${mid} ${from.y} ${mid} ${from.y + dir * radius} V${to.y - dir * radius} Q${mid} ${to.y} ${mid + radius} ${to.y} H${to.x}`;
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("d", d);
-  path.setAttribute("class", `${className} signal-${String(value ?? X).toLowerCase()}`);
+  path.setAttribute("class", `${className} signal-${signalClass(value)}`);
   return path;
 }
 
@@ -312,11 +416,22 @@ function renderVariables(bp, result) {
     item.dataset.node = node.id;
     if (node.type === "input") {
       item.type = "button";
-      item.addEventListener("click", () => { state.inputs[node.name] = (state.inputs[node.name] ?? 0) ? 0 : 1; render(); });
+      item.addEventListener("click", () => {
+        const width = nodeWidth(node), current = state.inputs[node.name] ?? (width === 1 ? 0 : "0".repeat(width));
+        if (width === 1) state.inputs[node.name] = current ? 0 : 1;
+        else {
+          const entered = window.prompt(`${node.name} için onluk değer (0–${(1n << BigInt(width)) - 1n})`, String(BigInt(`0b${current}`)));
+          if (entered === null) return;
+          const next = decimalBits(entered.trim(), width);
+          if (next === null) return announce(`0 ile ${(1n << BigInt(width)) - 1n} arasında bir tam sayı gir.`);
+          state.inputs[node.name] = next;
+        }
+        render();
+      });
     }
     item.append(el("span", "cad-variable-name", node.name || (node.type === "register" ? "Q" : "Sinyal")));
-    item.append(el("span", `cad-variable-value value-${String(value).toLowerCase()}`, String(value)));
-    item.append(el("small", "", node.type === "input" ? "Giriş · değiştir" : node.type === "register" ? "Yazmaç" : node.type === "signal" ? "Ara sinyal · çift tıkla: adlandır" : "Çıkış"));
+    item.append(el("span", `cad-variable-value value-${signalClass(value)}`, displayValue(value, nodeWidth(node))));
+    item.append(el("small", "", node.type === "input" ? `Giriş · ${nodeWidth(node)} bit · değiştir` : node.type === "register" ? `Yazmaç · ${nodeWidth(node)} bit` : node.type === "signal" ? `Ara sinyal · ${nodeWidth(node)} bit` : `Çıkış · ${nodeWidth(node)} bit`));
     list.append(item);
   }
 }
@@ -345,7 +460,7 @@ function renderSignalView(bp, values) {
     title.setAttribute("class", "cad-mini-title"); title.textContent = node.name || labels[node.type]; group.append(title);
     const value = document.createElementNS("http://www.w3.org/2000/svg", "text");
     value.setAttribute("x", "75"); value.setAttribute("y", "67"); value.setAttribute("text-anchor", "middle");
-    value.setAttribute("class", `cad-mini-value value-${String(values[node.id] ?? X).toLowerCase()}`); value.textContent = String(values[node.id] ?? X); group.append(value);
+    value.setAttribute("class", `cad-mini-value value-${signalClass(values[node.id] ?? X)}`); value.textContent = displayValue(values[node.id] ?? X, nodeWidth(node)); group.append(value);
     svg.append(group);
   }
   host.append(svg);
@@ -369,20 +484,29 @@ function connectPort(nodeId, port, direction) {
 
 function beginDrag(event, node) {
   if (event.button !== 0 || event.target.closest("button")) return;
-  const canvas = $("#blueprint-canvas");
-  const rect = canvas.getBoundingClientRect();
-  const startX = event.clientX, startY = event.clientY, x = node.x, y = node.y;
+  if (!selectedIds.has(node.id)) {
+    selectedIds = new Set([node.id]);
+    for (const [id, card] of renderedNodes) card.classList.toggle("is-selected", id === node.id);
+  }
+  const bp = activeDocument().bp;
+  const moving = bp.nodes.filter((item) => selectedIds.has(item.id));
+  const origins = new Map(moving.map((item) => [item.id, { x: item.x, y: item.y }]));
+  const startX = event.clientX, startY = event.clientY;
   event.currentTarget.setPointerCapture(event.pointerId);
   const card = event.currentTarget;
   const move = (e) => {
-    node.x = Math.round((x + (e.clientX - startX) / camera.zoom) / 20) * 20;
-    node.y = Math.round((y + (e.clientY - startY) / camera.zoom) / 20) * 20;
-    card.style.left = `${node.x}px`;
-    card.style.top = `${node.y}px`;
+    const dx = snapToGrid((e.clientX - startX) / camera.zoom), dy = snapToGrid((e.clientY - startY) / camera.zoom);
+    for (const item of moving) {
+      item.x = origins.get(item.id).x + dx;
+      item.y = origins.get(item.id).y + dy;
+      const element = renderedNodes.get(item.id);
+      element.style.left = `${item.x}px`;
+      element.style.top = `${item.y}px`;
+    }
     updateCamera();
-    const values = safeEvaluate(activeDocument()).values;
-    renderWires(activeDocument().bp, values);
-    renderSignalView(activeDocument().bp, values);
+    const result = safeEvaluate(activeDocument());
+    renderWires(bp, result.values);
+    renderSignalView(bp, result.values);
   };
   const up = () => { card.removeEventListener("pointermove", move); card.removeEventListener("pointerup", up); render(); persist(); };
   card.addEventListener("pointermove", move);
@@ -394,14 +518,14 @@ function addNode(type, at = null) {
   const count = bp.nodes.filter((node) => node.type === type).length;
   if (type === "input" && count >= 12) return announce("Bir devrede en fazla 12 giriş ekleyebilirsin.");
   const index = bp.nodes.length;
-  const x = at ? at.x : type === "input" ? 60 : type === "output" ? 700 : 310 + (index % 2) * 190;
-  const y = at ? at.y : 60 + Math.floor(index / 2) % 5 * 100;
+  const x = at ? snapToGrid(at.x) : type === "input" ? 60 : type === "output" ? 700 : snapToGrid(310 + (index % 2) * 190);
+  const y = at ? snapToGrid(at.y) : snapToGrid(60 + Math.floor(index / 2) % 5 * 100);
   const defaultName = type === "input" ? `giris${count ? count + 1 : ""}` : type === "output" ? `cikis${count ? count + 1 : ""}` : `ara_sinyal_${count + 1}`;
   let name = ["input", "output", "signal"].includes(type) ? defaultName : "";
   if (type === "signal") while (bp.nodes.some((item) => item.name === name)) name += "_";
-  const node = { id: crypto.randomUUID(), type, name, x, y };
+  const node = { id: crypto.randomUUID(), type, name, x, y, ...(type === "constant" ? { value: 0 } : {}) };
   bp.nodes.push(node);
-  selectedId = node.id;
+  selectedIds = new Set([node.id]);
   render();
   persist();
 }
@@ -410,30 +534,38 @@ function addModule(moduleName, at = null) {
   const bp = activeDocument().bp;
   const index = bp.nodes.length;
   const count = bp.nodes.filter((node) => node.type === "module" && node.module === moduleName).length;
-  const node = { id: crypto.randomUUID(), type: "module", module: moduleName, name: `${moduleName}_${count + 1}`, x: at?.x ?? 310 + (index % 2) * 190, y: at?.y ?? 60 + Math.floor(index / 2) % 5 * 100 };
+  const node = { id: crypto.randomUUID(), type: "module", module: moduleName, name: `${moduleName}_${count + 1}`, x: at ? snapToGrid(at.x) : snapToGrid(310 + (index % 2) * 190), y: at ? snapToGrid(at.y) : snapToGrid(60 + Math.floor(index / 2) % 5 * 100) };
   bp.nodes.push(node);
-  selectedId = node.id;
+  selectedIds = new Set([node.id]);
   render();
   persist();
 }
 
 function removeNode(id) {
+  removeNodes(new Set([id]));
+}
+
+function removeSelectedNodes() {
+  if (selectedIds.size) removeNodes(new Set(selectedIds));
+}
+
+function removeNodes(ids) {
   const bp = activeDocument().bp;
-  bp.nodes = bp.nodes.filter((node) => node.id !== id);
-  bp.wires = bp.wires.filter((wire) => wire.from.node !== id && wire.to.node !== id);
-  if (state.registers[id] !== undefined) delete state.registers[id];
-  selectedId = null;
+  bp.nodes = bp.nodes.filter((node) => !ids.has(node.id));
+  bp.wires = bp.wires.filter((wire) => !ids.has(wire.from.node) && !ids.has(wire.to.node));
+  for (const id of ids) if (state.registers[id] !== undefined) delete state.registers[id];
+  selectedIds = new Set();
   render();
   persist();
 }
 
 function newDocument() {
   if (documents.length >= 8) return announce("Aynı anda en fazla 8 blueprint açık tutabilirsin.");
-  stopTimer();
+  stopSignalAnimation();
   const doc = { id: crypto.randomUUID(), name: `devre${documents.length + 1}.bp`, bp: basicBlueprint(`devre${documents.length + 1}`) };
   documents.push(doc);
   activeId = doc.id;
-  state = { registers: projectState(doc), inputs: {}, timer: null, tick: 0, vector: -1 };
+  state = { registers: projectState(doc), inputs: {}, tick: 0 };
   render();
   persist();
 }
@@ -441,6 +573,8 @@ function newDocument() {
 function saveLocal() { persist(); announce("Blueprint bu cihazda kaydedildi."); }
 function exportBlueprint() {
   const doc = activeDocument();
+  snapBlueprintPositions(doc.bp);
+  persist();
   const blob = new Blob([JSON.stringify(doc.bp, null, 2)], { type: "application/json" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob); link.download = doc.name;
@@ -452,51 +586,59 @@ async function importBlueprint(file) {
   const doc = activeDocument(), previous = { bp: doc.bp, name: doc.name };
   try {
     const bp = JSON.parse(await file.text());
-    doc.bp = bp;
+      doc.bp = snapBlueprintPositions(bp);
     doc.name = file.name.endsWith(".bp") ? file.name : `${bp.name}.bp`;
     validateProject(documents);
-    state = { registers: projectState(doc), inputs: {}, timer: null, tick: 0, vector: -1 };
+    state = { registers: projectState(doc), inputs: {}, tick: 0 };
+    stopSignalAnimation();
     render(); persist(); announce("Blueprint açıldı.");
   } catch (error) { doc.bp = previous.bp; doc.name = previous.name; announce(`Dosya açılamadı: ${error.message}`); }
 }
 
 function announce(message) { $("#sim-status").textContent = message; }
-function stopTimer() { if (state.timer !== null) window.clearInterval(state.timer); state.timer = null; }
+function stopSignalAnimation() { signalAnimation = "stopped"; }
+
+function play() {
+  signalAnimation = "playing";
+  announce("Sağdaki devrede mantıksal sinyal yolları canlandırılıyor. Giriş ve yazmaç değerleri değişmez.");
+  render();
+}
+
+function pauseSignalAnimation() {
+  if (signalAnimation !== "playing") return;
+  signalAnimation = "paused";
+  announce("Sinyal görselleştirmesi duraklatıldı; devre değerleri değişmedi.");
+  render();
+}
+
+function stopSignalAnimationAndAnnounce() {
+  stopSignalAnimation();
+  announce("Sinyal görselleştirmesi durduruldu ve başa alındı; devre değerleri değişmedi.");
+  render();
+}
 
 function tickOnce() {
   const bp = activeDocument().bp;
+  if (!hasRegisters(bp)) return announce("Bu devrede yazmaç olmadığı için clock tiki yok; girişleri değiştirerek sinyali izle.");
   try {
     validateProject(documents);
-    if (hasRegisters(bp)) {
-      state.registers = tickProject(documents, bp.name, currentInputs(bp), state.registers);
-      state.tick++;
-      $("#clock-led").classList.add("is-on");
-      window.setTimeout(() => $("#clock-led").classList.remove("is-on"), 140);
-    } else {
-      const inputs = inputNodes(bp);
-      const count = 2 ** inputs.length;
-      state.vector = (state.vector + 1) % count;
-      inputs.forEach((node, index) => { state.inputs[node.name] = (state.vector >> index) & 1; });
-      state.tick++;
-    }
+    state.registers = tickProject(documents, bp.name, currentInputs(bp), state.registers);
+    state.tick++;
+    $("#clock-led").classList.add("is-on");
+    window.setTimeout(() => $("#clock-led").classList.remove("is-on"), 140);
     render();
-    announce(hasRegisters(bp) ? `Yükselen kenar ${state.tick}: yazmaç değerleri birlikte güncellendi.` : `Giriş birleşimi ${state.vector + 1}: bağımsız yollar birlikte değerlendiriliyor.`);
+    announce(`Yükselen kenar ${state.tick}: yazmaç değerleri birlikte güncellendi.`);
     return true;
-  } catch (error) { announce(error.message); stopTimer(); return false; }
-}
-
-function play() {
-  if (state.timer !== null) return;
-  if (!tickOnce()) return;
-  if (state.timer === null) state.timer = window.setInterval(tickOnce, Number($("#step-speed").value));
+  } catch (error) { announce(error.message); return false; }
 }
 
 $("#play-sim").addEventListener("click", play);
 $("#step-sim").addEventListener("click", tickOnce);
-$("#pause-sim").addEventListener("click", () => { stopTimer(); announce("Simülasyon duraklatıldı; yazmaç değerleri korundu."); render(); });
-$("#stop-sim").addEventListener("click", () => { stopTimer(); announce("Simülasyon durdu; yazmaç değerleri korundu."); render(); });
-$("#reset-sim").addEventListener("click", () => { stopTimer(); try { state.registers = resetProject(documents, activeDocument().bp.name); } catch { state.registers = createState(activeDocument().bp); } state.tick = 0; render(); announce("Yazmaç değerleri sıfırlandı; girişler değişmedi."); });
-$("#step-speed").addEventListener("change", () => { if (state.timer !== null) { stopTimer(); state.timer = window.setInterval(tickOnce, Number($("#step-speed").value)); } });
+$("#pause-sim").addEventListener("click", pauseSignalAnimation);
+$("#stop-sim").addEventListener("click", stopSignalAnimationAndAnnounce);
+$("#reset-sim").addEventListener("click", () => { try { state.registers = resetProject(documents, activeDocument().bp.name); } catch { state.registers = createState(activeDocument().bp); } state.tick = 0; render(); announce("Yazmaç değerleri sıfırlandı; girişler değişmedi."); });
+$("#step-speed").addEventListener("change", () => { document.documentElement.style.setProperty("--cad-signal-duration", `${Number($("#step-speed").value) / 1000}s`); });
+document.documentElement.style.setProperty("--cad-signal-duration", `${Number($("#step-speed").value) / 1000}s`);
 document.querySelectorAll("[data-add]").forEach((button) => {
   button.draggable = true;
   button.addEventListener("click", () => addNode(button.dataset.add));
@@ -520,22 +662,126 @@ $("#import-file").addEventListener("change", (event) => { if (event.target.files
 $("#copy-verilog").addEventListener("click", async () => { try { await navigator.clipboard.writeText($("#verilog-code").textContent); announce("Verilog kodu panoya kopyalandı."); } catch { announce("Tarayıcı panoya erişim izni vermedi."); } });
 document.addEventListener("keydown", (event) => {
   if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName) || event.ctrlKey || event.metaKey) return;
-  if (event.key === "Delete" && selectedId) removeNode(selectedId);
+  if (event.key === "Delete" && selectedIds.size) removeSelectedNodes();
   const shortcuts = { i: "input", o: "output", a: "and", r: "or", x: "xor", n: "not", q: "register" };
   if (shortcuts[event.key.toLowerCase()]) addNode(shortcuts[event.key.toLowerCase()]);
 });
 
-const canvas = $("#blueprint-canvas"), search = $("#node-search");
+const canvas = $("#blueprint-canvas"), caller = $("#node-caller"), search = $("#node-search"), options = $("#node-options"), selectionBox = $("#selection-box");
+$("#shelf-toggle").addEventListener("click", (event) => {
+  const button = event.currentTarget, expanded = button.getAttribute("aria-expanded") !== "true";
+  button.setAttribute("aria-expanded", String(expanded));
+  button.closest(".cad-tools").classList.toggle("is-open", expanded);
+  button.textContent = expanded ? "Blokları gizle −" : "Blokları göster ＋";
+});
 let spaceDown = false;
-function openSearchAt(clientX, clientY) {
+let callerEntries = [];
+let callerIndex = 0;
+function describeBlock(type) {
+  return ({ input: "Seçilen bit genişliğinde onluk giriş değeri verir.", output: "Bir mantık yolunun sonucunu gösterir.", constant: "Sabit bir onluk değeri bit dizisine çevirir.", and: "Her bit konumunda iki giriş de 1 ise 1 üretir.", nand: "AND sonucundaki her biti tersine çevirir.", or: "Her bit konumunda en az bir giriş 1 ise 1 üretir.", nor: "OR sonucundaki her biti tersine çevirir.", xor: "Her bit konumunda girişler farklıysa 1 üretir.", xnor: "XOR sonucundaki her biti tersine çevirir.", not: "Girişin her bitini tersine çevirir.", mux: "Seçim girişi a veya b yolundan birini çıkışa bağlar.", signal: "Bir sinyale ad verir; değer saklamaz.", register: "Değeri clock tikinde saklar." })[type] || "";
+}
+function matchingBlocks(query = "") {
+  const q = query.trim().toLocaleLowerCase("tr");
+  const blocks = Object.entries(labels).map(([type, label]) => ({ type, label, description: describeBlock(type), search: `${type} ${label} ${describeBlock(type)}`.toLocaleLowerCase("tr") }));
+  for (const doc of documents.filter((item) => item.id !== activeId)) blocks.push({ type: "module", moduleName: doc.bp.name, label: doc.bp.name, description: "Giriş ve çıkış portları olan başka bir blueprint.", search: `${doc.bp.name} ${doc.name} modül blueprint`.toLocaleLowerCase("tr") });
+  const synonyms = { and: "ve", or: "veya", xor: "ayrık veya", not: "değil", register: "yazmaç", input: "giriş in", output: "çıkış out", module: "bp" };
+  return blocks.filter((item) => !q || item.search.includes(q) || synonyms[item.type]?.includes(q));
+}
+function renderCallerOptions() {
+  callerEntries = matchingBlocks(search.value);
+  callerIndex = Math.min(callerIndex, Math.max(0, callerEntries.length - 1));
+  options.replaceChildren();
+  callerEntries.forEach((item, index) => {
+    const row = el("li");
+    row.setAttribute("role", "presentation");
+    const option = el("button", "btn btn-ghost cad-node-option");
+    option.type = "button";
+    option.id = `node-option-${index}`;
+    option.setAttribute("role", "option");
+    option.setAttribute("aria-selected", String(index === callerIndex));
+    option.append(el("strong", "", item.label), el("small", "", item.description));
+    option.addEventListener("pointerenter", () => { callerIndex = index; syncCallerHighlight(); });
+    option.addEventListener("click", () => addCallerEntry(item));
+    row.append(option);
+    options.append(row);
+  });
+  if (!callerEntries.length) options.append(el("li", "cad-node-empty", "Bu aramayla eşleşen blok yok."));
+  syncCallerHighlight();
+}
+function syncCallerHighlight() {
+  [...options.querySelectorAll('[role="option"]')].forEach((option, index) => {
+    option.setAttribute("aria-selected", String(index === callerIndex));
+  });
+  search.setAttribute("aria-activedescendant", callerEntries.length ? `node-option-${callerIndex}` : "");
+}
+function closeNodeCaller(returnFocus = false) {
+  caller.hidden = true;
+  search.setAttribute("aria-expanded", "false");
+  if (returnFocus) canvas.focus();
+}
+function addCallerEntry(item) {
+  const position = JSON.parse(search.dataset.world || "null");
+  closeNodeCaller();
+  if (item.type === "module") addModule(item.moduleName, position);
+  else addNode(item.type, position);
+}
+function openNodeCaller(clientX, clientY) {
   const bounds = canvas.getBoundingClientRect();
-  search.style.left = `${Math.max(8, Math.min(bounds.width - 250, clientX - bounds.left))}px`;
-  search.style.top = `${Math.max(8, Math.min(bounds.height - 42, clientY - bounds.top))}px`;
   search.dataset.world = JSON.stringify(screenToWorld(clientX, clientY));
-  search.hidden = false;
+  caller.hidden = false;
   search.setAttribute("aria-expanded", "true");
   search.value = "";
+  callerIndex = 0;
+  renderCallerOptions();
+  caller.style.left = `${Math.max(8, Math.min(bounds.width - 300, clientX - bounds.left))}px`;
+  caller.style.top = `${Math.max(8, Math.min(bounds.height - 360, clientY - bounds.top))}px`;
   search.focus();
+  search.select();
+}
+function panByPointer(event) {
+  event.preventDefault();
+  const start = { x: event.clientX, y: event.clientY, cameraX: camera.x, cameraY: camera.y };
+  canvas.setPointerCapture(event.pointerId);
+  const move = (next) => {
+    camera.x = start.cameraX + next.clientX - start.x;
+    camera.y = start.cameraY + next.clientY - start.y;
+    cameraEngaged = true;
+    updateCamera();
+  };
+  const up = () => { canvas.removeEventListener("pointermove", move); canvas.removeEventListener("pointerup", up); };
+  canvas.addEventListener("pointermove", move);
+  canvas.addEventListener("pointerup", up, { once: true });
+}
+function beginSelection(event) {
+  event.preventDefault();
+  const startX = event.clientX, startY = event.clientY, rect = canvas.getBoundingClientRect();
+  const original = event.shiftKey ? new Set(selectedIds) : new Set();
+  let moved = false;
+  canvas.setPointerCapture(event.pointerId);
+  const move = (next) => {
+    const dx = next.clientX - startX, dy = next.clientY - startY;
+    if (Math.hypot(dx, dy) > 4) moved = true;
+    if (!moved) return;
+    const left = Math.min(startX, next.clientX) - rect.left, top = Math.min(startY, next.clientY) - rect.top;
+    selectionBox.hidden = false;
+    selectionBox.style.left = `${left}px`; selectionBox.style.top = `${top}px`;
+    selectionBox.style.width = `${Math.abs(dx)}px`; selectionBox.style.height = `${Math.abs(dy)}px`;
+  };
+  const up = (next) => {
+    canvas.removeEventListener("pointermove", move);
+    canvas.removeEventListener("pointerup", up);
+    selectionBox.hidden = true;
+    if (moved) {
+      const box = { left: Math.min(startX, next.clientX), right: Math.max(startX, next.clientX), top: Math.min(startY, next.clientY), bottom: Math.max(startY, next.clientY) };
+      selectedIds = new Set([...original, ...activeDocument().bp.nodes.filter((node) => {
+        const nodeRect = renderedNodes.get(node.id).getBoundingClientRect();
+        return nodeRect.right >= box.left && nodeRect.left <= box.right && nodeRect.bottom >= box.top && nodeRect.top <= box.bottom;
+      }).map((node) => node.id)]);
+    } else selectedIds = original;
+    render();
+  };
+  canvas.addEventListener("pointermove", move);
+  canvas.addEventListener("pointerup", up, { once: true });
 }
 document.addEventListener("keydown", (event) => { if (event.code === "Space" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) { spaceDown = true; event.preventDefault(); } });
 document.addEventListener("keyup", (event) => { if (event.code === "Space") spaceDown = false; });
@@ -550,7 +796,7 @@ canvas.addEventListener("wheel", (event) => {
   updateCamera();
 }, { passive: false });
 canvas.addEventListener("pointerdown", (event) => {
-  if (event.target.closest(".cad-node") || event.target === search) return;
+  if (event.target.closest(".cad-node") || caller.contains(event.target)) return;
   if (event.pointerType === "touch" && event.button === 0) {
     event.preventDefault();
     const start = { x: event.clientX, y: event.clientY, cameraX: camera.x, cameraY: camera.y };
@@ -563,26 +809,35 @@ canvas.addEventListener("pointerdown", (event) => {
     const up = (next) => {
       canvas.removeEventListener("pointermove", move);
       canvas.removeEventListener("pointerup", up);
-      if (!moved) openSearchAt(next.clientX, next.clientY);
+      if (!moved) openNodeCaller(next.clientX, next.clientY);
     };
     canvas.addEventListener("pointermove", move);
     canvas.addEventListener("pointerup", up, { once: true });
     return;
   }
-  if (event.button === 1 || (event.button === 0 && spaceDown)) {
+  if (event.button === 1 || (event.button === 0 && spaceDown)) return panByPointer(event);
+  if (event.button === 2) {
     event.preventDefault();
     const start = { x: event.clientX, y: event.clientY, cameraX: camera.x, cameraY: camera.y };
+    let moved = false;
     canvas.setPointerCapture(event.pointerId);
-    const move = (next) => { camera.x = start.cameraX + next.clientX - start.x; camera.y = start.cameraY + next.clientY - start.y; cameraEngaged = true; updateCamera(); };
-    const up = () => { canvas.removeEventListener("pointermove", move); canvas.removeEventListener("pointerup", up); };
+    const move = (next) => {
+      if (Math.hypot(next.clientX - start.x, next.clientY - start.y) > 5) moved = true;
+      if (moved) { camera.x = start.cameraX + next.clientX - start.x; camera.y = start.cameraY + next.clientY - start.y; cameraEngaged = true; updateCamera(); }
+    };
+    const up = () => {
+      canvas.removeEventListener("pointermove", move); canvas.removeEventListener("pointerup", up);
+      if (!moved) openNodeCaller(start.x, start.y);
+    };
     canvas.addEventListener("pointermove", move);
     canvas.addEventListener("pointerup", up, { once: true });
     return;
   }
-  if (event.button !== 0) return;
-  event.preventDefault();
-  openSearchAt(event.clientX, event.clientY);
+  if (event.button === 0) return beginSelection(event);
 });
+canvas.addEventListener("contextmenu", (event) => event.preventDefault());
+document.addEventListener("pointerdown", (event) => { if (!caller.hidden && !caller.contains(event.target)) closeNodeCaller(); }, true);
+caller.addEventListener("focusout", () => requestAnimationFrame(() => { if (!caller.contains(document.activeElement)) closeNodeCaller(); }));
 canvas.addEventListener("dragover", (event) => { if ([...event.dataTransfer.types].some((type) => type.startsWith("application/x-ludus-"))) event.preventDefault(); });
 canvas.addEventListener("drop", (event) => {
   const type = event.dataTransfer.getData("application/x-ludus-block"), moduleName = event.dataTransfer.getData("application/x-ludus-module");
@@ -591,22 +846,18 @@ canvas.addEventListener("drop", (event) => {
   const position = screenToWorld(event.clientX, event.clientY);
   if (moduleName) addModule(moduleName, position); else addNode(type, position);
 });
+search.addEventListener("input", () => { callerIndex = 0; renderCallerOptions(); });
 search.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") { search.hidden = true; search.setAttribute("aria-expanded", "false"); canvas.focus(); return; }
-  if (event.key !== "Enter") return;
-  event.preventDefault();
-  const key = search.value.trim().toLocaleLowerCase("tr");
-  if (!key) return announce("Eklemek istediğin bloğun adını yaz.");
-  const entries = Object.entries(labels).map(([type, label]) => [type, `${type} ${label}`.toLocaleLowerCase("tr")]);
-  const synonyms = { and: "ve", or: "veya", xor: "ayrık veya", not: "değil", register: "yazmaç" };
-  const hit = entries.find(([type, text]) => text.includes(key) || synonyms[type]?.includes(key));
-  const position = JSON.parse(search.dataset.world);
-  search.hidden = true;
-  search.setAttribute("aria-expanded", "false");
-  if (hit) return addNode(hit[0], position);
-  const module = documents.find((doc) => doc.id !== activeId && doc.bp.name.toLocaleLowerCase("tr").includes(key));
-  if (module) return addModule(module.bp.name, position);
-  announce("Bu adla eklenebilen bir blok bulunamadı.");
+  if (event.key === "Escape") { closeNodeCaller(true); return; }
+  if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+    event.preventDefault();
+    if (callerEntries.length) callerIndex = (callerIndex + (event.key === "ArrowDown" ? 1 : -1) + callerEntries.length) % callerEntries.length;
+    syncCallerHighlight();
+  }
+  if (event.key === "Enter") {
+    event.preventDefault();
+    if (callerEntries[callerIndex]) addCallerEntry(callerEntries[callerIndex]);
+  }
 });
 function zoomAtCenter(factor) {
   const rect = canvas.getBoundingClientRect(), next = Math.max(0.25, Math.min(2.5, camera.zoom * factor));
@@ -625,6 +876,7 @@ try {
   const saved = JSON.parse(localStorage.getItem(storeKey) || "null");
   if (Array.isArray(saved) && saved.length && saved.length <= 8 && new Set(saved.map((doc) => doc.id)).size === saved.length && saved.every((doc) => typeof doc?.id === "string" && doc.bp && typeof doc.name === "string")) {
     documents = saved;
+    documents.forEach((doc) => snapBlueprintPositions(doc.bp));
     activeId = documents[0].id;
     state.registers = projectState(activeDocument());
   }

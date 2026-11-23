@@ -2,11 +2,27 @@
 
 Bu dosya proje hakkında paylaşılan bilgilerin düzenlendiği çalışma belleğidir. Her yeni bilgi için kaynağı, karar durumunu ve belirsizliği koru. Necati'nin açıkça kararlaştırmadığı ayrıntıları kesinleşmiş gibi yazma.
 
+> Güncel kararlar dosyanın başındaki son tarihli proje yönünde yer alır. Aşağıdaki tarihli notlar, yazıldıkları gündeki karar ve uygulama durumunun tarihçesidir; sonraki kayıtlar önceki teknik kapsamı değiştirebilir.
+
 ## Proje fikri
 
 **Çalışma tanımı:** Ludus Circuitus, Verilog öğrenmeye görsel bloklarla başlanan; kullanıcının oluşturduğu blueprint'i gerçek Verilog kodu ve devre davranışıyla yan yana gösteren açık kaynaklı bir eğitim projesidir. Unreal Engine Blueprint fikri, çok modüllü proje kurma deneyimine ilham veriyor.
 
 Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde öğrenmeyi zorlaştırabilir. Ürün; görsel kurulumdan gerçek HDL'e geçişi görünür kılarak bu öğrenme eşiğini düşürmeyi hedefliyor. Bu bir amaç ve tanıtım yönüdür; öğrenme etkisi ölçülmeden kanıtlanmış sonuç olarak sunulmayacak.
+
+## Atölye genişletme ve görsel yenileme: 2026-11-24
+
+**Necati'nin güncel yönlendirmesi:** Devre Atölyesi simülasyonundaki Oynat/Duraklat/Durdur, sağdaki devre görünümünde mantıksal sinyallerin hareketini canlandırmalı. Oynat giriş bitlerini çevirmemeli ve clock/register tiki üretmemeli; yazmaçlar yalnızca Tek tik veya Reset eylemiyle değişmeli. Animasyon hızı kullanıcı tarafından ayarlanabilir.
+
+**Kapsam düzeltmesi:** RISC-V yalnızca örnekti. Assembly dili, tam işlemci veya ISA projesi istenmiyor. Ürün dijital mantık ve Verilog öğrenimine odaklanır. Eski `.bp` belgelerindeki genişlik belirtilmemiş sinyaller 1 bit kalır; yeni tasarımlarda 1–32 bit genişlik desteklenir. Giriş onluk girilebilir, bit dizisi de görünür. Sabit ve seçici (MUX) blokları eklenmiştir; veri genişliği uyumsuz bağlantılar doğrulamada reddedilir. Sinyal benzetimi, devre görünümü ve üretilen Verilog aynı çok-bitli tasarımı temsil eder. Davranış motoru, Icarus oracle'ları ve E2E ile sınanır.
+
+**Etkileşim isteği:** Tuvalde sol tıkla seçim ve sürükleyerek seçim kutusu; sağ tıkta klavye ile aranabilen, her blok için kısa açıklama gösteren çağırma listesi; sağ tuşa basılı sürükleme veya orta tuş ile pan. Blok çağırmadan dışarı tıklama, Escape ve araç çubuğundaki başka eylem menüyü kapatır. Açık `.bp` dosyaları yeniden adlandırılabilir/silinebilir; bir `.bp` başka blueprint'te modül olarak eklenip giriş/çıkış portlarından bağlanabilir. Var olan dinamik modül örneklemesi korunmalı ve dosya silerken bağımlılıklar açıkça ele alınmalı.
+
+**Görsel kalite yönü ve sonucu:** CSS yenilendi. Tanıtım/docs/quiz için mineral alt tonlu grafit-yeşil, atölye için bunun daha araç odaklı koyu yüzeyleri ortak token ve kontrast testleriyle uygulanmıştır. Footer kısa marka tanımı, üç gerekli bağlantı ve saha çalışması iddiasının sınırıyla sadeleştirilmiştir. Landing'de genel şablon kartları yerine etkileşimli yarım-toplayıcı devresi ve ürünün gerçek kod çıktısı öne çıkar. Renkler okunabilirlik ve durum ayrımı için seçilmiştir; eğitim başarısını artırdığı iddia edilmez. Görsel inceleme mobil taşma ve etiketlerin okunurluğu için bağımsız geri kontrolle yürütülür.
+
+**Durum:** Tuval seçim kutusu, sağ tıkla aramalı blok çağırma, dışarı/Escape ile iptal, sağ tuş sürükleme/orta tuş pan, grid snap, imleç merkezli yakınlaştırma ve seçili düğümde genişlik düzenleme uygulandı. Blueprint yeniden adlandırma bağlı modül örneklerini günceller; silme bağımlılıkları açıkça temizler. Silme öncesi kullanıcı onayıyla bağlı tasarımın değişmesi bilerek görünürdür. Süreçler E2E ile sınanır. Güncel geçerli blok listesi `docs/bloklar.md`'de tutulur.
+
+**TÜBİTAK ile ilişki:** Güncel erişilebilir 2204-A değerlendirme formlarının proje kanıtlarıyla eşlemesi [`research/tubitak/evaluation-alignment-2027.md`](research/tubitak/evaluation-alignment-2027.md) içinde. Tasarım kalitesi ve otomatik oracle testleri ürünün çalışırlığını destekler; öğrenme artışını kanıtlamaz. Başvuru materyali öğrencilerin gerçekte verdiği kararları doğru yansıtmalı; araç kullanımı veya dış katkı olduğundan farklı gösterilmemeli. Ekip üyelerinin sunduğu tasarımı, kod akışını ve testlerin sınırlarını kendilerinin anlayıp açıklaması gerekir.
 
 ## Araştırma ölçümü: 2026-11-23 kullanıcı kararları
 

@@ -1,6 +1,6 @@
 # Teknik doğrulama kapıları
 
-**Durum:** Uygulama benchmark şartnamesi, 2026-11-23. Bu kapılar kod davranışını doğrular; öğrenme etkisi veya quiz geçerliği ölçmez.
+**Durum:** Uygulama benchmark şartnamesi, 2026-11-23; çok-bit oracle kapsamı 2026-11-24 eklendi. Bu kapılar kod davranışını doğrular; öğrenme etkisi veya quiz geçerliği ölçmez.
 
 ## Girdi sınırları
 
@@ -19,6 +19,10 @@
 - Toplam 252 devre/vektör sonucu.
 
 Oracle, başarısızlıkta kesin sıra ve çıktıyı göstererek `generateVerilog` ile `evaluate` arasındaki davranış farkını yakalar. Dizinin tohumu ve ölçüsü kod içinde sabittir; CI tekrarında farklı devre üretmez.
+
+## Sabit tohumlu çok-bit ve sıralı oracle
+
+`tests/vector-verilog-oracle.mjs`, 1, 2, 7, 31 ve 32 bit genişliklerde AND/NAND/OR/NOR/XOR/XNOR/NOT/MUX için 48 sabit ve seeded giriş vektörü üretir; her genişlik ve blok çıktısı Icarus Verilog ile saf JS evaluator arasında karşılaştırılır (1.920 vektör-çıkış sonucu). Her genişlikte 0/1 seçimleri, X seçimleri, ortak bitleri koruyan belirsiz MUX seçimi, tüm-X sınırı ve deterministik rastgele vektörler vardır. Aynı oracle register için başlangıç X, asenkron reset, yükselen kenarda örnekleme ve kenarlar arasında tutma davranışını da kontrol eder. Bu, standart simülatörle tutarlılık kanıtıdır; gerçek FPGA zamanlamasını veya öğrenme etkisini ölçmez.
 
 ## Hiyerarşi ve kaynak sınırı
 

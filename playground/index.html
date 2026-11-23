@@ -22,26 +22,28 @@ permalink: /playground/
 
   <section class="cad-simulation-bar" aria-label="Simülasyon kontrolleri">
     <div class="cad-sim-actions">
-      <button id="play-sim" class="cad-action cad-play" type="button" aria-label="Simülasyonu oynat">▶ <span>Oynat</span></button>
+      <button id="play-sim" class="cad-action cad-play" type="button" aria-label="Sinyal görselleştirmesini başlat" aria-pressed="false">▶ <span>Canlandır</span></button>
       <button id="step-sim" class="cad-action" type="button" aria-label="Bir tik ilerle">▷| <span>Tek tik</span></button>
-      <button id="pause-sim" class="cad-action" type="button" aria-label="Simülasyonu duraklat">Ⅱ <span>Duraklat</span></button>
-      <button id="stop-sim" class="cad-action" type="button" aria-label="Simülasyonu durdur">■ <span>Durdur</span></button>
-    <button id="reset-sim" class="cad-action cad-reset" type="button" aria-label="Yazmaç değerlerini sıfırla">↺ <span>Reset</span></button>
+      <button id="pause-sim" class="cad-action" type="button" aria-label="Sinyal görselleştirmesini duraklat" disabled>Ⅱ <span>Duraklat</span></button>
+      <button id="stop-sim" class="cad-action" type="button" aria-label="Sinyal görselleştirmesini durdur" disabled>■ <span>Durdur</span></button>
+      <button id="reset-sim" class="cad-action cad-reset" type="button" aria-label="Yazmaçları sıfırla">↺ <span>Yazmaçları sıfırla</span></button>
     </div>
     <div class="cad-clock"><span class="cad-led" id="clock-led"></span><span>SAAT</span><b id="tick-count">000</b><span class="cad-tick-label">yükselen kenar</span></div>
-    <label class="cad-rate" for="step-speed">TİK HIZI
-      <select id="step-speed"><option value="1500">0.5 Hz</option><option value="900" selected>1 Hz</option><option value="450">2 Hz</option></select>
+    <label class="cad-rate" for="step-speed">ANİMASYON HIZI
+      <select id="step-speed"><option value="1500">Yavaş</option><option value="900" selected>Normal</option><option value="450">Hızlı</option></select>
     </label>
-    <div class="cad-sim-status" id="sim-status" role="status" aria-live="polite">Yarım toplayıcı örneği hazır.</div>
+    <div class="cad-sim-status" id="sim-status" role="status" aria-live="polite">Canlandırma sağdaki mantıksal sinyalleri oynatır; yazmaçlar için Tek tik kullan.</div>
   </section>
 
   <main class="cad-workspace">
     <aside class="cad-tools" aria-label="Blok araçlığı">
-      <div class="cad-panel-title"><span>ARAÇLIK</span><kbd>01</kbd></div>
+      <div class="cad-panel-title"><span>ARAÇLIK</span><button class="cad-shelf-toggle" id="shelf-toggle" type="button" aria-expanded="false" aria-controls="tool-shelf">Blokları göster ＋</button><kbd>01</kbd></div>
+      <div class="cad-tool-content" id="tool-shelf">
       <p class="cad-tool-group">GİRİŞ / ÇIKIŞ</p>
-      <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="input"><i class="cad-tool-symbol input-symbol">IN</i><span>Giriş</span><kbd>I</kbd></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#giris-cikis' | relative_url }}" target="_blank" rel="noopener" aria-label="Giriş bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">Devreye dışarıdan 0 veya 1 değerinde sinyal verir.</span></a></div>
+      <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="input"><i class="cad-tool-symbol input-symbol">IN</i><span>Giriş</span><kbd>I</kbd></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#giris-cikis' | relative_url }}" target="_blank" rel="noopener" aria-label="Giriş bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">Seçilen bit genişliğinde onluk giriş değeri verir.</span></a></div>
       <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="output"><i class="cad-tool-symbol output-symbol">OUT</i><span>Çıkış</span><kbd>O</kbd></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#giris-cikis' | relative_url }}" target="_blank" rel="noopener" aria-label="Çıkış bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">Bir mantık yolunun ürettiği 0, 1 veya X değerini gösterir.</span></a></div>
       <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="signal"><i class="cad-tool-symbol signal-symbol">SIG</i><span>Ara sinyal</span></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#ara-sinyal' | relative_url }}" target="_blank" rel="noopener" aria-label="Ara sinyal bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">Bir mantık yoluna ad verir; değerini değişkenler panelinde canlı izle.</span></a></div>
+      <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="constant"><i class="cad-tool-symbol gate-symbol">#</i><span>Sabit</span></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#sabit' | relative_url }}" target="_blank" rel="noopener" aria-label="Sabit bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">Devrede değişmeyen onluk bir değeri seçilen bit genişliğinde üretir.</span></a></div>
       <p class="cad-tool-group">MANTIK KAPILARI</p>
       <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="and"><i class="cad-tool-symbol gate-symbol">&amp;</i><span>AND</span><kbd>A</kbd></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#mantik-kapilari' | relative_url }}" target="_blank" rel="noopener" aria-label="AND bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">Yalnızca iki girişi de 1 olduğunda 1 üretir.</span></a></div>
       <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="nand"><i class="cad-tool-symbol gate-symbol">&amp;○</i><span>NAND</span></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#mantik-kapilari' | relative_url }}" target="_blank" rel="noopener" aria-label="NAND bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">AND sonucunu tersine çevirir.</span></a></div>
@@ -50,24 +52,30 @@ permalink: /playground/
       <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="xor"><i class="cad-tool-symbol gate-symbol">=1</i><span>XOR</span><kbd>X</kbd></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#mantik-kapilari' | relative_url }}" target="_blank" rel="noopener" aria-label="XOR bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">İki girişi farklıysa 1 üretir.</span></a></div>
       <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="xnor"><i class="cad-tool-symbol gate-symbol">=1○</i><span>XNOR</span></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#mantik-kapilari' | relative_url }}" target="_blank" rel="noopener" aria-label="XNOR bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">XOR sonucunu tersine çevirir; girişler aynıysa 1 üretir.</span></a></div>
       <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="not"><i class="cad-tool-symbol gate-symbol">¬</i><span>NOT</span><kbd>N</kbd></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#mantik-kapilari' | relative_url }}" target="_blank" rel="noopener" aria-label="NOT bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">Girişteki 0'ı 1'e, 1'i 0'a çevirir.</span></a></div>
+      <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="mux"><i class="cad-tool-symbol gate-symbol">MUX</i><span>Seçici</span></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#secici' | relative_url }}" target="_blank" rel="noopener" aria-label="Seçici bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">Bir bitlik seçim girişiyle iki veri yolundan birini çıkışa geçirir.</span></a></div>
       <p class="cad-tool-group">SIRALI MANTIK</p>
       <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="register"><i class="cad-tool-symbol register-symbol">D</i><span>Yazmaç</span><kbd>Q</kbd></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#yazmac' | relative_url }}" target="_blank" rel="noopener" aria-label="Yazmaç bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">D girişini bir yükselen clock kenarında saklar ve Q çıkışında tutar.</span></a></div>
       <p class="cad-tool-group">BP MODÜLLERİ</p>
       <div id="module-tools" data-help-href="{{ '/docs/bloklar/#bp-modulleri' | relative_url }}"></div>
       <div class="cad-tool-help"><b>Bağlantı</b><span>Çıkış portuna, sonra giriş portuna tıkla.</span></div>
       <div class="cad-selection" id="selection-info">Blok seçili değil</div>
+      </div>
     </aside>
 
     <section class="cad-editor" aria-label="Blueprint çalışma alanı">
       <div class="cad-document-tabs" id="document-tabs" role="tablist" aria-label="Açık blueprint dosyaları"></div>
       <div class="cad-canvas-topline"><div><span class="cad-green-dot"></span><span id="canvas-mode">KOMBİNASYONEL DEVRE</span></div><div class="cad-camera-tools"><button class="cad-zoom-button" id="zoom-out" type="button" aria-label="Uzaklaştır">−</button><span id="zoom-level">100%</span><button class="cad-zoom-button" id="zoom-in" type="button" aria-label="Yakınlaştır">+</button><button class="cad-zoom-button" id="zoom-fit" type="button" aria-label="Görünümü sığdır">Sığdır</button><span class="cad-topline-divider">·</span><span>IZGARA 20</span></div></div>
       <div class="cad-canvas-scroll">
-        <div id="blueprint-canvas" class="cad-canvas" tabindex="0" aria-label="Blokları sürükleyip bağlayacağın blueprint tuvali; boş alana tıklayarak blok ekle">
-          <input id="node-search" class="cad-node-search" type="text" role="combobox" aria-label="Blok ara ve ekle" aria-expanded="false" placeholder="Blok ara… Enter ile ekle" autocomplete="off" hidden>
+        <div id="blueprint-canvas" class="cad-canvas" tabindex="0" aria-label="Blueprint tuvali; sol tıkla blokları seç, boş alana sağ tıklayarak blok ekle">
+          <div id="node-caller" class="cad-node-caller dropdown" role="dialog" aria-label="Blok ekle" hidden>
+            <input id="node-search" class="cad-node-search input input-sm" type="search" role="combobox" aria-label="Blok ara ve ekle" aria-autocomplete="list" aria-controls="node-options" aria-expanded="false" placeholder="Blok ara…" autocomplete="off">
+            <ul id="node-options" class="cad-node-options menu menu-sm" role="listbox" aria-label="Eklenebilir bloklar"></ul>
+          </div>
           <div id="camera-world" class="cad-camera-world">
           <svg id="wire-layer" viewBox="0 0 900 600" preserveAspectRatio="none" aria-label="Mantıksal sinyal bağlantıları"></svg>
           <div id="node-layer"></div>
           </div>
+          <div id="selection-box" class="cad-selection-box" aria-hidden="true" hidden></div>
         </div>
       </div>
       <section class="cad-variables">

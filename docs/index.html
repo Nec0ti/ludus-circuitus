@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Dokümantasyon
-description: Dijital mantık, Verilog ve Devre Atölyesi için Türkçe adım adım rehber.
+description: Dijital mantık, Verilog ve Devre Atölyesi için sırayla ilerleyen Türkçe rehber.
 permalink: /docs/
 reading_time: 2
 ---
@@ -9,31 +9,32 @@ reading_time: 2
   {% include docs-nav.html %}
   <article class="docs-article">
     <p class="eyebrow eyebrow-ink">Dokümantasyon</p>
-    <h1>Kısa derslerle devreleri öğren.</h1>
-    <p class="docs-reading-time">Tüm rehber yaklaşık 41 dakika</p>
-    <p class="docs-intro">Her temel ders tek bir konuya odaklanır ve yaklaşık 2–3 dakika sürer. Hiç ön bilgi gerektirmeyen dersleri sırayla oku, sonra atölyede dene.</p>
+    <h1>Önce mantığı anla, sonra devreyi kur.</h1>
+    <p class="docs-reading-time">Tüm rehber yaklaşık 44 dakika</p>
+    <p class="docs-intro">İlk kez öğreniyorsan üç adımda ilerle. Her ders tek bir soruya yanıt verir; konu listesini sayfanın içinde bulursun. Atölye rehberleri temel derslerden sonra gelir.</p>
+    <aside class="docs-callout"><b>Kapsam</b><p>Atölye 1–32 bit aralığında mantık yolları kurar; başlangıç dersleri kavramları önce tek bit üzerinden açıklar. Bu çalışma dijital mantık ve Verilog içindir. Tam işlemci veya assembly geliştirme ortamı kapsamda değildir.</p></aside>
 
-    <h2>Temel dersler <span class="docs-section-time">~18 dk</span></h2>
+    <h2>Temeller <span class="docs-section-time">~18 dk</span></h2>
+    <p>Bir bitin ne olduğunu öğren, kapıların sonucunu bul, sonra bu yolları ve Verilog karşılıklarını bir araya getir.</p>
     <div class="docs-link-list">
-      <a href="{{ '/docs/baslangic/' | relative_url }}"><span><b>Kurs haritası</b><small>Altı temel dersin sırası ve devam rehberleri.</small></span><i>2 dk</i></a>
-      <a href="{{ '/docs/dijital-sinyaller/' | relative_url }}"><span><b>1. 0 ve 1: dijital sinyaller</b><small>Bir bit, iki değer ve ikilik gösterim.</small></span><i>3 dk</i></a>
-      <a href="{{ '/docs/mantik-kapilari/' | relative_url }}"><span><b>2. Mantık kapıları</b><small>Doğruluk tablosundan kapı çıkışını bul.</small></span><i>3 dk</i></a>
-      <a href="{{ '/docs/yarim-toplayici/' | relative_url }}"><span><b>3. Yarım toplayıcı</b><small>XOR ve AND ile iki bitin toplamını kur.</small></span><i>3 dk</i></a>
-      <a href="{{ '/docs/paralel-yollar/' | relative_url }}"><span><b>4. Paralel yollar</b><small>Bağımsız donanım yollarının birlikte çalışması.</small></span><i>2 dk</i></a>
-      <a href="{{ '/docs/saat-yazmac/' | relative_url }}"><span><b>5. Saat ve yazmaç</b><small>Kombinasyonel hesap ile değer saklamayı ayır.</small></span><i>3 dk</i></a>
-      <a href="{{ '/docs/bloktan-verilog/' | relative_url }}"><span><b>6. Bloktan Verilog'a</b><small>Görsel devreyi gerçek Verilog sözdizimiyle eşleştir.</small></span><i>2 dk</i></a>
+      <a href="{{ '/docs/baslangic/' | relative_url }}"><span><b>Kurs haritası</b><small>Bu rehberi nasıl izleyeceğini seç.</small></span><i>2 dk</i></a>
+      <a href="{{ '/docs/dijital-sinyaller/' | relative_url }}"><span><b>1 · Dijital sinyaller</b><small>Bir bit ne taşır? 0 ve 1 ne demektir?</small></span><i>3 dk</i></a>
+      <a href="{{ '/docs/mantik-kapilari/' | relative_url }}"><span><b>2 · Mantık kapıları</b><small>Girişlerden çıkışı doğruluk tablosuyla bul.</small></span><i>3 dk</i></a>
+      <a href="{{ '/docs/yarim-toplayici/' | relative_url }}"><span><b>3 · Yarım toplayıcı</b><small>XOR ve AND ile toplam ve taşımayı kur.</small></span><i>3 dk</i></a>
+      <a href="{{ '/docs/paralel-yollar/' | relative_url }}"><span><b>4 · Paralel yollar</b><small>Bağımsız donanım yollarının birlikte hesabını izle.</small></span><i>2 dk</i></a>
+      <a href="{{ '/docs/saat-yazmac/' | relative_url }}"><span><b>5 · Saat ve yazmaç</b><small>Hesaplama ile değer saklamayı ayır.</small></span><i>3 dk</i></a>
+      <a href="{{ '/docs/bloktan-verilog/' | relative_url }}"><span><b>6 · Bloktan Verilog'a</b><small>Kurulan bağlantıyı gerçek kodla eşleştir.</small></span><i>2 dk</i></a>
     </div>
 
-    <h2>Atölye rehberi <span class="docs-section-time">~17 dk</span></h2>
+    <h2>Atölyede uygula <span class="docs-section-time">~20 dk</span></h2>
+    <p>Temelleri bitirdiğinde önce çalışma alanını tanı, sonra ihtiyaç duyduğun bloğun başvuru sayfasını aç.</p>
     <div class="docs-link-list">
-      <a href="{{ '/docs/kullanim/' | relative_url }}"><span><b>Devre Atölyesi'ni kullan</b><small>Blok ekle, sinyalleri izle, simüle et ve `.bp` modüllerini birleştir.</small></span><i>8 dk</i></a>
-      <a href="{{ '/docs/bloklar/' | relative_url }}"><span><b>Blok kataloğu</b><small>Giriş, kapı, ara sinyal, yazmaç ve modül bloklarının açıklaması.</small></span><i>9 dk</i></a>
+      <a href="{{ '/docs/kullanim/' | relative_url }}"><span><b>Devre Atölyesi'ni kullan</b><small>Tuval, giriş değerleri, simülasyon ve blueprint dosyaları.</small></span><i>9 dk</i></a>
+      <a href="{{ '/docs/bloklar/' | relative_url }}"><span><b>Blok kataloğu</b><small>Blokların görevi, bit genişliği, portlar ve bağlantı kuralları.</small></span><i>11 dk</i></a>
     </div>
 
-    <h2>Geliştirici rehberi <span class="docs-section-time">~6 dk</span></h2>
-    <div class="docs-link-list">
-      <a href="{{ '/docs/yerel-kurulum/' | relative_url }}"><span><b>Yerel kullanım ve kurulum</b><small>Siteyi bilgisayarında çalıştır ve katkı vermeye başla.</small></span><i>6 dk</i></a>
-    </div>
-    <aside class="docs-callout"><b>Başlangıç önerisi</b><p><a href="{{ '/docs/baslangic/' | relative_url }}">Kurs haritasını</a> aç veya ilk ders olan <a href="{{ '/docs/dijital-sinyaller/' | relative_url }}">0 ve 1: dijital sinyaller</a> sayfasından başla. Okuma süreleri yaklaşık değerlerdir.</p></aside>
+    <h2>Projeyi bilgisayarında çalıştır <span class="docs-section-time">~6 dk</span></h2>
+    <p>Geliştirme yapacaksan <a href="{{ '/docs/yerel-kurulum/' | relative_url }}">yerel kurulum rehberinden</a> gereken araçlar ve test sırasıyla başla.</p>
+    <aside class="docs-callout"><b>Bu sıranın amacı</b><p>Önce kavramı, sonra küçük devreyi, en son araç kullanımını öğren. Her dersin alt başlıkları ve sonraki adımı ders sayfasında yer alır.</p></aside>
   </article>
 </div>

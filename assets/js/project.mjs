@@ -1,18 +1,25 @@
-import { createState, evaluate, generateVerilog, isValidSignalName, reset, tick, validateBlueprint } from "./engine.mjs";
+import { createState, evaluate, generateVerilog, isValidSignalName, nodeWidth, reset, tick, validateBlueprint } from "./engine.mjs";
 
 const validName = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 const key = (node, port) => node + ":" + port;
 const maxExpandedNodes = 500;
 const inputsOf = (node, modules) => node.type === "module"
   ? (modules.get(node.module)?.nodes.filter((item) => item.type === "input").map((item) => item.name) || [])
-  : ({ and: ["a", "b"], nand: ["a", "b"], or: ["a", "b"], nor: ["a", "b"], xor: ["a", "b"], xnor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] })[node.type] || [];
+  : ({ and: ["a", "b"], nand: ["a", "b"], or: ["a", "b"], nor: ["a", "b"], xor: ["a", "b"], xnor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"], mux: ["sel", "a", "b"] })[node.type] || [];
 const outputsOf = (node, modules) => node.type === "module"
   ? (modules.get(node.module)?.nodes.filter((item) => item.type === "output").map((item) => item.name) || [])
-  : node.type === "input" || ["and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register"].includes(node.type) ? ["out"] : [];
+  : node.type === "input" || ["constant", "and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register", "mux"].includes(node.type) ? ["out"] : [];
+const portWidth = (node, port, modules) => {
+  if (node.type === "module") {
+    const childPort = modules.get(node.module)?.nodes.find((item) => item.name === port && ["input", "output"].includes(item.type));
+    return childPort ? nodeWidth(childPort) : undefined;
+  }
+  return node.type === "mux" && port === "sel" ? 1 : nodeWidth(node);
+};
 
 function inspectBlueprint(bp, modules) {
   if (!bp || bp.version !== 1 || typeof bp.name !== "string" || !validName.test(bp.name) || !Array.isArray(bp.nodes) || !Array.isArray(bp.wires) || bp.nodes.length > 500 || bp.wires.length > 2000) throw new Error("Blueprint biçimi, adı, boyutu veya sürümü geçersiz.");
-  const nodes = new Map(), names = new Set(), allowed = new Set(["input", "output", "and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register", "module"]);
+  const nodes = new Map(), names = new Set(), allowed = new Set(["input", "output", "constant", "and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register", "mux", "module"]);
   for (const node of bp.nodes) {
     if (!node || typeof node.id !== "string" || !node.id || node.id.length > 100 || nodes.has(node.id) || !allowed.has(node.type)) throw new Error("Blok türü veya kimliği geçersiz.");
     if (node.type === "module" && (!modules.has(node.module) || !validName.test(node.name || "instance"))) throw new Error("Modül bloğu geçerli bir blueprint modülünü göstermeli.");
@@ -32,6 +39,7 @@ function inspectBlueprint(bp, modules) {
   for (const wire of bp.wires) {
     const from = nodes.get(wire?.from?.node), to = nodes.get(wire?.to?.node);
     if (!from || !to || !outputsOf(from, modules).includes(wire.from.port) || !inputsOf(to, modules).includes(wire.to.port)) throw new Error("Bağlantı geçersiz bir blok girişine veya çıkışına ulaşıyor.");
+    if (portWidth(from, wire.from.port, modules) !== portWidth(to, wire.to.port, modules)) throw new Error("Bağlantıdaki port genişlikleri eşleşmeli; genişlik dönüştürme otomatik yapılmaz.");
     const destination = key(to.id, wire.to.port);
     if (destinations.has(destination)) throw new Error("Bir blok girişine birden fazla sinyal bağlanamaz.");
     destinations.add(destination);

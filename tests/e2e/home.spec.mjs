@@ -43,7 +43,15 @@ test("landing circuit updates both parallel outputs and stays within the viewpor
 test("landing sections display reading estimates and the workshop keeps its separate theme", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".reading-time")).toHaveCount(5);
-  expect(await page.locator("html").evaluate((node) => getComputedStyle(node).getPropertyValue("--color-base-100").trim())).toBe("#1b232b");
+  expect(await page.locator("html").evaluate((node) => getComputedStyle(node).getPropertyValue("--color-base-100").trim())).toBe("#202c2b");
   await page.goto("/playground/");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "ludus-cad");
+});
+
+test("footer gives clear routes to the course, workbench and source without claiming measured learning effects", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("footer .footer-links a")).toHaveCount(3);
+  await expect(page.locator("footer")).toContainText("Öğrenme kazanımı saha çalışmasıyla değerlendirilecek.");
+  await expect(page.locator("footer .footer-brand")).toContainText("Dijital mantık çalışma alanı");
+  await expect(page.locator("footer a[href='https://github.com/Nec0ti/ludus-circuitus']")).toHaveText(/Kaynak kodu/);
 });

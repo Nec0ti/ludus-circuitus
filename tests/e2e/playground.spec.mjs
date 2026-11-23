@@ -55,6 +55,25 @@ test("keeps the full-screen workbench usable at narrow viewport widths", async (
   }
 });
 
+test("mobile block shelf starts collapsed and exposes its accessible block controls", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto("/playground/");
+  const toggle = page.getByRole("button", { name: "Blokları göster" });
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(page.locator('[data-add="nand"]')).toBeHidden();
+  const canvasTop = (await page.locator("#blueprint-canvas").boundingBox()).y;
+  expect(canvasTop).toBeLessThan(380);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await toggle.click();
+  await expect(page.getByRole("button", { name: "Blokları gizle" })).toHaveAttribute("aria-expanded", "true");
+  const nand = page.locator('[data-add="nand"]');
+  await expect(nand).toBeVisible();
+  await expect(nand).toHaveAttribute("draggable", "true");
+  await nand.click();
+  await expect(page.locator(".node-nand")).toHaveCount(1);
+});
+
 test("builds a connection, saves locally, reloads and exports a .bp file", async ({ page }) => {
   await page.goto("/playground/");
   await page.getByRole("button", { name: "Yeni BP" }).click();
@@ -91,7 +110,25 @@ test("adds, names, simulates and exports a named intermediate signal", async ({ 
   expect(file.suggestedFilename()).toBe("devre2.bp");
 });
 
-test("clocked register updates on a tick and reset is separate from stop", async ({ page }) => {
+test("play, pause and stop animate only the right signal view without changing inputs or clock", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.locator(".cad-variable.is-input").first().click();
+  await page.getByRole("button", { name: "Sinyal görselleştirmesini başlat" }).click();
+  await expect(page.locator("#signal-view")).toHaveClass(/is-playing/);
+  await expect(page.locator("#signal-view .cad-mini-wire").first()).toHaveCSS("animation-name", "cad-signal-flow");
+  await expect(page.locator("#variable-list .cad-variable-value").first()).toHaveText("1");
+  await expect(page.locator("#tick-count")).toHaveText("000");
+  await page.getByRole("button", { name: "Sinyal görselleştirmesini duraklat" }).click();
+  await expect(page.locator("#signal-view")).toHaveClass(/is-paused/);
+  await expect(page.locator("#signal-view .cad-mini-wire").first()).toHaveCSS("animation-play-state", "paused");
+  await page.getByRole("button", { name: "Sinyal görselleştirmesini durdur" }).click();
+  await expect(page.locator("#signal-view")).not.toHaveClass(/is-playing|is-paused/);
+  await expect(page.locator("#tick-count")).toHaveText("000");
+  await expect(page.locator("#variable-list .cad-variable-value").first()).toHaveText("1");
+  await expect(page.locator("#step-sim")).toBeDisabled();
+});
+
+test("clocked registers change only on a manual tick; reset stays separate from visualization stop", async ({ page }) => {
   await page.goto("/playground/");
   await page.getByRole("button", { name: "Yeni BP" }).click();
   await page.locator('[data-add="register"]').click();
@@ -101,12 +138,15 @@ test("clocked register updates on a tick and reset is separate from stop", async
   await page.getByRole("button", { name: "cikis in girişi" }).click();
   await expect(page.locator("#verilog-code")).toContainText("always @(posedge clk or posedge reset)");
   await page.locator(".cad-variable.is-input").click();
+  await page.getByRole("button", { name: "Sinyal görselleştirmesini başlat" }).click();
+  await expect(page.locator("#variable-list .cad-variable").nth(1).locator(".cad-variable-value")).toHaveText("X");
+  await expect(page.locator("#tick-count")).toHaveText("000");
+  await page.getByRole("button", { name: "Sinyal görselleştirmesini durdur" }).click();
+  await expect(page.locator("#variable-list .cad-variable").nth(1).locator(".cad-variable-value")).toHaveText("X");
   await page.getByRole("button", { name: "Bir tik ilerle" }).click();
   await expect(page.locator("#variable-list .cad-variable").nth(1).locator(".cad-variable-value")).toHaveText("1");
   await expect(page.locator("#tick-count")).toHaveText("001");
-  await page.getByRole("button", { name: "Simülasyonu durdur" }).click();
-  await expect(page.locator("#sim-status")).toContainText("yazmaç değerleri korundu");
-  await page.getByRole("button", { name: "Yazmaç değerlerini sıfırla" }).click();
+  await page.getByRole("button", { name: "Yazmaçları sıfırla" }).click();
   await expect(page.locator("#sim-status")).toContainText("Yazmaç değerleri sıfırlandı");
 });
 
@@ -127,6 +167,49 @@ test("composes open .bp files through named module ports and keeps the project a
   await page.getByRole("tab", { name: "devre3.bp" }).click();
   await expect(page.locator("#verilog-code")).toContainText("assign cikis = giris;");
   await expect(page.locator("#module-tools").getByRole("button", { name: "devre2" })).toBeVisible();
+});
+
+test("renaming a blueprint updates module references and deleting it removes dependent blocks safely", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.getByRole("button", { name: "Yeni BP" }).click();
+  await page.getByRole("button", { name: "giris out çıkışı" }).click();
+  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await page.getByRole("button", { name: "Yeni BP" }).click();
+  page.on("dialog", (dialog) => dialog.accept("yardimci"));
+  await page.getByRole("tab", { name: "devre2.bp" }).dblclick();
+  await expect(page.locator("#file-name")).toHaveText("yardimci.bp");
+  await page.getByRole("tab", { name: "devre3.bp" }).click();
+  await expect(page.locator("#module-tools").getByRole("button", { name: "yardimci" })).toBeVisible();
+  await page.locator("#module-tools").getByRole("button", { name: "yardimci" }).click();
+  await expect(page.locator(".node-module")).toHaveCount(1);
+  await page.getByRole("button", { name: "giris out çıkışı" }).click();
+  await page.getByRole("button", { name: "yardimci_1 giris girişi" }).click();
+  await page.getByRole("button", { name: "yardimci_1 cikis çıkışı" }).click();
+  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await expect(page.locator("#verilog-code")).toContainText("module devre3");
+  page.removeAllListeners("dialog");
+  page.on("dialog", (dialog) => dialog.accept());
+  await page.locator("#document-tabs .cad-tab-wrap").filter({ hasText: "yardimci.bp" }).getByRole("button", { name: "yardimci.bp dosyasını kapat" }).click();
+  await expect(page.locator(".node-module")).toHaveCount(0);
+  await expect(page.locator("#document-tabs .cad-tab-wrap")).toHaveCount(2);
+});
+
+test("1–32-bit inputs display decimal and binary while Verilog keeps the selected width", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.getByRole("button", { name: "Yeni BP" }).click();
+  const input = page.locator(".node-input").first();
+  await input.click();
+  await input.getByRole("combobox").selectOption("8");
+  await page.locator(".node-output").first().click();
+  await page.locator(".node-output").first().getByRole("combobox").selectOption("8");
+  await page.getByRole("button", { name: "giris out çıkışı" }).click();
+  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await expect(page.locator("#graph-status")).toContainText("Blueprint geçerli");
+  await expect(page.locator("#verilog-code")).toContainText("input wire [7:0] giris");
+  page.on("dialog", (dialog) => dialog.accept("173"));
+  await page.locator(".cad-variable.is-input").click();
+  await expect(page.locator(".cad-variable.is-input .cad-variable-value")).toHaveText("173 · 10101101");
+  await expect(page.locator("#variable-list .cad-variable-value").nth(1)).toHaveText("173 · 10101101");
 });
 
 test("imports a blueprint safely and reports malformed files", async ({ page }) => {
@@ -168,7 +251,7 @@ test("moves a block on the blueprint grid and updates the signal view", async ({
 test("shows concise help beside every block and opens its docs in a new tab", async ({ page }) => {
   await page.goto("/playground/");
   const blocks = [
-    ["Giriş", /#giris-cikis/, "Devreye dışarıdan 0 veya 1 değerinde sinyal verir."],
+    ["Giriş", /#giris-cikis/, "Seçilen bit genişliğinde onluk giriş değeri verir."],
     ["Çıkış", /#giris-cikis/, "Bir mantık yolunun ürettiği 0, 1 veya X değerini gösterir."],
     ["AND", /#mantik-kapilari/, "Yalnızca iki girişi de 1 olduğunda 1 üretir."],
     ["NAND", /#mantik-kapilari/, "AND sonucunu tersine çevirir."],
@@ -177,6 +260,8 @@ test("shows concise help beside every block and opens its docs in a new tab", as
     ["XOR", /#mantik-kapilari/, "İki girişi farklıysa 1 üretir."],
     ["XNOR", /#mantik-kapilari/, "XOR sonucunu tersine çevirir; girişler aynıysa 1 üretir."],
     ["NOT", /#mantik-kapilari/, "Girişteki 0'ı 1'e, 1'i 0'a çevirir."],
+    ["Sabit", /#sabit/, "Devrede değişmeyen onluk bir değeri seçilen bit genişliğinde üretir."],
+    ["Seçici", /#secici/, "Bir bitlik seçim girişiyle iki veri yolundan birini çıkışa geçirir."],
     ["Ara sinyal", /#ara-sinyal/, "Bir mantık yoluna ad verir; değerini değişkenler panelinde canlı izle."],
     ["Yazmaç", /#yazmac/, "D girişini bir yükselen clock kenarında saklar ve Q çıkışında tutar."]
   ];
@@ -194,7 +279,7 @@ test("shows concise help beside every block and opens its docs in a new tab", as
   await help.click();
   const popup = await popupPromise;
   await expect(popup).toHaveURL(/docs\/bloklar\/#mantik-kapilari/);
-  await expect(popup.getByRole("heading", { name: "Bloklar" })).toBeVisible();
+  await expect(popup.getByRole("heading", { name: "Bloklar", exact: true })).toBeVisible();
 
   await page.getByRole("button", { name: "Yeni BP" }).click();
   await page.getByRole("tab", { name: "top.bp" }).click();
@@ -205,10 +290,10 @@ test("shows concise help beside every block and opens its docs in a new tab", as
   await expect(moduleHelp.getByRole("tooltip")).toHaveText("Bu blueprint'i giriş ve çıkış portlarıyla tek blok olarak kullanır.");
 });
 
-test("canvas wheel zoom keeps the pointer's world point stable and click-to-search adds a snapped block", async ({ page }) => {
+test("canvas wheel zoom keeps the pointer fixed and right-click search adds a snapped block", async ({ page }) => {
   await page.goto("/playground/");
   const canvas = page.locator("#blueprint-canvas"), box = await canvas.boundingBox();
-  const px = box.x + box.width * 0.82, py = box.y + box.height * 0.24;
+  const px = box.x + 20, py = box.y + 20;
   const worldAtPointer = () => page.evaluate(({ px, py }) => {
     const matrix = new DOMMatrixReadOnly(getComputedStyle(document.querySelector("#camera-world")).transform);
     const rect = document.querySelector("#blueprint-canvas").getBoundingClientRect();
@@ -220,14 +305,44 @@ test("canvas wheel zoom keeps the pointer's world point stable and click-to-sear
   const after = await worldAtPointer();
   expect(Math.abs(after[0] - before[0])).toBeLessThan(0.2);
   expect(Math.abs(after[1] - before[1])).toBeLessThan(0.2);
-  await page.mouse.click(px, py);
+  await page.mouse.click(px, py, { button: "right" });
   const search = page.getByRole("combobox", { name: "Blok ara ve ekle" });
   await expect(search).toBeFocused();
+  await search.fill("MUX");
+  await expect(page.locator("#node-options [role='option']")).toContainText("SEÇİCİ");
   await search.fill("NAND");
   await search.press("Enter");
   await expect(page.locator(".node-nand")).toHaveCount(1);
-  const position = await page.locator(".node-nand").getAttribute("style");
-  expect(position).toMatch(/left: -?\d+px; top: -?\d+px/);
+  const position = await page.locator(".node-nand").evaluate((node) => ({ x: parseFloat(node.style.left), y: parseFloat(node.style.top) }));
+  expect(Math.abs(position.x % 20)).toBe(0);
+  expect(Math.abs(position.y % 20)).toBe(0);
+  await page.mouse.click(px, py, { button: "right" });
+  await expect(search).toBeVisible();
+  await search.press("Escape");
+  await expect(search).toBeHidden();
+  await expect(canvas).toBeFocused();
+  await page.mouse.click(px, py, { button: "right" });
+  await page.locator(".cad-canvas-topline").click();
+  await expect(search).toBeHidden();
+});
+
+test("selection box selects nodes and right-drag pans the canvas", async ({ page }) => {
+  await page.goto("/playground/");
+  const canvas = await page.locator("#blueprint-canvas").boundingBox();
+  const nodes = await page.locator(".cad-node").evaluateAll((items) => items.slice(0, 2).map((item) => {
+    const box = item.getBoundingClientRect(); return { left: box.left, right: box.right, top: box.top, bottom: box.bottom };
+  }));
+  const left = Math.min(...nodes.map((box) => box.left)) - 5, top = Math.min(...nodes.map((box) => box.top)) - 5;
+  const right = Math.max(...nodes.map((box) => box.right)) + 5, bottom = Math.max(...nodes.map((box) => box.bottom)) + 5;
+  await page.mouse.move(left, top); await page.mouse.down(); await page.mouse.move(right, bottom, { steps: 5 }); await page.mouse.up();
+  await expect(page.locator(".cad-node.is-selected")).toHaveCount(2);
+  const before = await page.locator("#camera-world").evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).e);
+  await page.mouse.move(canvas.x + canvas.width - 20, canvas.y + canvas.height - 20);
+  await page.mouse.down({ button: "right" });
+  await page.mouse.move(canvas.x + canvas.width - 80, canvas.y + canvas.height - 60, { steps: 4 });
+  await page.mouse.up({ button: "right" });
+  const after = await page.locator("#camera-world").evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).e);
+  expect(after - before).toBeCloseTo(-60, 0);
 });
 
 test("block tools can be dragged onto the canvas and grid snapping remains enabled", async ({ page }) => {
