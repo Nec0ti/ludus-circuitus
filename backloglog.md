@@ -206,4 +206,7 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Proje/blueprint doğrulaması geçersiz, anahtar kelime, yinelenen ve `clk`/`reset` çakışmalı adları engeller. Modül düzleştirme her modül örneğinin ara sinyaline ayrı kapsam adı verir. Eski `.bp` sürüm 1 dosyaları geçerliliğini korur. Blok yardımı ve Bloklar/Kullanım dokümanları güncellendi.
 - Bağımsız kod denetimi bütün entegrasyon noktalarını ve modül ad çakışması riskini belirledi; uygulama ve testler buna göre tamamlandı.
 - Doğrulama: `npm test` 16/16; Icarus Verilog iki oracle (yarım toplayıcıda 4 binary + 4 X vektörü, iç ara sinyalli ve iki örnekli `.bp` modülü); CSS build; Jekyll 4.4.1 ile site build; Playwright E2E 18/18; `git diff --check` geçti. Araçlar yerel Nix paketleriyle sağlandı.
-- Kalan: PR CI ve istenen bağımsız atölye görsel incelemesi tamamlanınca birleştirme kararı.
+- Bağımsız görsel inceleme: 1440×900 ve 390×844 ölçülerinde hizalama/taşma sorunu yok. Ara Sinyal satırı yanlışlıkla kapı sanılmasın diye Giriş/Çıkış grubuna taşındı. İlk yerel ve PR CI kapıları geçiyor; son konumla PR CI sonucu bekleniyor.
+
+
+- Son görsel değerlendirme `/tmp/ludus-a855858-1440.png` ve `/tmp/ludus-a855858-390.png` ekran görüntülerinde yapıldı. İlk konumda hizalama doğruydu, mobilde metin iki satıra kırılıyordu; yalnız araçlık başlığına göre sınıflandırma netliği iyileştirildi. Son konum PR başlığında incelenecek.
