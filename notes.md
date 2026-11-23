@@ -26,6 +26,15 @@ Detay, alternatifler ve sınırlılıklar: [`research/measurement/learning-study
 - Veriler yalnız yerel tarayıcıda. Quiz, API ve öğrenci kaydı henüz yok; okul/MEB/KVKK onayı beklemeden kişisel veri toplama yapılmayacak.
 - Genel site için yumuşak koyu tema, renk/okunabilirlik ve çocuklarda öğrenme motivasyonu kaynak incelemesi bekliyor; dokümantasyon modüler eğitim portalına dönüşecek.
 
+## Çoklu `.bp` modül birleşimi: 2026-11-23
+
+- Bir açık blueprint'in `name` alanı modül kimliğidir. Bir modül örneği `{ type: "module", module: <hedef blueprint name>, name: <örnek adı> }` biçimindedir.
+- Modül giriş portları hedef blueprint'teki `input` bloklarının adları, çıkış portları `output` bloklarının adlarıdır. Araçlıktaki `BP MODÜLLERİ` listesi diğer açık blueprint'leri modül olarak ekler.
+- Bir proje 1–8 benzersiz `.bp` sekmesi taşır; modül adları benzersiz, bağımlılıklar döngüsüz olmalı. Modül başına en fazla 8 giriş ve 8 çıkış portu desteklenir.
+- Simülasyon ve Verilog, `.bp` hiyerarşisini düzleştirip tek üst Verilog modülünde birleştirir. İç modül register/yazmaç durumları da üst tasarımla aynı tick/reset geçişlerine katılır.
+- Her açık BP yerel depolamada birlikte saklanır. Dışa aktarma hâlâ etkin `.bp` dosyasını verir; başka cihaza proje taşırken bağımlı BP dosyaları ayrı ayrı içe aktarılmalıdır.
+- Doğrulama: tüm yarım toplayıcı giriş vektörleri, modül portları, eksik modül, modül döngüsü, iç içe register tick/reset, 320–1440 px atölye akışı, yerel saklama/yükleme ve Icarus ile kombinasyonel + sıralı modül simülasyonu.
+
 ## Ürün ve yayın kararı
 
 - Site GitHub Pages ve Jekyll ile yayımlanacak.

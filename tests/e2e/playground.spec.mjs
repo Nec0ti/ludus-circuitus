@@ -65,6 +65,25 @@ test("clocked register updates on a tick and reset is separate from stop", async
   await expect(page.locator("#sim-status")).toContainText("Yazmaç değerleri sıfırlandı");
 });
 
+test("composes open .bp files through named module ports and keeps the project after reload", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.getByRole("button", { name: "Yeni BP" }).click();
+  await page.getByRole("button", { name: "giris out çıkışı" }).click();
+  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await page.getByRole("button", { name: "Yeni BP" }).click();
+  await page.locator("#module-tools").getByRole("button", { name: "devre2" }).click();
+  await page.getByRole("button", { name: "giris out çıkışı" }).click();
+  await page.getByRole("button", { name: "devre2_1 giris girişi" }).click();
+  await page.getByRole("button", { name: "devre2_1 cikis çıkışı" }).click();
+  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await expect(page.locator("#verilog-code")).toContainText("assign cikis = giris;");
+  await expect(page.locator("#graph-status")).toContainText("Blueprint geçerli");
+  await page.reload();
+  await page.getByRole("tab", { name: "devre3.bp" }).click();
+  await expect(page.locator("#verilog-code")).toContainText("assign cikis = giris;");
+  await expect(page.locator("#module-tools").getByRole("button", { name: "devre2" })).toBeVisible();
+});
+
 test("imports a blueprint safely and reports malformed files", async ({ page }) => {
   await page.goto("/playground/");
   const blueprint = {

@@ -1,4 +1,5 @@
-import { createState, evaluate, generateVerilog, halfAdderBlueprint, reset, tick, validateBlueprint, X } from "./engine.mjs";
+import { createState, halfAdderBlueprint, X } from "./engine.mjs";
+import { createProjectState, evaluateProject, flattenProject, generateProjectVerilog, resetProject, tickProject, validateProject } from "./project.mjs";
 
 const $ = (selector) => document.querySelector(selector);
 const el = (tag, className, text) => {
@@ -27,19 +28,21 @@ let documents = [{ id: crypto.randomUUID(), name: "top.bp", bp: halfAdderBluepri
 let activeId = documents[0].id;
 let selectedId = null;
 let pendingSource = null;
-let state = { registers: createState(documents[0].bp), inputs: {}, timer: null, tick: 0, vector: -1 };
+let state = { registers: projectState(documents[0]), inputs: {}, timer: null, tick: 0, vector: -1 };
 
 function activeDocument() { return documents.find((doc) => doc.id === activeId); }
+function projectState(doc) { try { return createProjectState(documents, doc.bp.name); } catch { return createState(doc.bp); } }
+function moduleBlueprint(node) { return documents.find((doc) => doc.bp.name === node.module)?.bp; }
 function inputNodes(bp) { return bp.nodes.filter((node) => node.type === "input"); }
-function hasRegisters(bp) { return bp.nodes.some((node) => node.type === "register"); }
+function hasRegisters(bp) { try { return flattenProject(documents, bp.name).bp.nodes.some((node) => node.type === "register"); } catch { return bp.nodes.some((node) => node.type === "register"); } }
 function currentInputs(bp) { return Object.fromEntries(inputNodes(bp).map((node) => [node.name, state.inputs[node.name] ?? 0])); }
-function portInputs(node) { return ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], register: ["d"], output: ["in"] })[node.type] || []; }
-function portOutputs(node) { return ["input", "and", "or", "xor", "not", "register"].includes(node.type) ? ["out"] : []; }
+function portInputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "input").map((item) => item.name) || []) : ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], register: ["d"], output: ["in"] })[node.type] || []; }
+function portOutputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "output").map((item) => item.name) || []) : ["input", "and", "or", "xor", "not", "register"].includes(node.type) ? ["out"] : []; }
 
 function safeEvaluate(doc) {
   try {
-    validateBlueprint(doc.bp);
-    return evaluate(doc.bp, currentInputs(doc.bp), state.registers);
+    validateProject(documents);
+    return evaluateProject(documents, doc.bp.name, currentInputs(doc.bp), state.registers);
   } catch (error) {
     return { values: Object.fromEntries(doc.bp.nodes.map((node) => [node.id, node.type === "input" ? state.inputs[node.name] ?? 0 : X])), outputs: {}, error };
   }
@@ -81,12 +84,44 @@ function renderTabs() {
   tabs.append(add);
 }
 
+function renderModuleTools() {
+  const shelf = $("#module-tools");
+  if (!shelf) return;
+  shelf.replaceChildren();
+  for (const doc of documents.filter((item) => item.id !== activeId)) {
+    const row = el("div", "cad-tool-row");
+    const button = el("button", "cad-block-tool");
+    button.type = "button";
+    button.append(el("i", "cad-tool-symbol module-symbol", "BP"), el("span", "", doc.bp.name));
+    button.addEventListener("click", () => addModule(doc.bp.name));
+    row.append(button);
+    const help = el("a", "cad-help-icon");
+    help.href = shelf.dataset.helpHref;
+    help.target = "_blank";
+    help.rel = "noopener";
+    help.setAttribute("aria-label", `${doc.bp.name} modül yardımı, yeni sekmede`);
+    help.append(el("span", "", "?"), el("span", "cad-tooltip", "Bu blueprint'i giriş ve çıkış portlarıyla tek blok olarak kullanır."));
+    help.addEventListener("pointerenter", () => positionTooltip(help));
+    help.addEventListener("focus", () => positionTooltip(help));
+    row.append(help);
+    shelf.append(row);
+  }
+  if (!shelf.children.length) shelf.append(el("small", "cad-module-empty", "Bir BP daha açınca burada modül olarak görünür."));
+}
+
+function positionTooltip(link) {
+  const tooltip = link.querySelector(".cad-tooltip");
+  const rect = link.getBoundingClientRect();
+  tooltip.style.left = `${Math.max(8, Math.min(window.innerWidth - tooltip.offsetWidth - 8, rect.right + 8))}px`;
+  tooltip.style.top = `${Math.max(8, Math.min(window.innerHeight - tooltip.offsetHeight - 8, rect.top))}px`;
+}
+
 function switchDocument(id) {
   stopTimer();
   activeId = id;
   selectedId = null;
   pendingSource = null;
-  state = { registers: createState(activeDocument().bp), inputs: {}, timer: null, tick: 0, vector: -1 };
+  state = { registers: projectState(activeDocument()), inputs: {}, timer: null, tick: 0, vector: -1 };
   render();
 }
 
@@ -101,11 +136,12 @@ function render() {
   $("#graph-status").textContent = result.error ? result.error.message : "Tüm girişler bağlı · Blueprint geçerli";
   $("#selection-info").textContent = selectedId ? `${labels[bp.nodes.find((node) => node.id === selectedId)?.type] || "BLOK"} seçili · Delete ile sil` : "Blok seçili değil";
   renderTabs();
+  renderModuleTools();
   renderNodes(bp, result.values);
   renderWires(bp, result.values);
   renderVariables(bp, result);
   renderSignalView(bp, result.values);
-  try { $("#verilog-code").textContent = generateVerilog(bp); }
+  try { $("#verilog-code").textContent = generateProjectVerilog(documents, bp.name); }
   catch (error) { $("#verilog-code").textContent = `// ${error.message}\n// Tüm portları bağladıktan sonra Verilog oluşur.`; }
   $("#tick-count").textContent = String(state.tick).padStart(3, "0");
   $("#step-sim").disabled = state.timer !== null;
@@ -118,10 +154,11 @@ function renderNodes(bp, values) {
     const card = el("article", `cad-node node-${node.type}${selectedId === node.id ? " is-selected" : ""}`);
     card.style.left = `${node.x / 9}%`;
     card.style.top = `${node.y / 6}%`;
+    if (node.type === "module") card.style.height = `${Math.max(88, 36 + Math.max(portInputs(node).length, portOutputs(node).length) * 16)}px`;
     card.dataset.id = node.id;
     const header = el("div", "cad-node-head");
-    header.append(el("span", "cad-node-icon", icons[node.type]));
-    const title = el("button", "cad-node-name", node.name || labels[node.type]);
+    header.append(el("span", "cad-node-icon", node.type === "module" ? "BP" : icons[node.type]));
+    const title = el("button", "cad-node-name", node.type === "module" ? node.module : node.name || labels[node.type]);
     title.type = "button";
     title.title = "Yeniden adlandırmak için çift tıkla";
     title.addEventListener("dblclick", (event) => {
@@ -150,19 +187,30 @@ function renderNodes(bp, values) {
 }
 
 function makePort(node, port, direction) {
-  const button = el("button", `cad-port port-${direction}`, direction === "output" ? "" : port.toUpperCase());
+  const button = el("button", `cad-port port-${direction}`, direction === "output" && node.type !== "module" ? "" : port.toUpperCase());
   button.type = "button";
   button.dataset.node = node.id;
   button.dataset.port = port;
   button.dataset.direction = direction;
   button.setAttribute("aria-label", `${node.name || labels[node.type]} ${port} ${direction === "output" ? "çıkışı" : "girişi"}`);
   if (direction === "output" && pendingSource?.node === node.id) button.classList.add("is-pending");
+  if (node.type === "module") {
+    const all = direction === "input" ? portInputs(node) : portOutputs(node);
+    const index = all.indexOf(port), top = 42 + index * 16;
+    button.style.top = `${top}px`;
+    button.style[direction === "input" ? "left" : "right"] = direction === "input" ? "-6px" : "4px";
+  }
   button.addEventListener("pointerdown", (event) => event.stopPropagation());
   button.addEventListener("click", (event) => { event.stopPropagation(); connectPort(node.id, port, direction); });
   return button;
 }
 
 function point(node, port, direction) {
+  if (node.type === "module") {
+    const all = direction === "input" ? portInputs(node) : portOutputs(node);
+    const index = Math.max(0, all.indexOf(port));
+    return { x: direction === "output" ? node.x + 150 : node.x, y: node.y + 50 + index * 16 };
+  }
   if (direction === "output") return { x: node.x + 150, y: node.y + 44 };
   if (port === "a") return { x: node.x, y: node.y + 27 };
   if (port === "b") return { x: node.x, y: node.y + 59 };
@@ -185,7 +233,7 @@ function renderWires(bp, values) {
     const source = nodes.get(wire.from.node);
     const target = nodes.get(wire.to.node);
     if (!source || !target) continue;
-    svg.append(makePath(point(source, wire.from.port, "output"), point(target, wire.to.port, "input"), "cad-wire", values[source.id] ?? X));
+    svg.append(makePath(point(source, wire.from.port, "output"), point(target, wire.to.port, "input"), "cad-wire", values[`${source.id}:${wire.from.port}`] ?? values[source.id] ?? X));
   }
   if (pendingSource) {
     const source = nodes.get(pendingSource.node);
@@ -223,7 +271,7 @@ function renderSignalView(bp, values) {
   const nodes = new Map(bp.nodes.map((node) => [node.id, node]));
   for (const wire of bp.wires) {
     const source = nodes.get(wire.from.node), target = nodes.get(wire.to.node);
-    if (source && target) svg.append(makePath(point(source, "out", "output"), point(target, wire.to.port, "input"), "cad-mini-wire", values[source.id] ?? X));
+    if (source && target) svg.append(makePath(point(source, wire.from.port, "output"), point(target, wire.to.port, "input"), "cad-mini-wire", values[`${source.id}:${wire.from.port}`] ?? values[source.id] ?? X));
   }
   for (const node of bp.nodes) {
     const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -294,6 +342,17 @@ function addNode(type) {
   persist();
 }
 
+function addModule(moduleName) {
+  const bp = activeDocument().bp;
+  const index = bp.nodes.length;
+  const count = bp.nodes.filter((node) => node.type === "module" && node.module === moduleName).length;
+  const node = { id: crypto.randomUUID(), type: "module", module: moduleName, name: `${moduleName}_${count + 1}`, x: 310 + (index % 2) * 190, y: 60 + Math.floor(index / 2) % 5 * 100 };
+  bp.nodes.push(node);
+  selectedId = node.id;
+  render();
+  persist();
+}
+
 function removeNode(id) {
   const bp = activeDocument().bp;
   bp.nodes = bp.nodes.filter((node) => node.id !== id);
@@ -310,7 +369,7 @@ function newDocument() {
   const doc = { id: crypto.randomUUID(), name: `devre${documents.length + 1}.bp`, bp: basicBlueprint(`devre${documents.length + 1}`) };
   documents.push(doc);
   activeId = doc.id;
-  state = { registers: createState(doc.bp), inputs: {}, timer: null, tick: 0, vector: -1 };
+  state = { registers: projectState(doc), inputs: {}, timer: null, tick: 0, vector: -1 };
   render();
   persist();
 }
@@ -326,15 +385,15 @@ function exportBlueprint() {
 
 async function importBlueprint(file) {
   if (file.size > maxImportBytes) return announce("Blueprint dosyası 1 MB sınırını aşıyor.");
+  const doc = activeDocument(), previous = { bp: doc.bp, name: doc.name };
   try {
     const bp = JSON.parse(await file.text());
-    validateBlueprint(bp);
-    const doc = activeDocument();
     doc.bp = bp;
     doc.name = file.name.endsWith(".bp") ? file.name : `${bp.name}.bp`;
-    state = { registers: createState(bp), inputs: {}, timer: null, tick: 0, vector: -1 };
+    validateProject(documents);
+    state = { registers: projectState(doc), inputs: {}, timer: null, tick: 0, vector: -1 };
     render(); persist(); announce("Blueprint açıldı.");
-  } catch (error) { announce(`Dosya açılamadı: ${error.message}`); }
+  } catch (error) { doc.bp = previous.bp; doc.name = previous.name; announce(`Dosya açılamadı: ${error.message}`); }
 }
 
 function announce(message) { $("#sim-status").textContent = message; }
@@ -343,9 +402,9 @@ function stopTimer() { if (state.timer !== null) window.clearInterval(state.time
 function tickOnce() {
   const bp = activeDocument().bp;
   try {
-    validateBlueprint(bp);
+    validateProject(documents);
     if (hasRegisters(bp)) {
-      state.registers = tick(bp, currentInputs(bp), state.registers);
+      state.registers = tickProject(documents, bp.name, currentInputs(bp), state.registers);
       state.tick++;
       $("#clock-led").classList.add("is-on");
       window.setTimeout(() => $("#clock-led").classList.remove("is-on"), 140);
@@ -372,7 +431,7 @@ $("#play-sim").addEventListener("click", play);
 $("#step-sim").addEventListener("click", tickOnce);
 $("#pause-sim").addEventListener("click", () => { stopTimer(); announce("Simülasyon duraklatıldı; yazmaç değerleri korundu."); render(); });
 $("#stop-sim").addEventListener("click", () => { stopTimer(); announce("Simülasyon durdu; yazmaç değerleri korundu."); render(); });
-$("#reset-sim").addEventListener("click", () => { stopTimer(); state.registers = reset(activeDocument().bp); state.tick = 0; render(); announce("Yazmaç değerleri sıfırlandı; girişler değişmedi."); });
+$("#reset-sim").addEventListener("click", () => { stopTimer(); try { state.registers = resetProject(documents, activeDocument().bp.name); } catch { state.registers = createState(activeDocument().bp); } state.tick = 0; render(); announce("Yazmaç değerleri sıfırlandı; girişler değişmedi."); });
 $("#step-speed").addEventListener("change", () => { if (state.timer !== null) { stopTimer(); state.timer = window.setInterval(tickOnce, Number($("#step-speed").value)); } });
 document.querySelectorAll("[data-add]").forEach((button) => button.addEventListener("click", () => addNode(button.dataset.add)));
 document.querySelectorAll(".cad-help-icon").forEach((link) => {
@@ -400,10 +459,10 @@ document.addEventListener("keydown", (event) => {
 
 try {
   const saved = JSON.parse(localStorage.getItem(storeKey) || "null");
-  if (Array.isArray(saved) && saved.length && saved.length <= 8 && new Set(saved.map((doc) => doc.id)).size === saved.length && saved.every((doc) => typeof doc?.id === "string" && doc.bp && typeof doc.name === "string" && validateBlueprint(doc.bp))) {
+  if (Array.isArray(saved) && saved.length && saved.length <= 8 && new Set(saved.map((doc) => doc.id)).size === saved.length && saved.every((doc) => typeof doc?.id === "string" && doc.bp && typeof doc.name === "string")) {
     documents = saved;
     activeId = documents[0].id;
-    state.registers = createState(activeDocument().bp);
+    state.registers = projectState(activeDocument());
   }
-} catch { try { localStorage.removeItem(storeKey); } catch { /* Browser storage is optional. */ } }
+} catch { announce("Yerel blueprint verisi okunamadı; kayıtlı içerik değiştirilmedi."); }
 render();

@@ -4,7 +4,8 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
-- İlk çalışan uygulama MVP'si: tam ekran etkileşimli Devre Atölyesi ve pure graph motoru hazır. Kalan ana parçalar: çok modüllü `.bp` bileşimi, quiz, düzenli eğitim dokümanları ve görsel inceleme kapıları.
+- İlk çalışan uygulama MVP'si: tam ekran etkileşimli Devre Atölyesi, pure graph motoru ve çok modüllü `.bp` bileşimi hazır. Kalan ana parçalar: quiz, düzenli eğitim dokümanları ve görsel inceleme kapıları.
+- Bu dilimde çok modüllü `.bp` bileşimi uygulandı ve doğrulandı; docs/quiz yeniden tasarımı ayrı worktree'lerde inceleme bekliyor.
 
 ## Sıradaki işler
 
@@ -18,7 +19,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [ ] Çocuklara uygun ama manipülatif olmayan motivasyon etkileşimlerini öğrenme kanıtı hipoteziyle eşleştir.
 - [ ] Quiz belirtke tablosu, eşdeğer ön/son formlar, cevap anahtarı ve puanlamayı hazırla; okul içinde yeterli gönüllü/karşılaştırma koşulunu danışmanla belirle.
 - [ ] En küçük blok kümesini ve blokların giriş/çıkış davranışını tanımla.
-- [ ] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle.
+- [x] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle ve çalışan editör akışına bağla.
 - [ ] Onluk kullanıcı değerleri, Verilog bit genişliği ve ikilik fiziksel davranış arasındaki pedagojik eşlemeyi tasarla.
 - [ ] Değişken panelinin kapsadığı değişken türlerini belirle.
 - [ ] Zorlayıcı test/benchmark şartnamesi, veri kümesi, eşikler ve başarısız kontrollerde push engelini tasarla.

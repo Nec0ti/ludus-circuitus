@@ -589,6 +589,8 @@ select:focus-visible {
 .output-symbol { border-color: #796236; color: #f1c76b; font-size: 7px; }
 .gate-symbol { border-color: #54677e; color: #b6d7fa; }
 .register-symbol { border-color: #77526e; color: #e3a4d2; }
+.module-symbol { border-color: #287d78; color: #72d8c3; }
+.cad-module-empty { display: block; padding: 6px 4px; color: #788695; font-size: 9px; line-height: 1.45; }
 .cad-tool-help { display: grid; gap: 5px; margin-top: 19px; border: 1px solid #343e4a; border-radius: 4px; background: #202731; padding: 9px; color: #a5b0bd; font-size: 9px; line-height: 1.5; }
 .cad-tool-help b { color: var(--cad-amber); font-size: 8px; letter-spacing: .1em; text-transform: uppercase; }
 .cad-selection { margin-top: 10px; color: #758291; font-size: 9px; }
@@ -615,6 +617,14 @@ select:focus-visible {
 .node-input { border-color: #477966; }
 .node-output { border-color: #806a3d; }
 .node-register { border-color: #77526e; }
+.node-module { border-color: #287d78; background: linear-gradient(145deg, #223c3d, #202832); }
+.node-module .cad-node-icon { background: #214643; color: #83deca; }
+.node-module .cad-port { width: auto; min-width: 0; height: 16px; border: 0; border-radius: 0; background: transparent; padding: 0; color: #b8d5ce; font-size: 8px; white-space: nowrap; }
+.node-module .port-input { padding-left: 12px; text-align: left; }
+.node-module .port-output { padding-right: 12px; text-align: right; }
+.node-module .cad-port::before { position: absolute; top: 4px; width: 8px; height: 8px; border: 2px solid #adbac8; border-radius: 50%; background: #222b35; content: ""; }
+.node-module .port-input::before { left: 2px; }
+.node-module .port-output::before { right: -4px; }
 .cad-node-head { height: 34px; display: flex; align-items: center; gap: 7px; border-bottom: 1px solid #3b4652; padding: 0 8px; cursor: move; }
 .cad-node-icon { width: 19px; height: 19px; display: grid; place-items: center; border-radius: 3px; background: #344555; color: #cce4f6; font: 700 8px var(--font-code); }
 .node-input .cad-node-icon { background: #25483e; color: #82dfbd; }
