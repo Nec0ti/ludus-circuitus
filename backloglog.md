@@ -395,3 +395,13 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Bu genel TÜBİTAK desteği rehberinin 2204-A TYBS başvuru formundaki güncel sorusuna ve MVP geliştirme katkılarına nasıl uygulandığı bu taramada kesinleşmedi. Danışmanla başvuru öncesi doğrulama açık iş olarak eklendi. Görsel polish ile gerçek katkıyı saklama birbirinden ayrıldı.
 - Kaynak: [TÜBİTAK Üretken Yapay Zekâ Rehberi sayfası](https://tubitak.gov.tr/tr/kurumsal/hakkimizda/uretken-yapay-zeka-rehberi), [rehber PDF](https://tubitak.gov.tr/sites/default/files/2025-09/UYZ_Rehberi-v02.pdf).
 - Değişenler: `research/tubitak/2027-2204-a.md`, `research/tubitak/evaluation-alignment-2027.md`, `backlog.md`, `raports/overnight-quality-review-2026-11-24.md`, bu günlük.
+
+## 2026-11-24 — Gece yayımlanan artifact doğrulaması
+
+- PR #21, `348d2de` squash commit’iyle birleştirildi. GitHub Pages run `45289698880` build, Node 27/27, Icarus Verilog oracle'ları, Jekyll/Playwright 37/37 ve deploy adımlarının tamamını başarıyla bitirdi.
+- Aynı run'ın `github-pages` artifact'ı `/tmp` altında açıldı ve Playwright bu tam artifact'a karşı Nix Chromium ile yeniden koşturuldu: 37/37 geçti. Yerel Node testleri de 27/27; geçici `nix shell nixpkgs#iverilog` ile scalar/vektör, hiyerarşik `.bp`, 1–32-bit, seeded devre ve register/reset oracle'ları geçti.
+- Artifact görsel olarak 1440×1000 landing/docs, 1440×900 masaüstü atölye ve 390×844 mobil atölye ölçülerinde incelendi. Stil dosyaları, eğitim gezinmesi, bağlantı grafiği, sinyal görünümü ve mobilde araçlık değişken sırası yüklendi; temel çalışma alanında kesilme görülmedi. Geçici ekran görüntüleri `/tmp/ludus-*-review.png` altında.
+- İlk yerel E2E denemesi sistem Chromium'unda `libglib-2.0.so.0` eksikliğiyle başlayamadı. Nix Chromium ile eski, önceki sürümden kalma `_site` klasörüne karşı deneme de eski ders URL'lerinde 404 verdi; bunu ürün hatası saymadım. CI'ın güncel artifact'ına yönlendirilen tam tekrar geçti. Depodaki `_site` değiştirilmedi.
+- Canlı Pages smoke kontrolünde `/`, `/docs/`, `/playground/`, `/quiz/` ve altı ders rotası 10/10 HTTP 200, her birinde tek `<title>` döndürdü. `git diff --check` temiz ve çalışma ağacı temiz.
+- İnsan katılımcı veya kişisel veri kullanılmadı. Kalan: MEB/okul/veli izinleri ve danışman kararı olmadan araştırma verisi toplama veya API'yi açma.
+- Değişenler: `backlog.md`, bu günlük; ürün kodu değişmedi.
