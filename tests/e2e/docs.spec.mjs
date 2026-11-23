@@ -122,6 +122,7 @@ test("block catalog documents exact ports and distinguishes named wires from reg
   await expect(page.locator(".docs-article h3")).toHaveCount(9);
   await expect(page.locator(".docs-article")).toContainText("1–32 bit genişlik");
   await expect(page.locator(".docs-article")).toContainText("genişlik dönüşümü otomatik yapılmaz");
+  await expect(page.locator(".docs-article")).toContainText("bitler arasında taşıma oluşmaz");
   const complementary = page.locator("#tamamlayici-kapilar + p + .block-list + table");
   await expect(complementary).toHaveCount(1);
   await expect(complementary.locator("tbody tr")).toHaveCount(4);
@@ -132,4 +133,13 @@ test("block catalog documents exact ports and distinguishes named wires from reg
     const overflowing = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
     expect(overflowing, `block catalog overflow at ${width}px`).toBe(false);
   }
+});
+
+test("beginner lessons distinguish single-bit examples from supported vector signals", async ({ page }) => {
+  await page.goto("/docs/dijital-sinyaller/");
+  await expect(page.locator(".docs-article")).toContainText("Atölye daha geniş yolları da destekler");
+  await page.goto("/docs/mantik-kapilari/");
+  await expect(page.locator(".docs-article")).toContainText("kapı aynı kuralı her bit konumuna ayrı uygular");
+  await page.goto("/docs/saat-yazmac/");
+  await expect(page.locator(".docs-article")).toContainText("aynı genişlikteki Q çıkışına alınır");
 });

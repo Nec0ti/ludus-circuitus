@@ -32,6 +32,7 @@ reading_time: 11
       <div><span class="block-swatch gate-swatch">NOT</span><p><b>NOT</b><small>0 değerini 1'e, 1 değerini 0'a çevirir.</small></p></div>
       <div><span class="block-swatch gate-swatch">XOR</span><p><b>XOR</b><small>Girişler farklıysa 1 üretir.</small></p></div>
     </div>
+    <p>Bu kısa açıklama ve doğruluk tabloları tek bit içindir. Bir kapının veri genişliğini 1–32 bit seçebilirsin: geniş girişlerde aynı kapı kuralı her bit konumunda ayrı uygulanır. Örneğin <code>0101 AND 0011 = 0001</code>. Kapılar toplama yapmadığı için bitler arasında taşıma oluşmaz.</p>
     <h3 id="tamamlayici-kapilar">NAND, NOR ve XNOR</h3>
     <p>NAND, NOR ve XNOR, tanıdık kapıların çıkışını tersine çevirir. Adın başındaki <code>N</code>'i “sonucun değili” gibi düşünebilirsin: NAND, AND'in; NOR, OR'un; XNOR, XOR'un tersidir.</p>
     <div class="block-list">
@@ -49,7 +50,7 @@ reading_time: 11
     <h2 id="yazmac">Saat kenarında değer sakla <span class="docs-section-time">~1 dk</span></h2>
     <h3>Yazmaç (register)</h3>
     <div class="block-list">
-      <div><span class="block-swatch swatch-register">D</span><p><b>Register</b><small>D girişindeki değeri her yükselen clock kenarında Q çıkışına saklar. Başlangıç değeri <code>X</code>'tir.</small></p></div>
+      <div><span class="block-swatch swatch-register">D</span><p><b>Register</b><small>D girişindeki değeri her yükselen clock kenarında aynı genişlikte Q çıkışına saklar. Başlangıç değeri <code>X</code>'tir.</small></p></div>
     </div>
     <h2 id="baglanti-kurallari">Bloklar ve blueprint'ler nasıl bağlanır? <span class="docs-section-time">~3 dk</span></h2>
     <h3 id="portlar">Portların giriş/çıkış sözleşmesi</h3>
