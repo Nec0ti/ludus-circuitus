@@ -1,19 +1,19 @@
 <nav class="docs-nav" aria-label="Dokümantasyon bölümleri">
   <p class="docs-nav-heading">ÖĞRENME REHBERİ</p>
-  <details class="docs-nav-group" open>
+  <details class="docs-nav-group" {% if page.url contains '/docs/' and page.url != '/docs/kullanim/' and page.url != '/docs/bloklar/' and page.url != '/docs/yerel-kurulum/' %}open{% endif %}>
     <summary>Temeller <small>4 dk</small></summary>
     <a href="{{ '/docs/baslangic/' | relative_url }}" {% if page.url contains '/docs/baslangic' %}aria-current="page"{% endif %}>Başlangıç <small>4 dk</small></a>
     <a href="{{ '/docs/baslangic/#bir-devre-ne-yapar' | relative_url }}">Sinyal ve kapılar <small>1 dk</small></a>
     <a href="{{ '/docs/baslangic/#paralel-yollar' | relative_url }}">Paralel yollar <small>1 dk</small></a>
     <a href="{{ '/docs/baslangic/#sirali-mantik' | relative_url }}">Clock ve yazmaç <small>1 dk</small></a>
   </details>
-  <details class="docs-nav-group" open>
+  <details class="docs-nav-group" {% if page.url contains '/docs/kullanim/' or page.url contains '/docs/bloklar/' %}open{% endif %}>
     <summary>Atölyeyi kullan <small>13 dk</small></summary>
     <a href="{{ '/docs/kullanim/' | relative_url }}" {% if page.url contains '/docs/kullanim' %}aria-current="page"{% endif %}>Kullanım <small>5 dk</small></a>
     <a href="{{ '/docs/kullanim/#devre-kur' | relative_url }}">Devre kurma <small>1 dk</small></a>
     <a href="{{ '/docs/kullanim/#simulasyon' | relative_url }}">Simülasyon <small>1 dk</small></a>
     <a href="{{ '/docs/kullanim/#blueprint-dosyalari' | relative_url }}">Blueprint ve Verilog <small>1 dk</small></a>
-    <a href="{{ '/docs/bloklar/' | relative_url }}" {% if page.url contains '/docs/bloklar' %}aria-current="page"{% endif %}>Blok kataloğu <small>3 dk</small></a>
+    <a href="{{ '/docs/bloklar/' | relative_url }}" {% if page.url contains '/docs/bloklar' %}aria-current="page"{% endif %}>Blok kataloğu <small>5 dk</small></a>
     <a href="{{ '/docs/bloklar/#giris-cikis' | relative_url }}">Giriş ve çıkış <small>1 dk</small></a>
     <a href="{{ '/docs/bloklar/#mantik-kapilari' | relative_url }}">Mantık kapıları <small>1 dk</small></a>
     <a href="{{ '/docs/bloklar/#yazmac' | relative_url }}">Yazmaç <small>1 dk</small></a>

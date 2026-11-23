@@ -172,3 +172,12 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Doğrulama: CSS build, Jekyll build, `npm test` 12/12, Icarus Verilog oracle (kombinasyonel + nested `.bp` clock/register), tam Playwright E2E 15/15; landing giriş/output doğruluğu ve 320/390/768/1440 px yatay taşma kontrolü dahil; `git diff --check` geçti.
 - Değişenler: `index.html`, `assets/js/landing.mjs`, `assets/css/input.css` ve derlenmiş `assets/css/site.css`, default/workbench layouts, `docs/bloklar.md`, `tests/e2e/home.spec.mjs`, `README.md`, `notes.md`, araştırma/backlog kayıtları.
 - Kalan: üç sayfanın yeni bağımsız görsel QA'sı, okunabilirlik/kontrast benchmarklarının CI'a bağlanması, landing sonrası uzaktaki PR kontrolü; bu commit henüz push edilmedi.
+
+
+## 2026-11-23 — Görsel benchmarkları ve bağımsız arayüz incelemesi
+
+- Landing, docs ve atölye ayrı worktree'lerde masaüstü/mobil boyutlarda incelendi; üç ajanın düzeltmeler sonrası geri kontrolü de geçti. Mobil devre etiketleri büyütüldü; docs yalnız etkin grubu açıyor, menü okuma süresi düzeltildi ve satır aralıkları sıkılaştırıldı; atölye küçük yardımcı metinleri büyütülüp aydınlatıldı.
+- Görsel kapılar eklendi: 1440 px ana alan hizaları, landing başlık satırı, docs mobil içerik başlangıcı ve aktif menü, atölye sütun kenarları. Kontrast Node testi site tema renklerini ve seçili atölye yardımcı metinlerini ölçüyor.
+- Değişenler: `_includes/docs-nav.html`, `assets/css/input.css`, derlenmiş `assets/css/site.css`, `tests/e2e/visual.spec.mjs`, `tests/visual-colors.test.mjs`, `backlog.md`, `notes.md`, `raports/visual-review-2026-11-23.md`, bu günlük.
+- Doğrulama: CSS ve Jekyll build geçti; `npm test` 14/14; Playwright E2E 17/17; Icarus Verilog kombinasyonel ve çok modüllü clock/register oracle'ları geçti; `git diff --check` temiz. Ajan incelemeleri landing/docs/workbench için ayrı worktree'de; son geri kontrollerinde mobil/desktop hizalama ve okunabilirlikte regresyon yok.
+- Kalan: mobil Devre Atölyesi tuvali yatay kaydırılır ama kaydırma gereksinimi açıkça işaretlenmiyor. Bu commit henüz gönderilmedi; push öncesi mevcut CI kapısı PR'da da doğrulanacak.

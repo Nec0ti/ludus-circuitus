@@ -15,7 +15,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] Landing'i somut devre etkileşimli bir hikâyeye dönüştür; tamamlanan görev ve merak ilerlemesi kullan, baskılı streak/infinite scroll ekleme. Yarım toplayıcı 4 giriş durumunu sayfa belleğinde gösterir; ağ/kalıcı izleme yok.
 - [x] Docs'u eğitim portalı olarak yeniden kur: açılır/kapanır ana gruplar, alt başlıklar, içerik içi gezinme ve her sayfa/bölüm için yaklaşık okuma süresi.
 - [x] Modül bileşimi uygulandıktan sonra `.bp` oluşturma/yeniden kullanma kılavuzunu gerçek kullanım adımlarına geçir.
-- [ ] Ana sayfa, docs ve atölye için ayrı iş-kopyası worktree'lerinde görsel alt ajan incelemesi yap; hizalama/taşma/kontrast benchmarklarını CI'a ekle.
+- [x] Ana sayfa, docs ve atölye için ayrı iş-kopyası worktree'lerinde görsel alt ajan incelemesi yap; hizalama/taşma/kontrast benchmarklarını CI'a ekle. Üç bağımsız inceleme ve son düzeltme geri kontrolleri geçti; eşikler CI testlerine bağlandı. Ayrıntı: [`raports/visual-review-2026-11-23.md`](raports/visual-review-2026-11-23.md).
 - [x] Araçlık bloklarının yanındaki yardım işaretleri hover/focus özeti gösterir ve hedef docs anchor'ını yeni sekmede açar.
 - [x] Çocuklara uygun ama manipülatif olmayan motivasyon etkileşimlerini öğrenme kanıtı hipoteziyle eşleştir. (Özerklik, yetkinlik, sınırlı görev ve sağlıklı durma önerileri araştırma notunda; Ludus etkisi kanıtlanmış değil.)
 - [ ] Quiz belirtke tablosu, eşdeğer ön/son formlar, cevap anahtarı ve puanlamayı hazırla; okul içinde yeterli gönüllü/karşılaştırma koşulunu danışmanla belirle.

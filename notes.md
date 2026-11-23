@@ -184,3 +184,11 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - Önceki proje taslağı: İkinci Beyin içindeki `notes/tubitak-fpga-egitim-araci.md` kaydı. Oradaki kapı/doğruluk tablosu önerileri bu depoda henüz uygulama kararı değildir.
 - 2026–2027 2204-A çağrısı ile 2025 MEB Araştırma Uygulama İzinleri Yönergesi/TTKB kılavuzu 2026-11-23'te resmî sayfalardan doğrulandı ve `research/` altında özetlendi. Uygunluk, seçilecek örneklem ili, okul süreçleri ve güncel başvuru belgeleri başvuru anında yeniden teyit edilmeli.
 - TÜBİTAK ön değerlendirme kriter bağlantısı şu anda 2025 formuna yönleniyor. Formun görünen ağırlıkları (problem/soru %20, yöntem %20, yaratıcılık/etki %30, sonuç/tartışma %30) 2027 için kesinleşmiş kabul edilmemeli; yeni form başvurudan önce kontrol edilmeli.
+
+
+### 2026-11-23 — Üç yüzey için görsel kalite kapıları
+
+- Landing, docs ve Devre Atölyesi ayrı worktree'lerde bağımsız görsel ajanlarca masaüstü ve mobil boyutlarda incelendi; bulunan mobil etiket, docs menü yüksekliği/okuma süresi ve atölye ikincil metin okunabilirliği sorunları düzeltildi.
+- Son ekran kontrolleri: landing mobil devre etiketleri yaklaşık 11–12 px; docs ana başlığı 390×844'te y=643; docs yatay taşmasız ve tek etkin bölüm açık; atölye değiştirilen yardımcı metinleri koyu yüzeylerde 6.5:1 üstü kontrastla okunuyor.
+- Playwright hizalama ve mobil içerik konumu eşiği ile WCAG kontrast eşikleri `npm test`/`npm run test:e2e` kapılarına eklendi; mevcut Pages workflow bu testleri PR'da çalıştırır.
+- İnceleme raporu: [`raports/visual-review-2026-11-23.md`](raports/visual-review-2026-11-23.md). Açık kullanım notu: atölye mobil tuvali yatay kaydırılır ve kaydırma gereksinimi görsel olarak belirtilmiyor.
