@@ -239,3 +239,14 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Değişenler: `backlog.md`, `backloglog.md`.
 - Doğrulama: mevcut Playwright testi bütün blokların özet ve hedeflerini, AND yardımı popup'ını ve modül yardımını doğruluyor; main Pages build/E2E/deploy geçti; canlı sayfada sekiz yardım bağlantısı yayımlanmış HTML'de görüldü. `git diff --check` geçti.
 - Kalan: bu isteğin gerektirdiği ek uygulama değişikliği yok.
+
+## 2026-11-23 — Zorlayıcı doğrulama ve zorunlu main merge kapısı
+
+- `assets/js/project.mjs`, `.bp` hiyerarşisinin birleşmiş blok sayısını tahmini olarak flatten öncesi hesaplıyor ve 500 üstünü reddediyor. Saldırganca 498 fanout'lu, her kaynağı tek başına 500 blokta kalan iç içe tasarım artık büyük ara graph kurmadan durduruluyor.
+- Icarus oracle'ı sabit tohumla üretilmiş 12 farklı 40 kapılı AND/OR/XOR/NOT devresini 16 ikili + 5 X giriş vektöründe karşılaştırıyor: 252 devre/vektör sonucu. Sıralı ve çok modüllü oracle'lar önceki örneklerle birlikte çalışmaya devam ediyor.
+- Boyut sınırı E2E ile belirtili hâle geldi: tam 1 MiB `.bp` içe aktarımı kabul edilir; 1 MiB üstü reddedilir ve etkin blueprint/code korunur. Kullanım ve yerel kurulum docs sınırı ve merge kapısını açıklar.
+- GitHub ruleset `main-requires-green-build` ID `27927079` main için PR ve `build` status check istiyor; bypass aktörü yok, approval sayısı 0. Gerçek dal kuralları API yanıtından doğrulandı. Ruleset `/repos/Nec0ti/ludus-circuitus/rules/branches/main` ile kontrol edildi.
+- Değişenler: `assets/js/project.mjs`, `tests/project.test.mjs`, `tests/verilog-oracle.mjs`, `tests/e2e/{docs,playground}.spec.mjs`, `docs/{kullanim,yerel-kurulum}.md`, `research/quality/benchmark-gates.md`, `research/README.md`, `notes.md`, backlog ve günlük.
+- Yerel doğrulama: `npm test` 18/18; Icarus oracle (`nix shell nixpkgs#iverilog -c npm run test:verilog`) başarılı, 252 sonuç eşleşti; Tailwind CSS build; Nix Jekyll build; Playwright E2E 21/21; `git diff --check` temiz. Standart Playwright Chromium bu NixOS shell'inde `libglib` yüzünden açılamadı; Nix Chromium ile tüm E2E geçti.
+- PR #7 (`45243309555`) `97d1791` ile main'e squash merge edildi; main `build`, Icarus, E2E ve Pages deploy (`45243550641`) başarılı. Canlı `/docs/kullanim/` ve `/docs/yerel-kurulum/` metinleri `curl` ile, atölye URL'si HTTP 200 ile kontrol edildi.
+- Kalan: ölçülmüş runtime/bellek profili çeşitli gerçek cihazlarda yapılmadı; 500 düğüm sınırı statik boyut kuralı, makineden bağımsız gecikme iddiası değildir. Quiz etkisi ve insan katılımcı onayları ayrı açık backlog işleridir.
