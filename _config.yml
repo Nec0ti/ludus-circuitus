@@ -1,5 +1,6 @@
 title: Ludus Circuitus
 description: Görsel bloklarla dijital mantık ve Verilog öğrenme alanı.
+locale: tr_TR
 url: https://nec0ti.github.io
 baseurl: /ludus-circuitus
 markdown: kramdown

@@ -351,4 +351,13 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR #14 (`0dcedc3`, research/privacy/mastery notları) ve PR #15 (`087ee9a`, geçersiz yerel `.bp` kaydını reddetme) `main`e alındı. PR #14 Pages run `45281277570`, PR #15 Pages run `45283762587` build ve deploy adımlarını başarıyla tamamladı.
 - PR #15 yerel/PR CI kapıları: Node 27/27, Icarus Verilog scalar/hiyerarşik/vector oracle'ları (1.920 vector sonuç karşılaştırması), Jekyll ve Playwright 36/36. Dört canlı rota HTTP 200 verdi.
 - Bozuk yerel kaydı doğrulama düzeltmesi kullanıcı verisini otomatik silmez; geçersiz kayıt uyarıyla reddedilip başlangıç devresi korunur.
-- Kalan: PR #16 içindeki rakip araştırması kaydının CI ve gerekiyorsa Pages dağıtımını izlemek.
+- PR #16 (`901426a`, canlı CircuitVerse denemesi sınırları) CI'ı geçti; Pages run `45284677384` build ve deploy adımlarını başarıyla tamamladı. Yayın sonrası landing, docs, playground ve quiz HTTP **200/200/200/200** döndü.
+- Kalan: canlı arayüzde bulunan yinelenen başlık/açıklama ve İngilizce locale metadata'sını düzeltip doğrulamak.
+
+## 2026-11-24 — Türkçe sayfa metadata düzeltmesi
+
+- Canlı sayfa `<head>` incelemesinde Jekyll SEO Tag'in ürettiği title ve description ile layout'taki el ile yazılmış değerlerin yinelendiği; `og:locale` değerinin `en_US` olduğu görüldü.
+- Resmî Jekyll SEO Tag rehberine göre `locale` yapılandırılabilir ve SEO etiketi title/description üretir. İki layout'taki yinelenen etiketler kaldırıldı, `_config.yml` için `locale: tr_TR` eklendi; `lang="tr"` korundu.
+- Değişenler: `_config.yml`, `_layouts/default.html`, `_layouts/workbench.html`, `research/references/site-metadata.md`, `research/README.md`, `backlog.md`, bu günlük.
+- Önceki Pages artifact'ında dört sayfada da 2 `<title>`, 2 description ve `og:locale=en_US` görüldü. Güncel canlı rotalar HTTP 200; bu kontrol hatanın eski yayında olduğunu kesinleştirdi.
+- Yerel Jekyll build henüz çalıştırılamadı: Nix Ruby ile `bundle install` sırasında `openssl 4.0.2` native extension derlemesi başarısız oldu; GitHub Pages CI üretim build'i zorunlu doğrulama olacak. PR CI ve Pages smoke bekliyor.
