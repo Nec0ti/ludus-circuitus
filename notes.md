@@ -35,7 +35,7 @@ Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde ö
 - Jekyll iskeleti, Türkçe tanıtım, Başlangıç/Kullanım/Bloklar/Yerel kullanım ve kurulum docs sayfaları ve responsive çok panelli Devre Atölyesi taslağı oluşturuldu. Görsel dil DaisyUI 5 + Tailwind CSS 4 üzerinde özel açık tema ve sistem fontlarıyla kuruldu.
 - Playground şu an sabit yarım toplayıcı blueprint'ini gösteriyor. A/B girişleri değişiyor; toplam XOR, taşıma AND, SVG mantık yolları ve değişken değerleri eşzamanlı güncelleniyor. Oynat dört giriş vektörünü, Duraklat mevcut değeri korumayı, Başa al 00 durumunu gösteriyor. Verilog görüntüsü bu örneğin sabit kodudur.
 - Bu ilk prototipte sürükle-bırak blok düzenleme, blueprint ekleme/kaydetme, dinamik Verilog üretimi, clock/register simülasyonu, quiz, API veya kullanıcı verisi toplama yoktur. Bunlar tamamlanmış özellik olarak tanıtılmayacak.
-- GitHub Pages için CSS'i npm ile derleyip resmi Jekyll Pages action'ıyla derleme/yayınlama workflow'u eklendi. Yerel derleme doğrulandı; uzak CI henüz çalıştırılmadı. Depo şu an özeldir; sitede yalnızca açık kaynaklı yayımlanma hedefi olarak ifade edilir.
+- GitHub Pages için CSS'i npm ile derleyip resmi Jekyll Pages action'ıyla derleme workflow'u eklendi. PR derlemesi Pages ayarından bağımsızdır; otomatik yayın `PAGES_ENABLED=true` deposal Actions değişkeniyle açılır. GitHub resmî dokümanına göre Pages kaynak özel olsa bile desteklenen planda site herkese açık olabilir. Depo şu an özeldir; sitede yalnızca açık kaynaklı yayımlanma hedefi olarak ifade edilir. Görünürlük kararı öncesi yayın açılmayacak.
 
 ### Tanıtım sayfasında anlatılacaklar
 

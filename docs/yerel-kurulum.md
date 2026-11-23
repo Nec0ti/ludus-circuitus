@@ -18,6 +18,8 @@ permalink: /docs/yerel-kurulum/
     <h2>Yerel önizleme</h2>
     <div class="install-code"><code>bundle exec jekyll serve</code></div>
     <p>Jekyll yerel sunucunun adresini terminalde gösterir. CSS'i değiştirirken başka terminalde <code>npm run watch:css</code> çalıştırabilirsin.</p>
+    <h2>GitHub Pages yayını</h2>
+    <p>PR kontrolleri siteyi derler; yayın adımı varsayılan olarak kapalıdır. Depo yöneticisi GitHub Settings → Pages içinden GitHub Actions kaynağını etkinleştirdikten ve sitenin görünürlüğünü kararlaştırdıktan sonra depo Actions değişkeni <code>PAGES_ENABLED=true</code> yapılırsa ana dala gelen değişiklikler yayımlanır. GitHub Pages, plan izin verdiğinde özel depodan yayımlansa bile siteyi internetten herkese açık sunabilir.</p>
     <h2>Katkı ve doğrulama</h2>
     <p>Önce <code>AGENTS.md</code>, <code>const.md</code> ve ilgili backlog maddelerini oku. Kullanıcıya dönük bütün metinler Türkçe olmalı. Sıralı mantık ve Verilog doğruluğunu etkileyen değişiklikler, tanımlı test/benchmark kapıları geçmeden gönderilmemeli.</p>
     <p>Henüz veri toplama API'si veya quiz kaydı yoktur. Kişisel verileri GitHub deposuna, issue'lara veya örnek çıktı dosyalarına ekleme.</p>
