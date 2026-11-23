@@ -37,6 +37,7 @@ export function validateBlueprint(bp) {
   const names = new Set();
   for (const node of bp.nodes) {
     if (!node || !validTypes.has(node.type) || typeof node.id !== "string" || !node.id || node.id.length > 100 || ids.has(node.id)) throw new Error("Blok türü veya kimliği geçersiz.");
+    if (!Number.isFinite(node.x) || !Number.isFinite(node.y) || Math.abs(node.x) > 1_000_000 || Math.abs(node.y) > 1_000_000) throw new Error("Blok koordinatları geçersiz veya çalışma alanı sınırını aşıyor.");
     ids.add(node.id);
     nodes.set(node.id, node);
     if (["input", "output", "signal"].includes(node.type)) {

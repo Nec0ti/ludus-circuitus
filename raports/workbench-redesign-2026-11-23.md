@@ -21,7 +21,7 @@ Bu düzen mevcut koyu, yalın ürün paletini korur; genel amaçlı SaaS gradien
 
 ## Uygulama kapsamı
 
-- 2B çalışma alanında sınırlandırılmış kaydırma yerine kamera pan/zoom; wheel zoom imleç altındaki dünya noktasını sabit tutar. Boş grid'de Space+sürükleme (dokunmatik ekranda tek parmak sürükleme) pan yapar; dokunmatik kısa dokunuş ve fare tıklaması aramayı açar. `.bp` sürüm 1 koordinatları korunur ve grid'e oturur.
+- 2B çalışma alanında sınırlandırılmış kaydırma yerine kamera pan/zoom; wheel zoom imleç altındaki dünya noktasını sabit tutar. Boş grid'de Space+sürükleme (dokunmatik ekranda tek parmak sürükleme) pan yapar; dokunmatik kısa dokunuş ve fare tıklaması aramayı açar. `.bp` sürüm 1 koordinatları korunur; koordinatlar finite olmalı ve ±1.000.000 sınırını aşamaz.
 - Araçlık düğmesine tıklama mevcut merkezî ekleme akışını korur; sürükleyip bırakma bırakılan dünya koordinatında ekler.
 - Tuvalin boş alanında tıklama bir arama kutusu açar; ad yazıp Enter ile aynı koordinatta blok üretir; Escape kapatır.
 - Sinyal yolları her iki gösterimde aynı route işlevini kullanır.
@@ -33,7 +33,7 @@ MUX, sabit kaynak, çok bitli sinyaller, portlar arası sürükleyerek kablo çi
 
 ## Kontrol listesi
 
-- [x] Node/pan/zoom dönüşümleri; `.bp` sürüm 1 kayıt biçimi ve koordinatları korunuyor
+- [x] Node/pan/zoom dönüşümleri; `.bp` sürüm 1 kayıt biçimi ve geçerli koordinatları korunuyor, bozuk/sınırsız koordinatlar reddediliyor
 - [x] Drop, arama kutusu, klavye erişimi ve wheel zoom E2E
 - [x] NAND/NOR/XNOR için X semantiği, Verilog ve Icarus: 12 sabit tohumlu × 40 kapı, 252 vektör
 - [~] Küçük ve mobil görünümde hizalama, clipping, focus: eski mobil fit ve dokunma sorunları bulundu; fit alanı içerik boyutuna göre ve en az %58 ölçekli, dokunmatik pan eklendi. Masaüstü/mobil son geri incelemesi bekleniyor.

@@ -52,6 +52,14 @@ test("rejects undriven inputs, duplicate drivers and combinational cycles", () =
   assert.throws(() => validateBlueprint(cycle), /döngü/);
 });
 
+test("rejects non-finite or unsafe blueprint coordinates before rendering", () => {
+  const bp = halfAdderBlueprint();
+  bp.nodes[0].x = Number.POSITIVE_INFINITY;
+  assert.throws(() => validateBlueprint(bp), /koordinatları geçersiz/);
+  bp.nodes[0].x = 1_000_001;
+  assert.throws(() => validateBlueprint(bp), /çalışma alanı sınırını/);
+});
+
 test("registers start X, reset explicitly and update from one old-state snapshot", () => {
   const bp = {
     version: 1, name: "swap",
