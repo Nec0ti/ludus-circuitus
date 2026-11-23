@@ -46,3 +46,15 @@ test("every docs navigation and in-page topic link resolves to a published secti
     }
   }
 });
+
+test("local setup guide lists test tools and builds the static site before E2E", async ({ page }) => {
+  await page.goto("/docs/yerel-kurulum/");
+  const article = page.locator(".docs-article");
+  await expect(page.locator(".docs-reading-time")).toHaveText("Yaklaşık 6 dakika");
+  await expect(article).toContainText("Node.js 22");
+  await expect(article).toContainText("Python 3");
+  await expect(article).toContainText("Icarus Verilog");
+  await expect(article).toContainText("E2E testleri Jekyll'i kendi başına çalıştırmaz");
+  await expect(article).toContainText("bundle exec jekyll build");
+  await expect(article).toContainText("npx playwright install --with-deps chromium");
+});

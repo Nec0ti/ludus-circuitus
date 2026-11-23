@@ -220,3 +220,9 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - **Doğrulama kaydı:** Uygulama/test ayrıntıları `backloglog.md` içindeki 2026-11-23 ara sinyal girdisinde.
 
 - Ara Sinyal değişikliği PR #4 ile `452c539` commit’inde birleştirildi. PR kontrolü ve main Pages build/deploy başarılı; canlı `https://nec0ti.github.io/ludus-circuitus/playground/` smoke testinde blok/yeni sekme yardım hedefi doğrulandı ve POST/diğer yazan istek görülmedi. Ayrıntı `backloglog.md` içindeki aynı tarihli kayıt ve `/tmp/ludus-ab3a75f-{1440,390}.png` görsel kontrolüdür.
+
+
+### 2026-11-23 — Yerel katkı/test kurulumu
+
+- Yerel proje için Node.js 22, Ruby/Bundler, Git gerekir; Playwright E2E ayrıca Python 3 ve Chromium, `test:verilog` ise Icarus `iverilog`/`vvp` ister. Repo şu anda Ruby sürümünü pinlemiyor.
+- `npm run test:e2e`, Jekyll'i çalıştırmaz; güncel `npm run build:css` ve `bundle exec jekyll build` ardından `_site` klasörünü Python sunucusuyla açar. Linux Playwright kurulumunda OS bağımlılıkları `--with-deps` ile kurulabilir. Ayrıntı güncel `docs/yerel-kurulum.md` içinde.
