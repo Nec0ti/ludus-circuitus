@@ -352,7 +352,7 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR #15 yerel/PR CI kapıları: Node 27/27, Icarus Verilog scalar/hiyerarşik/vector oracle'ları (1.920 vector sonuç karşılaştırması), Jekyll ve Playwright 36/36. Dört canlı rota HTTP 200 verdi.
 - Bozuk yerel kaydı doğrulama düzeltmesi kullanıcı verisini otomatik silmez; geçersiz kayıt uyarıyla reddedilip başlangıç devresi korunur.
 - PR #16 (`901426a`, canlı CircuitVerse denemesi sınırları) CI'ı geçti; Pages run `45284677384` build ve deploy adımlarını başarıyla tamamladı. Yayın sonrası landing, docs, playground ve quiz HTTP **200/200/200/200** döndü.
-- Kalan: canlı arayüzde bulunan yinelenen başlık/açıklama ve İngilizce locale metadata'sını düzeltip doğrulamak.
+- PR #17 (`1f7fe57`) bu metadata düzeltmesini yaptı; dağıtım ve canlı doğrulama aşağıdaki kayıtta tamamlandı.
 
 ## 2026-11-24 — Türkçe sayfa metadata düzeltmesi
 
@@ -369,4 +369,6 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - `tests/e2e/playground.spec.mjs` içine 390×844 görünümde Dışa aktar düğmesinin görünürlüğünü ve `top.bp` dosyasının indirilmesini doğrulayan regresyon testi eklendi.
 - Doğrulama: `npm run build:css`, Node testleri 27/27, Jekyll build ve Playwright E2E 37/37 geçti; hedefli mobil dışa aktarma testi ayrıca 1/1 geçti. PR CI durumu PR açılışında kaydedilecek.
 - Değişenler: `assets/css/input.css`, derlenmiş `assets/css/site.css`, `tests/e2e/playground.spec.mjs`, `backlog.md`, bu günlük.
-- PR #18 `05eeda1` ile açıldı ve birleştirilmedi. Güncel GitHub `build` kontrolü run `45286844702` için kuyrukta; CI sonucu bu kayda eklenecek.
+- PR #18 `a217bf3` yeşil CI sonrası `492a008` olarak birleştirildi. Pages run `45287278491` build ve deploy adımlarını başarıyla tamamladı.
+- Canlı Playwright kontrolü 390×844 ölçüsünde `#export-bp` görünürlüğünü doğruladı ve `top.bp` indirmesini aldı; JavaScript hatası yok, document scroll width 390 px kaldı. Aynı smoke turunda landing, docs, playground ve quiz HTTP 200 döndü.
+- Ekran görüntüsü `/tmp/ludus-mobile-export-live.png` yerel geçici QA kanıtıdır; öğrenci/quiz verisi kullanılmadı.
