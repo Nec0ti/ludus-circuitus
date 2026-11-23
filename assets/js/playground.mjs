@@ -668,6 +668,12 @@ document.addEventListener("keydown", (event) => {
 });
 
 const canvas = $("#blueprint-canvas"), caller = $("#node-caller"), search = $("#node-search"), options = $("#node-options"), selectionBox = $("#selection-box");
+$("#shelf-toggle").addEventListener("click", (event) => {
+  const button = event.currentTarget, expanded = button.getAttribute("aria-expanded") !== "true";
+  button.setAttribute("aria-expanded", String(expanded));
+  button.closest(".cad-tools").classList.toggle("is-open", expanded);
+  button.textContent = expanded ? "Blokları gizle −" : "Blokları göster ＋";
+});
 let spaceDown = false;
 let callerEntries = [];
 let callerIndex = 0;

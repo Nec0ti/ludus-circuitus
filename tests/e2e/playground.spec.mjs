@@ -55,6 +55,25 @@ test("keeps the full-screen workbench usable at narrow viewport widths", async (
   }
 });
 
+test("mobile block shelf starts collapsed and exposes its accessible block controls", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto("/playground/");
+  const toggle = page.getByRole("button", { name: "Blokları göster" });
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(page.locator('[data-add="nand"]')).toBeHidden();
+  const canvasTop = (await page.locator("#blueprint-canvas").boundingBox()).y;
+  expect(canvasTop).toBeLessThan(380);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await toggle.click();
+  await expect(page.getByRole("button", { name: "Blokları gizle" })).toHaveAttribute("aria-expanded", "true");
+  const nand = page.locator('[data-add="nand"]');
+  await expect(nand).toBeVisible();
+  await expect(nand).toHaveAttribute("draggable", "true");
+  await nand.click();
+  await expect(page.locator(".node-nand")).toHaveCount(1);
+});
+
 test("builds a connection, saves locally, reloads and exports a .bp file", async ({ page }) => {
   await page.goto("/playground/");
   await page.getByRole("button", { name: "Yeni BP" }).click();

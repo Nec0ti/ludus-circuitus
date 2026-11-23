@@ -37,7 +37,8 @@ permalink: /playground/
 
   <main class="cad-workspace">
     <aside class="cad-tools" aria-label="Blok araçlığı">
-      <div class="cad-panel-title"><span>ARAÇLIK</span><kbd>01</kbd></div>
+      <div class="cad-panel-title"><span>ARAÇLIK</span><button class="cad-shelf-toggle" id="shelf-toggle" type="button" aria-expanded="false" aria-controls="tool-shelf">Blokları göster ＋</button><kbd>01</kbd></div>
+      <div class="cad-tool-content" id="tool-shelf">
       <p class="cad-tool-group">GİRİŞ / ÇIKIŞ</p>
       <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="input"><i class="cad-tool-symbol input-symbol">IN</i><span>Giriş</span><kbd>I</kbd></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#giris-cikis' | relative_url }}" target="_blank" rel="noopener" aria-label="Giriş bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">Seçilen bit genişliğinde onluk giriş değeri verir.</span></a></div>
       <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="output"><i class="cad-tool-symbol output-symbol">OUT</i><span>Çıkış</span><kbd>O</kbd></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#giris-cikis' | relative_url }}" target="_blank" rel="noopener" aria-label="Çıkış bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">Bir mantık yolunun ürettiği 0, 1 veya X değerini gösterir.</span></a></div>
@@ -58,6 +59,7 @@ permalink: /playground/
       <div id="module-tools" data-help-href="{{ '/docs/bloklar/#bp-modulleri' | relative_url }}"></div>
       <div class="cad-tool-help"><b>Bağlantı</b><span>Çıkış portuna, sonra giriş portuna tıkla.</span></div>
       <div class="cad-selection" id="selection-info">Blok seçili değil</div>
+      </div>
     </aside>
 
     <section class="cad-editor" aria-label="Blueprint çalışma alanı">

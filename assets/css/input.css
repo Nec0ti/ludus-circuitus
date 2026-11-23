@@ -647,6 +647,7 @@ select:focus-visible {
 .cad-action { min-height: 29px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid #3b4552; border-radius: 4px; background: #262e39; padding: 0 9px; color: #c9d1dc; font-size: 10px; cursor: pointer; }
 .cad-action:hover { border-color: #687686; background: #303a47; color: #fff; }
 .cad-action:disabled { opacity: .45; cursor: default; }
+.cad-shelf-toggle { display: none; border: 1px solid #3b4653; border-radius: 3px; background: #252e39; padding: 5px 7px; color: #dce3ec; font: 600 10px var(--font-sans); cursor: pointer; }
 .cad-play { border-color: #77602f; background: #382f20; color: #ffd27c; }
 .cad-reset { color: #9da9b8; }
 .cad-clock { display: flex; align-items: center; gap: 7px; color: #9da9b8; font: 10px var(--font-code); }
@@ -825,8 +826,15 @@ button.cad-variable:hover { border-color: #738295; }
   .cad-tick-label { display: none; }
   .cad-sim-status { min-width: 100%; order: 2; }
   .cad-workspace { min-height: 1500px; grid-template-columns: minmax(0, 1fr); }
-  .cad-tools { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px; border-right: 0; border-bottom: 1px solid #0e1319; padding: 7px; }
-  .cad-tools > .cad-panel-title, .cad-tool-group, .cad-tool-help, .cad-selection { grid-column: 1 / -1; margin-block: 3px; }
+  .cad-tools { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3px; border-right: 0; border-bottom: 1px solid #0e1319; padding: 7px; }
+  .cad-tools > .cad-panel-title { margin-block: 3px; }
+  .cad-panel-title { min-height: 32px; }
+  .cad-panel-title kbd { margin-left: auto; }
+  .cad-shelf-toggle { display: block; }
+  .cad-tool-content { display: none; }
+  .cad-tools.is-open .cad-tool-content { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px; }
+  .cad-tool-group, .cad-tool-help, .cad-selection { grid-column: 1 / -1; margin-block: 3px; }
+  #module-tools { display: contents; }
   .cad-block-tool { min-height: 42px; justify-content: center; gap: 5px; border: 1px solid #35414d; padding: 3px; }
   .cad-block-tool span { font-size: 8px; }
   .cad-block-tool kbd { display: none; }
