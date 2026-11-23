@@ -16,7 +16,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] Docs'u eğitim portalı olarak yeniden kur: açılır/kapanır ana gruplar, alt başlıklar, içerik içi gezinme ve her sayfa/bölüm için yaklaşık okuma süresi.
 - [x] Modül bileşimi uygulandıktan sonra `.bp` oluşturma/yeniden kullanma kılavuzunu gerçek kullanım adımlarına geçir.
 - [x] Ana sayfa, docs ve atölye için ayrı iş-kopyası worktree'lerinde görsel alt ajan incelemesi yap; hizalama/taşma/kontrast benchmarklarını CI'a ekle. Üç bağımsız inceleme ve son düzeltme geri kontrolleri geçti; eşikler CI testlerine bağlandı. Ayrıntı: [`raports/visual-review-2026-11-23.md`](raports/visual-review-2026-11-23.md).
-- [x] Araçlık bloklarının yanındaki yardım işaretleri hover/focus özeti gösterir ve hedef docs anchor'ını yeni sekmede açar.
+- [x] Araçlık bloklarının yanındaki yardım işaretleri hover/focus özeti gösterir ve hedef docs anchor'ını yeni sekmede açar; E2E kapsamı ve canlı Pages HTML'i doğrulandı.
 - [x] Çocuklara uygun ama manipülatif olmayan motivasyon etkileşimlerini öğrenme kanıtı hipoteziyle eşleştir. (Özerklik, yetkinlik, sınırlı görev ve sağlıklı durma önerileri araştırma notunda; Ludus etkisi kanıtlanmış değil.)
 - [x] Quiz belirtke tablosu, madde beceri eşlemesi, dengeli cevap anahtarı ve puanlama protokolü taslağını oluştur; A/B formları hâlâ araştırma geçerliği/eşdeğerliği kanıtlı değildir. Ayrıntı: [`research/measurement/quiz-blueprint.md`](research/measurement/quiz-blueprint.md).
 - [ ] Danışman/alan öğretmeniyle kazanımları ve maddeleri gözden geçir; okul içinde gönüllü/karşılaştırma koşulunu belirle ve MEB izin dosyasında onaylat.

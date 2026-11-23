@@ -230,3 +230,12 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - `docs/bloklar.md` artık giriş/çıkış portlarını tablo halinde tanımlar: kapı girişleri `a`/`b` veya `in`, tek çıkış `out`; yazmaçta `d` ve Q; modül portları açık belgedeki Giriş/Çıkış adlarından türetilir. Ara Sinyal'in state saklamadığı, yalnız Yazmaç'ın sakladığı; saat/reset, `X` başlangıcı, 1-bit değer, mantıksal paralel görünümün fiziksel kapı gecikmesi olmadığı açıklanır. Reset eylemi ile generated Verilog'un aktif-yüksek asenkron reseti eşleştirilir.
 - MVP kapsamı sabit, MUX, çok bit ve fiziksel FPGA yüklemesini içermiyor; herhangi biri öğrenme gereksinimi doğurursa ayrı gerekçeyle ele alınacak.
 - Docs E2E port tablosunu, süreyi, reset/wire ayrımını, 0/1 onluk→tek-bit Verilog eşlemesini ve 320/390/768/1440 px taşmasızlığını doğruluyor. Jekyll build ve docs E2E 4/4 geçti. Kalan: bağımsız görsel kontrol ve PR CI.
+
+- Son görsel geri kontrolü 390 px mobilde callout'un taşmadan doğal biçimde sarıldığını doğruladı. PR #6 CI (run `45239958700`) geçti ve PR `3d499b5` ile main'e squash merge edildi; main build, Icarus, E2E ve Pages deploy (`45240327987`) başarılı oldu. Canlı atölye HTML'inde Giriş, Çıkış, AND, OR, XOR, NOT, Ara Sinyal ve Yazmaç yardım bağlantıları yeni sekme hedefleriyle doğrulandı; E2E ayrıca `.bp` modül yardımını ve AND bağlantısının açtığı sekmeyi denetliyor. Çalışma ağacı temiz.
+
+## 2026-11-23 — Blok yardımı isteğinin canlı doğrulaması
+
+- İstenen küçük `?` yardımları zaten her statik blok aracında ve dinamik `.bp` modül aracında bulunuyordu. Hover/klavye odağı Türkçe kısa özeti gösteriyor; bağlantı ilgili `docs/bloklar/` başlığını `target="_blank"` ile yeni sekmede açıyor.
+- Değişenler: `backlog.md`, `backloglog.md`.
+- Doğrulama: mevcut Playwright testi bütün blokların özet ve hedeflerini, AND yardımı popup'ını ve modül yardımını doğruluyor; main Pages build/E2E/deploy geçti; canlı sayfada sekiz yardım bağlantısı yayımlanmış HTML'de görüldü. `git diff --check` geçti.
+- Kalan: bu isteğin gerektirdiği ek uygulama değişikliği yok.
