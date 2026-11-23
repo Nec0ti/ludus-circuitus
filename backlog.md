@@ -4,8 +4,8 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
-- İlk çalışan uygulama MVP'si: tam ekran etkileşimli Devre Atölyesi, pure graph motoru ve çok modüllü `.bp` bileşimi hazır. Kalan ana parçalar: quiz, düzenli eğitim dokümanları ve görsel inceleme kapıları.
-- Bu dilimde çok modüllü `.bp` bileşimi uygulandı ve doğrulandı; docs/quiz yeniden tasarımı ayrı worktree'lerde inceleme bekliyor.
+- İlk çalışan uygulama MVP'si: tam ekran etkileşimli Devre Atölyesi, pure graph motoru, çok modüllü `.bp` bileşimi, yerel anonim quiz ve modüler docs hazır. Kalan: genel site/landing tasarım yenilemesi, görsel inceleme kapıları ve araştırma aracının danışmanla kesinleştirilmesi.
+- `.bp` modül bileşimi uygulandı ve doğrulandı. Quiz prototipi tamamlandı; araştırma ölçüm aracı olarak kullanımı için danışman/okul incelemesi bekliyor.
 
 ## Sıradaki işler
 
@@ -14,11 +14,11 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [ ] Renk/okunabilirlik ve çocuklarda öğrenme motivasyonu için kaynaklı tasarım notu yaz; palet kararı öncesinde aşırı genelleme yapma.
 - [ ] Landing'i koyu ama yumuşak, somut devre etkileşimli bir hikâyeye dönüştür; tamamlanan görev ve merak ilerlemesi kullan, baskılı streak/infinite scroll ekleme.
 - [x] Docs'u eğitim portalı olarak yeniden kur: açılır/kapanır ana gruplar, alt başlıklar, içerik içi gezinme ve her sayfa/bölüm için yaklaşık okuma süresi.
-- [ ] Modül bileşimi uygulandıktan sonra `.bp` oluşturma/yeniden kullanma kılavuzunu taslaktan gerçek kullanım adımlarına geçir.
+- [x] Modül bileşimi uygulandıktan sonra `.bp` oluşturma/yeniden kullanma kılavuzunu gerçek kullanım adımlarına geçir.
 - [ ] Ana sayfa, docs ve atölye için ayrı iş-kopyası worktree'lerinde görsel alt ajan incelemesi yap; hizalama/taşma/kontrast benchmarklarını CI'a ekle.
 - [x] Araçlık bloklarının yanındaki yardım işaretleri hover/focus özeti gösterir ve hedef docs anchor'ını yeni sekmede açar.
 - [ ] Çocuklara uygun ama manipülatif olmayan motivasyon etkileşimlerini öğrenme kanıtı hipoteziyle eşleştir.
-- [ ] Quiz belirtke tablosu, eşdeğer ön/son formlar, cevap anahtarı ve puanlamayı hazırla; okul içinde yeterli gönüllü/karşılaştırma koşulunu danışmanla belirle.
+- [ ] Yerel quiz'in soru belirtkesini, A/B form eşdeğerliğini ve puanlamasını danışmanla gözden geçir; izinli araştırma aracı, katılımcı sayısı ve karşılaştırma koşulunu ayrıca belirle.
 - [ ] En küçük blok kümesini ve blokların giriş/çıkış davranışını tanımla.
 - [x] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle ve çalışan editör akışına bağla.
 - [ ] Onluk kullanıcı değerleri, Verilog bit genişliği ve ikilik fiziksel davranış arasındaki pedagojik eşlemeyi tasarla.
@@ -53,3 +53,4 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] Pure grafik motorunun ilk katmanı: half-adder evaluation, X dahil kapı semantiği, döngü/eksik port/çoklu sürücü reddi, register reset ve toplu kenar güncellemesi, başlangıç Verilog codegen; Node test kapısı.
 - [x] `Nec0ti/ludus-circuitus` deposunu açıkça onaylanan şekilde public yap; Git geçmişindeki merge commit kişisel yazar metadatasını kullanıcıya bildir.
 - [x] Tam ekran çalışma alanı: blok ekleme, grid taşıma, port bağlama, canlı sinyal paneli, Verilog codegen, yerel belge kaydı ve `.bp` içe/dışa aktarma.
+- [x] Ağ isteği ve kalıcı kayıt olmadan yerel quiz prototipi; paralel mantık birincil, Verilog ve sıralı mantık alt puanları; eşlenmiş A/B soru formları.

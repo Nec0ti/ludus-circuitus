@@ -1,0 +1,41 @@
+---
+layout: default
+title: Mantık kontrolü
+description: Mantık yolları, Verilog eşlemesi ve yazmaçlarla ilgili kısa bir öğrenme alıştırması.
+permalink: /quiz/
+---
+
+<section class="site-width quiz-page">
+  <header class="quiz-intro">
+    <p class="eyebrow"><span class="eyebrow-dot"></span> Kısa öğrenme alıştırması · Yaklaşık 4 dakika</p>
+    <h1>Mantık yollarını tahmin et.</h1>
+    <p>Önce iki bağımsız kapının çıkışını düşün; sonra Verilog satırları ve clock kenarındaki yazmaç davranışını yokla. Yanıtların sonunda açıklamaları görebilirsin.</p>
+    <p class="quiz-privacy"><strong>Gizlilik:</strong> Bu prototip adını veya başka kişisel bilgini istemez. Cevaplar yalnızca bu sayfadayken bellekte tutulur; puan ve süre kaydedilmez ya da gönderilmez. Bu alıştırma, danışman ve okul onayı olmadan araştırma ölçüm aracı olarak kullanılmamalıdır.</p>
+  </header>
+
+  <section class="card quiz-card" aria-labelledby="quiz-title">
+    <div class="quiz-toolbar">
+      <div>
+        <p class="quiz-kicker">8 soru · 3 konu</p>
+        <h2 id="quiz-title">Sorular</h2>
+      </div>
+      <div class="quiz-forms" role="group" aria-label="Soru formu">
+        <button class="btn btn-sm btn-primary" type="button" data-form="A" aria-pressed="true">Form A</button>
+        <button class="btn btn-sm btn-ghost" type="button" data-form="B" aria-pressed="false">Form B</button>
+      </div>
+    </div>
+    <p class="quiz-form-note" id="quiz-form-note">Form A seçili. Diğer form aynı konuları farklı örneklerle sorar.</p>
+    <form id="quiz-form">
+      <div id="quiz-questions"></div>
+      <div class="quiz-submit-row">
+        <p id="quiz-status" class="quiz-status" role="status" aria-live="polite">Devam etmek için her soruya bir yanıt seç.</p>
+        <button class="btn btn-primary" type="submit">Yanıtlarımı değerlendir</button>
+      </div>
+    </form>
+    <section id="quiz-results" class="quiz-results" aria-labelledby="result-title" hidden></section>
+  </section>
+
+  <p class="quiz-caution">Puan, bu kısa alıştırmadaki sorulara verdiğin yanıtların özetidir; tek başına öğrenme düzeyini veya Ludus'un etkisini kanıtlamaz.</p>
+</section>
+
+<script type="module" src="{{ '/assets/js/quiz.mjs' | relative_url }}"></script>

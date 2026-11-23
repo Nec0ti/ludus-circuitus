@@ -3,7 +3,7 @@ layout: default
 title: Bloklar
 description: Devre Atölyesi'nde kullanılabilen dijital mantık blokları.
 permalink: /docs/bloklar/
-reading_time: 4
+reading_time: 5
 ---
 <div class="site-width docs-shell">
   {% include docs-nav.html %}
@@ -12,7 +12,7 @@ reading_time: 4
     <h1>Bloklar</h1>
     <p class="docs-reading-time">Yaklaşık {{ page.reading_time }} dakika</p>
     <p class="docs-intro">Atölye şu anda 1 bitlik sinyallerle çalışır. Sinyal 0, 1 veya başlangıçta bilinmeyen <code>X</code> olabilir. Her kapı ayrı bir donanım yoludur; devreye bağlı yollar aynı anda değerlendirilir.</p>
-    <nav class="docs-page-toc" aria-label="Bu sayfadaki konular"><b>Bu sayfada</b><a href="#giris-cikis">Giriş ve çıkış <small>1 dk</small></a><a href="#mantik-kapilari">Mantık kapıları <small>1 dk</small></a><a href="#yazmac">Clock ve yazmaç <small>1 dk</small></a><a href="#portlar">Portlar ve bağlantı <small>1 dk</small></a></nav>
+    <nav class="docs-page-toc" aria-label="Bu sayfadaki konular"><b>Bu sayfada</b><a href="#giris-cikis">Giriş ve çıkış <small>1 dk</small></a><a href="#mantik-kapilari">Mantık kapıları <small>1 dk</small></a><a href="#yazmac">Clock ve yazmaç <small>1 dk</small></a><a href="#portlar">Portlar ve bağlantı <small>1 dk</small></a><a href="#bp-modulleri">BP modülleri <small>1 dk</small></a></nav>
     <h2 id="giris-cikis">Giriş ve çıkış <span class="docs-section-time">~1 dk</span></h2>
     <div class="block-list">
       <div><span class="block-swatch swatch-input">A</span><p><b>Giriş</b><small>Devrenin dışından 0 veya 1 alan sinyal.</small></p></div>
@@ -32,5 +32,8 @@ reading_time: 4
     <h2 id="portlar">Portlar ve clock <span class="docs-section-time">~1 dk</span></h2>
     <p>Kapıların soldaki portları giriş, sağdaki portu çıkıştır. Her giriş portuna bir kaynak bağlanır; bir çıkış birden fazla hedefe dallanabilir. Clock ayrı bir mantık bloğu değildir: simülasyon araç çubuğundaki Tek tik bir yükselen kenardır. Reset eylemi register'ları ayrı olarak 0 yapar.</p>
     <aside class="docs-callout"><b>Bir bitlik başlangıç modeli</b><p>Onluk ekranda 0 ve 1 gösterilir; bu araç henüz çok bitli sayıları veya FPGA kartına yüklemeyi desteklemez.</p></aside>
+    <h2 id="bp-modulleri">Blueprint modülleri <span class="docs-section-time">~1 dk</span></h2>
+    <p>Açık bir `.bp` sekmesini üst blueprint'te tekrar kullanılabilen tek bir blok olarak ekleyebilirsin. Modülün Giriş ve Çıkış bloklarının adları, dışarıda görünen portların adıdır. Modülün içindeki kapı ve yazmaçlar tek tasarım olarak değerlendirilir; modül bağımlılıkları döngü oluşturamaz.</p>
+    <p>Atölye en fazla 8 açık blueprint ve modül başına 8 giriş/8 çıkış portu destekler. Birleşik davranış ve Verilog için adımları görmek istersen <a href="{{ '/docs/kullanim/#moduller' | relative_url }}">modül kullanım rehberine</a> geç.</p>
   </article>
 </div>

@@ -23,8 +23,8 @@ Detay, alternatifler ve sınırlılıklar: [`research/measurement/learning-study
 - 1-bit blueprint JSON'u saf motorla doğrulanıp simüle ediliyor. 0/1/X kapı mantığı, kombinasyonel döngü reddi, gerçek Verilog üretimi, başlangıç X yazmaç, eşzamanlı yükselen kenar, ayrı reset, tarayıcı localStorage ve `.bp` JSON içe/dışa aktarımı çalışıyor.
 - Araçlık blokları mouse/keyboard ile eklenebilir; çıkıştan girişe tıklayarak bağlanır; canvas'ta 20 birimlik ızgarada taşınır. Bu ilk dilimde alt blueprint dosyaları tablarda açılabilir; modül örneği çağırma/bileştirme henüz yok.
 - Her blokta kısa hover/focus yardımı var; yardım bağlantısı ilgili Bloklar başlığını yeni sekmede açıyor.
-- Veriler yalnız yerel tarayıcıda. Quiz, API ve öğrenci kaydı henüz yok; okul/MEB/KVKK onayı beklemeden kişisel veri toplama yapılmayacak.
-- Genel site için yumuşak koyu tema, renk/okunabilirlik ve çocuklarda öğrenme motivasyonu kaynak incelemesi bekliyor; dokümantasyon modüler eğitim portalına dönüşecek.
+- Atölye verileri tarayıcıda yerel kalır. Quiz yalnız açık sayfa belleğinde puanlanan anonim bir öğrenme alıştırmasıdır; cevap/puan/süre kaydetmez ve API isteği yapmaz. Okul/MEB/KVKK onayı beklemeden insan katılımcılı araştırma verisi toplanmayacak.
+- Genel site için yumuşak koyu tema, renk/okunabilirlik ve çocuklarda öğrenme motivasyonu kaynak incelemesi bekliyor; docs eğitim portalı, quiz yerel anonim prototip olarak eklendi.
 
 ## Çoklu `.bp` modül birleşimi: 2026-11-23
 
@@ -34,6 +34,13 @@ Detay, alternatifler ve sınırlılıklar: [`research/measurement/learning-study
 - Simülasyon ve Verilog, `.bp` hiyerarşisini düzleştirip tek üst Verilog modülünde birleştirir. İç modül register/yazmaç durumları da üst tasarımla aynı tick/reset geçişlerine katılır.
 - Her açık BP yerel depolamada birlikte saklanır. Dışa aktarma hâlâ etkin `.bp` dosyasını verir; başka cihaza proje taşırken bağımlı BP dosyaları ayrı ayrı içe aktarılmalıdır.
 - Doğrulama: tüm yarım toplayıcı giriş vektörleri, modül portları, eksik modül, modül döngüsü, iç içe register tick/reset, 320–1440 px atölye akışı, yerel saklama/yükleme ve Icarus ile kombinasyonel + sıralı modül simülasyonu.
+
+
+## Yerel quiz prototipi
+
+- `/quiz/` sayfasında sekiz soruluk A ve B formları bulunur. İki form da aynı dağılımı izler: dört paralel mantık yolu tahmini (birincil puan), iki blok-Verilog eşleme ve iki clock/yazmaç sorusu (ikincil puanlar).
+- Sonuçlar form toplamı ve üç alt puan olarak sayfada gösterilir; yanlış yanıtlara kısa açıklama verilir. Yanıtlar yalnız açık sayfanın JavaScript belleğinde durur; sonuç/katılımcı/süre saklanmaz. API isteği veya analitik kodu yoktur.
+- A/B formlarının konu dağılımı ve doğru yanıt konumları otomatik testle eşleştirilir. Bu, pedagojik geçerliği veya saha uygulamasında gerçek test eşdeğerliğini kanıtlamaz. İnsan katılımcılı ölçümden önce danışman ve MEB izin dosyasıyla gözden geçirilmeli; gerekirse soru ve puanlama değiştirilmelidir.
 
 ## Ürün ve yayın kararı
 

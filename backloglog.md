@@ -132,8 +132,17 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 # 2026-11-23 — Dokümantasyon eğitim portalı
 
 - Sol dokümantasyon menüsü Temeller, Atölyeyi Kullan ve Geliştirici Rehberi adlı açılır konu gruplarına ayrıldı; sayfa ve alt bölüm bağlantıları ile yaklaşık okuma süreleri eklendi. Doküman sayfalarına sayfa süresi, içindekiler ve bölüm süreleri eklendi.
-- Kullanım rehberine `.bp` dosyası içinde Giriş/Çıkış portları tanımlayıp üst blueprint'te modül olarak tekrar kullanma anlatımı eklendi. Motor/arayüz desteği tamamlanmadığından bölüm açıkça taslak/önizleme olarak işaretli.
+- Kullanım ve Bloklar rehberleri çalışan modül arayüzüne göre güncellendi: açık dosyayı araçlıktan ekleme, isimli portları bağlama, sınırlar ve yerel proje saklama adımları anlatılıyor. Yardım bağlantısı `BP modülleri` anchor'ına gidiyor.
 - `tests/e2e/docs.spec.mjs` menü aç/kapa davranışını, okuma sürelerini, 320–1440 px taşma kontrolünü ve yayımlanan sayfalardaki bütün dokümantasyon anchor hedeflerini doğrular. İzole worktree'de E2E test sunucusu çakışmasını çözmek için Playwright portu `PLAYWRIGHT_PORT` ortam değişkeniyle seçilebilir hale getirildi.
 - Doğrulama: `npm ci` (0 audit bulgusu), `npm run build:css`, Jekyll build, `npm run test:e2e` 9/9 (Chromium, port 4179), `npm test` 6/6 ve `git diff --check` geçti; 1440 px kullanım rehberi screenshot'ı gözle incelendi.
 - Değişen dosyalar: `_includes/docs-nav.html`, dört `docs/*.md`/`docs/index.html` sayfası, `assets/css/input.css`, `assets/css/site.css`, `playwright.config.mjs`, `tests/e2e/docs.spec.mjs`, `backlog.md`, bu günlük.
-- Kalan: modül bileşimi uygulandığında taslak kılavuzu gerçek arayüz ve Verilog davranışına göre güncelle; genel koyu tema ve landing tasarımı bu çalışma diliminin dışında.
+- Kalan: genel koyu tema ve landing tasarımı; eğitim portalı içeriği geçerli kılındı.
+
+# 2026-11-23 — Yerel anonim quiz prototipi
+
+- `/quiz/` sayfasına sekiz soruluk A/B alıştırma formları eklendi: her formda dört paralel mantık yolu tahmini birincil puanı; iki blok-Verilog eşlemesi ve iki clock/yazmaç sorusu ikincil puanları oluşturuyor. Sonuç ekranı genel yüzdeyi ve alt puanları açıklamalarla sunuyor; form değiştirme ve yeniden deneme var.
+- Cevaplar yalnız açık sayfa belleğinde tutuluyor. İsim, yaş, sınıf, süre, puan kaydı, localStorage/sessionStorage, API/POST ve analitik yok; sayfadaki gizlilik notu da alıştırmanın okul onaylı araştırma aracı olmadığını belirtiyor. Quiz masaüstü/mobil gezinmeye eklendi.
+- Eş form yapısını ve puanlamayı `tests/quiz.test.mjs`; tamamlama, puan, alt puanlar, sıfırlama, form değiştirme, ağ isteği/kalıcı saklama ve 320/390/768/1440 px taşmayı `tests/e2e/quiz.spec.mjs` doğruluyor. 768 px kontrolü gezinme çubuğunun taşmasını yakaladı; mobil menü eşiği 56 rem'e çıkarıldı.
+- Değişenler: `quiz/`, `assets/js/quiz*.mjs`, `assets/css/input.css`, derlenmiş `assets/css/site.css`, `_includes/nav.html`, testler, `playwright.config.mjs`, `package.json`, `README.md`, `notes.md`, `backlog.md`.
+- Doğrulama: `npm ci` audit 0 açık bulgu; `npm test` 9/9; `npm run build:css`; Jekyll build; tam Playwright E2E 10/10. Yeni quiz E2E'leri son kalıcı kayıt doğrulaması eklendikten sonra ayrıca 3/3 geçti; `git diff --check` temiz.
+- Kalan: A/B formları aynı konu dağılımı ve doğru seçenek konumu ile eşleştirildi, ancak madde güçlüğü/ölçüm geçerliği danışmanla değerlendirilmedi; MEB izin dosyası veya katılımcı araştırma ölçümü olarak kullanıma hazır değiller. Ortaokul öğrencileriyle kullanılabilirlik testi yapılmadı.
