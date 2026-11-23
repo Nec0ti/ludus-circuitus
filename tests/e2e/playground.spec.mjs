@@ -46,6 +46,27 @@ test("builds a connection, saves locally, reloads and exports a .bp file", async
   expect((await download).suggestedFilename()).toBe("devre2.bp");
 });
 
+test("adds, names, simulates and exports a named intermediate signal", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.getByRole("button", { name: "Yeni BP" }).click();
+  page.on("dialog", (dialog) => dialog.accept("ara_deger"));
+  await page.locator('[data-add="signal"]').click();
+  await page.locator(".node-signal .cad-node-name").dblclick();
+  await page.getByRole("button", { name: "giris out çıkışı" }).click();
+  await page.getByRole("button", { name: "ara_deger in girişi" }).click();
+  await page.getByRole("button", { name: "ara_deger out çıkışı" }).click();
+  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await expect(page.locator("#verilog-code")).toContainText("wire ara_deger;");
+  await expect(page.locator("#verilog-code")).toContainText("assign ara_deger = giris;");
+  await expect(page.locator("#variable-list .cad-variable-name")).toHaveText(["giris", "cikis", "ara_deger"]);
+  await page.locator(".cad-variable.is-input").click();
+  await expect(page.locator("#variable-list .cad-variable-value").nth(2)).toHaveText("1");
+  const download = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Dışa aktar" }).click();
+  const file = await download;
+  expect(file.suggestedFilename()).toBe("devre2.bp");
+});
+
 test("clocked register updates on a tick and reset is separate from stop", async ({ page }) => {
   await page.goto("/playground/");
   await page.getByRole("button", { name: "Yeni BP" }).click();
@@ -123,6 +144,7 @@ test("shows concise help beside every block and opens its docs in a new tab", as
     ["OR", /#mantik-kapilari/, "Girişlerinden en az biri 1 ise 1 üretir."],
     ["XOR", /#mantik-kapilari/, "İki girişi farklıysa 1 üretir."],
     ["NOT", /#mantik-kapilari/, "Girişteki 0'ı 1'e, 1'i 0'a çevirir."],
+    ["Ara sinyal", /#ara-sinyal/, "Bir mantık yoluna ad verir; değerini değişkenler panelinde canlı izle."],
     ["Yazmaç", /#yazmac/, "D girişini bir yükselen clock kenarında saklar ve Q çıkışında tutar."]
   ];
   for (const [name, destination, summary] of blocks) {

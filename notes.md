@@ -210,3 +210,11 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - PR #3 (`ce89a00`) `52ae1ebb` merge commit'iyle `main`e geçti. PR build ve ana dal Pages build/deploy (`45232526762`) başarılı.
 - Canlı quiz'de p2'nin her seçeneği hem AND/XOR değerlerini hem paralel/seri ilişkiyi söylüyor; doğru seçenek ikisini doğru kuruyor. 390 px'te yatay taşma yok; local/session storage boş, GET harici istek yok.
 - A/B'nin eşdeğerliği ve soruların geçerliği kanıtlanmış değildir. Bu sürüm alıştırma olarak kullanılabilir; okul araştırmasında kullanmak için danışman/öğrenci incelemesi ve MEB onayı beklenir.
+
+
+### 2026-11-23 — Ara sinyal ve değişken paneli
+
+- **Karar/uygulama:** Değişken panelinin MVP kapsamına adlandırılmış ara sinyaller eklendi. Ara Sinyal bloğu bir girişten aldığı değeri çıkışına combinational olarak geçirir; 0/1/X değerini saklamaz ve saati beklemez. Alt panel bu bloğun canlı değerini gösterir.
+- **Verilog karşılığı:** Verilen ad bir yerel `wire` olarak üretilir ve bağlı kaynakla `assign` edilir. İsimler Verilog tanımlayıcı kurallarına uyar, modül içi giriş/çıkış/ara sinyaller arasında benzersizdir; register kullanılan tasarımlarda `clk` ve `reset` ile çakışamaz. Aynı `.bp` modülü birden fazla kullanılırsa düzleştirilmiş kodda ara sinyaller örneğe göre adlandırılır.
+- **Kapsam sınırı:** Sabitler, parametreler ve çok bitli değişkenler eklenmedi. Değer saklama için var olan Yazmaç kullanılır. `.bp` sürümü 1 değişmedi; yeni node tipi `signal` eklemelidir.
+- **Doğrulama kaydı:** Uygulama/test ayrıntıları `backloglog.md` içindeki 2026-11-23 ara sinyal girdisinde.

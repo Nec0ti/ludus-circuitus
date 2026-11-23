@@ -664,6 +664,7 @@ select:focus-visible {
 .output-symbol { border-color: #796236; color: #f1c76b; font-size: 7px; }
 .gate-symbol { border-color: #54677e; color: #b6d7fa; }
 .register-symbol { border-color: #77526e; color: #e3a4d2; }
+.signal-symbol { border-color: #356e73; color: #70d2cf; font-size: 7px; }
 .module-symbol { border-color: #287d78; color: #72d8c3; }
 .cad-module-empty { display: block; padding: 6px 4px; color: #788695; font-size: 9px; line-height: 1.45; }
 .cad-tool-help { display: grid; gap: 5px; margin-top: 19px; border: 1px solid #343e4a; border-radius: 4px; background: #202731; padding: 9px; color: #a5b0bd; font-size: 9px; line-height: 1.5; }
@@ -692,6 +693,7 @@ select:focus-visible {
 .node-input { border-color: #477966; }
 .node-output { border-color: #806a3d; }
 .node-register { border-color: #77526e; }
+.node-signal { border-color: #356e73; }
 .node-module { border-color: #287d78; background: linear-gradient(145deg, #223c3d, #202832); }
 .node-module .cad-node-icon { background: #214643; color: #83deca; }
 .node-module .cad-port { width: auto; min-width: 0; height: 16px; border: 0; border-radius: 0; background: transparent; padding: 0; color: #b8d5ce; font-size: 8px; white-space: nowrap; }
@@ -705,6 +707,7 @@ select:focus-visible {
 .node-input .cad-node-icon { background: #25483e; color: #82dfbd; }
 .node-output .cad-node-icon { background: #514428; color: #f4cf81; }
 .node-register .cad-node-icon { background: #4c3348; color: #e8b1dc; }
+.node-signal .cad-node-icon { background: #21464a; color: #79d8d2; }
 .cad-node-name { overflow: hidden; flex: 1; border: 0; background: none; padding: 0; color: #dce4ed; font: 700 9px var(--font-code); text-align: left; text-overflow: ellipsis; white-space: nowrap; }
 .cad-node-remove { border: 0; background: none; color: #8995a3; font-size: 15px; cursor: pointer; }
 .cad-node-remove:hover { color: #ff9d86; }
@@ -742,6 +745,7 @@ button.cad-variable:hover { border-color: #738295; }
 .mini-input .cad-mini-node { stroke: #477966; }
 .mini-output .cad-mini-node { stroke: #806a3d; }
 .mini-register .cad-mini-node { stroke: #77526e; }
+.mini-signal .cad-mini-node { stroke: #356e73; }
 .cad-mini-title { fill: #cbd5df; font: 700 17px var(--font-code); }
 .cad-mini-value { fill: #bcc8d4; font: 800 18px var(--font-code); }
 .cad-signal-legend { display: flex; gap: 12px; padding-top: 8px; color: #a3afbd; font-size: 9px; }

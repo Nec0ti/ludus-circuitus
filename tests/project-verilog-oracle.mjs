@@ -11,11 +11,13 @@ const invert = {
     nodes: [
       { id: "x", type: "input", name: "x", x: 0, y: 0 },
       { id: "not", type: "not", name: "", x: 100, y: 0 },
+      { id: "tap", type: "signal", name: "negated", x: 150, y: 0 },
       { id: "y", type: "output", name: "y", x: 200, y: 0 }
     ],
     wires: [
       { from: { node: "x", port: "out" }, to: { node: "not", port: "in" } },
-      { from: { node: "not", port: "out" }, to: { node: "y", port: "in" } }
+      { from: { node: "not", port: "out" }, to: { node: "tap", port: "in" } },
+      { from: { node: "tap", port: "out" }, to: { node: "y", port: "in" } }
     ]
   }
 };
@@ -25,10 +27,12 @@ const parent = {
     nodes: [
       { id: "a", type: "input", name: "a", x: 0, y: 0 },
       { id: "u", type: "module", module: "invert", name: "u1", x: 100, y: 0 },
+      { id: "u2", type: "module", module: "invert", name: "u2", x: 100, y: 100 },
       { id: "y", type: "output", name: "y", x: 200, y: 0 }
     ],
     wires: [
       { from: { node: "a", port: "out" }, to: { node: "u", port: "x" } },
+      { from: { node: "a", port: "out" }, to: { node: "u2", port: "x" } },
       { from: { node: "u", port: "y" }, to: { node: "y", port: "in" } }
     ]
   }

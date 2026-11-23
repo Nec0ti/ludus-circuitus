@@ -1,4 +1,4 @@
-import { createState, halfAdderBlueprint, X } from "./engine.mjs";
+import { createState, halfAdderBlueprint, isValidSignalName, X } from "./engine.mjs";
 import { createProjectState, evaluateProject, flattenProject, generateProjectVerilog, resetProject, tickProject, validateProject } from "./project.mjs";
 
 const $ = (selector) => document.querySelector(selector);
@@ -8,8 +8,8 @@ const el = (tag, className, text) => {
   if (text !== undefined) node.textContent = text;
   return node;
 };
-const icons = { input: "IN", output: "OUT", and: "&", or: "≥1", xor: "=1", not: "¬", register: "D" };
-const labels = { input: "GİRİŞ", output: "ÇIKIŞ", and: "AND", or: "OR", xor: "XOR", not: "NOT", register: "YAZMAÇ" };
+const icons = { input: "IN", output: "OUT", and: "&", or: "≥1", xor: "=1", not: "¬", signal: "SIG", register: "D" };
+const labels = { input: "GİRİŞ", output: "ÇIKIŞ", and: "AND", or: "OR", xor: "XOR", not: "NOT", signal: "ARA SİNYAL", register: "YAZMAÇ" };
 const storeKey = "ludus-circuitus-documents-v1";
 const maxImportBytes = 1024 * 1024;
 
@@ -36,8 +36,8 @@ function moduleBlueprint(node) { return documents.find((doc) => doc.bp.name === 
 function inputNodes(bp) { return bp.nodes.filter((node) => node.type === "input"); }
 function hasRegisters(bp) { try { return flattenProject(documents, bp.name).bp.nodes.some((node) => node.type === "register"); } catch { return bp.nodes.some((node) => node.type === "register"); } }
 function currentInputs(bp) { return Object.fromEntries(inputNodes(bp).map((node) => [node.name, state.inputs[node.name] ?? 0])); }
-function portInputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "input").map((item) => item.name) || []) : ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], register: ["d"], output: ["in"] })[node.type] || []; }
-function portOutputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "output").map((item) => item.name) || []) : ["input", "and", "or", "xor", "not", "register"].includes(node.type) ? ["out"] : []; }
+function portInputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "input").map((item) => item.name) || []) : ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] })[node.type] || []; }
+function portOutputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "output").map((item) => item.name) || []) : ["input", "and", "or", "xor", "not", "signal", "register"].includes(node.type) ? ["out"] : []; }
 
 function safeEvaluate(doc) {
   try {
@@ -163,11 +163,16 @@ function renderNodes(bp, values) {
     const title = el("button", "cad-node-name", node.type === "module" ? node.module : node.name || labels[node.type]);
     title.type = "button";
     title.title = "Yeniden adlandırmak için çift tıkla";
+    title.addEventListener("click", (event) => event.stopPropagation());
     title.addEventListener("dblclick", (event) => {
       event.stopPropagation();
-      if (!["input", "output"].includes(node.type)) return;
-      const next = window.prompt("Sinyal adı", node.name);
-      if (next) { node.name = next.trim().replace(/\s+/g, "_"); render(); persist(); }
+      if (!["input", "output", "signal"].includes(node.type)) return;
+      const next = window.prompt("Sinyal adı (İngilizce harf, rakam ve _)", node.name);
+      if (next === null) return;
+      const name = next.trim();
+      if (!isValidSignalName(name) || name.length > 40 || bp.nodes.some((item) => item.id !== node.id && ["input", "output", "signal"].includes(item.type) && item.name === name) || bp.nodes.some((item) => item.type === "register") && ["clk", "reset"].includes(name)) return announce("Sinyal adı geçerli, benzersiz olmalı ve clk/reset ile çakışmamalı.");
+      node.name = name;
+      render(); persist();
     });
     header.append(title);
     const remove = el("button", "cad-node-remove", "×");
@@ -246,10 +251,10 @@ function renderWires(bp, values) {
 function renderVariables(bp, result) {
   const list = $("#variable-list");
   list.replaceChildren();
-  const vars = bp.nodes.filter((node) => ["input", "output", "register"].includes(node.type));
+  const vars = bp.nodes.filter((node) => ["input", "output", "signal", "register"].includes(node.type));
   $("#variable-count").textContent = `${vars.length} SİNYAL`;
   for (const node of vars) {
-    const value = node.type === "input" ? state.inputs[node.name] ?? 0 : node.type === "output" ? result.outputs[node.name] ?? X : state.registers[node.id] ?? X;
+    const value = node.type === "input" ? state.inputs[node.name] ?? 0 : node.type === "output" ? result.outputs[node.name] ?? X : node.type === "signal" ? result.values[node.id] ?? X : state.registers[node.id] ?? X;
     const item = node.type === "input" ? el("button", "cad-variable is-input") : el("div", "cad-variable");
     item.dataset.node = node.id;
     if (node.type === "input") {
@@ -258,7 +263,7 @@ function renderVariables(bp, result) {
     }
     item.append(el("span", "cad-variable-name", node.name || (node.type === "register" ? "Q" : "Sinyal")));
     item.append(el("span", `cad-variable-value value-${String(value).toLowerCase()}`, String(value)));
-    item.append(el("small", "", node.type === "input" ? "Giriş · değiştir" : node.type === "register" ? "Register" : "Çıkış"));
+    item.append(el("small", "", node.type === "input" ? "Giriş · değiştir" : node.type === "register" ? "Yazmaç" : node.type === "signal" ? "Ara sinyal · çift tıkla: adlandır" : "Çıkış"));
     list.append(item);
   }
 }
@@ -337,7 +342,10 @@ function addNode(type) {
   const index = bp.nodes.length;
   const x = type === "input" ? 60 : type === "output" ? 700 : 310 + (index % 2) * 190;
   const y = 60 + Math.floor(index / 2) % 5 * 100;
-  const node = { id: crypto.randomUUID(), type, name: ["input", "output"].includes(type) ? `${type === "input" ? "giris" : "cikis"}${count ? count + 1 : ""}` : "", x, y };
+  const defaultName = type === "input" ? `giris${count ? count + 1 : ""}` : type === "output" ? `cikis${count ? count + 1 : ""}` : `ara_sinyal_${count + 1}`;
+  let name = ["input", "output", "signal"].includes(type) ? defaultName : "";
+  if (type === "signal") while (bp.nodes.some((item) => item.name === name)) name += "_";
+  const node = { id: crypto.randomUUID(), type, name, x, y };
   bp.nodes.push(node);
   selectedId = node.id;
   render();

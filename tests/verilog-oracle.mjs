@@ -7,7 +7,14 @@ import { generateVerilog, halfAdderBlueprint } from "../assets/js/engine.mjs";
 
 const dir = await mkdtemp(join(tmpdir(), "ludus-iverilog-"));
 try {
-  const dut = generateVerilog(halfAdderBlueprint());
+  const namedWire = halfAdderBlueprint();
+  namedWire.nodes.push({ id: "sum_label", type: "signal", name: "sum_wire", x: 380, y: 80 });
+  namedWire.wires = namedWire.wires.filter((wire) => !(wire.to.node === "out_sum" && wire.to.port === "in"));
+  namedWire.wires.push(
+    { from: { node: "sum", port: "out" }, to: { node: "sum_label", port: "in" } },
+    { from: { node: "sum_label", port: "out" }, to: { node: "out_sum", port: "in" } }
+  );
+  const dut = generateVerilog(namedWire);
   const sequence = {
     version: 1, name: "flipflop",
     nodes: [
@@ -59,7 +66,7 @@ endmodule
   const seqRun = spawnSync("vvp", [join(dir, "seq.out")], { encoding: "utf8" });
   assert.equal(seqRun.status, 0, seqRun.stderr || "sıralı Verilog çalıştırması başarısız");
   assert.deepEqual([...seqRun.stdout.matchAll(/^S=([01x])$/gmi)].map((match) => match[1].toLowerCase()), ["0", "0", "1", "1", "0"]);
-  console.log("Icarus Verilog: yarım toplayıcı 4 binary + 4 X vektöründe; register reset/tik izinde eşleşti.");
+  console.log("Icarus Verilog: adlandırılmış ara sinyalli yarım toplayıcı 4 binary + 4 X vektöründe; register reset/tik izinde eşleşti.");
 } finally {
   await rm(dir, { recursive: true, force: true });
 }

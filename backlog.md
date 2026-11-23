@@ -23,7 +23,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [ ] En küçük blok kümesini ve blokların giriş/çıkış davranışını tanımla.
 - [x] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle ve çalışan editör akışına bağla.
 - [ ] Onluk kullanıcı değerleri, Verilog bit genişliği ve ikilik fiziksel davranış arasındaki pedagojik eşlemeyi tasarla.
-- [ ] Değişken panelinin kapsadığı değişken türlerini belirle.
+- [x] Değişken paneli kapsamını belirle ve adlandırılmış Ara Sinyal bloğunu ekle. Giriş/çıkış/yazmaç ve ara sinyallerin canlı değerleri görünür; sabit/parametre yönetimi MVP dışında.
 - [ ] Zorlayıcı test/benchmark şartnamesi, veri kümesi, eşikler ve başarısız kontrollerde push engelini tasarla.
 - [ ] Gerçek Verilog üretimini, benzetimi ve `.bp` kaydet/yükle akışını benchmark kapılarından geçir.
 - [ ] Yerel kurulum, önizleme, katkı ve yayın akışını belgeleri son MVP'ye göre tamamla.

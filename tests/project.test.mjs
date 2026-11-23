@@ -12,6 +12,7 @@ const adder = {
       { id: "b", type: "input", name: "b", x: 0, y: 100 },
       { id: "sum", type: "xor", name: "", x: 100, y: 0 },
       { id: "carry", type: "and", name: "", x: 100, y: 100 },
+      { id: "sum_label", type: "signal", name: "xor_tap", x: 150, y: 0 },
       { id: "s", type: "output", name: "sum", x: 200, y: 0 },
       { id: "c", type: "output", name: "carry", x: 200, y: 100 }
     ],
@@ -20,7 +21,8 @@ const adder = {
       { from: { node: "b", port: "out" }, to: { node: "sum", port: "b" } },
       { from: { node: "a", port: "out" }, to: { node: "carry", port: "a" } },
       { from: { node: "b", port: "out" }, to: { node: "carry", port: "b" } },
-      { from: { node: "sum", port: "out" }, to: { node: "s", port: "in" } },
+      { from: { node: "sum", port: "out" }, to: { node: "sum_label", port: "in" } },
+      { from: { node: "sum_label", port: "out" }, to: { node: "s", port: "in" } },
       { from: { node: "carry", port: "out" }, to: { node: "c", port: "in" } }
     ]
   }
@@ -49,7 +51,13 @@ function topWithModule() {
 }
 
 test("composes a named .bp module and matches all half-adder vectors", () => {
-  const docs = [topWithModule(), adder];
+  const top = topWithModule();
+  top.bp.nodes.push({ id: "instance2", type: "module", module: "adder", name: "half2", x: 200, y: 180 });
+  top.bp.wires.push(
+    { from: { node: "x", port: "out" }, to: { node: "instance2", port: "a" } },
+    { from: { node: "y", port: "out" }, to: { node: "instance2", port: "b" } }
+  );
+  const docs = [top, adder];
   validateProject(docs);
   for (const [x, y, sum, carry] of [[0, 0, 0, 0], [0, 1, 1, 0], [1, 0, 1, 0], [1, 1, 0, 1]]) {
     assert.deepEqual(evaluateProject(docs, "top", { x, y }).outputs, { sum_out: sum, carry_out: carry });
@@ -57,7 +65,9 @@ test("composes a named .bp module and matches all half-adder vectors", () => {
   const verilog = generateProjectVerilog(docs, "top");
   assert.match(verilog, /module top/);
   assert.match(verilog, /assign n_\d+ = x \^ y;/);
-  assert.match(verilog, /assign sum_out = n_\d+;/);
+  assert.match(verilog, /assign sum_out = __ludus_instance_0_xor_tap;/);
+  assert.match(verilog, /wire __ludus_instance_0_xor_tap;/);
+  assert.match(verilog, /wire __ludus_instance_1_xor_tap;/);
 });
 
 test("clocked registers inside a nested .bp module share project tick and reset semantics", () => {

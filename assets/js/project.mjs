@@ -1,26 +1,27 @@
-import { createState, evaluate, generateVerilog, reset, tick, validateBlueprint } from "./engine.mjs";
+import { createState, evaluate, generateVerilog, isValidSignalName, reset, tick, validateBlueprint } from "./engine.mjs";
 
 const validName = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 const key = (node, port) => node + ":" + port;
 const inputsOf = (node, modules) => node.type === "module"
   ? (modules.get(node.module)?.nodes.filter((item) => item.type === "input").map((item) => item.name) || [])
-  : ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], register: ["d"], output: ["in"] })[node.type] || [];
+  : ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] })[node.type] || [];
 const outputsOf = (node, modules) => node.type === "module"
   ? (modules.get(node.module)?.nodes.filter((item) => item.type === "output").map((item) => item.name) || [])
-  : node.type === "input" || ["and", "or", "xor", "not", "register"].includes(node.type) ? ["out"] : [];
+  : node.type === "input" || ["and", "or", "xor", "not", "signal", "register"].includes(node.type) ? ["out"] : [];
 
 function inspectBlueprint(bp, modules) {
   if (!bp || bp.version !== 1 || typeof bp.name !== "string" || !validName.test(bp.name) || !Array.isArray(bp.nodes) || !Array.isArray(bp.wires) || bp.nodes.length > 500 || bp.wires.length > 2000) throw new Error("Blueprint biçimi, adı, boyutu veya sürümü geçersiz.");
-  const nodes = new Map(), names = new Set(), allowed = new Set(["input", "output", "and", "or", "xor", "not", "register", "module"]);
+  const nodes = new Map(), names = new Set(), allowed = new Set(["input", "output", "and", "or", "xor", "not", "signal", "register", "module"]);
   for (const node of bp.nodes) {
     if (!node || typeof node.id !== "string" || !node.id || node.id.length > 100 || nodes.has(node.id) || !allowed.has(node.type)) throw new Error("Blok türü veya kimliği geçersiz.");
     if (node.type === "module" && (!modules.has(node.module) || !validName.test(node.name || "instance"))) throw new Error("Modül bloğu geçerli bir blueprint modülünü göstermeli.");
-    if (node.type === "input" || node.type === "output") {
-      if (!validName.test(node.name || "") || names.has(node.name)) throw new Error("Giriş ve çıkış adları geçerli ve benzersiz olmalı.");
+    if (["input", "output", "signal"].includes(node.type)) {
+      if (!isValidSignalName(node.name) || node.name.length > 40 || names.has(node.name)) throw new Error("Giriş, çıkış ve ara sinyal adları geçerli ve benzersiz olmalı.");
       names.add(node.name);
     }
     nodes.set(node.id, node);
   }
+  if (bp.nodes.some((node) => node.type === "register") && ["clk", "reset"].some((name) => names.has(name))) throw new Error("Sinyal adları clk/reset ile çakışamaz.");
   if (!bp.nodes.some((node) => node.type === "output")) throw new Error("Blueprint en az bir çıkış içermeli.");
   for (const node of bp.nodes.filter((item) => item.type === "module")) {
     const child = modules.get(node.module);
@@ -52,7 +53,7 @@ function expand(top, modules) {
     const ref = refs.get(node);
     return ref ? { node: ref.node, port: ref.port } : undefined;
   };
-  const visit = (bp, isTop, externalInputs) => {
+  const visit = (bp, isTop, externalInputs, scope = "") => {
     const refs = new Map(), moduleIds = new Map(), outputRefs = new Map();
     for (const node of bp.nodes) {
       if (node.type === "input") {
@@ -65,7 +66,7 @@ function expand(top, modules) {
       } else if (node.type !== "output" || isTop) {
         const id = isTop ? node.id : result.fresh("node", () => result.nodeIndex++);
         refs.set(node.id, { node: id, port: node.type === "output" ? "in" : "out" });
-        result.nodes.push(isTop ? node : { ...node, id });
+        result.nodes.push(isTop ? node : { ...node, id, ...(node.type === "signal" ? { name: `${scope}_${node.name}` } : {}) });
       }
     }
     for (const node of bp.nodes.filter((item) => item.type === "module")) {
@@ -75,7 +76,7 @@ function expand(top, modules) {
         const wire = bp.wires.find((item) => item.to.node === node.id && item.to.port === input.name);
         childInputs[input.name] = source(wire.from.node, wire.from.port, refs, moduleIds, outputRefs);
       }
-      const childOutputs = visit(child, false, childInputs);
+      const childOutputs = visit(child, false, childInputs, `${scope ? `${scope}_` : ""}${moduleIds.get(node.id)}`);
       for (const [name, ref] of Object.entries(childOutputs)) result.aliases.set(key(moduleIds.get(node.id), name), ref);
       if (isTop) result.topOutputs.set(node.id, childOutputs);
     }
