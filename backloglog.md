@@ -93,3 +93,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR'daki ilk GitHub Actions build'i, depo Pages ayarı etkin olmadığı için `configure-pages` adımında başarısız oldu. GitHub kaynakları, özel repo kullanılsa bile Pages'in plan koşuluna göre halka açık olabileceğini doğruladı. PR build'i artık Pages ayarından bağımsız çalışıyor; deploy yalnızca Settings/Pages etkinleştirilip `PAGES_ENABLED=true` ayarlanırsa koşacak. Yayın görünürlüğü kararı verilmediği için bu ayar açılmadı.
 - PR #1'in sonraki uzak GitHub Actions build'i geçti; deploy gate nedeniyle yayın adımı beklendiği gibi atlandı.
 - PR birleşince `main` üzerindeki Jekyll build ve Pages artifact yüklemesi geçti; deploy kapalı kaldı. Node 20 uyarısı sonrası action'lar resmi güncel Node 24 sürümlerine yükseltildi (`checkout@v7`, `setup-node@v7`, `upload-pages-artifact@v5`, `configure-pages@v6`, `deploy-pages@v5`); son action sürümleriyle uzak CI build'i de geçti ve Node 20 uyarısı kalmadı.
+# 2026-11-23 — Ölçüm kararları ve açık repo hazırlığı
+
+- Necati'nin onayladığı karşılaştırma yaklaşımı kaydedildi: yeterli gönüllü varsa eşit süreli Ludus/statik anlatım koşullarına rastgele atama; örneklem küçükse nedensel iddiasız tek grup ön-test/Ludus/son-test pilotu. Quiz'de ad-soyad yok; kaba sınıf/eğitim bandı yalnız gerekçelendirilip izin aracında onaylanırsa.
+- Değişenler: `notes.md`, `research/measurement/learning-study.md`, `research/privacy/data-collection-plan.md`, `backlog.md`.
+- Hazırlık doğrulaması: `git diff --check` geçti; gitleaks 8.30.1 mevcut dosyalar ve tüm yerel Git geçmişinde bulgu döndürmedi. İlk merge commit'inde kişisel yazar metadatası bulunduğu için repository public olunca bu metadata da görünür olacak; geçmiş yeniden yazılmadı.
+- Kalan: belgeleri commit/push et; `Nec0ti/ludus-circuitus` deposunu public yap; GitHub Pages'i etkinleştirip URL ve deploy sonucunu doğrula; ardından MVP hedefini başlat.

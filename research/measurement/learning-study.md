@@ -34,6 +34,14 @@ Verilog/dijital mantığa daha önce maruz kalmamış öğrencileri hedefleyin. 
 
 ## Önerilen ölçüm, danışmanla netleştirilecek
 
+### Necati'nin 2026-11-23 onayı
+
+- Yeterli gönüllü bulunur ve MEB/okul izinleri çıkarsa, aynı süreli başlangıç düzeyi anlatımla karşılaştırmalı tasarım tercih edilecek; katılımcılar onam sonrası iki koşula rastgele atanacak. Örneklem iki koşulu anlamlı kılmayacak kadar küçükse tek grup ön-test → Ludus → son-test pilotuna dönülecek ve nedensel etki iddiası yapılmayacak.
+- Quiz'de ad-soyad toplanmayacak. Tam yaş yerine, gerekli görülür ve MEB'e sunulan araçta onaylanırsa yalnızca kaba sınıf/eğitim düzeyi bandı alınması kabul edildi. Kesin kategori ve gereklilik danışmanla kararlaştırılacak.
+- Örneklem Adil Karaağaç MTAL'deki lise öğrencileridir; bu örneklem ortaokul öğrencilerinde etki iddiasını desteklemez.
+
+Bu kararlar araştırma tasarımına yön verir; okul/MEB izni, danışman onayı ve katılımcı belgelerinin yerine geçmez.
+
 1. **Ön-test/son-test:** Lise başlangıç grubunda aynı kazanımı ölçen, eşdeğer zorlukta fakat aynı soruları ezberletmeyen iki form hazırla. Belirtke tablosu, cevap anahtarı, her boyutun puanı ve 100'lük ölçek önceden sabitlensin.
 2. **Tercih edilen okul içi kıyas:** Gönüllü katılımcı bulunduktan ve MEB izni çıktıktan sonra, aynı sınıf düzeyi/benzer ön-test düzeyindeki öğrencileri iki koşula rastgele ata: (A) Ludus; (B) aynı kavramı aynı sürede anlatan kısa metin/şema çalışma kâğıdı. Ludus'un adım adım blok↔Verilog↔sinyal izini, karşılaştırma koşulunda göstermeyerek araştırılan katkıyı ayır. İki koşulda yönerge, süre ve quiz zorluğu aynı olsun. İzin sonrasında kontrol grubuna da aracı deneme fırsatı verilebilir.
 3. **Örneklem azsa:** İki koşul küçük ve dengesiz kalacaksa bunu danışmanla önceden belirleyin. Tek grup ön-test→Ludus→son-test daha yapılabilir bir pilot olur; artış, tekrar etkisi/önbilgi/öğretmen etkisinden ayrıştırılamayacağından “Ludus artırdı/kanıtladı” denmemeli.

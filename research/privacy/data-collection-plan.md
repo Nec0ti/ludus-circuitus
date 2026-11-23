@@ -8,6 +8,8 @@ Necati ilk akış için isim-soyisim, yaş, eğitim düzeyi/sınıf, 100 üzerin
 
 **Örneklem güncellendi:** Adil Karaağaç MTAL hem ekip hem planlanan katılımcı okulu; katılımcılar lise öğrencileri olacak. Bu çalışma ortaokul öğrencilerindeki etkiyi kanıtlamaz. Tam yaşın hangi analiz sorusuna yanıt vereceği belli değil; tek okul ve sınırlı örneklemde ön-test başlangıç düzeyi için daha doğrudan bir ölçüdür. Şimdilik yaş toplamama önerisi. Birden çok sınıf düzeyi katılırsa yaş/sınıf değişkenini ancak araştırma sorusuyla gerekçelendirip danışman ve MEB'e sunulan araçta onaylatın.
 
+**2026-11-23 kararı:** Quiz'de ad-soyad alınmayacak. Kullanıcı tam yaş yerine kaba eğitim/sınıf düzeyi bilgisini kabul etti; hangi bandın gerekli olduğu henüz seçilmedi. Bu alan yalnız araştırma gerekçesi bulunur, danışman ve MEB onaylı veri toplama aracına girer ve yeniden tanımlama riski değerlendirilirse eklenebilir. İzin ve veri sorumlusu netleşmeden canlı veri toplama/API açılmayacak.
+
 ### Araştırma sorusuna göre veri minimizasyonu
 
 | Önerilen alan | Araştırma değeri | İlk öneri |

@@ -8,6 +8,15 @@ Bu dosya proje hakkında paylaşılan bilgilerin düzenlendiği çalışma belle
 
 Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde öğrenmeyi zorlaştırabilir. Ürün; görsel kurulumdan gerçek HDL'e geçişi görünür kılarak bu öğrenme eşiğini düşürmeyi hedefliyor. Bu bir amaç ve tanıtım yönüdür; öğrenme etkisi ölçülmeden kanıtlanmış sonuç olarak sunulmayacak.
 
+## Araştırma ölçümü: 2026-11-23 kullanıcı kararları
+
+- Tercih edilen yöntem, izinler alındıktan ve yeterli gönüllü bulunduktan sonra Ludus ile aynı süreli statik metin/şema anlatımını karşılaştırmaktır; gönüllüler koşullara rastgele atanır. Örneklem küçük kalırsa tek grup ön-test/Ludus/son-test pilotu uygulanabilir; bu durumda nedensel etki iddiası kurulmaz.
+- Katılımcı adı-soyadı toplanmayacak. Tam yaş yerine kaba sınıf/eğitim düzeyi bandı kabul edildi; hangi kategorinin ve analizin gerekli olduğu danışmanla netleşecek ve MEB'e sunulan araçta yer alacak.
+- Örneklem okulu Adil Karaağaç MTAL; katılımcılar lise öğrencileri. Ortaokul hedef kitlesine genelleme yapılmayacak.
+- İzin, danışman/okul süreci ve KVKK veri akışı onaylanmadan API veya katılımcı verisi toplama başlatılmayacak.
+
+Detay, alternatifler ve sınırlılıklar: [`research/measurement/learning-study.md`](research/measurement/learning-study.md) ve [`research/privacy/data-collection-plan.md`](research/privacy/data-collection-plan.md).
+
 ## Ürün ve yayın kararı
 
 - Site GitHub Pages ve Jekyll ile yayımlanacak.
@@ -35,7 +44,7 @@ Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde ö
 - Jekyll iskeleti, Türkçe tanıtım, Başlangıç/Kullanım/Bloklar/Yerel kullanım ve kurulum docs sayfaları ve responsive çok panelli Devre Atölyesi taslağı oluşturuldu. Görsel dil DaisyUI 5 + Tailwind CSS 4 üzerinde özel açık tema ve sistem fontlarıyla kuruldu.
 - Playground şu an sabit yarım toplayıcı blueprint'ini gösteriyor. A/B girişleri değişiyor; toplam XOR, taşıma AND, SVG mantık yolları ve değişken değerleri eşzamanlı güncelleniyor. Oynat dört giriş vektörünü, Duraklat mevcut değeri korumayı, Başa al 00 durumunu gösteriyor. Verilog görüntüsü bu örneğin sabit kodudur.
 - Bu ilk prototipte sürükle-bırak blok düzenleme, blueprint ekleme/kaydetme, dinamik Verilog üretimi, clock/register simülasyonu, quiz, API veya kullanıcı verisi toplama yoktur. Bunlar tamamlanmış özellik olarak tanıtılmayacak.
-- GitHub Pages için CSS'i npm ile derleyip resmi Jekyll Pages action'ıyla derleme workflow'u eklendi. PR derlemesi Pages ayarından bağımsızdır; otomatik yayın `PAGES_ENABLED=true` deposal Actions değişkeniyle açılır. GitHub resmî dokümanına göre Pages kaynak özel olsa bile desteklenen planda site herkese açık olabilir. Depo şu an özeldir; sitede yalnızca açık kaynaklı yayımlanma hedefi olarak ifade edilir. Görünürlük kararı öncesi yayın açılmayacak.
+- GitHub Pages için CSS'i npm ile derleyip resmi Jekyll Pages action'ıyla derleme workflow'u eklendi. PR derlemesi Pages ayarından bağımsızdır; otomatik yayın `PAGES_ENABLED=true` deposal Actions değişkeniyle açılır. Repo görünürlüğü ve Pages yayın durumu backlog'da izlenir.
 
 ### Tanıtım sayfasında anlatılacaklar
 
