@@ -6,6 +6,8 @@
 
 2026–2027 (58. yarışma) çağrı sayfası **23.09.2026** tarihinde yayımlandı. Sayfadaki “Ön değerlendirme” ve “Bölge/Final sergi” bağlantıları hâlâ dosya adında `2025` yazan formlara gidiyor. Aşağıdaki ağırlıklar bu sayfadan şu an indirilebilen son formlara aittir; 2027 dönemi için ayrı güncel form görünürse başvuru öncesinde bu not yenilenmelidir.
 
+2026-11-24 yeniden kontrolünde sayfa aynı çağrı dönemini ve 4 Ocak 2027 saat 17.30 kapanışını gösteriyordu; iki kriter bağlantısı da hâlâ `on_degerlendirme_kriterleri_2025_web.pdf` ve `sergi_kriterleri_2025_web.pdf` dosyalarına gidiyordu. Bu nedenle ağırlıklar güncel sayfada erişilebilen son formlardan aktarılmıştır; resmî 2027 ölçütü olarak doğrulanmış değildir.
+
 - Ön değerlendirme: problem/araştırma sorusu 20; yöntem 20; yaratıcılık ve etki 30; sonuçlar ve tartışma 30.
 - Bölge/final: problem/araştırma sorusu 15; yöntem 10; yaratıcılık ve etki 15; sonuçlar ve tartışma 20; sunum ve projeye hâkimiyet 40.
 - Her iki form da etik ilkelere uyumu eşik koşulu yapıyor: gerekli izinlerin eksikliği, veri bütünlüğü ihlali, kaynak göstermeme, kişisel verilerin gizliliğini ihlal etme veya çalışmanın ekip tarafından geliştirilmediğinin tespiti elenme nedeni.
