@@ -121,6 +121,14 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Mevcut Playwright testini kullandım; AND yardımında yeni sekme hedefi, doküman anchor'ı ve tooltip metni doğrulandı. Nix Chromium ile `npm run test:e2e`: 7/7 geçti. Sistem Playwright Chromium'u eksik `libglib` nedeniyle açılamadı; Nix Chromium bu ortam için çalışan test ikilisi oldu.
 - Değişen dosyalar: `backlog.md`, `backloglog.md`. Uygulama kodu değişmedi; özellik daha önceki atölye commit'inde yer alıyordu.
 - Kalan: yardım davranışı diğer bloklarda aynı ortak görünüm ve anchor yapısını kullanıyor; her blok için ayrı tarayıcı testi henüz yok.
+
+## 2026-11-23 — Blok yardımı kapsam testi
+
+- Giriş, Çıkış, AND, OR, XOR, NOT ve Yazmaç yardımlarının her biri için kısa açıklama, hedef doküman bölümü ve yeni sekme niteliğini tarayıcı testine ekledim. AND yardımına tıklayınca Bloklar dokümanının yeni sekmede açıldığını da doğruladım.
+- Açık blueprint modüllerinin yardımında tooltip rolü eksikti; dinamik yardım balonuna `role="tooltip"` eklendi. Test, modül yardımının anchor'ını ve özetini de kontrol ediyor.
+- Yerel baseurl ile açılan yeni sekmenin Jekyll çıktısında doğru sayfaya ulaşması için Playwright isteği yönlendirmesi sayfa bağlamına taşındı.
+- Doğrulama: CSS üretimi, Jekyll build, tam Playwright E2E 13/13 ve `git diff --check` geçti.
+- Kalan: blok yardım davranışı doğrulandı; yeni ürün işi gerekmiyor.
 # 2026-11-23 — Birden çok `.bp` modülünü birleştirme
 
 - `assets/js/project.mjs` eklendi: 1–8 blueprint proje doğrulaması, adlandırılmış modül portları, modül döngüsü/eksik port reddi, iç içe blueprint düzleştirme, proje simülasyonu, yazmaç tick/reset ve birleşik Verilog üretimi.

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  await page.route("**/*", (route) => {
+  await page.context().route("**/*", (route) => {
     const url = new URL(route.request().url());
     url.pathname = url.pathname.replace(/^\/ludus-circuitus(?=\/|$)/, "") || "/";
     route.continue({ url: url.toString() });
@@ -114,13 +114,39 @@ test("moves a block on the blueprint grid and updates the signal view", async ({
   expect(after).not.toBe(before);
 });
 
-test("shows concise block help and links to the matching docs section in a new tab", async ({ page }) => {
+test("shows concise help beside every block and opens its docs in a new tab", async ({ page }) => {
   await page.goto("/playground/");
+  const blocks = [
+    ["Giriş", /#giris-cikis/, "Devreye dışarıdan 0 veya 1 değerinde sinyal verir."],
+    ["Çıkış", /#giris-cikis/, "Bir mantık yolunun ürettiği 0, 1 veya X değerini gösterir."],
+    ["AND", /#mantik-kapilari/, "Yalnızca iki girişi de 1 olduğunda 1 üretir."],
+    ["OR", /#mantik-kapilari/, "Girişlerinden en az biri 1 ise 1 üretir."],
+    ["XOR", /#mantik-kapilari/, "İki girişi farklıysa 1 üretir."],
+    ["NOT", /#mantik-kapilari/, "Girişteki 0'ı 1'e, 1'i 0'a çevirir."],
+    ["Yazmaç", /#yazmac/, "D girişini bir yükselen clock kenarında saklar ve Q çıkışında tutar."]
+  ];
+  for (const [name, destination, summary] of blocks) {
+    const help = page.getByRole("link", { name: `${name} bloğu yardımı, yeni sekmede`, exact: true });
+    await expect(help).toHaveAttribute("target", "_blank");
+    await expect(help).toHaveAttribute("href", new RegExp(`docs/bloklar/${destination.source}`));
+    await help.hover();
+    await expect(help.getByRole("tooltip")).toBeVisible();
+    await expect(help.getByRole("tooltip")).toHaveText(summary);
+  }
+
   const help = page.getByRole("link", { name: "AND bloğu yardımı, yeni sekmede" });
-  await expect(help).toHaveAttribute("target", "_blank");
-  await expect(help).toHaveAttribute("href", /docs\/bloklar\/#mantik-kapilari/);
-  await help.hover();
-  await expect(help.getByRole("tooltip")).toBeVisible();
-  await expect(help.getByRole("tooltip")).toHaveText("Yalnızca iki girişi de 1 olduğunda 1 üretir.");
+  const popupPromise = page.waitForEvent("popup");
+  await help.click();
+  const popup = await popupPromise;
+  await expect(popup).toHaveURL(/docs\/bloklar\/#mantik-kapilari/);
+  await expect(popup.getByRole("heading", { name: "Bloklar" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Yeni BP" }).click();
+  await page.getByRole("tab", { name: "top.bp" }).click();
+  const moduleHelp = page.getByRole("link", { name: "devre2 modül yardımı, yeni sekmede", exact: true });
+  await expect(moduleHelp).toHaveAttribute("target", "_blank");
+  await expect(moduleHelp).toHaveAttribute("href", /docs\/bloklar\/#bp-modulleri/);
+  await moduleHelp.hover();
+  await expect(moduleHelp.getByRole("tooltip")).toHaveText("Bu blueprint'i giriş ve çıkış portlarıyla tek blok olarak kullanır.");
 });
 

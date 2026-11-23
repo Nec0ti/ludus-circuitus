@@ -100,7 +100,9 @@ function renderModuleTools() {
     help.target = "_blank";
     help.rel = "noopener";
     help.setAttribute("aria-label", `${doc.bp.name} modül yardımı, yeni sekmede`);
-    help.append(el("span", "", "?"), el("span", "cad-tooltip", "Bu blueprint'i giriş ve çıkış portlarıyla tek blok olarak kullanır."));
+    const tooltip = el("span", "cad-tooltip", "Bu blueprint'i giriş ve çıkış portlarıyla tek blok olarak kullanır.");
+    tooltip.setAttribute("role", "tooltip");
+    help.append(el("span", "", "?"), tooltip);
     help.addEventListener("pointerenter", () => positionTooltip(help));
     help.addEventListener("focus", () => positionTooltip(help));
     row.append(help);
