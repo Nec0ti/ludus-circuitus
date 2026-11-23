@@ -335,3 +335,20 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Yeni E2E testi `tests/e2e/playground.spec.mjs` içinde.
 - Doğrulama: regresyon öncesi test, bozuk kayıtta `#verilog-code` boş kaldığını yakaladı; düzeltmeden sonra hedefli test 1/1 geçti. Tam Node **27/27**, Icarus scalar/hiyerarşik/vector oracle (1.920 sonuç), Jekyll build ve Playwright **36/36** geçti. CSS değişmedi. `git diff --check` temiz.
 - Bağımsız kod incelemesi aynı kök düzeltmeyi onayladı; bağımsız Playwright gözlemi düzeltme sonrasında yapıldığı için baseline yeniden üretimi sayılmadı.
+
+
+## 2026-11-24 — Rakip arayüzünde sınırlı canlı görev denemesi
+
+- CircuitVerse misafir simülatöründe input, AND/XOR ve output bileşenleri tuvale sürüklenerek eklendi; bağlantılar görsel olarak kuruldu. Bir input'u değiştirme adımında contention uyarısı oluştu. Kablo güzergâhı/kesişimi denemeyi bozmuş olabileceği için bu bulgu ürün kusuru olarak yorumlanmadı; AND/XOR doğruluk görevi tamamlanmış sayılmadı.
+- Aynı oturumda konsolda tekrarlanan `transformCallback` hataları görüldü; yalnızca mevcut oturumun gözlemidir. VPLAS için canlı oturum yok, yalnızca yayımlanmış kaynaklar kullanıldı.
+- Değişenler: `research/references/related-tools.md`, `backlog.md`, bu günlük.
+- Kontroller: güncel Pages landing, docs, playground ve quiz yolları HTTP **200/200/200/200**; `git diff --check` ve araştırma Markdown bağlantı kontrolü yapılacak. Ürün kodu değişmedi.
+- Katılımcı kullanılmadı; kişisel bilgi, quiz sonucu veya süre toplanmadı.
+- Kalan: aynı devre görevini CircuitVerse'te doğru kablo yerleşimiyle yeniden denemek ve VPLAS için erişilebilir canlı uygulama olup olmadığını araştırmak. İki üründe de öğrenme etkisi veya üstünlük sonucu yok.
+
+## 2026-11-24 — Son üç güncellemenin dağıtım kaydı
+
+- PR #14 (`0dcedc3`, research/privacy/mastery notları) ve PR #15 (`087ee9a`, geçersiz yerel `.bp` kaydını reddetme) `main`e alındı. PR #14 Pages run `45281277570`, PR #15 Pages run `45283762587` build ve deploy adımlarını başarıyla tamamladı.
+- PR #15 yerel/PR CI kapıları: Node 27/27, Icarus Verilog scalar/hiyerarşik/vector oracle'ları (1.920 vector sonuç karşılaştırması), Jekyll ve Playwright 36/36. Dört canlı rota HTTP 200 verdi.
+- Bozuk yerel kaydı doğrulama düzeltmesi kullanıcı verisini otomatik silmez; geçersiz kayıt uyarıyla reddedilip başlangıç devresi korunur.
+- Kalan: PR #16 içindeki rakip araştırması kaydının CI ve gerekiyorsa Pages dağıtımını izlemek.

@@ -29,6 +29,13 @@ Karşılaştırmada ortak görev şu şekilde sabitlendi: öğrenci A ve B giri�
 - VPLAS: Hsieh et al. (2025), [Future Internet 17(8), 333](https://www.mdpi.com/1999-5903/17/8/333); Jin et al. (2026), “An Extension of VPLAS with EFP Integration,” [IEICE technical report record](https://www.ieice.org/publications/ken/summary.php?contribution_id=142049&expandable=3&ken_id=ET&lang=jp&presen_date=2026-03-04&schedule_id=8798&society_cd=ISS&year=2026).
 - Ayrıntılı araştırma sınırlamaları: [`education-studies.md`](education-studies.md), öğrenme ölçüm taslağı: [`../measurement/learning-study.md`](../measurement/learning-study.md).
 
+## Canlı CircuitVerse denemesi — 2026-11-24 (misafir oturumu)
+
+- `https://circuitverse.org/simulator` tarayıcıda açıldı; hesap oluşturulmadı. Başlangıç ipucunu kapattıktan sonra tuvale giriş, AND/XOR kapısı ve çıkış öğeleri sürüklenerek eklendi. Kablolar çizildi ve bağlantılar ekranda görünür hâle geldi. Dolayısıyla önceki “canvas'a öğe ekleme doğrulanamadı” notu bu oturum için güncel değil.
+- Girişlerden birini değiştirme denemesinde uygulama `Contention Error` uyarısı verdi. Kurulan kablo güzergâhı veya kesişim kullanıcı hatası yaratmış olabilir; başka bir devreyle yeniden denemeden bunu CircuitVerse kusuru diye yorumlayamayız. Bu nedenle ortak AND/XOR görevinde doğru değerlerin çalışır simülasyonla doğrulanması **tamamlanmadı**.
+- Oturum sırasında konsolda tekrarlanan `Cannot read properties of undefined (reading 'transformCallback')` hataları görüldü. Gözlem, bu deneme oturumundaki tarayıcı konsoluyla sınırlıdır ve tek başına uygulamanın çalışmadığını kanıtlamaz.
+- İnsan katılımcı kullanılmadı; öğrenme puanı, süre veya kişisel bilgi toplanmadı. Ekran görüntüleri geçici yerel QA dosyalarıdır, araştırma sonucu olarak depoya eklenmedi.
+
 ## Aynı görev karşılaştırmasının sınırları — 2026-11-24
 
 Görev: A ve B girişlerini hem AND hem XOR yoluna bağlamak, iki çıkışın değerlerini verilen girişlerde bulmak ve iki yolun aynı devrede bağımsız değerlendirilmesini açıklamak.
