@@ -37,5 +37,6 @@ MUX, sabit kaynak, çok bitli sinyaller, portlar arası sürükleyerek kablo çi
 - [x] Node/pan/zoom dönüşümleri; `.bp` sürüm 1 kayıt biçimi ve geçerli koordinatları korunuyor, bozuk/sınırsız koordinatlar reddediliyor
 - [x] Drop, arama kutusu, klavye erişimi ve wheel zoom E2E
 - [x] NAND/NOR/XNOR için X semantiği, Verilog ve Icarus: 12 sabit tohumlu × 40 kapı, 252 vektör
+- [x] Ana SVG çalışma alanı görünür ve altı örnek bağlantının başlangıç/bitiş noktaları E2E ile gerçek port merkezlerine oturuyor
 - [~] Küçük ve mobil görünümde hizalama, clipping, focus: eski mobil fit ve dokunma sorunları bulundu; fit alanı içerik boyutuna göre ve en az %58 ölçekli, dokunmatik pan eklendi. Masaüstü/mobil son geri incelemesi bekleniyor.
 - [ ] Ana CI/Pages yayın kanıtı

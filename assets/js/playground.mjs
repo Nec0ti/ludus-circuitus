@@ -31,6 +31,8 @@ let pendingSource = null;
 let camera = { x: 0, y: 0, zoom: 1 };
 let cameraReady = false;
 let cameraEngaged = false;
+const renderedNodes = new Map();
+let pointCache = new Map();
 let state = { registers: projectState(documents[0]), inputs: {}, timer: null, tick: 0, vector: -1 };
 
 function activeDocument() { return documents.find((doc) => doc.id === activeId); }
@@ -185,6 +187,7 @@ function screenToWorld(clientX, clientY) {
 function renderNodes(bp, values) {
   const layer = $("#node-layer");
   layer.replaceChildren();
+  renderedNodes.clear();
   for (const node of bp.nodes) {
     const card = el("article", `cad-node node-${node.type}${selectedId === node.id ? " is-selected" : ""}`);
     card.style.left = `${node.x}px`;
@@ -223,6 +226,7 @@ function renderNodes(bp, values) {
     card.addEventListener("pointerdown", (event) => beginDrag(event, node));
     card.addEventListener("click", () => { selectedId = node.id; render(); });
     layer.append(card);
+    renderedNodes.set(node.id, card);
   }
 }
 
@@ -246,14 +250,21 @@ function makePort(node, port, direction) {
 }
 
 function point(node, port, direction) {
-  if (node.type === "module") {
-    const all = direction === "input" ? portInputs(node) : portOutputs(node);
-    const index = Math.max(0, all.indexOf(port));
-    return { x: direction === "output" ? node.x + 150 : node.x, y: node.y + 50 + index * 16 };
-  }
+  const key = `${node.id}:${direction}:${port}`;
+  if (pointCache.has(key)) return pointCache.get(key);
+  const button = [...(renderedNodes.get(node.id)?.querySelectorAll(".cad-port") || [])].find((item) => item.dataset.port === port && item.dataset.direction === direction);
+  if (!button) return { x: node.x + (direction === "output" ? 150 : 0), y: node.y + 44 };
+  const rect = button.getBoundingClientRect(), canvas = $("#blueprint-canvas").getBoundingClientRect();
+  const result = { x: (rect.left + rect.width / 2 - canvas.left - camera.x) / camera.zoom, y: (rect.top + rect.height / 2 - canvas.top - camera.y) / camera.zoom };
+  pointCache.set(key, result);
+  return result;
+}
+
+function miniPoint(node, port, direction) {
+  if (node.type === "module") return point(node, port, direction);
   if (direction === "output") return { x: node.x + 150, y: node.y + 44 };
-  if (port === "a") return { x: node.x, y: node.y + 44 };
-  if (port === "b") return { x: node.x, y: node.y + 68 };
+  if (port === "a") return { x: node.x, y: node.y + 27 };
+  if (port === "b") return { x: node.x, y: node.y + 59 };
   return { x: node.x, y: node.y + 44 };
 }
 
@@ -270,13 +281,19 @@ function makePath(from, to, className, value) {
 
 function renderWires(bp, values) {
   const svg = $("#wire-layer");
+  pointCache = new Map();
   svg.replaceChildren();
   const nodes = new Map(bp.nodes.map((node) => [node.id, node]));
   for (const wire of bp.wires) {
     const source = nodes.get(wire.from.node);
     const target = nodes.get(wire.to.node);
     if (!source || !target) continue;
-    svg.append(makePath(point(source, wire.from.port, "output"), point(target, wire.to.port, "input"), "cad-wire", values[`${source.id}:${wire.from.port}`] ?? values[source.id] ?? X));
+    const path = makePath(point(source, wire.from.port, "output"), point(target, wire.to.port, "input"), "cad-wire", values[`${source.id}:${wire.from.port}`] ?? values[source.id] ?? X);
+    path.dataset.fromNode = source.id;
+    path.dataset.fromPort = wire.from.port;
+    path.dataset.toNode = target.id;
+    path.dataset.toPort = wire.to.port;
+    svg.append(path);
   }
   if (pendingSource) {
     const source = nodes.get(pendingSource.node);
@@ -314,7 +331,7 @@ function renderSignalView(bp, values) {
   const nodes = new Map(bp.nodes.map((node) => [node.id, node]));
   for (const wire of bp.wires) {
     const source = nodes.get(wire.from.node), target = nodes.get(wire.to.node);
-    if (source && target) svg.append(makePath(point(source, wire.from.port, "output"), point(target, wire.to.port, "input"), "cad-mini-wire", values[`${source.id}:${wire.from.port}`] ?? values[source.id] ?? X));
+    if (source && target) svg.append(makePath(miniPoint(source, wire.from.port, "output"), miniPoint(target, wire.to.port, "input"), "cad-mini-wire", values[`${source.id}:${wire.from.port}`] ?? values[source.id] ?? X));
   }
   for (const node of bp.nodes) {
     const group = document.createElementNS("http://www.w3.org/2000/svg", "g");

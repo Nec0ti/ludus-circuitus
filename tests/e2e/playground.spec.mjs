@@ -22,6 +22,30 @@ test("Devre Atölyesi is a standalone full-screen industrial workspace", async (
   expect(errors).toEqual([]);
 });
 
+test("main blueprint wires render in the SVG viewport and meet their port centers", async ({ page }) => {
+  await page.goto("/playground/");
+  const svg = page.locator("#wire-layer");
+  const bounds = await svg.boundingBox();
+  expect(bounds.width).toBeGreaterThan(0);
+  expect(bounds.height).toBeGreaterThan(0);
+  await expect(svg.locator(".cad-wire")).toHaveCount(6);
+  const mismatches = await svg.locator(".cad-wire").evaluateAll((paths) => {
+    const world = new DOMMatrixReadOnly(getComputedStyle(document.querySelector("#camera-world")).transform);
+    const canvas = document.querySelector("#blueprint-canvas").getBoundingClientRect();
+    const screenPoint = (point) => ({ x: canvas.left + world.e + point.x * world.a, y: canvas.top + world.f + point.y * world.d });
+    return paths.map((path) => {
+      const start = screenPoint(path.getPointAtLength(0)), end = screenPoint(path.getPointAtLength(path.getTotalLength()));
+      const fromButton = document.querySelector(`.cad-node[data-id="${path.dataset.fromNode}"] .cad-port[data-port="${path.dataset.fromPort}"][data-direction="output"]`);
+      const toButton = document.querySelector(`.cad-node[data-id="${path.dataset.toNode}"] .cad-port[data-port="${path.dataset.toPort}"][data-direction="input"]`);
+      if (!fromButton || !toButton) return { missing: [path.dataset.fromNode, path.dataset.fromPort, path.dataset.toNode, path.dataset.toPort] };
+      const from = fromButton.getBoundingClientRect(), to = toButton.getBoundingClientRect();
+      const distance = (point, rect) => Math.hypot(point.x - rect.left - rect.width / 2, point.y - rect.top - rect.height / 2);
+      return Math.max(distance(start, from), distance(end, to));
+    });
+  });
+  expect(mismatches.every((distance) => distance < 0.75), JSON.stringify(mismatches)).toBe(true);
+});
+
 test("keeps the full-screen workbench usable at narrow viewport widths", async ({ page }) => {
   await page.goto("/playground/");
   for (const width of [320, 390, 768, 1440]) {

@@ -278,3 +278,11 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Son mobil görsel inceleme node kartlarının sığdığını, fakat kamera transformunun 9 px başlıkları yaklaşık 5 px'e düşürdüğünü belirtti. Node başlığı, ikon, silme düğmesi, değer ve modül port metinleri artık kamera zoom oranına ters ölçeklenerek ekranda sabit ölçüde çiziliyor; graph geometrisi ve node konumu değişmiyor.
 - Doğrulama: CSS ve Jekyll build; Playwright **26/26**, mobil test tüm başlangıç bloklarının sığdığını ve etiketin ekranda 9 px kaldığını doğruluyor. Dokunma pan ve tıklama davranışı önceki akışla korunuyor. `git diff --check` geçti.
 - Kalan: bağımsız ekran geri kontrolü, bu son görsel düzeltme commit'i, PR CI ve Pages yayın doğrulaması.
+
+## 2026-11-23 — Ana blueprint kablolarını görünür ve portlara hizalı yapma
+
+- Bağımsız inceleme, orta çalışma alanındaki SVG'nin sıfır boyutlu kaldığını ve bu yüzden kabloların görünmediğini buldu; sağdaki minik devre görünümü bunu gizlemişti. SVG'ye blueprint koordinat alanı verildi. Kablo uçları artık çizilmiş node portlarının gerçek DOM merkezlerinden hesaplanıyor; mini devredeki ayrı görünüm korunuyor.
+- Yeni E2E testi ana SVG'nin görünür alanını ve altı kablonun iki ucunun da gerçek port merkezlerine 0.75 ekran pikselinden yakınlığını doğruluyor.
+- Değişenler: `playground/index.html`, `assets/css/input.css`, derlenmiş `assets/css/site.css`, `assets/js/playground.mjs`, `tests/e2e/playground.spec.mjs`, bu rapor, backlog ve bu günlük.
+- Doğrulama: Tailwind CSS ve Jekyll build geçti; Node **21/21**; Icarus 252 seeded kapı vektörü ve hiyerarşik `.bp` oracle'ları geçti; Playwright **27/27**; `git diff --check` temiz.
+- Kalan: commit/push, ayrı worktree'de son masaüstü/mobil görsel geri kontrolü, güncel PR CI ve Pages yayın doğrulaması.

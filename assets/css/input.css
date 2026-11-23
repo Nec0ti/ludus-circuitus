@@ -684,8 +684,8 @@ select:focus-visible {
 .cad-canvas-scroll { position: relative; min-height: 280px; flex: 1; overflow: hidden; background: #171d26; }
 .cad-canvas { position: absolute; inset: 0; overflow: hidden; touch-action: none; outline: none; background-color: #171d26; background-image: radial-gradient(#39434f 0.7px, transparent .7px), linear-gradient(#28333f 1px, transparent 1px), linear-gradient(90deg, #28333f 1px, transparent 1px); background-size: 20px 20px, 100px 100px, 100px 100px; }
 .cad-camera-world { position: absolute; z-index: 1; top: 0; left: 0; width: 0; height: 0; transform-origin: 0 0; }
-#wire-layer, #node-layer { position: absolute; top: 0; left: 0; width: 0; height: 0; }
-#wire-layer { overflow: visible; pointer-events: none; }
+#wire-layer { position: absolute; top: 0; left: 0; width: 900px; height: 600px; overflow: visible; pointer-events: none; }
+#node-layer { position: absolute; top: 0; left: 0; width: 0; height: 0; }
 .cad-node-search { position: absolute; z-index: 10; width: min(238px, calc(100vw - 32px)); height: 36px; border: 1px solid #6c987f; border-radius: 4px; outline: 1px solid #171d26; background: #202a34; padding: 0 11px; color: #e0e7ef; font: 11px var(--font-code); box-shadow: 0 8px 22px #0009; }
 .cad-node-search:focus { border-color: var(--cad-teal); outline: 2px solid #52d2b233; }
 .cad-node-search::placeholder { color: #9aa8b8; }
@@ -724,7 +724,7 @@ select:focus-visible {
 .port-input { left: -6px; }
 .node-and .port-input[data-port="a"], .node-nand .port-input[data-port="a"], .node-or .port-input[data-port="a"], .node-nor .port-input[data-port="a"], .node-xor .port-input[data-port="a"], .node-xnor .port-input[data-port="a"] { top: 44px; }
 .node-and .port-input[data-port="b"], .node-nand .port-input[data-port="b"], .node-or .port-input[data-port="b"], .node-nor .port-input[data-port="b"], .node-xor .port-input[data-port="b"], .node-xnor .port-input[data-port="b"] { top: 68px; }
-.node-not .port-input, .node-register .port-input, .node-output .port-input { top: 56px; }
+.node-not .port-input, .node-signal .port-input, .node-register .port-input, .node-output .port-input { top: 56px; }
 .port-output { top: 56px; right: -6px; }
 .cad-node-value { position: absolute; right: 12px; bottom: 9px; min-width: 23px; border: 1px solid #414e5b; border-radius: 3px; background: #171e26; padding: 3px 6px; color: #c4d0de; font: 700 calc(10px / var(--camera-zoom, 1)) var(--font-code); text-align: center; }
 .value-1 { color: var(--cad-teal) !important; }
