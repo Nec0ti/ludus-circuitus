@@ -411,4 +411,5 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Canlı tarayıcıda kök `https://nec0ti.github.io/favicon.ico` isteğinin 404 olduğu görüldü; dört ürün rotası ve uygulama etkileşimleri çalışıyordu, başka ağ/JavaScript hatası yoktu.
 - Var olan marka işaretini 32×32 vektör favicon olarak kullanan `assets/favicon.svg` eklendi. Varsayılan ve tam ekran Devre Atölyesi layout'larına `relative_url` üzerinden bağlandı.
 - `tests/e2e/visual.spec.mjs` iki layout'ta da favicon URL'sini alıp `fetch` ile 200 döndüğünü kontrol ediyor. PR #23'ün ilk tam CI run'ı `45291562074`: Node 27/27, Icarus oracle, Jekyll build ve Playwright 38/38 başarılı.
-- Değişenler: `_layouts/default.html`, `_layouts/workbench.html`, `assets/favicon.svg`, `tests/e2e/visual.spec.mjs`, `backlog.md`. Canlı doğrulama birleştirme/yayın sonrasında tamamlanacak.
+- PR #23 `97056b0` ile birleştirildi ve Pages run `45292033268` başarılı. Canlı `https://nec0ti.github.io/ludus-circuitus/assets/favicon.svg` `image/svg+xml` ve HTTP 200 döndü. Doğrudan Playwright taramasında landing, docs, atölye ve quiz açıldı; önceden görülen favicon 404'ü ve diğer ağ/JavaScript hataları tekrar oluşmadı.
+- Değişenler: `_layouts/default.html`, `_layouts/workbench.html`, `assets/favicon.svg`, `tests/e2e/visual.spec.mjs`, `backlog.md`. Katılımcı veya kişisel veri kullanılmadı.
