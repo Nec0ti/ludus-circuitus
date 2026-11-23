@@ -8,12 +8,15 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test("docs use collapsible topic groups and show approximate reading time", async ({ page }) => {
+test("course map is short and docs use collapsible topic groups", async ({ page }) => {
   await page.goto("/docs/baslangic/");
   await expect(page.locator(".docs-nav details")).toHaveCount(3);
-  await expect(page.getByRole("link", { name: /Başlangıç/ }).first()).toHaveAttribute("aria-current", "page");
-  await expect(page.locator(".docs-reading-time")).toContainText("Yaklaşık 4 dakika");
-  await expect(page.locator(".docs-article h2 .docs-section-time")).toHaveCount(4);
+  await expect(page.getByRole("link", { name: /Kurs haritası/ })).toHaveAttribute("aria-current", "page");
+  await expect(page.locator(".docs-reading-time")).toContainText("Yaklaşık 2 dakika");
+  await expect(page.locator(".docs-article h2 .docs-section-time")).toHaveCount(3);
+  for (const lesson of ["/docs/dijital-sinyaller/", "/docs/mantik-kapilari/", "/docs/yarim-toplayici/", "/docs/paralel-yollar/", "/docs/saat-yazmac/", "/docs/bloktan-verilog/"]) {
+    await expect(page.locator(`.docs-article a[href$='${lesson}']`)).toHaveCount(1);
+  }
   const developerGroup = page.locator(".docs-nav details").nth(2);
   await expect(developerGroup).not.toHaveAttribute("open", "");
   await developerGroup.locator("summary").click();
@@ -26,12 +29,12 @@ test("docs use collapsible topic groups and show approximate reading time", asyn
   }
 });
 
-test("every docs navigation and in-page topic link resolves to a published section", async ({ page }) => {
-  const routes = ["/docs/", "/docs/baslangic/", "/docs/kullanim/", "/docs/bloklar/", "/docs/yerel-kurulum/"];
+test("every docs navigation, course card and in-page topic link resolves", async ({ page }) => {
+  const routes = ["/docs/", "/docs/baslangic/", "/docs/dijital-sinyaller/", "/docs/mantik-kapilari/", "/docs/yarim-toplayici/", "/docs/paralel-yollar/", "/docs/saat-yazmac/", "/docs/bloktan-verilog/", "/docs/kullanim/", "/docs/bloklar/", "/docs/yerel-kurulum/"];
   const links = new Set();
   for (const route of routes) {
     await page.goto(route);
-    const hrefs = await page.locator(".docs-nav a[href], .docs-page-toc a[href]").evaluateAll((items) => items.map((item) => item.href));
+    const hrefs = await page.locator(".docs-nav a[href], .docs-page-toc a[href], .docs-link-list a[href]").evaluateAll((items) => items.map((item) => item.href));
     hrefs.forEach((href) => links.add(href));
   }
   expect(links.size).toBeGreaterThan(0);
@@ -45,6 +48,26 @@ test("every docs navigation and in-page topic link resolves to a published secti
       await expect(page.locator(".docs-article h1")).toBeVisible();
     }
   }
+});
+
+test("short lessons show their estimated reading times and active navigation link", async ({ page }) => {
+  const lessons = [
+    ["/docs/dijital-sinyaller/", "0 ve 1: dijital sinyaller", "0 ve 1", 3],
+    ["/docs/mantik-kapilari/", "Mantık kapıları ve doğruluk tabloları", "Mantık kapıları", 3],
+    ["/docs/yarim-toplayici/", "İki kapı, bir yarım toplayıcı", "Yarım toplayıcı", 3],
+    ["/docs/paralel-yollar/", "Paralel yollar nasıl çalışır?", "Paralel yollar", 2],
+    ["/docs/saat-yazmac/", "Saat ve yazmaç", "Saat ve yazmaç", 3],
+    ["/docs/bloktan-verilog/", "Bloktan Verilog'a", "Bloktan Verilog'a", 2],
+  ];
+  for (const [route, heading, navLabel, minutes] of lessons) {
+    await page.goto(route);
+    await expect(page.locator(".docs-article h1")).toHaveText(heading);
+    await expect(page.locator(".docs-reading-time")).toHaveText(`Yaklaşık ${minutes} dakika`);
+    await expect(page.locator(".docs-nav a[aria-current='page']")).toContainText(navLabel);
+    await expect(page.locator(".docs-article h2 .docs-section-time")).toHaveCount(minutes);
+  }
+  await page.goto("/docs/");
+  await expect(page.locator(".docs-reading-time")).toHaveText("Tüm rehber yaklaşık 41 dakika");
 });
 
 test("local setup guide lists test tools and builds the static site before E2E", async ({ page }) => {
@@ -69,7 +92,7 @@ test("module guide documents the expanded block safety limit", async ({ page }) 
 
 test("block catalog documents exact ports and distinguishes named wires from register state", async ({ page }) => {
   await page.goto("/docs/bloklar/");
-  await expect(page.locator(".docs-reading-time")).toHaveText("Yaklaşık 7 dakika");
+  await expect(page.locator(".docs-reading-time")).toHaveText("Yaklaşık 9 dakika");
   const table = page.getByRole("table", { name: "Blueprint bloklarının giriş ve çıkış portları" });
   await expect(table.locator("tbody tr")).toHaveCount(7);
   await expect(table).toContainText("a");
@@ -81,6 +104,11 @@ test("block catalog documents exact ports and distinguishes named wires from reg
   await expect(page.locator(".docs-callout")).toContainText("fiziksel kapı gecikmesini");
   await expect(page.locator(".docs-callout")).toContainText("Ekrandaki 0/1 değerleri onluk gösterimdir");
   await expect(page.locator(".docs-callout")).toContainText("ikilik 0/1 ile aynıdır");
+  const complementary = page.locator("#tamamlayici-kapilar + p + .block-list + table");
+  await expect(complementary).toHaveCount(1);
+  await expect(complementary.locator("tbody tr")).toHaveCount(4);
+  const gateRows = await complementary.locator("tbody tr").evaluateAll((rows) => rows.map((row) => [...row.cells].map((cell) => cell.textContent.trim())));
+  expect(gateRows).toEqual([["0", "0", "1", "1", "1"], ["0", "1", "1", "0", "0"], ["1", "0", "1", "0", "0"], ["1", "1", "0", "0", "1"]]);
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     const overflowing = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);

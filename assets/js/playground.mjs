@@ -30,6 +30,7 @@ let selectedId = null;
 let pendingSource = null;
 let camera = { x: 0, y: 0, zoom: 1 };
 let cameraReady = false;
+let cameraEngaged = false;
 let state = { registers: projectState(documents[0]), inputs: {}, timer: null, tick: 0, vector: -1 };
 
 function activeDocument() { return documents.find((doc) => doc.id === activeId); }
@@ -157,12 +158,13 @@ function render() {
 function fitCamera() {
   const canvas = $("#blueprint-canvas"), nodes = activeDocument().bp.nodes;
   const width = canvas.clientWidth, height = canvas.clientHeight;
-  const minX = Math.min(0, ...nodes.map((node) => node.x)), minY = Math.min(0, ...nodes.map((node) => node.y));
-  const maxX = Math.max(900, ...nodes.map((node) => node.x + 150)), maxY = Math.max(600, ...nodes.map((node) => node.y + 88));
-  camera.zoom = Math.max(0.25, Math.min(1.5, (width - 64) / (maxX - minX), (height - 64) / (maxY - minY)));
+  const minX = Math.min(...nodes.map((node) => node.x)), minY = Math.min(...nodes.map((node) => node.y));
+  const maxX = Math.max(...nodes.map((node) => node.x + 150)), maxY = Math.max(...nodes.map((node) => node.y + (node.type === "module" ? Math.max(88, 36 + Math.max(portInputs(node).length, portOutputs(node).length) * 16) : 88)));
+  camera.zoom = Math.max(0.58, Math.min(1.5, (width - 64) / (maxX - minX), (height - 64) / (maxY - minY)));
   camera.x = (width - (maxX - minX) * camera.zoom) / 2 - minX * camera.zoom;
   camera.y = (height - (maxY - minY) * camera.zoom) / 2 - minY * camera.zoom;
   cameraReady = true;
+  cameraEngaged = false;
 }
 
 function updateCamera() {
@@ -507,6 +509,16 @@ document.addEventListener("keydown", (event) => {
 
 const canvas = $("#blueprint-canvas"), search = $("#node-search");
 let spaceDown = false;
+function openSearchAt(clientX, clientY) {
+  const bounds = canvas.getBoundingClientRect();
+  search.style.left = `${Math.max(8, Math.min(bounds.width - 250, clientX - bounds.left))}px`;
+  search.style.top = `${Math.max(8, Math.min(bounds.height - 42, clientY - bounds.top))}px`;
+  search.dataset.world = JSON.stringify(screenToWorld(clientX, clientY));
+  search.hidden = false;
+  search.setAttribute("aria-expanded", "true");
+  search.value = "";
+  search.focus();
+}
 document.addEventListener("keydown", (event) => { if (event.code === "Space" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) { spaceDown = true; event.preventDefault(); } });
 document.addEventListener("keyup", (event) => { if (event.code === "Space") spaceDown = false; });
 canvas.addEventListener("wheel", (event) => {
@@ -516,15 +528,34 @@ canvas.addEventListener("wheel", (event) => {
   const worldX = (px - camera.x) / camera.zoom, worldY = (py - camera.y) / camera.zoom;
   camera = { x: px - worldX * next, y: py - worldY * next, zoom: next };
   cameraReady = true;
+  cameraEngaged = true;
   updateCamera();
 }, { passive: false });
 canvas.addEventListener("pointerdown", (event) => {
   if (event.target.closest(".cad-node") || event.target === search) return;
+  if (event.pointerType === "touch" && event.button === 0) {
+    event.preventDefault();
+    const start = { x: event.clientX, y: event.clientY, cameraX: camera.x, cameraY: camera.y };
+    let moved = false;
+    canvas.setPointerCapture(event.pointerId);
+    const move = (next) => {
+      if (Math.hypot(next.clientX - start.x, next.clientY - start.y) > 5) moved = true;
+      if (moved) { camera.x = start.cameraX + next.clientX - start.x; camera.y = start.cameraY + next.clientY - start.y; cameraEngaged = true; updateCamera(); }
+    };
+    const up = (next) => {
+      canvas.removeEventListener("pointermove", move);
+      canvas.removeEventListener("pointerup", up);
+      if (!moved) openSearchAt(next.clientX, next.clientY);
+    };
+    canvas.addEventListener("pointermove", move);
+    canvas.addEventListener("pointerup", up, { once: true });
+    return;
+  }
   if (event.button === 1 || (event.button === 0 && spaceDown)) {
     event.preventDefault();
     const start = { x: event.clientX, y: event.clientY, cameraX: camera.x, cameraY: camera.y };
     canvas.setPointerCapture(event.pointerId);
-    const move = (next) => { camera.x = start.cameraX + next.clientX - start.x; camera.y = start.cameraY + next.clientY - start.y; updateCamera(); };
+    const move = (next) => { camera.x = start.cameraX + next.clientX - start.x; camera.y = start.cameraY + next.clientY - start.y; cameraEngaged = true; updateCamera(); };
     const up = () => { canvas.removeEventListener("pointermove", move); canvas.removeEventListener("pointerup", up); };
     canvas.addEventListener("pointermove", move);
     canvas.addEventListener("pointerup", up, { once: true });
@@ -532,14 +563,7 @@ canvas.addEventListener("pointerdown", (event) => {
   }
   if (event.button !== 0) return;
   event.preventDefault();
-  const bounds = canvas.getBoundingClientRect();
-  search.style.left = `${Math.max(8, Math.min(bounds.width - 250, event.clientX - bounds.left))}px`;
-  search.style.top = `${Math.max(8, Math.min(bounds.height - 42, event.clientY - bounds.top))}px`;
-  search.dataset.world = JSON.stringify(screenToWorld(event.clientX, event.clientY));
-  search.hidden = false;
-  search.setAttribute("aria-expanded", "true");
-  search.value = "";
-  search.focus();
+  openSearchAt(event.clientX, event.clientY);
 });
 canvas.addEventListener("dragover", (event) => { if ([...event.dataTransfer.types].some((type) => type.startsWith("application/x-ludus-"))) event.preventDefault(); });
 canvas.addEventListener("drop", (event) => {
@@ -571,12 +595,13 @@ function zoomAtCenter(factor) {
   camera.x = rect.width / 2 - (rect.width / 2 - camera.x) * next / camera.zoom;
   camera.y = rect.height / 2 - (rect.height / 2 - camera.y) * next / camera.zoom;
   camera.zoom = next;
+  cameraEngaged = true;
   updateCamera();
 }
 $("#zoom-in").addEventListener("click", () => zoomAtCenter(1.2));
 $("#zoom-out").addEventListener("click", () => zoomAtCenter(1 / 1.2));
 $("#zoom-fit").addEventListener("click", () => { fitCamera(); updateCamera(); });
-window.addEventListener("resize", () => { if (!cameraReady) fitCamera(); updateCamera(); });
+window.addEventListener("resize", () => { if (!cameraReady || !cameraEngaged) fitCamera(); updateCamera(); });
 
 try {
   const saved = JSON.parse(localStorage.getItem(storeKey) || "null");

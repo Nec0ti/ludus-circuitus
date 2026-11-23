@@ -803,6 +803,8 @@ button.cad-variable:hover { border-color: #738295; }
   .cad-block-tool kbd { display: none; }
   .cad-editor { min-height: 760px; }
   .cad-canvas-scroll { min-height: 520px; }
+  .cad-canvas-topline { align-items: flex-start; flex-wrap: wrap; row-gap: 4px; padding-block: 6px; }
+  .cad-camera-tools { margin-left: auto; }
   .cad-variables { min-height: 90px; }
   .cad-bottom-status { font-size: 9px; }
   .cad-inspector { min-height: 500px; }

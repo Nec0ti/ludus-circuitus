@@ -4,8 +4,8 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
-- [~] Devre Atölyesi etkileşimlerini endüstriyel çalışma alanına yaklaştır: sonsuz düzlem, imleç merkezli tekerlek yakınlaştırma, yumuşatılmış ortogonal sinyal yolları, araçlıktan sürükle-bırak ve boş tuvalde yazarak blok çağırma. NAND/NOR/XNOR motor ve Icarus/E2E doğrulandı; docs eşlemesi, görsel QA ve main CI/Pages yayını bekliyor. Ayrıntı: `raports/workbench-redesign-2026-11-23.md`.
-- [~] Başlangıç dijital elektronik eğitim yolunu ayrı, kısa ve amaç odaklı ders sayfalarına ayır; sinyaller, kapılar, kombinasyonel devre, paralellik, saat/yazmaç ve Verilog eşlemesi. Kullanıcı mevcut başlangıç docs'unu hâlâ karışık buldu; yeni bilgi mimarisi geri bildirim bekliyor.
+- [~] Devre Atölyesi etkileşimlerini endüstriyel çalışma alanına yaklaştır: sonsuz düzlem, imleç merkezli tekerlek yakınlaştırma, yumuşatılmış ortogonal sinyal yolları, araçlıktan sürükle-bırak ve boş tuvalde yazarak blok çağırma. NAND/NOR/XNOR motor ve Icarus/E2E doğrulandı; son mobil görsel QA ve PR CI/Pages yayını bekliyor. Ayrıntı: `raports/workbench-redesign-2026-11-23.md`.
+- [x] Başlangıç dijital elektronik eğitim yolunu kurs haritası ve altı kısa derse ayır: sinyaller, kapılar, yarım toplayıcı, paralellik, saat/yazmaç ve Verilog eşlemesi. Kullanıcı geri bildirimiyle tek uzun Başlangıç sayfası küçük modüllere bölündü; Jekyll, E2E ve masaüstü/mobil QA geçti. Ayrıntı: `raports/docs-curriculum-review-2026-11-23.md`.
 
 - İlk çalışan uygulama MVP'si: tam ekran Devre Atölyesi, pure graph motoru, çok modüllü `.bp` bileşimi, yerel anonim quiz, modüler docs ve Türkçe landing hazır; görsel QA, ana CI kapıları ve Pages yayını doğrulandı. Kalan: içerik/öğrenme aracı kapsamı ile ölçüm planının danışmanla kesinleştirilmesi.
 - `.bp` modül bileşimi uygulandı ve doğrulandı. Quiz prototipi tamamlandı; araştırma ölçüm aracı olarak kullanımı için danışman/okul incelemesi bekliyor.

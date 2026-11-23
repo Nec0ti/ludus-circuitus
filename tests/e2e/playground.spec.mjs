@@ -231,3 +231,17 @@ test("space-drag pans the blueprint camera without moving blocks", async ({ page
   await expect(card).toHaveAttribute("style", blockBefore);
 });
 
+test("fit keeps every sample block legible and inside the mobile canvas", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.setViewportSize({ width: 390, height: 844 });
+  const canvas = await page.locator("#blueprint-canvas").boundingBox();
+  await expect(page.locator("#zoom-level")).toHaveText(/^(5[8-9]|[6-9]\d|100)%$/);
+  for (const node of await page.locator(".cad-node").all()) {
+    const box = await node.boundingBox();
+    expect(box.x).toBeGreaterThanOrEqual(canvas.x - 1);
+    expect(box.y).toBeGreaterThanOrEqual(canvas.y - 1);
+    expect(box.x + box.width).toBeLessThanOrEqual(canvas.x + canvas.width + 1);
+    expect(box.y + box.height).toBeLessThanOrEqual(canvas.y + canvas.height + 1);
+  }
+});
+
