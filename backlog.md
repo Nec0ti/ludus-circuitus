@@ -26,7 +26,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] Değişken paneli kapsamını belirle ve adlandırılmış Ara Sinyal bloğunu ekle. Giriş/çıkış/yazmaç ve ara sinyallerin canlı değerleri görünür; sabit/parametre yönetimi MVP dışında.
 - [ ] Zorlayıcı test/benchmark şartnamesi, veri kümesi, eşikler ve başarısız kontrollerde push engelini tasarla.
 - [ ] Gerçek Verilog üretimini, benzetimi ve `.bp` kaydet/yükle akışını benchmark kapılarından geçir.
-- [ ] Yerel kurulum, önizleme, katkı ve yayın akışını belgeleri son MVP'ye göre tamamla.
+- [x] Yerel kurulum, önizleme, katkı ve yayın akışını son MVP'ye göre tamamla; Node 22, Python 3, Icarus Verilog ve `_site`/E2E sıralaması belgelendi, Playwright kontrolü eklendi.
 - [ ] İki öğrencinin 2204-A lise/yaş uygunluğunu ve varsa danışman koşulunu teyit et.
 - [ ] Danışman öğretmeni belirle; Adil Karaağaç MTAL'deki örneklem sınıfı, tarafsız gönüllü çağrısı ve iki çalışma koşulu için okul yönetimiyle plan yap.
 - [ ] Öğrencilerle öğrenme testi yapılacaksa MEB izni, veli onamı ve gönüllü katılım akışını başlat.

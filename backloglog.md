@@ -211,3 +211,11 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 
 - PR #4, son Ara Sinyal yerleşimiyle PR CI (`45236581066`) yeşil olduktan sonra `452c539` merge commit’iyle `main`e alındı. Main build ve Pages deploy (`45236869647`) başarıyla tamamlandı.
 - Canlı Pages Playwright kontrolü atölyenin 200 döndüğünü, Ara Sinyal/yardım bağlantısını ve docs `#ara-sinyal` hedefini doğruladı; yalnız GET istekleri oluştu. Öğrenci verisi veya API yok.
+
+
+## 2026-11-23 — Yerel kurulum kılavuzunun MVP ile eşleştirilmesi
+
+- `docs/yerel-kurulum.md`, güncel package scriptleri ve Pages workflow'u ile karşılaştırıldı. Node.js 22, Python 3 ve Icarus Verilog gereksinimleri eklendi; Ruby sürümü sabitlenmiş gibi gösterilmedi.
+- E2E adımlarına önce `bundle exec jekyll build` eklenerek Playwright'ın `_site` klasörünü Python HTTP sunucusuyla servis ettiği açıklandı. Linux için Chromium sistem bağımlılıklarını kuran `npx playwright install --with-deps chromium`, macOS/Windows için tarayıcı kurulum komutu belirtildi. Yayın kapısının PR build'i ve Pages dağıtımıyla ilişkisi güncellendi; okuma süresi ve içindekiler eşleştirildi.
+- Yeni docs E2E kontrolü gereken araçları, okuma süresini ve E2E öncesi Jekyll build adımını doğruluyor. Doğrulama: Jekyll build; docs Playwright E2E 3/3; `npm test` 16/16; `git diff --check` geçti.
+- Kalan: PR CI ve bağımsız docs ekran incelemesi.
