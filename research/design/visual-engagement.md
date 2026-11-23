@@ -1,6 +1,6 @@
 # Görsel dil ve sağlıklı öğrenme etkileşimi
 
-**Durum:** Kaynaklara dayalı tasarım önerisi; uygulama kararı henüz verilmedi.
+**Durum:** Koyu site paleti 2026-11-23 tarihinde seçildi ve ilk sürümde uygulandı. Atölye kendi temasını koruyor.
 **Hazırlanma tarihi:** 2026-11-23
 **Kapsam:** Koyu ama yumuşak palet, okunabilirlik, öğrenme etkileşimi ve çocukların dijital iyi oluşu.
 
@@ -38,7 +38,7 @@ WCAG 2.2 AA normal metin için en az 4.5:1, büyük metin için en az 3:1 karş�
 | `on-primary` / `signal-high` | 9.36:1 | Dolu birincil düğme metni için geçer |
 | `border-strong` / `surface` | 3.62:1 | Kontrol sınırı için geçer |
 
-Paletin son sürümü uygulanınca otomatik karşıtlık testi ve ana sayfa, dokümanlar, quiz ve Devre Atölyesi için tarayıcı ekran görüntüsü incelemesi gerekir. Durum anlamı yalnızca renkle verilmemeli: 0/1/X ayrıca sayı veya harfle, gerektiğinde çizgi biçimiyle gösterilmeli. Renk görme farklılıkları ve gri ton görünümü bu yüzden ayrı kontrol edilmeli.
+Palet uygulandı. İlk tarayıcı ekran görüntüleri ana sayfa, dokümanlar ve atölyede incelendi; farklı genişlikler için otomatik kontroller eklendi. Renk, durum anlamını tek başına taşımıyor: 0/1/X ayrıca sayı veya harfle, gerektiğinde çizgi biçimiyle gösteriliyor. Renk görme farklılıkları ve gri ton görünümü ayrıca kontrol edilmelidir.
 
 ## Renk psikolojisi kanıtı ve sınırı
 

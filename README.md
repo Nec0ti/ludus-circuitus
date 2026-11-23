@@ -4,7 +4,7 @@ Ludus Circuitus, başlangıç düzeyindeki öğrenenlerin görsel bloklarla diji
 
 Site üç bölümden oluşur:
 
-- **Tanıtım:** Projenin amacı, Verilog öğrenirken karşılaşılan güçlük ve yaklaşımımız.
+- **Tanıtım:** Projenin amacı, Verilog öğrenirken karşılaşılan güçlük ve etkileşimli yarım toplayıcı örneği.
 - **Dokümantasyon:** Başlangıç, kullanım, bloklar ve yerel kurulum için Türkçe kılavuz.
 - **Devre Atölyesi:** Tam ekran, CAD/CAM esintili çalışma alanı. Blokları ekleyip bağla, mantıksal sinyal değerlerini ve üretilen Verilog'u izle; açık `.bp` belgelerini modül olarak birleştirip bu cihazda sakla veya ayrı ayrı içe/dışa aktar.
 

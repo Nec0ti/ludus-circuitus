@@ -24,12 +24,13 @@ Detay, alternatifler ve sınırlılıklar: [`research/measurement/learning-study
 - Araçlık blokları mouse/keyboard ile eklenebilir; çıkıştan girişe tıklayarak bağlanır; canvas'ta 20 birimlik ızgarada taşınır. Bu ilk dilimde alt blueprint dosyaları tablarda açılabilir; modül örneği çağırma/bileştirme henüz yok.
 - Her blokta kısa hover/focus yardımı var; yardım bağlantısı ilgili Bloklar başlığını yeni sekmede açıyor.
 - Atölye verileri tarayıcıda yerel kalır. Quiz yalnız açık sayfa belleğinde puanlanan anonim bir öğrenme alıştırmasıdır; cevap/puan/süre kaydetmez ve API isteği yapmaz. Okul/MEB/KVKK onayı beklemeden insan katılımcılı araştırma verisi toplanmayacak.
-- Genel site için yumuşak koyu tema, renk/okunabilirlik ve çocuklarda öğrenme motivasyonu kaynak incelemesi bekliyor; docs eğitim portalı, quiz yerel anonim prototip olarak eklendi.
+- Genel site koyu ve yumuşak palete alındı; Devre Atölyesi ayrı endüstriyel temasını koruyor. Landing'de yarım toplayıcı etkileşimi var; docs eğitim portalı, quiz yerel anonim prototip olarak eklendi.
 
 ## Görsel dil ve etkileşim araştırması: 2026-11-23
 
-- Kaynaklı tasarım önerisi [`research/design/visual-engagement.md`](research/design/visual-engagement.md) içinde. Öneri koyu mavi-gri zemin, yumuşak fildişi metin, turkuaz mantık-sinyali vurgusu ve sıcak amber clock/odak vurgusu kullanıyor; hesaplanan örnek eşleşmeler WCAG 2.2 AA eşiklerini karşılıyor.
-- Bu renkler eğitim etkisi kanıtı veya Necati'nin kesin palet kararı değildir; uygulama öncesi karar ve ekran görüntüsü incelemesi gerekir. Renk, sinyal anlamını tek başına taşımamalıdır.
+- Kaynaklı tasarım araştırması [`research/design/visual-engagement.md`](research/design/visual-engagement.md) içinde. Seçilen palet: sayfa `#1B232B`, yüzey `#232E37`, yükseltilmiş yüzey `#2D3B44`, metin `#F1F3EE`, ikincil metin `#B5C0C0`, mantık sinyali `#72D6B5`, clock/odak `#F1B866`, hata `#E8897B`. Tema genel landing/docs/quiz'e uygulandı; Devre Atölyesi `ludus-cad` temasını kullanıyor.
+- Renk rolleri okunabilirlik, düzen ve durum ayrımı içindir; eğitim etkisi kanıtı değildir. 0/1/X metinsel olarak da gösterilir. İlk ekran görüntüleri desktop/mobile landing, docs ve atölyede incelendi; bağımsız görsel incelemeleri sürüyor.
+- Landing yarım toplayıcı önizlemesinde A ve B girişleri değiştirilebilir; AND taşıma ve XOR toplam sonuçlarıyla sinyal yolları anlık güncellenir. Dört giriş çifti için sınırlı, yalnızca açık sayfa belleğinde kalan keşif göstergesi var. Verilog satırları devre tanımını gösterir ve giriş değerleri değişince değişmez.
 - Etkileşim önerileri: kullanıcının seçim ve duraklatma/çıkış kontrolü, açıklayıcı ve nazik doğruluk geri bildirimi, sonu görünür kısa görevler; streak kaybı, geri sayım baskısı, değişken ödül, zorunlu bildirim, leaderboard ve sonsuz akış kullanılmaması. Bunlar literatürün Ludus üzerindeki sonuçları değil, eğitim/çocuk iyi oluşu kaynaklarına dayalı tasarım hipotezleridir.
 - Renk ve gamification bulgularını başarı/bağımlılık iddiasına çevirmemek; öğrenci görüşlerini izinli biçimde alıp örneklem sınırını korumak gerekir.
 

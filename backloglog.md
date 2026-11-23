@@ -162,3 +162,13 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Değişenler: `research/design/visual-engagement.md`, `research/README.md`, `notes.md`, `backlog.md`, `backloglog.md`.
 - Doğrulama: WCAG göreli parlaklık hesabı Node ile bağımsız hesaplandı; metin kontrastları normal metinde 4.5:1'i, kritik kontur/işaret kontrastı 3:1'i geçiyor. Kaynak iddiaları meta-analizler, hakemli derlemeler, UNICEF Innocenti raporu ve W3C WCAG sayfalarıyla sınırlandırıldı. `git diff --check` geçti; yeni araştırma dosyasında satır sonu boşluğu da bulunmadı.
 - Kalan: palet ürün genelinde uygulanmadı ve onaylanmadı; mobil/masaüstü ekranlarda görsel ve erişilebilirlik incelemesi uygulama görevi kapsamında yapılmalı. Tasarım ilkeleri çocuk kullanıcı testi veya öğrenme etkisi kanıtı yerine geçmez.
+
+## 2026-11-23 — Koyu site teması ve etkileşimli landing
+
+- Kaynaklı öneri paleti site teması olarak seçilip uygulandı; Jekyll'in doküman, quiz ve genel sayfaları `ludus`, tam ekran Devre Atölyesi ise kendi `ludus-cad` temasını kullanıyor.
+- Landing yeniden düzenlendi: büyük ama üç satıra yakın başlık, paralel AND/XOR yollarını gösteren etkileşimli yarım toplayıcı, A/B giriş kontrolleri, sinyal ve Verilog eşlemesi, dört giriş çiftini yerel sayfa belleğinde izleyen sınırlı keşif göstergesi ve her bölüm için yaklaşık okuma süresi. Araç ilk yüklemede çizgi animasyonu başlatmıyor; kullanıcı giriş değiştirince ilgili mantık yolları hareket ediyor.
+- Docs koyu palete taşındı; mantık kapısı katalog örnekleri açık renkli eski prototip görünümünden paletle uyumlu blok örneklerine çevrildi. Public README ve proje notları da güncellendi.
+- İlk masaüstü/mobil ekran görüntüleri ve ayrı worktree ön eleştirisi incelendi. Eski başlığın beş satıra çıkması ve statik demo bulguları düzeltilmiş durumda. Tanıtım, docs ve atölye için yeni bağımsız görsel incelemeler ve CI hizalama/kontrast kapıları backlog'da açık.
+- Doğrulama: CSS build, Jekyll build, `npm test` 12/12, Icarus Verilog oracle (kombinasyonel + nested `.bp` clock/register), tam Playwright E2E 15/15; landing giriş/output doğruluğu ve 320/390/768/1440 px yatay taşma kontrolü dahil; `git diff --check` geçti.
+- Değişenler: `index.html`, `assets/js/landing.mjs`, `assets/css/input.css` ve derlenmiş `assets/css/site.css`, default/workbench layouts, `docs/bloklar.md`, `tests/e2e/home.spec.mjs`, `README.md`, `notes.md`, araştırma/backlog kayıtları.
+- Kalan: üç sayfanın yeni bağımsız görsel QA'sı, okunabilirlik/kontrast benchmarklarının CI'a bağlanması, landing sonrası uzaktaki PR kontrolü; bu commit henüz push edilmedi.

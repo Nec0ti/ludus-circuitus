@@ -20,10 +20,10 @@ reading_time: 5
     </div>
     <h2 id="mantik-kapilari">Mantık kapıları <span class="docs-section-time">~1 dk</span></h2>
     <div class="block-list">
-      <div><span class="logic-block logic-block-small">AND</span><p><b>AND</b><small>İki giriş de 1 ise 1 üretir.</small></p></div>
-      <div><span class="logic-block logic-block-small">OR</span><p><b>OR</b><small>En az bir giriş 1 ise 1 üretir.</small></p></div>
-      <div><span class="logic-block logic-block-small">NOT</span><p><b>NOT</b><small>0 değerini 1'e, 1 değerini 0'a çevirir.</small></p></div>
-      <div><span class="logic-block logic-block-small">XOR</span><p><b>XOR</b><small>Girişler farklıysa 1 üretir.</small></p></div>
+      <div><span class="block-swatch gate-swatch">AND</span><p><b>AND</b><small>İki giriş de 1 ise 1 üretir.</small></p></div>
+      <div><span class="block-swatch gate-swatch">OR</span><p><b>OR</b><small>En az bir giriş 1 ise 1 üretir.</small></p></div>
+      <div><span class="block-swatch gate-swatch">NOT</span><p><b>NOT</b><small>0 değerini 1'e, 1 değerini 0'a çevirir.</small></p></div>
+      <div><span class="block-swatch gate-swatch">XOR</span><p><b>XOR</b><small>Girişler farklıysa 1 üretir.</small></p></div>
     </div>
     <h2 id="yazmac">Clock ve yazmaç (register) <span class="docs-section-time">~1 dk</span></h2>
     <div class="block-list">

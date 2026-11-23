@@ -4,15 +4,15 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
-- İlk çalışan uygulama MVP'si: tam ekran etkileşimli Devre Atölyesi, pure graph motoru, çok modüllü `.bp` bileşimi, yerel anonim quiz ve modüler docs hazır. Kalan: genel site/landing tasarım yenilemesi, görsel inceleme kapıları ve araştırma aracının danışmanla kesinleştirilmesi.
+- İlk çalışan uygulama MVP'si: tam ekran etkileşimli Devre Atölyesi, pure graph motoru, çok modüllü `.bp` bileşimi, yerel anonim quiz, modüler docs ve ilk landing yenilemesi hazır. Kalan: üç ayrı görsel inceleme/benchmark, eksik ürün kapsamı ve araştırma aracının danışmanla kesinleştirilmesi.
 - `.bp` modül bileşimi uygulandı ve doğrulandı. Quiz prototipi tamamlandı; araştırma ölçüm aracı olarak kullanımı için danışman/okul incelemesi bekliyor.
 
 ## Sıradaki işler
 
 - [ ] Birincil kazanım ve ikincil quiz alt sonuçlarını (paralel yollar; blok↔Verilog; clock/register) danışmanla ve örneklem düzeyiyle uyumlu kesinleştir.
 - [ ] CircuitVerse ve VPLAS'ı aynı başlangıç göreviyle uygulamalı karşılaştır; Ludus'un kanıtlanabilir farkını ürün ve araştırma sorusuna bağla.
-- [x] Renk/okunabilirlik ve çocuklarda öğrenme motivasyonu için kaynaklı tasarım notu yaz; palet kararı öncesinde aşırı genelleme yapma. (Not ve karşıtlık hesapları hazır; palet henüz uygulanmış/kararlaştırılmış değil.)
-- [ ] Landing'i koyu ama yumuşak, somut devre etkileşimli bir hikâyeye dönüştür; tamamlanan görev ve merak ilerlemesi kullan, baskılı streak/infinite scroll ekleme.
+- [x] Kaynaklı renk/okunabilirlik araştırmasına göre koyu-yumuşak paleti seçip landing'e ve dokümantasyona uygula; atölye temasını ayrı tut. Öğrenme etkisi iddiası değil, okunabilirlik ve durum ayrımı gerekçesiyle seçildi.
+- [x] Landing'i somut devre etkileşimli bir hikâyeye dönüştür; tamamlanan görev ve merak ilerlemesi kullan, baskılı streak/infinite scroll ekleme. Yarım toplayıcı 4 giriş durumunu sayfa belleğinde gösterir; ağ/kalıcı izleme yok.
 - [x] Docs'u eğitim portalı olarak yeniden kur: açılır/kapanır ana gruplar, alt başlıklar, içerik içi gezinme ve her sayfa/bölüm için yaklaşık okuma süresi.
 - [x] Modül bileşimi uygulandıktan sonra `.bp` oluşturma/yeniden kullanma kılavuzunu gerçek kullanım adımlarına geçir.
 - [ ] Ana sayfa, docs ve atölye için ayrı iş-kopyası worktree'lerinde görsel alt ajan incelemesi yap; hizalama/taşma/kontrast benchmarklarını CI'a ekle.
