@@ -13,7 +13,8 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [ ] CircuitVerse ve VPLAS'ı aynı başlangıç göreviyle uygulamalı karşılaştır; Ludus'un kanıtlanabilir farkını ürün ve araştırma sorusuna bağla.
 - [ ] Renk/okunabilirlik ve çocuklarda öğrenme motivasyonu için kaynaklı tasarım notu yaz; palet kararı öncesinde aşırı genelleme yapma.
 - [ ] Landing'i koyu ama yumuşak, somut devre etkileşimli bir hikâyeye dönüştür; tamamlanan görev ve merak ilerlemesi kullan, baskılı streak/infinite scroll ekleme.
-- [ ] Docs'u eğitim portalı olarak yeniden kur: açılır/kapanır ana gruplar, alt başlıklar, içerik içi gezinme ve her sayfa/bölüm için yaklaşık okuma süresi.
+- [x] Docs'u eğitim portalı olarak yeniden kur: açılır/kapanır ana gruplar, alt başlıklar, içerik içi gezinme ve her sayfa/bölüm için yaklaşık okuma süresi.
+- [ ] Modül bileşimi uygulandıktan sonra `.bp` oluşturma/yeniden kullanma kılavuzunu taslaktan gerçek kullanım adımlarına geçir.
 - [ ] Ana sayfa, docs ve atölye için ayrı iş-kopyası worktree'lerinde görsel alt ajan incelemesi yap; hizalama/taşma/kontrast benchmarklarını CI'a ekle.
 - [x] Araçlık bloklarının yanındaki yardım işaretleri hover/focus özeti gösterir ve hedef docs anchor'ını yeni sekmede açar.
 - [ ] Çocuklara uygun ama manipülatif olmayan motivasyon etkileşimlerini öğrenme kanıtı hipoteziyle eşleştir.

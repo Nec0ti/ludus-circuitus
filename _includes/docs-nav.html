@@ -1,7 +1,28 @@
 <nav class="docs-nav" aria-label="Dokümantasyon bölümleri">
-  <p class="docs-nav-heading">Öğrenme rehberi</p>
-  <a href="{{ '/docs/baslangic/' | relative_url }}" {% if page.url contains 'baslangic' %}aria-current="page"{% endif %}>Başlangıç</a>
-  <a href="{{ '/docs/kullanim/' | relative_url }}" {% if page.url contains 'kullanim' %}aria-current="page"{% endif %}>Kullanım</a>
-  <a href="{{ '/docs/bloklar/' | relative_url }}" {% if page.url contains 'bloklar' %}aria-current="page"{% endif %}>Bloklar</a>
-  <a href="{{ '/docs/yerel-kurulum/' | relative_url }}" {% if page.url contains 'yerel-kurulum' %}aria-current="page"{% endif %}>Yerel kullanım ve kurulum</a>
+  <p class="docs-nav-heading">ÖĞRENME REHBERİ</p>
+  <details class="docs-nav-group" open>
+    <summary>Temeller <small>4 dk</small></summary>
+    <a href="{{ '/docs/baslangic/' | relative_url }}" {% if page.url contains '/docs/baslangic' %}aria-current="page"{% endif %}>Başlangıç <small>4 dk</small></a>
+    <a href="{{ '/docs/baslangic/#bir-devre-ne-yapar' | relative_url }}">Sinyal ve kapılar <small>1 dk</small></a>
+    <a href="{{ '/docs/baslangic/#paralel-yollar' | relative_url }}">Paralel yollar <small>1 dk</small></a>
+    <a href="{{ '/docs/baslangic/#sirali-mantik' | relative_url }}">Clock ve yazmaç <small>1 dk</small></a>
+  </details>
+  <details class="docs-nav-group" open>
+    <summary>Atölyeyi kullan <small>11 dk</small></summary>
+    <a href="{{ '/docs/kullanim/' | relative_url }}" {% if page.url contains '/docs/kullanim' %}aria-current="page"{% endif %}>Kullanım <small>5 dk</small></a>
+    <a href="{{ '/docs/kullanim/#devre-kur' | relative_url }}">Devre kurma <small>1 dk</small></a>
+    <a href="{{ '/docs/kullanim/#simulasyon' | relative_url }}">Simülasyon <small>1 dk</small></a>
+    <a href="{{ '/docs/kullanim/#blueprint-dosyalari' | relative_url }}">Blueprint ve Verilog <small>1 dk</small></a>
+    <a href="{{ '/docs/bloklar/' | relative_url }}" {% if page.url contains '/docs/bloklar' %}aria-current="page"{% endif %}>Blok kataloğu <small>3 dk</small></a>
+    <a href="{{ '/docs/bloklar/#giris-cikis' | relative_url }}">Giriş ve çıkış <small>1 dk</small></a>
+    <a href="{{ '/docs/bloklar/#mantik-kapilari' | relative_url }}">Mantık kapıları <small>1 dk</small></a>
+    <a href="{{ '/docs/bloklar/#yazmac' | relative_url }}">Yazmaç <small>1 dk</small></a>
+  </details>
+  <details class="docs-nav-group" {% if page.url contains '/docs/yerel-kurulum' %}open{% endif %}>
+    <summary>Geliştirici rehberi <small>4 dk</small></summary>
+    <a href="{{ '/docs/yerel-kurulum/' | relative_url }}" {% if page.url contains '/docs/yerel-kurulum' %}aria-current="page"{% endif %}>Yerel kullanım ve kurulum <small>4 dk</small></a>
+    <a href="{{ '/docs/yerel-kurulum/#gerekenler' | relative_url }}">Gerekenler <small>1 dk</small></a>
+    <a href="{{ '/docs/yerel-kurulum/#yerel-onizleme' | relative_url }}">Yerel önizleme <small>1 dk</small></a>
+    <a href="{{ '/docs/yerel-kurulum/#testler' | relative_url }}">Doğrulama testleri <small>1 dk</small></a>
+  </details>
 </nav>

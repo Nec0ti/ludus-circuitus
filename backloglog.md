@@ -128,3 +128,12 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - `tests/project.test.mjs` yarım-toplayıcı modülünü tüm giriş birleşimlerinde, iç içe yazmacı, eksik modül/portu ve bağımlılık döngüsünü denetliyor. `tests/project-verilog-oracle.mjs`, Icarus ile hem kombinasyonel modül hem de iç yazmaçlı sıralı modül çıktısını derleyip simüle ediyor. `npm test`: 9/9; Icarus oracle; Jekyll/CSS build; Playwright: 8/8 geçti.
 - Değişenler: `assets/js/project.mjs`, `assets/js/playground.mjs`, `assets/css/input.css`, `playground/index.html`, `tests/project.test.mjs`, `tests/project-verilog-oracle.mjs`, `tests/e2e/playground.spec.mjs`, `package.json`, `README.md`, `notes.md`, `backlog.md`.
 - Kalan: dışa aktarma etkin `.bp` dosyasıyla sınırlı; modül bağımlılıkları başka cihaza ayrı dosyalar olarak taşınmalı. Görsel inceleme ve modül API sınırları üzerinde daha geniş kod denetimi henüz yapılmadı.
+
+# 2026-11-23 — Dokümantasyon eğitim portalı
+
+- Sol dokümantasyon menüsü Temeller, Atölyeyi Kullan ve Geliştirici Rehberi adlı açılır konu gruplarına ayrıldı; sayfa ve alt bölüm bağlantıları ile yaklaşık okuma süreleri eklendi. Doküman sayfalarına sayfa süresi, içindekiler ve bölüm süreleri eklendi.
+- Kullanım rehberine `.bp` dosyası içinde Giriş/Çıkış portları tanımlayıp üst blueprint'te modül olarak tekrar kullanma anlatımı eklendi. Motor/arayüz desteği tamamlanmadığından bölüm açıkça taslak/önizleme olarak işaretli.
+- `tests/e2e/docs.spec.mjs` menü aç/kapa davranışını, okuma sürelerini, 320–1440 px taşma kontrolünü ve yayımlanan sayfalardaki bütün dokümantasyon anchor hedeflerini doğrular. İzole worktree'de E2E test sunucusu çakışmasını çözmek için Playwright portu `PLAYWRIGHT_PORT` ortam değişkeniyle seçilebilir hale getirildi.
+- Doğrulama: `npm ci` (0 audit bulgusu), `npm run build:css`, Jekyll build, `npm run test:e2e` 9/9 (Chromium, port 4179), `npm test` 6/6 ve `git diff --check` geçti; 1440 px kullanım rehberi screenshot'ı gözle incelendi.
+- Değişen dosyalar: `_includes/docs-nav.html`, dört `docs/*.md`/`docs/index.html` sayfası, `assets/css/input.css`, `assets/css/site.css`, `playwright.config.mjs`, `tests/e2e/docs.spec.mjs`, `backlog.md`, bu günlük.
+- Kalan: modül bileşimi uygulandığında taslak kılavuzu gerçek arayüz ve Verilog davranışına göre güncelle; genel koyu tema ve landing tasarımı bu çalışma diliminin dışında.
