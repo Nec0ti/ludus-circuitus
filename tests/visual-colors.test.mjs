@@ -24,12 +24,12 @@ test("site palette keeps normal text and controls above WCAG contrast floors", (
     assert.ok(contrast(colors[accent], colors["base-200"]) >= 4.5, `${accent} text contrast`);
     assert.ok(contrast(colors[`${accent}-content`], colors[accent]) >= 4.5, `${accent} button text contrast`);
   }
-  assert.ok(contrast("#75858d", colors["base-200"]) >= 3, "strong circuit line contrast");
+  assert.ok(contrast("#74877a", colors["base-200"]) >= 3, "strong circuit line contrast");
 });
 
 test("workbench microcopy colors stay readable on their dark panels", () => {
-  const darkPanel = "#1d232d";
-  for (const color of ["#9aa8b8", "#a3afbd"]) {
+  const darkPanel = "#2c3a37";
+  for (const color of ["#b9c1b7", "#c6d3c3"]) {
     assert.ok(contrast(color, darkPanel) >= 4.5, `${color} needs 4.5:1 against workbench panel`);
   }
 });

@@ -1,33 +1,53 @@
 ---
 layout: default
-title: Kullanım
-description: Devre Atölyesi taslağında sinyalleri ve Verilog'u incele.
+title: Atölye kullanımı
+description: Devre Atölyesi'nde bloklarla devre kur, mantıksal sinyalleri izle ve blueprint dosyalarını düzenle.
 permalink: /docs/kullanim/
-reading_time: 8
+reading_time: 9
 ---
 <div class="site-width docs-shell">
   {% include docs-nav.html %}
   <article class="docs-article">
     <p class="eyebrow eyebrow-ink">Atölye rehberi</p>
-    <h1>Kullanım</h1>
+    <h1>Atölye kullanımı</h1>
     <p class="docs-reading-time">Yaklaşık {{ page.reading_time }} dakika</p>
-    <p class="docs-intro">Devre Atölyesi tam ekran bir çalışma alanıdır. Üst menü dosyaları ve simülasyonu, sol araçlık blokları, orta tuval blueprint'i, sağ panel mantıksal sinyalleri ve gerçek Verilog'u gösterir.</p>
-    <nav class="docs-page-toc" aria-label="Bu sayfadaki konular"><b>Bu sayfada</b><a href="#devre-kur">Devre kurma <small>1 dk</small></a><a href="#girisleri-izle">Sinyali izleme <small>1 dk</small></a><a href="#simulasyon">Simülasyon ve clock <small>1 dk</small></a><a href="#blueprint-dosyalari">Blueprint ve Verilog <small>1 dk</small></a><a href="#moduller">.bp modülleri <small>2 dk</small></a><a href="#gizlilik">Yerel kayıt <small>1 dk</small></a></nav>
-    <h2 id="devre-kur">Devre kur ve bağla <span class="docs-section-time">~1 dk</span></h2>
-    <p>Soldan Giriş, Çıkış, AND, OR, XOR, NOT, Ara Sinyal veya Yazmaç ekle. Bir bloğu başlığından tutup ızgarada taşı. Bağlantı yapmak için bir bloğun çıkış portuna, ardından hedef bloğun giriş portuna tıkla. Giriş portuna tek bir sinyal bağlanır. Seçili bloğu Delete tuşuyla kaldırabilirsin.</p>
-    <h2 id="girisleri-izle">Girişleri değiştir ve sinyali izle <span class="docs-section-time">~1 dk</span></h2>
-    <p>Alttaki Değişkenler bölümünde girişe tıklayarak 0 ve 1 arasında geçiş yap. Blueprint tuvalindeki ve sağdaki Sinyal Görünümü'ndeki değerler birlikte güncellenir. Turkuaz 1'i, gri 0'ı, kesik sarı çizgi henüz bilinmeyen <code>X</code> değerini gösterir. Bunlar mantıksal sinyallerdir; elektrik akımı canlandırması değildir.</p>
-    <p>Bir yolun değerini adlandırıp alttaki listede izlemek için Ara Sinyal ekle. Bloğa çift tıklayarak adını değiştir; bu değer saklanmaz, bağlı olduğu sinyalle birlikte anında değişir.</p>
-    <h2 id="simulasyon">Oynat ve clock <span class="docs-section-time">~1 dk</span></h2>
-    <p>Yalnız kombinasyonel kapılar varsa Oynat, giriş birleşimlerini sırayla dener; bağımsız mantık yolları aynı giriş durumunda birlikte değerlendirilir. Devrede Register varsa Tek tik veya Oynat bir yükselen clock kenarı oluşturur; register'lar yeni değerlerini aynı eski durumdan eşzamanlı alır. Başlangıçta register değeri <code>X</code>'tir. Duraklat ve Durdur değeri korur; Reset register'ları 0 yapar.</p>
-    <h2 id="blueprint-dosyalari">Blueprint dosyaları ve Verilog <span class="docs-section-time">~1 dk</span></h2>
-    <p>Yeni BP veya <code>+</code> ile yeni bir belge aç. Kaydet, açık belgeleri bu tarayıcıda saklar. Dışa aktar etkin belgeyi <code>.bp</code> JSON dosyası olarak indirir; İçe aktar en fazla 1 MB boyutundaki bir dosyayı açar. Sağdaki Verilog çıktısı blueprint geçerliyken otomatik üretilir. Bağlantı hataları varsa uyarı görünür ve HDL üretilmez.</p>
-    <h2 id="moduller">Bir blueprint'i modül olarak kullanmak <span class="docs-section-time">~2 dk</span></h2>
-    <p>Bir modül, kendi giriş ve çıkışlarıyla tek blok gibi kullanılabilen başka bir açık blueprint'tir. Modülün içindeki kapılar ve yazmaçlar çalışma sırasında üst devreyle birlikte değerlendirilir.</p>
-    <ol><li><strong>Modül dosyasını kur:</strong> <code>+</code> veya <em>Yeni BP</em> ile yeni bir blueprint aç. Giriş, kapı/yazmaç ve Çıkış bloklarını kurup bütün portları bağla. Giriş ve Çıkış adları modül port adları olur.</li><li><strong>Üst blueprint'e dön:</strong> sekmelerden üst devreyi seç. Sol araçlıktaki <em>BP MODÜLLERİ</em> altında diğer açık dosyaların adını bulup kullanmak istediğine tıkla.</li><li><strong>Portları bağla:</strong> modül bloğunun adlandırılmış giriş portlarını üst devredeki sinyal çıkışlarına; modülün adlandırılmış çıkışlarını sonraki blokların girişlerine bağla.</li></ol>
-    <p>Üst ve alt blueprint'lerin modül adları benzersiz olmalı, çağrılar da döngü oluşturmamalıdır. Bir projede en fazla 8 açık blueprint; modül başına en fazla 8 giriş ve 8 çıkış portu, birleşmiş devrede ise en fazla 500 blok bulunabilir. Ana tuval modülü tek blok olarak gösterir; Verilog çıktısı iç mantığı üst modülde açar. Sıralı alt modüller aynı clock tiklerinde güncellenir.</p>
-    <p><em>Kaydet</em> açık blueprint dosyalarını bu tarayıcıda birlikte saklar. <em>Dışa aktar</em> yalnız etkin `.bp` dosyasını indirir; projeyi başka cihaza taşırken bağlı modül dosyalarını ayrı ayrı dışa aktarıp yeniden aç.</p>
-    <aside class="docs-callout" id="gizlilik"><b>Gizlilik · ~1 dk</b><p>Blueprint'ler bu cihazın tarayıcı saklamasında kalır. Quiz/API ve öğrenci verisi toplama henüz etkin değil; atölye verileri sunucuya gönderilmez.</p></aside>
-    <div class="docs-next"><a href="{{ '/docs/bloklar/' | relative_url }}">Sonraki: Bloklar</a></div>
+    <p class="docs-intro">Çalışma alanında soldan blok ekle, ortada bağla, sağdaki görünüm ve Verilog çıktısıyla sonucu incele. Bu sayfa dört ayrı işi sırayla anlatır.</p>
+    <nav class="docs-page-toc" aria-label="Bu sayfadaki konular"><b>Adımlar</b><a href="#devre-kur">1. Devreyi kur <small>2 dk</small></a><a href="#girisleri-izle">2. Sinyalleri incele <small>2 dk</small></a><a href="#simulasyon">3. Görselleştirmeyi ve yazmacı çalıştır <small>1 dk</small></a><a href="#blueprint-dosyalari">4. Dosya ve modülleri yönet <small>3 dk</small></a></nav>
+
+    <h2 id="devre-kur">1. Devreyi kur <span class="docs-section-time">~2 dk</span></h2>
+    <h3>Blokları ekle ve yerleştir</h3>
+    <p>Soldan Giriş, Çıkış, kapı, Sabit, Seçici, Ara Sinyal veya Yazmaç ekle. Bir bloğun başlığını tutup ızgarada taşı. Her blokta bit genişliğini başlıktaki menüden 1–32 arasında seç. Blok türlerinin görev ve portlarını <a href="{{ '/docs/bloklar/' | relative_url }}">blok kataloğunda</a> bulabilirsin.</p>
+    <h3>Tuvalde gezin ve çoklu seçim yap</h3>
+    <p>Tuval boşluğuna sağ tıkla: arama ve kısa açıklama içeren blok listesi açılır; bir öğeyi seç veya Escape/dışarı tıklamayla kapat. Boş alanda sol tuşu sürüklemek seçim kutusu oluşturur. Sağ tuşu basılı sürüklemek veya orta tuşu kullanmak tuvali kaydırır; tekerlek yakınlaştırır. Araçlıktaki bloğu tuvale sürükleyerek de ekleyebilirsin.</p>
+    <h3>Portları birbirine bağla</h3>
+    <p>Önce bir bloğun çıkış portuna, sonra hedef bloğun giriş portuna tıkla. Her giriş portuna tek bir kaynak bağlanır; bir çıkış birden fazla hedefe dallanabilir. Seçili bloğu Delete tuşuyla kaldırabilirsin.</p>
+
+    <h2 id="girisleri-izle">2. Sinyalleri incele <span class="docs-section-time">~2 dk</span></h2>
+    <h3>Giriş değerlerini değiştir</h3>
+    <p>Alttaki Değişkenler bölümünde 1 bitlik girişe tıklayarak 0 ve 1 arasında geçiş yap. Daha geniş girişler için onluk bir değer gir; ekranda karşılık gelen bit dizisi de görünür. Blueprint tuvalindeki ve sağdaki Sinyal Görünümü'ndeki değerler birlikte güncellenir.</p>
+    <h3>Değerleri ve yolları oku</h3>
+    <p>Yeşil 1'i, gri 0'ı, kesik bakır çizgi henüz bilinmeyen <code>X</code> değerini gösterir. Bunlar mantıksal sinyallerdir; elektrik akımı canlandırması değildir. Bir değeri adlandırıp alttaki listede izlemek için Ara Sinyal ekle. Bu blok saklama yapmaz; değeri bağlı sinyalle birlikte değişir.</p>
+
+    <h2 id="simulasyon">3. Görselleştirmeyi ve yazmacı çalıştır <span class="docs-section-time">~1 dk</span></h2>
+    <h3>Oynat, duraklat ve durdur</h3>
+    <p>Bu üç kontrol sağdaki mantıksal sinyal yayılımı görselleştirmesini yönetir. Girişleri değiştirmez ve yeni bir clock kenarı üretmez. Durdurma ya da duraklatma, yazmaçta saklanan değeri değiştirmez.</p>
+    <h3>Tek tik ve reset</h3>
+    <p>Bir tik, bir yükselen clock kenarını temsil eder. Yazmaçlar aynı önceki devre durumundan hesaplanan yeni değerleri birlikte alır; başlangıç değerleri bilinmiyorsa <code>X</code> görünür. Reset yazmaçları 0'a çeker. Bağımsız kombinasyonel yollar aynı giriş değişiminde birlikte değerlendirilir.</p>
+
+    <h2 id="blueprint-dosyalari">4. Dosya ve modülleri yönet <span class="docs-section-time">~3 dk</span></h2>
+    <h3>Blueprint dosyaları ve Verilog</h3>
+    <p><em>Yeni BP</em> veya <code>+</code> ile yeni belge aç. Kaydet, açık belgeleri bu tarayıcıda saklar. Dışa aktar etkin belgeyi <code>.bp</code> JSON dosyası olarak indirir; İçe aktar en fazla 1 MB boyutundaki bir dosyayı açar. Geçerli blueprint için sağdaki Verilog çıktısı otomatik üretilir; bağlantı hatalarında açıklayıcı uyarı gösterilir.</p>
+    <h3 id="moduller">.bp dosyalarını modül olarak birleştir</h3>
+    <p>Bir modül, kendi giriş ve çıkışlarıyla tek blok gibi kullanılabilen başka bir açık blueprint'tir. Modülün içindeki kapılar ve yazmaçlar üst devreyle birlikte değerlendirilir.</p>
+    <ol>
+      <li><strong>Modül belgesini kur:</strong> Yeni BP ile ayrı bir blueprint aç. Giriş, kapı/yazmaç ve Çıkış bloklarını ekleyip portları bağla. Giriş ve Çıkış adları modül portlarının adıdır.</li>
+      <li><strong>Üst belgeye dön:</strong> Sekmelerden ana devreyi seç. Diğer açık blueprint'ler sol araçlıkta modül olarak görünür.</li>
+      <li><strong>Modül portlarını bağla:</strong> Modül girişlerini üst devredeki sinyal çıkışlarına; modül çıkışlarını sonraki blokların girişlerine bağla.</li>
+    </ol>
+    <p>Modül adları benzersiz olmalı ve çağrılar döngü oluşturmamalıdır. Sekmeye çift tıklayarak dosyayı yeniden adlandır; sekmedeki <code>×</code> ile kapat. Kullanılan bir modülü kapatınca onay istenir ve ona bağlı örnek bloklar ile kabloları da kaldırılır. Modülün giriş/çıkış bit genişlikleri, içindeki Giriş/Çıkış bloklarından gelir; ana devrede ilgili port genişliğini eşleştir. Projede en fazla 8 açık blueprint, modül başına 8 giriş ve 8 çıkış, birleşmiş devrede ise en fazla 500 blok desteklenir. Tuvalde modül tek blok görünür; Verilog çıktısında iç mantık üst modüle açılır. Sıralı alt modüller aynı tikte güncellenir.</p>
+    <h3>Yerel kayıt ve gizlilik</h3>
+    <p><em>Kaydet</em> açık blueprint dosyalarını bu tarayıcıda birlikte saklar. <em>Dışa aktar</em> yalnız etkin `.bp` dosyasını indirir; projeyi başka cihaza taşırken bağlı modül belgelerini de dışa aktarıp yeniden aç. Blueprint ve quiz verisi sunucuya gönderilmez; katılımcı verisi toplanmaz.</p>
+
+    <div class="docs-next"><a href="{{ '/docs/bloklar/' | relative_url }}">Sonraki: Blok kataloğu</a></div>
   </article>
 </div>
