@@ -243,5 +243,11 @@ test("fit keeps every sample block legible and inside the mobile canvas", async 
     expect(box.x + box.width).toBeLessThanOrEqual(canvas.x + canvas.width + 1);
     expect(box.y + box.height).toBeLessThanOrEqual(canvas.y + canvas.height + 1);
   }
+  const labelScale = await page.locator(".cad-node-name").first().evaluate((node) => {
+    const world = new DOMMatrixReadOnly(getComputedStyle(document.querySelector("#camera-world")).transform);
+    return parseFloat(getComputedStyle(node).fontSize) * world.a;
+  });
+  expect(labelScale).toBeGreaterThanOrEqual(8.9);
+  expect(labelScale).toBeLessThanOrEqual(9.1);
 });
 

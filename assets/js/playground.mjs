@@ -170,6 +170,7 @@ function fitCamera() {
 function updateCamera() {
   const canvas = $("#blueprint-canvas"), world = $("#camera-world");
   if (!cameraReady) fitCamera();
+  world.style.setProperty("--camera-zoom", camera.zoom);
   world.style.transform = `translate(${camera.x}px, ${camera.y}px) scale(${camera.zoom})`;
   canvas.style.backgroundSize = `${20 * camera.zoom}px ${20 * camera.zoom}px, ${100 * camera.zoom}px ${100 * camera.zoom}px, ${100 * camera.zoom}px ${100 * camera.zoom}px`;
   canvas.style.backgroundPosition = `${camera.x}px ${camera.y}px, ${camera.x}px ${camera.y}px, ${camera.x}px ${camera.y}px`;

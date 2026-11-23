@@ -26,6 +26,7 @@ Bu düzen mevcut koyu, yalın ürün paletini korur; genel amaçlı SaaS gradien
 - Tuvalin boş alanında tıklama bir arama kutusu açar; ad yazıp Enter ile aynı koordinatta blok üretir; Escape kapatır.
 - Sinyal yolları her iki gösterimde aynı route işlevini kullanır.
 - NAND/NOR/XNOR; doğrulama, port, değerlendirme, Verilog, modül düzleştirme, yardım ve truth-table oracle'ı kapsar.
+- Node başlığı/değer etiketi ekranda yaklaşık sabit piksel boyutunda kalır; zoom, metin okunabilirliğini küçültmez.
 
 ## Kapsam dışı
 

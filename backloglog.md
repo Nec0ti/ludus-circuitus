@@ -272,3 +272,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Değişenler: `assets/js/{engine,project,playground}.mjs`, `playground/index.html`, CSS çıktısı/kaynağı, `tests/{engine,project}.test.mjs`, E2E ve iverilog oracle, docs gezinmesi ve altı yeni ders sayfası, `const.md`, `notes.md`, backlog, raporlar.
 - Doğrulama: Tailwind CSS build ve Jekyll build geçti; Node **20/20**; Icarus 252 kapı vektörü ve hiyerarşik `.bp` oracle'ları geçti; Playwright E2E **26/26** geçti (tam ekran, mobil fit, arama, imleç-zoom, pan, drag/drop, kayıt/bağlantı, gate yardımı, docs gezinme ve süreler dahil); `git diff --check` temiz.
 - İlk ve ikinci uygulama commitleri `a2955cc` ve `30a031b`. Son workbench masaüstü/mobil ekran incelemesi sürüyor; bu log ekinde yalnız koordinat doğrulama güvenlik düzeltmesi `21/21` Node testinden geçti. Kalan: son görsel QA, bu küçük düzeltme için commit, PR CI ve yeşil kontroller sonrası main merge/Pages yayını.
+
+## 2026-11-23 — Mobil yakınlaştırmada node etiketlerini okunur tutma
+
+- Son mobil görsel inceleme node kartlarının sığdığını, fakat kamera transformunun 9 px başlıkları yaklaşık 5 px'e düşürdüğünü belirtti. Node başlığı, ikon, silme düğmesi, değer ve modül port metinleri artık kamera zoom oranına ters ölçeklenerek ekranda sabit ölçüde çiziliyor; graph geometrisi ve node konumu değişmiyor.
+- Doğrulama: CSS ve Jekyll build; Playwright **26/26**, mobil test tüm başlangıç bloklarının sığdığını ve etiketin ekranda 9 px kaldığını doğruluyor. Dokunma pan ve tıklama davranışı önceki akışla korunuyor. `git diff --check` geçti.
+- Kalan: bağımsız ekran geri kontrolü, bu son görsel düzeltme commit'i, PR CI ve Pages yayın doğrulaması.
