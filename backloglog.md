@@ -380,3 +380,18 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Sayfadaki ön değerlendirme PDF'si `on_degerlendirme_kriterleri_2025_web.pdf`, bölge/final PDF'si `sergi_kriterleri_2025_web.pdf`; erişilebilir formlardaki puan ağırlıkları 2027 sürümü olarak teyit edilmedi. Araştırma notlarına erişim tarihi ve sürüm belirsizliği eklendi.
 - Kaynak: [resmî 2204-A çağrı sayfası](https://tubitak.gov.tr/tr/yarismalar/2204-lise-ogrencileri-arastirma-projeleri-yarismasi) ve sayfadaki kriter PDF bağlantıları.
 - Değişenler: `research/tubitak/2027-2204-a.md`, `research/tubitak/evaluation-alignment-2027.md`, `backlog.md`, bu günlük. Ürün kodu ve katılımcı verisi yok.
+
+## 2026-11-24 — Gece MVP kalite kontrolü
+
+- Bağımsız içerik incelemesi canlı docs dizinini, kurs planını, altı dersi, kullanım rehberini ve blok kataloğunu kontrol etti; sayfa hatası, kırık içindekiler hedefi, kavram veya sıra hatası bulmadı. Denetlenenler: kapı tabloları, çok-bitli AND örneği, yarım toplayıcı, clock/yazmaç/X ve reset eşleşmesi.
+- PR #15–20 arasındaki uygulama, deploy, mobil dışa aktarma, metadata ve TÜBİTAK kaynak doğrulama sonuçları; açık kanıt sınırlarıyla [`raports/overnight-quality-review-2026-11-24.md`](raports/overnight-quality-review-2026-11-24.md) raporunda toplandı.
+- İnsan katılımcı veya kişisel veri kullanılmadı. Teknik testler öğrenme etkisi ölçümü sayılmıyor; CircuitVerse/VPLAS karşılaştırması ve okul izinli araştırma açık durumda.
+- Değişenler: `raports/overnight-quality-review-2026-11-24.md`, bu günlük.
+
+
+## 2026-11-24 — TÜBİTAK ÜYZ rehberi ve başvuru şeffaflığı
+
+- Resmî ÜYZ rehberi proje başvuru sahipleri arasında öğrencileri de tanımlıyor. Kodlama yardımı doğrulama koşuluyla destekleyici kullanım; proje önerisinin hazırlanmasında önemli üretken katkı için beyan, AI ile üretilmiş görseller için belirtme öngörülüyor. Gizli/kişisel verilerin araçlara yüklenmemesi gerektiği ayrıca yazıyor.
+- Bu genel TÜBİTAK desteği rehberinin 2204-A TYBS başvuru formundaki güncel sorusuna ve MVP geliştirme katkılarına nasıl uygulandığı bu taramada kesinleşmedi. Danışmanla başvuru öncesi doğrulama açık iş olarak eklendi. Görsel polish ile gerçek katkıyı saklama birbirinden ayrıldı.
+- Kaynak: [TÜBİTAK Üretken Yapay Zekâ Rehberi sayfası](https://tubitak.gov.tr/tr/kurumsal/hakkimizda/uretken-yapay-zeka-rehberi), [rehber PDF](https://tubitak.gov.tr/sites/default/files/2025-09/UYZ_Rehberi-v02.pdf).
+- Değişenler: `research/tubitak/2027-2204-a.md`, `research/tubitak/evaluation-alignment-2027.md`, `backlog.md`, `raports/overnight-quality-review-2026-11-24.md`, bu günlük.

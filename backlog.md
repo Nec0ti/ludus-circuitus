@@ -37,6 +37,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] Zorlayıcı test/benchmark şartnamesi, veri kümesi ve eşikleri belirle; main için PR + yeşil build zorunlu kuralını açıp GitHub API'den doğrula. Ayrıntı: [`research/quality/benchmark-gates.md`](research/quality/benchmark-gates.md).
 - [x] Verilog üretimi, benzetim ve `.bp` içe/dışa aktarma/kayıt akışını kapılardan geçir: 12 × 40 kapılı sabit tohumlu corpus, 252 Icarus karşılaştırması, 500 birleşmiş blok ve 1 MiB aktarım sınırı, yerel saklama/yeniden yükleme E2E.
 - [x] Yerel kurulum, önizleme, katkı ve yayın akışını son MVP'ye göre tamamla; Node 22, Python 3, Icarus Verilog ve `_site`/E2E sıralaması belgelendi, Playwright kontrolü eklendi.
+- [ ] TÜBİTAK ÜYZ rehberine göre proje geliştirme ve başvuru hazırlığında kullanılan üretken yapay zekâ desteğinin güncel 2204-A TYBS beyan alanını danışmanla doğrula; gerçek katkıyı ve insan denetimini doğru kaydet.
 - [ ] İki öğrencinin 2204-A lise/yaş uygunluğunu ve varsa danışman koşulunu teyit et.
 - [ ] Danışman öğretmeni belirle; Adil Karaağaç MTAL'deki örneklem sınıfı, tarafsız gönüllü çağrısı ve iki çalışma koşulu için okul yönetimiyle plan yap.
 - [ ] Öğrencilerle öğrenme testi yapılacaksa MEB izni, veli onamı ve gönüllü katılım akışını başlat.
