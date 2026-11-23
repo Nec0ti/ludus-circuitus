@@ -29,7 +29,7 @@ reading_time: 6
     <div class="install-code"><code>npx playwright install --with-deps chromium<br>npm run test:e2e</code></div>
     <p>macOS ve Windows'ta işletim sistemi bağımlılık seçeneği olmadan <code>npx playwright install chromium</code> kullanabilirsin.</p>
     <h2 id="yayin">GitHub Pages yayını <span class="docs-section-time">~1 dk</span></h2>
-    <p>Site <a href="https://nec0ti.github.io/ludus-circuitus/">GitHub Pages'te</a> yayımlanır. Çekme isteğinde build, mantık testleri, Icarus oracle'ları ve Playwright E2E kapıları çalışır. Ana dala gelen değişiklikler kapılardan geçerse ve Pages yayını açıksa otomatik dağıtılır.</p>
+    <p>Site <a href="https://nec0ti.github.io/ludus-circuitus/">GitHub Pages'te</a> yayımlanır. <code>main</code> dalı yalnızca çekme isteğiyle güncellenir; birleştirmeden önce Node testleri, Icarus oracle'ları, Jekyll build'i ve Playwright E2E'yi içeren yeşil <code>build</code> kontrolü gerekir. Kontroller geçerse ve Pages yayını açıksa ana dal otomatik dağıtılır.</p>
     <h2 id="katki">Katkı ve doğrulama <span class="docs-section-time">~1 dk</span></h2>
     <p>Önce <code>AGENTS.md</code>, <code>const.md</code> ve ilgili backlog maddelerini oku. Kullanıcıya dönük bütün metinler Türkçe olmalı. Sıralı mantık ve Verilog doğruluğunu etkileyen değişiklikler, tanımlı test/benchmark kapıları geçmeden gönderilmemeli.</p>
     <p>Quiz ve öğrenci veri toplama henüz uygulamada etkin değildir. Katılımcı izni gelene kadar API'ye veri yollama. Kişisel verileri depoya, issue'lara veya örnek çıktı dosyalarına ekleme.</p>

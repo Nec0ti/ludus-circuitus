@@ -2,6 +2,7 @@ import { createState, evaluate, generateVerilog, isValidSignalName, reset, tick,
 
 const validName = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 const key = (node, port) => node + ":" + port;
+const maxExpandedNodes = 500;
 const inputsOf = (node, modules) => node.type === "module"
   ? (modules.get(node.module)?.nodes.filter((item) => item.type === "input").map((item) => item.name) || [])
   : ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] })[node.type] || [];
@@ -115,6 +116,19 @@ function expand(top, modules) {
   };
 }
 
+function expandedNodeCount(bp, modules, includePorts, memo) {
+  const memoKey = bp.name + (includePorts ? ":top" : ":child");
+  if (memo.has(memoKey)) return memo.get(memoKey);
+  let count = bp.nodes.filter((node) => node.type !== "module" && (includePorts || !["input", "output"].includes(node.type))).length;
+  for (const node of bp.nodes) if (node.type === "module") {
+    count += expandedNodeCount(modules.get(node.module), modules, false, memo);
+    if (count > maxExpandedNodes) break;
+  }
+  count = Math.min(count, maxExpandedNodes + 1);
+  memo.set(memoKey, count);
+  return count;
+}
+
 export function validateProject(documents) {
   if (!Array.isArray(documents) || documents.length < 1 || documents.length > 8) throw new Error("Bir projede 1–8 blueprint bulunmalı.");
   const modules = new Map(), filenames = new Set();
@@ -139,7 +153,11 @@ export function validateProject(documents) {
     visited.add(name);
   };
   for (const name of modules.keys()) visit(name);
-  for (const bp of modules.values()) validateBlueprint(expand(bp, modules).bp);
+  const expansionCounts = new Map();
+  for (const bp of modules.values()) {
+    if (expandedNodeCount(bp, modules, true, expansionCounts) > maxExpandedNodes) throw new Error("Birleşmiş blueprint en fazla 500 blok içerebilir.");
+    validateBlueprint(expand(bp, modules).bp);
+  }
   return modules;
 }
 

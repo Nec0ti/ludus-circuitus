@@ -237,3 +237,9 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - **Reset/izleme:** Atölye Reset eylemi saati beklemeden register'ı 0 yapar. Verilog çıktısı 1 olduğunda asenkron çalışan aktif-yüksek `reset` portu üretir. Register ilk başta `X`; input ilk başta 0. Ara Sinyal combinational wire'dır, state saklamaz. Sinyal renkleri mantıksal değerlerin durumunu gösterir; propagation delay/gerçek hız değildir.
 
 - **Onluk/bit eşlemesi:** İlk MVP'de her sinyal tek bit. Arayüzde 0 veya 1 onluk değer olarak görünür; Verilog'da bu doğrudan 1-bit `0` veya `1` değerine karşılık gelir. Arada sayı tabanı dönüşümü veya çok bitli bus yoktur. Başlangıçta değerini bilmediğimiz register `X` olur; girişler başlangıçta 0'dır. Çok bitli değerler pedagojik gereksinim doğduğunda ayrı tasarlanacak.
+
+### 2026-11-23 — Teknik doğrulama korpusu ve merge kapısı
+
+- `research/quality/benchmark-gates.md` benchmark kurallarını kaydeder: 12 sabit tohumlu 40 kapılı devre, Icarus ile 252 dört-durum karşılaştırması, 500 birleşmiş blok sınırı ve modül fanout kaynak testi.
+- Validator artık hiyerarşik modül genişleme boyutunu flatten etmeden sayar; 500 sınırının üzerini hemen reddeder. Eşik, önceden `validateBlueprint` tarafından yalnız genişleme sonrası örtük uygulanıyordu.
+- GitHub `main` için `main-requires-green-build` ruleset ID `27927079` aktif. `main` PR ve güncel `build` CI check'i gerektiriyor; bypass yok, onay sayısı 0. `build` Node testleri, Icarus, Jekyll ve Playwright'ı içerir. Bu, workflow-only kurulumun engelleyemediği doğrudan main push'unu da korur.

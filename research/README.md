@@ -14,6 +14,7 @@ Bu klasör, Ludus Circuitus'un ürün ve TÜBİTAK araştırma kararlarını day
 - [`measurement/quiz-blueprint.md`](measurement/quiz-blueprint.md): mevcut quiz için kazanım belirtkesi, A/B beceri eşlemesi, cevap anahtarı, puanlama ve geçerlik sınırlılıkları.
 - [`privacy/data-collection-plan.md`](privacy/data-collection-plan.md): MEB öğrenci izni, KVKK, ad/soyad toplamama ve veri minimizasyonu planı.
 - [`architecture/github-pages-post.md`](architecture/github-pages-post.md): statik GitHub Pages'ten POST ve yerel/ev API erişim kısıtları.
+- [`quality/benchmark-gates.md`](quality/benchmark-gates.md): Verilog oracle corpus'u, blueprint boyut sınırları ve CI merge kapısı.
 - [`examples/README.md`](examples/README.md): lise/ortaokul başlangıç düzeyine uygun, proje için özgün Verilog örnekleri.
 
 ## Kaynak etiketleri

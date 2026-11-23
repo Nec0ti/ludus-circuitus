@@ -3,7 +3,35 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
-import { generateVerilog, halfAdderBlueprint } from "../assets/js/engine.mjs";
+import { evaluate, generateVerilog, halfAdderBlueprint, X } from "../assets/js/engine.mjs";
+
+function seededCircuits() {
+  let state = 0x6d2b79f5;
+  const random = (limit) => {
+    state = Math.imul(state ^ state >>> 15, 1 | state);
+    state ^= state + Math.imul(state ^ state >>> 7, 61 | state);
+    return ((state ^ state >>> 14) >>> 0) % limit;
+  };
+  return Array.from({ length: 12 }, (_, circuitIndex) => {
+    const name = `random_${circuitIndex}`;
+    const nodes = ["a", "b", "c", "d"].map((input, index) => ({ id: `i${index}`, type: "input", name: input, x: 0, y: index * 80 }));
+    const wires = [];
+    const sources = nodes.map((node) => node.id);
+    for (let index = 0; index < 40; index++) {
+      const type = ["and", "or", "xor", "not"][random(4)];
+      const id = `g${index}`;
+      nodes.push({ id, type, name: "", x: 100 + (index % 8) * 80, y: index * 20 });
+      const first = sources[random(sources.length)];
+      wires.push({ from: { node: first, port: "out" }, to: { node: id, port: type === "not" ? "in" : "a" } });
+      if (type !== "not") wires.push({ from: { node: sources[random(sources.length)], port: "out" }, to: { node: id, port: "b" } });
+      sources.push(id);
+    }
+    const output = { id: "y", type: "output", name: "y", x: 800, y: 0 };
+    nodes.push(output);
+    wires.push({ from: { node: sources[sources.length - 1 - random(8)], port: "out" }, to: { node: output.id, port: "in" } });
+    return { version: 1, name, nodes, wires };
+  });
+}
 
 const dir = await mkdtemp(join(tmpdir(), "ludus-iverilog-"));
 try {
@@ -53,8 +81,22 @@ initial begin
 end
 endmodule
 `;
-  await writeFile(join(dir, "dut.v"), `${dut}\n${generateVerilog(sequence)}`);
-  await writeFile(join(dir, "tb.v"), `${bench}\n${seqBench}`);
+  const circuits = seededCircuits();
+  const vectors = [...Array.from({ length: 16 }, (_, index) => [index >> 3 & 1, index >> 2 & 1, index >> 1 & 1, index & 1]), [X, 0, 0, 0], [X, 1, 0, 1], [0, X, 1, 0], [1, 1, X, 0], [0, 1, 1, X]];
+  const inputs = ["a", "b", "c", "d"];
+  const randomBench = [
+    "module random_tb;",
+    "reg a,b,c,d;",
+    `wire [${circuits.length - 1}:0] y;`,
+    ...circuits.map((bp, index) => `${bp.name} u${index}(.a(a), .b(b), .c(c), .d(d), .y(y[${index}]));`),
+    "initial begin",
+    ...vectors.map((vector, index) => `  {a,b,c,d}={${vector.map((value) => value === X ? "1'bx" : `1'b${value}`).join(",")}}; #1; $display(\"R${index}=%b\", y);`),
+    "  $finish;",
+    "end",
+    "endmodule"
+  ].join("\n");
+  await writeFile(join(dir, "dut.v"), `${dut}\n${generateVerilog(sequence)}\n${circuits.map(generateVerilog).join("\n")}`);
+  await writeFile(join(dir, "tb.v"), `${bench}\n${seqBench}\n${randomBench}`);
   const compile = spawnSync("iverilog", ["-g2012", "-s", "tb", "-o", join(dir, "sim.out"), join(dir, "dut.v"), join(dir, "tb.v")], { encoding: "utf8" });
   assert.equal(compile.status, 0, compile.stderr || "iverilog derlemesi başarısız");
   const run = spawnSync("vvp", [join(dir, "sim.out")], { encoding: "utf8" });
@@ -66,7 +108,14 @@ endmodule
   const seqRun = spawnSync("vvp", [join(dir, "seq.out")], { encoding: "utf8" });
   assert.equal(seqRun.status, 0, seqRun.stderr || "sıralı Verilog çalıştırması başarısız");
   assert.deepEqual([...seqRun.stdout.matchAll(/^S=([01x])$/gmi)].map((match) => match[1].toLowerCase()), ["0", "0", "1", "1", "0"]);
-  console.log("Icarus Verilog: adlandırılmış ara sinyalli yarım toplayıcı 4 binary + 4 X vektöründe; register reset/tik izinde eşleşti.");
+  const randomCompile = spawnSync("iverilog", ["-g2012", "-s", "random_tb", "-o", join(dir, "random.out"), join(dir, "dut.v"), join(dir, "tb.v")], { encoding: "utf8" });
+  assert.equal(randomCompile.status, 0, randomCompile.stderr || "rastgele devreler derlenemedi");
+  const randomRun = spawnSync("vvp", [join(dir, "random.out")], { encoding: "utf8" });
+  assert.equal(randomRun.status, 0, randomRun.stderr || "rastgele devreler çalıştırılamadı");
+  const actualRows = [...randomRun.stdout.matchAll(/^R\d+=(\S+)$/gmi)].map((match) => match[1].toLowerCase());
+  const expectedRows = vectors.map((vector) => circuits.map((bp) => evaluate(bp, Object.fromEntries(inputs.map((name, index) => [name, vector[index]]))).outputs.y).reverse().map((value) => value === X ? "x" : value).join(""));
+  assert.deepEqual(actualRows, expectedRows, "12 seeded 40-gate circuits, 16 binary vectors and 5 X vectors");
+  console.log("Icarus Verilog: yarım toplayıcı/register oracle'ları ve 12 seeded 40-gate devrenin 252 vektörü benzetimle eşleşti.");
 } finally {
   await rm(dir, { recursive: true, force: true });
 }
