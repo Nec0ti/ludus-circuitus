@@ -118,8 +118,14 @@ test("imports a blueprint safely and reports malformed files", async ({ page }) 
   await page.locator("#import-file").setInputFiles({ name: "aktarilan.bp", mimeType: "application/json", buffer: Buffer.from(JSON.stringify(blueprint)) });
   await expect(page.locator("#file-name")).toHaveText("aktarilan.bp");
   await expect(page.locator("#verilog-code")).toContainText("assign cikis = giris;");
+  await page.locator("#import-file").setInputFiles({ name: "aktarilan.bp", mimeType: "application/json", buffer: Buffer.from(JSON.stringify(blueprint).padEnd(1024 * 1024)) });
+  await expect(page.locator("#sim-status")).toHaveText("Blueprint açıldı.");
   await page.locator("#import-file").setInputFiles({ name: "bozuk.bp", mimeType: "application/json", buffer: Buffer.from("{bad json") });
   await expect(page.locator("#sim-status")).toContainText("Dosya açılamadı");
+  await page.locator("#import-file").setInputFiles({ name: "buyuk.bp", mimeType: "application/json", buffer: Buffer.alloc(1024 * 1024 + 1) });
+  await expect(page.locator("#sim-status")).toHaveText("Blueprint dosyası 1 MB sınırını aşıyor.");
+  await expect(page.locator("#file-name")).toHaveText("aktarilan.bp");
+  await expect(page.locator("#verilog-code")).toContainText("assign cikis = giris;");
 });
 
 test("moves a block on the blueprint grid and updates the signal view", async ({ page }) => {

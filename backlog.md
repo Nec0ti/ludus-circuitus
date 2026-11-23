@@ -24,7 +24,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle ve çalışan editör akışına bağla.
 - [x] Onluk kullanıcı değerleri, Verilog bit genişliği ve ikilik gösterim eşlemesini MVP için belirle: yalnızca 1-bit 0/1 gösterilir; onluk değer doğrudan aynı Verilog biti olur, yazmaç başlangıç X’i korunur, çok bit kapsam dışıdır.
 - [x] Değişken paneli kapsamını belirle ve adlandırılmış Ara Sinyal bloğunu ekle. Giriş/çıkış/yazmaç ve ara sinyallerin canlı değerleri görünür; sabit/parametre yönetimi MVP dışında.
-- [ ] Zorlayıcı test/benchmark şartnamesi, veri kümesi, eşikler ve başarısız kontrollerde push engelini tasarla.
+- [~] Zorlayıcı test/benchmark şartnamesi, veri kümesi, eşikler ve başarısız kontrollerde push engelini tasarla. Bu görevde: motor/proje doğrulama sınırlarını ölç, belirlenebilir generated-logic örnekleri için oracle tabanlı benchmark ekle ve CI kapısının PR merge'ini gerçekten koruduğunu doğrula.
 - [ ] Gerçek Verilog üretimini, benzetimi ve `.bp` kaydet/yükle akışını benchmark kapılarından geçir.
 - [x] Yerel kurulum, önizleme, katkı ve yayın akışını son MVP'ye göre tamamla; Node 22, Python 3, Icarus Verilog ve `_site`/E2E sıralaması belgelendi, Playwright kontrolü eklendi.
 - [ ] İki öğrencinin 2204-A lise/yaş uygunluğunu ve varsa danışman koşulunu teyit et.

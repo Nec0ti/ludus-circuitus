@@ -57,6 +57,14 @@ test("local setup guide lists test tools and builds the static site before E2E",
   await expect(article).toContainText("E2E testleri Jekyll'i kendi başına çalıştırmaz");
   await expect(article).toContainText("bundle exec jekyll build");
   await expect(article).toContainText("npx playwright install --with-deps chromium");
+  await expect(article).toContainText("main dalı yalnızca çekme isteğiyle güncellenir");
+  await expect(article).toContainText("yeşil build kontrolü gerekir");
+});
+
+test("module guide documents the expanded block safety limit", async ({ page }) => {
+  await page.goto("/docs/kullanim/");
+  await expect(page.locator(".docs-article")).toContainText("birleşmiş devrede ise en fazla 500 blok");
+  await expect(page.locator(".docs-article")).toContainText("en fazla 1 MB boyutundaki bir dosyayı açar");
 });
 
 test("block catalog documents exact ports and distinguishes named wires from register state", async ({ page }) => {
