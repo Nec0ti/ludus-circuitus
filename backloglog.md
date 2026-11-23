@@ -345,3 +345,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Kontroller: güncel Pages landing, docs, playground ve quiz yolları HTTP **200/200/200/200**; `git diff --check` ve araştırma Markdown bağlantı kontrolü yapılacak. Ürün kodu değişmedi.
 - Katılımcı kullanılmadı; kişisel bilgi, quiz sonucu veya süre toplanmadı.
 - Kalan: aynı devre görevini CircuitVerse'te doğru kablo yerleşimiyle yeniden denemek ve VPLAS için erişilebilir canlı uygulama olup olmadığını araştırmak. İki üründe de öğrenme etkisi veya üstünlük sonucu yok.
+
+## 2026-11-24 — Son üç güncellemenin dağıtım kaydı
+
+- PR #14 (`0dcedc3`, research/privacy/mastery notları) ve PR #15 (`087ee9a`, geçersiz yerel `.bp` kaydını reddetme) `main`e alındı. PR #14 Pages run `45281277570`, PR #15 Pages run `45283762587` build ve deploy adımlarını başarıyla tamamladı.
+- PR #15 yerel/PR CI kapıları: Node 27/27, Icarus Verilog scalar/hiyerarşik/vector oracle'ları (1.920 vector sonuç karşılaştırması), Jekyll ve Playwright 36/36. Dört canlı rota HTTP 200 verdi.
+- Bozuk yerel kaydı doğrulama düzeltmesi kullanıcı verisini otomatik silmez; geçersiz kayıt uyarıyla reddedilip başlangıç devresi korunur.
+- Kalan: PR #16 içindeki rakip araştırması kaydının CI ve gerekiyorsa Pages dağıtımını izlemek.
