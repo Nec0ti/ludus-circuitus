@@ -11,14 +11,14 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 - [ ] Birincil kazanım ve ikincil quiz alt sonuçlarını (paralel yollar; blok↔Verilog; clock/register) danışmanla ve örneklem düzeyiyle uyumlu kesinleştir.
 - [ ] CircuitVerse ve VPLAS'ı aynı başlangıç göreviyle uygulamalı karşılaştır; Ludus'un kanıtlanabilir farkını ürün ve araştırma sorusuna bağla.
-- [ ] Renk/okunabilirlik ve çocuklarda öğrenme motivasyonu için kaynaklı tasarım notu yaz; palet kararı öncesinde aşırı genelleme yapma.
+- [x] Renk/okunabilirlik ve çocuklarda öğrenme motivasyonu için kaynaklı tasarım notu yaz; palet kararı öncesinde aşırı genelleme yapma. (Not ve karşıtlık hesapları hazır; palet henüz uygulanmış/kararlaştırılmış değil.)
 - [ ] Landing'i koyu ama yumuşak, somut devre etkileşimli bir hikâyeye dönüştür; tamamlanan görev ve merak ilerlemesi kullan, baskılı streak/infinite scroll ekleme.
 - [x] Docs'u eğitim portalı olarak yeniden kur: açılır/kapanır ana gruplar, alt başlıklar, içerik içi gezinme ve her sayfa/bölüm için yaklaşık okuma süresi.
 - [x] Modül bileşimi uygulandıktan sonra `.bp` oluşturma/yeniden kullanma kılavuzunu gerçek kullanım adımlarına geçir.
 - [ ] Ana sayfa, docs ve atölye için ayrı iş-kopyası worktree'lerinde görsel alt ajan incelemesi yap; hizalama/taşma/kontrast benchmarklarını CI'a ekle.
 - [x] Araçlık bloklarının yanındaki yardım işaretleri hover/focus özeti gösterir ve hedef docs anchor'ını yeni sekmede açar.
-- [ ] Çocuklara uygun ama manipülatif olmayan motivasyon etkileşimlerini öğrenme kanıtı hipoteziyle eşleştir.
-- [ ] Yerel quiz'in soru belirtkesini, A/B form eşdeğerliğini ve puanlamasını danışmanla gözden geçir; izinli araştırma aracı, katılımcı sayısı ve karşılaştırma koşulunu ayrıca belirle.
+- [x] Çocuklara uygun ama manipülatif olmayan motivasyon etkileşimlerini öğrenme kanıtı hipoteziyle eşleştir. (Özerklik, yetkinlik, sınırlı görev ve sağlıklı durma önerileri araştırma notunda; Ludus etkisi kanıtlanmış değil.)
+- [ ] Quiz belirtke tablosu, eşdeğer ön/son formlar, cevap anahtarı ve puanlamayı hazırla; okul içinde yeterli gönüllü/karşılaştırma koşulunu danışmanla belirle.
 - [ ] En küçük blok kümesini ve blokların giriş/çıkış davranışını tanımla.
 - [x] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle ve çalışan editör akışına bağla.
 - [ ] Onluk kullanıcı değerleri, Verilog bit genişliği ve ikilik fiziksel davranış arasındaki pedagojik eşlemeyi tasarla.

@@ -146,3 +146,11 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Değişenler: `quiz/`, `assets/js/quiz*.mjs`, `assets/css/input.css`, derlenmiş `assets/css/site.css`, `_includes/nav.html`, testler, `playwright.config.mjs`, `package.json`, `README.md`, `notes.md`, `backlog.md`.
 - Doğrulama: `npm ci` audit 0 açık bulgu; `npm test` 9/9; `npm run build:css`; Jekyll build; tam Playwright E2E 10/10. Yeni quiz E2E'leri son kalıcı kayıt doğrulaması eklendikten sonra ayrıca 3/3 geçti; `git diff --check` temiz.
 - Kalan: A/B formları aynı konu dağılımı ve doğru seçenek konumu ile eşleştirildi, ancak madde güçlüğü/ölçüm geçerliği danışmanla değerlendirilmedi; MEB izin dosyası veya katılımcı araştırma ölçümü olarak kullanıma hazır değiller. Ortaokul öğrencileriyle kullanılabilirlik testi yapılmadı.
+
+# 2026-11-23 — Görsel dil ve sağlıklı öğrenme etkileşimi araştırması
+
+- `research/design/visual-engagement.md` oluşturuldu: renk psikolojisi kanıtının sınırları, öneri paleti ve WCAG 2.2 karşıtlık hesapları, gamification/özerklik-yetkinlik kanıtı ve çocuklara uygun manipülatif olmayan etkileşim önerileri.
+- `research/README.md` kaynak dizinine eklendi; `notes.md` öneriyi ve karar durumunu kaydetti; `backlog.md` kaynak araştırması ve etkileşim ilkeleri maddelerini tamamlandı olarak işaretledi.
+- Değişenler: `research/design/visual-engagement.md`, `research/README.md`, `notes.md`, `backlog.md`, `backloglog.md`.
+- Doğrulama: WCAG göreli parlaklık hesabı Node ile bağımsız hesaplandı; metin kontrastları normal metinde 4.5:1'i, kritik kontur/işaret kontrastı 3:1'i geçiyor. Kaynak iddiaları meta-analizler, hakemli derlemeler, UNICEF Innocenti raporu ve W3C WCAG sayfalarıyla sınırlandırıldı. `git diff --check` geçti; yeni araştırma dosyasında satır sonu boşluğu da bulunmadı.
+- Kalan: palet ürün genelinde uygulanmadı ve onaylanmadı; mobil/masaüstü ekranlarda görsel ve erişilebilirlik incelemesi uygulama görevi kapsamında yapılmalı. Tasarım ilkeleri çocuk kullanıcı testi veya öğrenme etkisi kanıtı yerine geçmez.

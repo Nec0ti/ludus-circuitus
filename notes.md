@@ -26,6 +26,13 @@ Detay, alternatifler ve sınırlılıklar: [`research/measurement/learning-study
 - Atölye verileri tarayıcıda yerel kalır. Quiz yalnız açık sayfa belleğinde puanlanan anonim bir öğrenme alıştırmasıdır; cevap/puan/süre kaydetmez ve API isteği yapmaz. Okul/MEB/KVKK onayı beklemeden insan katılımcılı araştırma verisi toplanmayacak.
 - Genel site için yumuşak koyu tema, renk/okunabilirlik ve çocuklarda öğrenme motivasyonu kaynak incelemesi bekliyor; docs eğitim portalı, quiz yerel anonim prototip olarak eklendi.
 
+## Görsel dil ve etkileşim araştırması: 2026-11-23
+
+- Kaynaklı tasarım önerisi [`research/design/visual-engagement.md`](research/design/visual-engagement.md) içinde. Öneri koyu mavi-gri zemin, yumuşak fildişi metin, turkuaz mantık-sinyali vurgusu ve sıcak amber clock/odak vurgusu kullanıyor; hesaplanan örnek eşleşmeler WCAG 2.2 AA eşiklerini karşılıyor.
+- Bu renkler eğitim etkisi kanıtı veya Necati'nin kesin palet kararı değildir; uygulama öncesi karar ve ekran görüntüsü incelemesi gerekir. Renk, sinyal anlamını tek başına taşımamalıdır.
+- Etkileşim önerileri: kullanıcının seçim ve duraklatma/çıkış kontrolü, açıklayıcı ve nazik doğruluk geri bildirimi, sonu görünür kısa görevler; streak kaybı, geri sayım baskısı, değişken ödül, zorunlu bildirim, leaderboard ve sonsuz akış kullanılmaması. Bunlar literatürün Ludus üzerindeki sonuçları değil, eğitim/çocuk iyi oluşu kaynaklarına dayalı tasarım hipotezleridir.
+- Renk ve gamification bulgularını başarı/bağımlılık iddiasına çevirmemek; öğrenci görüşlerini izinli biçimde alıp örneklem sınırını korumak gerekir.
+
 ## Çoklu `.bp` modül birleşimi: 2026-11-23
 
 - Bir açık blueprint'in `name` alanı modül kimliğidir. Bir modül örneği `{ type: "module", module: <hedef blueprint name>, name: <örnek adı> }` biçimindedir.
