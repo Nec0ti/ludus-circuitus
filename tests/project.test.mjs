@@ -127,3 +127,55 @@ test("rejects unresolved, recursive and mismatched module dependencies", () => {
   mismatch.bp.wires = mismatch.bp.wires.filter((wire) => wire.to.port !== "b");
   assert.throws(() => validateProject([mismatch, adder]), /bağlı olmalı/);
 });
+
+test("rejects exponential module expansion before flattening it", () => {
+  const fanout = 498;
+  const docs = [{ id: "leaf", name: "leaf.bp", bp: {
+    version: 1, name: "leaf",
+    nodes: [
+      { id: "x", type: "input", name: "x", x: 0, y: 0 },
+      { id: "n", type: "not", name: "", x: 100, y: 0 },
+      { id: "y", type: "output", name: "y", x: 200, y: 0 }
+    ],
+    wires: [
+      { from: { node: "x", port: "out" }, to: { node: "n", port: "in" } },
+      { from: { node: "n", port: "out" }, to: { node: "y", port: "in" } }
+    ]
+  } }];
+  for (let level = 5; level >= 0; level--) {
+    const child = level === 5 ? "leaf" : `fanout_${level + 1}`;
+    const nodes = [{ id: "x", type: "input", name: "x", x: 0, y: 0 }];
+    const wires = [];
+    for (let index = 0; index < fanout; index++) {
+      const id = `u${index}`;
+      nodes.push({ id, type: "module", module: child, name: id, x: 100, y: index });
+      wires.push({ from: { node: "x", port: "out" }, to: { node: id, port: "x" } });
+    }
+    nodes.push({ id: "y", type: "output", name: "y", x: 200, y: 0 });
+    wires.push({ from: { node: "x", port: "out" }, to: { node: "y", port: "in" } });
+    docs.push({ id: `fanout-${level}`, name: `fanout_${level}.bp`, bp: { version: 1, name: `fanout_${level}`, nodes, wires } });
+  }
+  assert.equal(docs.at(-1).bp.nodes.length, 500);
+  assert.throws(() => validateProject(docs), /Birleşmiş blueprint en fazla 500 blok/);
+});
+
+test("accepts the 500-block expanded boundary and rejects the next block", () => {
+  const makeChain = (gateCount) => {
+    const nodes = ["a", "b", "c", "d"].map((name, index) => ({ id: `i${index}`, type: "input", name, x: 0, y: index }));
+    const wires = [];
+    let source = "i0";
+    for (let index = 0; index < gateCount; index++) {
+      const id = `n${index}`;
+      nodes.push({ id, type: "not", name: "", x: index, y: 0 });
+      wires.push({ from: { node: source, port: "out" }, to: { node: id, port: "in" } });
+      source = id;
+    }
+    nodes.push({ id: "out", type: "output", name: "y", x: gateCount + 1, y: 0 });
+    wires.push({ from: { node: source, port: "out" }, to: { node: "out", port: "in" } });
+    return [{ id: "top", name: "top.bp", bp: { version: 1, name: "top", nodes, wires } }];
+  };
+  assert.equal(makeChain(495)[0].bp.nodes.length, 500);
+  assert.doesNotThrow(() => validateProject(makeChain(495)));
+  assert.equal(makeChain(496)[0].bp.nodes.length, 501);
+  assert.throws(() => validateProject(makeChain(496)), /Blueprint biçimi/);
+});
