@@ -4,6 +4,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
+- [~] 2026-11-24 bütünleştirme: 1–32 bit simülasyon/Verilog, sabit ve seçici blokları; oynatmanın sinyal animasyonuyla sınırlanması; sağ tık arama/sol tık seçim/sağ veya orta tuş pan; grid snap; `.bp` adlandırma ve bağımlı modül işlemleri; sıralı modüler docs ve koyu tema/footer yenilemesi uygulandı. Node 27/27, Icarus scalar/vector + hiyerarşik oracle, CSS/Jekyll build ve Playwright 33/33 geçti. Son mobil araçlık düzenlemesi ile TÜBİTAK ölçüt eşlemesi ayrı worktree'lerde inceleniyor; PR/CI kapısı bekliyor. Ürün kapsamı ve kayıt: `const.md`, `notes.md`.
 - [x] Devre Atölyesi etkileşimlerini endüstriyel çalışma alanına yaklaştır: sonsuz düzlem, imleç merkezli tekerlek yakınlaştırma, yumuşatılmış ortogonal sinyal yolları, araçlıktan sürükle-bırak ve boş tuvalde yazarak blok çağırma. Ana SVG görünürlüğü/port hizası E2E ve bağımsız desktop/mobile QA ile doğrulandı; Node, Icarus, Playwright ve PR CI geçti. PR #11 birleştirildi; Pages dağıtımı `45261362299` başarılı ve doğru `nec0ti.github.io` adresindeki landing/docs/atölye 200 döndürüyor. Ayrıntı: `raports/workbench-redesign-2026-11-23.md`.
 - [x] Başlangıç dijital elektronik eğitim yolunu kurs haritası ve altı kısa derse ayır: sinyaller, kapılar, yarım toplayıcı, paralellik, saat/yazmaç ve Verilog eşlemesi. Kullanıcı geri bildirimiyle tek uzun Başlangıç sayfası küçük modüllere bölündü; Jekyll, E2E ve masaüstü/mobil QA geçti. Ayrıntı: `raports/docs-curriculum-review-2026-11-23.md`.
 
@@ -13,6 +14,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 ## Sıradaki işler
 
 - [ ] Birincil kazanım ve ikincil quiz alt sonuçlarını (paralel yollar; blok↔Verilog; clock/register) danışmanla ve örneklem düzeyiyle uyumlu kesinleştir.
+- [x] 2026–2027 2204-A için erişilebilir resmî kriterleri Ludus'un kanıtları ve eksikleriyle eşle; teknik doğruluk testlerini öğrenme etkisinden ayır, etik/onam ve öğrenci projeye hâkimiyet koşullarını görünür kıl. Ayrıntı: [`research/tubitak/evaluation-alignment-2027.md`](research/tubitak/evaluation-alignment-2027.md); çağrı sayfasındaki ölçüt PDF'lerinin 2025 adlı dosyalara gittiği not edildi.
 - [~] CircuitVerse ve VPLAS'ı aynı başlangıç göreviyle karşılaştır; Ludus'un kanıtlanabilir farkını ürün ve araştırma sorusuna bağla. Resmî kaynak matrisi ve VPLAS görev/arayüz kanıtları yenilendi; CircuitVerse misafir arayüzü incelendi ancak tekrarlanan tarayıcı hataları nedeniyle yarım-toplayıcı görevi tamamlanamadı. Tam uygulamalı kıyas ve benzersizlik sonucu hâlâ açık.
 - [x] Kaynaklı renk/okunabilirlik araştırmasına göre koyu-yumuşak paleti seçip landing'e ve dokümantasyona uygula; atölye temasını ayrı tut. Öğrenme etkisi iddiası değil, okunabilirlik ve durum ayrımı gerekçesiyle seçildi.
 - [x] Landing'i somut devre etkileşimli bir hikâyeye dönüştür; tamamlanan görev ve merak ilerlemesi kullan, baskılı streak/infinite scroll ekleme. Yarım toplayıcı 4 giriş durumunu sayfa belleğinde gösterir; ağ/kalıcı izleme yok.
