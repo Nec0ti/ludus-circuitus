@@ -188,3 +188,31 @@ test("accepts the 500-block expanded boundary and rejects the next block", () =>
   assert.equal(makeChain(496)[0].bp.nodes.length, 501);
   assert.throws(() => validateProject(makeChain(496)), /Blueprint biçimi/);
 });
+
+test("preserves vector widths through nested .bp ports and rejects module width mismatches", () => {
+  const invert4 = { id: "invert4-file", name: "invert4.bp", bp: { version: 1, name: "invert4", nodes: [
+    { id: "x", type: "input", name: "x", width: 4, x: 0, y: 0 },
+    { id: "not", type: "not", width: 4, x: 100, y: 0 },
+    { id: "y", type: "output", name: "y", width: 4, x: 200, y: 0 }
+  ], wires: [
+    { from: { node: "x", port: "out" }, to: { node: "not", port: "in" } },
+    { from: { node: "not", port: "out" }, to: { node: "y", port: "in" } }
+  ] } };
+  const top = { id: "vector-top-file", name: "vector_top.bp", bp: { version: 1, name: "vector_top", nodes: [
+    { id: "source", type: "input", name: "source", width: 4, x: 0, y: 0 },
+    { id: "u", type: "module", module: "invert4", name: "u1", x: 100, y: 0 },
+    { id: "result", type: "output", name: "result", width: 4, x: 200, y: 0 }
+  ], wires: [
+    { from: { node: "source", port: "out" }, to: { node: "u", port: "x" } },
+    { from: { node: "u", port: "y" }, to: { node: "result", port: "in" } }
+  ] } };
+  const docs = [top, invert4];
+  assert.equal(evaluateProject(docs, "vector_top", { source: "10X1" }).outputs.result, "01X0");
+  const verilog = generateProjectVerilog(docs, "vector_top");
+  assert.match(verilog, /input wire \[3:0\] source;/);
+  assert.match(verilog, /output wire \[3:0\] result;/);
+  assert.match(verilog, /assign n_\d+ = ~source;/);
+  const mismatch = structuredClone(docs);
+  mismatch[0].bp.nodes.find((node) => node.id === "source").width = 3;
+  assert.throws(() => validateProject(mismatch), /port genişlikleri eşleşmeli/);
+});

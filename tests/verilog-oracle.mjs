@@ -95,8 +95,40 @@ endmodule
     "end",
     "endmodule"
   ].join("\n");
-  await writeFile(join(dir, "dut.v"), `${dut}\n${generateVerilog(sequence)}\n${circuits.map(generateVerilog).join("\n")}`);
-  await writeFile(join(dir, "tb.v"), `${bench}\n${seqBench}\n${randomBench}`);
+  const vectorCircuit = { version: 1, name: "vector_circuit", nodes: [
+    { id: "sel", type: "input", name: "sel", x: 0, y: 0 },
+    { id: "a", type: "input", name: "a", width: 4, x: 0, y: 80 },
+    { id: "b", type: "input", name: "b", width: 4, x: 0, y: 160 },
+    { id: "constant", type: "constant", value: "10X1", width: 4, x: 100, y: 0 },
+    { id: "gate", type: "and", width: 4, x: 180, y: 120 },
+    { id: "mux", type: "mux", width: 4, x: 280, y: 0 },
+    { id: "and_out", type: "output", name: "and_y", width: 4, x: 400, y: 100 },
+    { id: "mux_out", type: "output", name: "mux_y", width: 4, x: 400, y: 0 }
+  ], wires: [
+    { from: { node: "a", port: "out" }, to: { node: "gate", port: "a" } },
+    { from: { node: "b", port: "out" }, to: { node: "gate", port: "b" } },
+    { from: { node: "gate", port: "out" }, to: { node: "and_out", port: "in" } },
+    { from: { node: "sel", port: "out" }, to: { node: "mux", port: "sel" } },
+    { from: { node: "constant", port: "out" }, to: { node: "mux", port: "a" } },
+    { from: { node: "b", port: "out" }, to: { node: "mux", port: "b" } },
+    { from: { node: "mux", port: "out" }, to: { node: "mux_out", port: "in" } }
+  ] };
+  const vectorBench = `module vector_tb;
+reg sel; reg [3:0] a,b; wire [3:0] and_y,mux_y;
+vector_circuit dut(.sel(sel), .a(a), .b(b), .and_y(and_y), .mux_y(mux_y));
+task check(input reg s, input reg [3:0] ai, input reg [3:0] bi);
+begin sel=s; a=ai; b=bi; #1; $display("V=%b_%b", and_y, mux_y); end
+endtask
+initial begin
+  check(0,4'b0110,4'b1001);
+  check(1,4'b0110,4'b1111);
+  check(1'bx,4'b0110,4'b1111);
+  $finish;
+end
+endmodule
+`;
+  await writeFile(join(dir, "dut.v"), `${dut}\n${generateVerilog(sequence)}\n${circuits.map(generateVerilog).join("\n")}\n${generateVerilog(vectorCircuit)}`);
+  await writeFile(join(dir, "tb.v"), `${bench}\n${seqBench}\n${randomBench}\n${vectorBench}`);
   const compile = spawnSync("iverilog", ["-g2012", "-s", "tb", "-o", join(dir, "sim.out"), join(dir, "dut.v"), join(dir, "tb.v")], { encoding: "utf8" });
   assert.equal(compile.status, 0, compile.stderr || "iverilog derlemesi başarısız");
   const run = spawnSync("vvp", [join(dir, "sim.out")], { encoding: "utf8" });
@@ -115,7 +147,22 @@ endmodule
   const actualRows = [...randomRun.stdout.matchAll(/^R\d+=(\S+)$/gmi)].map((match) => match[1].toLowerCase());
   const expectedRows = vectors.map((vector) => circuits.map((bp) => evaluate(bp, Object.fromEntries(inputs.map((name, index) => [name, vector[index]]))).outputs.y).reverse().map((value) => value === X ? "x" : value).join(""));
   assert.deepEqual(actualRows, expectedRows, "12 seeded 40-gate circuits, 16 binary vectors and 5 X vectors");
-  console.log("Icarus Verilog: yarım toplayıcı/register oracle'ları ve 12 seeded 40-gate AND/NAND/OR/NOR/XOR/XNOR/NOT devresinin 252 vektörü benzetimle eşleşti.");
+  const vectorCompile = spawnSync("iverilog", ["-g2012", "-s", "vector_tb", "-o", join(dir, "vector.out"), join(dir, "dut.v"), join(dir, "tb.v")], { encoding: "utf8" });
+  assert.equal(vectorCompile.status, 0, vectorCompile.stderr || "vektör Verilog derlenemedi");
+  const vectorRun = spawnSync("vvp", [join(dir, "vector.out")], { encoding: "utf8" });
+  assert.equal(vectorRun.status, 0, vectorRun.stderr || "vektör Verilog çalıştırılamadı");
+  const vectorInputs = [
+    { sel: 0, a: "0110", b: "1001" },
+    { sel: 1, a: "0110", b: "1111" },
+    { sel: X, a: "0110", b: "1111" }
+  ];
+  const vectorExpected = vectorInputs.map((input) => {
+    const result = evaluate(vectorCircuit, input).outputs;
+    return `${result.and_y.toLowerCase()}_${result.mux_y.toLowerCase()}`;
+  });
+  const vectorActual = [...vectorRun.stdout.matchAll(/^V=(\S+)$/gmi)].map((match) => match[1].toLowerCase());
+  assert.deepEqual(vectorActual, vectorExpected, "4-bit bitwise gates, constant and X-select mux");
+  console.log("Icarus Verilog: scalar/vektör mantık, constant, mux, register ve 12 seeded 40-gate devrenin oracle'ları eşleşti.");
 } finally {
   await rm(dir, { recursive: true, force: true });
 }
