@@ -4,24 +4,22 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
-- Yok.
+- İlk çalışan uygulama MVP'si: etkileşimli blueprint editörü, gerçek Verilog üretimi, sıralı simülasyon ve yerel blueprint kaydı.
 
 ## Sıradaki işler
 
-- [ ] Basit quiz/test ile ölçülecek tek öğrenme kazanımını ve araştırma sorusunu ekip/danışmanla netleştir.
+- [ ] Birincil kazanım ve ikincil quiz alt sonuçlarını (paralel yollar; blok↔Verilog; clock/register) danışmanla ve örneklem düzeyiyle uyumlu kesinleştir.
 - [ ] CircuitVerse ve VPLAS'ı aynı başlangıç göreviyle uygulamalı karşılaştır; Ludus'un kanıtlanabilir farkını ürün ve araştırma sorusuna bağla.
-- [ ] Birincil öğrenme sonucu, quiz formu/cevap anahtarı ve mümkünse karşılaştırma grubunu danışmanla kesinleştir; başvuru için son yayımlanmış kriter formunu tekrar kontrol et.
+- [ ] Quiz belirtke tablosu, eşdeğer ön/son formlar, cevap anahtarı ve puanlamayı hazırla; okul içinde yeterli gönüllü/karşılaştırma koşulunu danışmanla belirle.
 - [ ] En küçük blok kümesini ve blokların giriş/çıkış davranışını tanımla.
 - [ ] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle.
 - [ ] Onluk kullanıcı değerleri, Verilog bit genişliği ve ikilik fiziksel davranış arasındaki pedagojik eşlemeyi tasarla.
 - [ ] Değişken panelinin kapsadığı değişken türlerini belirle.
 - [ ] Zorlayıcı test/benchmark şartnamesi, veri kümesi, eşikler ve başarısız kontrollerde push engelini tasarla.
-- [ ] Jekyll/GitHub Pages iskeletini ve Türkçe tanıtım/dokümantasyon/Devre Atölyesi sayfalarını hazırla.
-- [ ] Hamartia/Unity referanslarından esinlenen ama Ludus Circuitus'a özgü görsel dil ve dokümantasyon gezinmesini tasarla.
-- [ ] Devre Atölyesi'nin çok panelli masaüstü düzeni ve dar ekran davranışı için prototip oluştur.
 - [ ] Gerçek Verilog üretimini, benzetimi ve `.bp` kaydet/yükle akışını benchmark kapılarından geçir.
-- [ ] Yerel kurulum, önizleme, katkı ve yayın akışını dokümantasyonda açıkla.
+- [ ] Yerel kurulum, önizleme, katkı ve yayın akışını belgeleri son MVP'ye göre tamamla.
 - [ ] İki öğrencinin 2204-A lise/yaş uygunluğunu ve varsa danışman koşulunu teyit et.
+- [ ] Danışman öğretmeni belirle; Adil Karaağaç MTAL'deki örneklem sınıfı, tarafsız gönüllü çağrısı ve iki çalışma koşulu için okul yönetimiyle plan yap.
 - [ ] Öğrencilerle öğrenme testi yapılacaksa MEB izni, veli onamı ve gönüllü katılım akışını başlat.
 - [ ] İnsan katılımcılı quiz için KVKK aydınlatma, gerekiyorsa ayrı açık rıza, öğrenci/veli gönüllü katılım ve veri saklama-imha belgelerini danışmanla tamamla; quiz aracında katılımcı adı/kişisel bilgi isteme.
 - [ ] Veriyi alacak veri sorumlusunu, araştırma örneklemini, sunucu erişimini ve kişisel veri güvenliği tedbirlerini belirlemeden API endpoint'i veya canlı veri toplamayı açma.
@@ -41,3 +39,5 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] 2026–2027 TÜBİTAK 2204-A kurallarını ve etiketli ürün/dil kaynaklarını `research/` altında araştırıp düzenle.
 - [x] DaisyUI ve ek frontend-design becerilerini proje ortamına kur; ön koşulları ve Jekyll entegrasyon notlarını kaydet.
 - [x] TÜBİTAK öğrenme ölçümü, KVKK/MEB katılımcı verisi ve GitHub Pages POST sınırları için kaynaklı araştırma taslağı hazırla; özgün katkı hipotezini daralt.
+- [x] Jekyll/Tailwind iskeletini, Türkçe tanıtım ve dört docs sayfasını, responsive çok panelli playground prototipini ve Pages workflow'unu oluşturup yarım toplayıcı etkileşimini tarayıcıda doğrula.
+- [x] README ve sayfa metinlerini mevcut taslak durumunu doğru gösterecek şekilde güncelle; drag-drop, codegen, sıralı mantık ve kayıt özelliklerinin henüz olmadığını belirt.

@@ -6,6 +6,8 @@
 
 GitHub Pages JavaScript'i quiz bitince `fetch(..., { method: "POST" })` ile başka bir API'ye veri gönderebilir. GitHub Pages'in kendisi API/backend çalıştırmaz; statik HTML/CSS/JS yayımlar. API'nin ayrıca çalışması, internete/belirlenen ağa erişilebilir olması ve GitHub Pages origin'ine uygun CORS yanıtı vermesi gerekir. [GitHub Pages statik yayın açıklaması](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site), [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS).
 
+GitHub Pages derleme/yayın kaynağı GitHub deposu ayarlarından ayrıca etkinleştirilmelidir. Resmî dokümana göre Pages özel depolarda yalnızca desteklenen ücretli planlarda kullanılabilir; Pages sitesi plan uygunsa kaynak depo özel olsa bile internette herkese açık olabilir. Bu depoda PR derlemesi Pages ayarından bağımsız çalışacak; otomatik yayın, depo ayarı ve görünürlük kararı sonrası etkinleştirilecektir. [Pages yayın kaynağı ve görünürlük](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
+
 ## “Yerel sunucum” ne anlama geliyor?
 
 - API adresini `localhost` yaparsak bu her zaman quiz'i açan öğrencinin kendi cihazını gösterir; Necati'nin ev bilgisayarını göstermez.

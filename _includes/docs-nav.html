@@ -1,0 +1,7 @@
+<nav class="docs-nav" aria-label="Dokümantasyon bölümleri">
+  <p class="docs-nav-heading">Öğrenme rehberi</p>
+  <a href="{{ '/docs/baslangic/' | relative_url }}" {% if page.url contains 'baslangic' %}aria-current="page"{% endif %}>Başlangıç</a>
+  <a href="{{ '/docs/kullanim/' | relative_url }}" {% if page.url contains 'kullanim' %}aria-current="page"{% endif %}>Kullanım</a>
+  <a href="{{ '/docs/bloklar/' | relative_url }}" {% if page.url contains 'bloklar' %}aria-current="page"{% endif %}>Bloklar</a>
+  <a href="{{ '/docs/yerel-kurulum/' | relative_url }}" {% if page.url contains 'yerel-kurulum' %}aria-current="page"{% endif %}>Yerel kullanım ve kurulum</a>
+</nav>

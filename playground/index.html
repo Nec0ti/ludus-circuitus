@@ -1,0 +1,112 @@
+---
+layout: default
+title: Devre Atölyesi
+description: Paralel mantık yolları için çalışan tarayıcı içi arayüz taslağı.
+permalink: /playground/
+---
+<section class="site-width playground-page">
+  <div class="workbench-heading">
+    <div>
+      <p class="eyebrow eyebrow-ink">Devre Atölyesi <span class="draft-pill">İlk taslak</span></p>
+      <h1>İki yol, bir giriş çifti.</h1>
+      <p>Yarım toplayıcı örneğinde XOR ve AND yollarının değerlerini değiştir. Animasyon, giriş birleşimlerini sırayla gösterir; bu devrede clock/register henüz yoktur.</p>
+    </div>
+    <p class="local-only"><span class="status-dot" aria-hidden="true"></span> Bu örnek veri göndermiyor</p>
+  </div>
+
+  <section class="workbench" aria-label="Yarım toplayıcı blueprint taslağı">
+    <div class="workbench-toolbar">
+      <div class="toolbar-menus">
+        <span class="workbench-brand"><span class="brand-mark" aria-hidden="true">LC</span> Devre Atölyesi</span>
+        <span class="toolbar-divider" aria-hidden="true"></span>
+        <span class="menu-word">Dosya</span><span class="menu-word">Görünüm</span>
+        <span class="toolbar-file mono">top.bp</span>
+      </div>
+      <div class="simulation-controls" aria-label="Örnek simülasyon kontrolleri">
+        <button id="play-sim" class="btn btn-sm btn-primary" type="button" aria-label="Giriş birleşimlerini oynat">▶ <span>Oynat</span></button>
+        <button id="pause-sim" class="btn btn-sm btn-ghost" type="button" aria-label="Oynatmayı duraklat">Ⅱ <span>Duraklat</span></button>
+        <button id="reset-sim" class="btn btn-sm btn-ghost" type="button" aria-label="Örneği başa al">↺ <span>Başa al</span></button>
+        <label class="speed-control" for="step-speed">Adım hızı
+          <select id="step-speed" class="select select-bordered select-sm"><option value="1500">Yavaş</option><option value="900" selected>Orta</option><option value="450">Hızlı</option></select>
+        </label>
+      </div>
+    </div>
+
+    <div class="playground-frame">
+      <aside class="playground-side block-shelf" aria-label="Blok araçlığı taslağı">
+        <div class="pane-heading"><b>Bloklar</b><span class="mono shelf-count">6</span></div>
+        <p class="shelf-section-title">Giriş ve çıkış</p>
+        <div class="shelf-item"><span class="shelf-icon shelf-input">A</span><span>Giriş</span></div>
+        <div class="shelf-item"><span class="shelf-icon shelf-output">Y</span><span>Çıkış</span></div>
+        <p class="shelf-section-title">Mantık kapıları</p>
+        <div class="shelf-item"><span class="shelf-icon shelf-gate">&amp;</span><span>AND</span></div>
+        <div class="shelf-item"><span class="shelf-icon shelf-gate">≥1</span><span>OR</span></div>
+        <div class="shelf-item"><span class="shelf-icon shelf-gate">=1</span><span>XOR</span></div>
+        <div class="shelf-item"><span class="shelf-icon shelf-gate">¬</span><span>NOT</span></div>
+        <div class="shelf-note">Blok ekleme bu taslakta kapalı.</div>
+      </aside>
+
+      <div class="blueprint-column">
+        <div class="canvas-toolbar">
+          <div><span class="mono canvas-file">top.bp</span><span class="canvas-caption">Blueprint görünümü</span></div>
+          <span class="canvas-mode">Kombinasyonel örnek</span>
+        </div>
+        <div class="playground-canvas blueprint-canvas">
+          <div class="canvas-inputs" aria-label="Devre girişleri"><span>Giriş A</span><span>Giriş B</span></div>
+          <div class="blueprint-diagram">
+            <svg class="blueprint-wires" viewBox="0 0 640 390" preserveAspectRatio="none" aria-hidden="true">
+              <path class="logic-wire" data-wire="a-xor" d="M55 95H154V122H247"/>
+              <path class="logic-wire" data-wire="b-xor" d="M55 295H176V174H247"/>
+              <path class="logic-wire" data-wire="a-and" d="M55 95H134V249H247"/>
+              <path class="logic-wire" data-wire="b-and" d="M55 295H154V301H247"/>
+              <path class="logic-wire" data-wire="xor-sum" d="M361 148H526"/>
+              <path class="logic-wire" data-wire="and-carry" d="M361 275H526"/>
+            </svg>
+            <div class="blueprint-input input-a"><span class="port-dot"></span><span>A</span><span id="bp-a" class="value-chip">0</span></div>
+            <div class="blueprint-input input-b"><span class="port-dot"></span><span>B</span><span id="bp-b" class="value-chip">0</span></div>
+            <div class="logic-block block-xor"><span class="port-dot"></span>XOR<span class="port-dot"></span></div>
+            <div class="logic-block block-and"><span class="port-dot"></span>AND<span class="port-dot"></span></div>
+            <div class="blueprint-output output-sum"><span id="bp-sum" class="value-chip">0</span><span>Toplam</span></div>
+            <div class="blueprint-output output-carry"><span id="bp-carry" class="value-chip">0</span><span>Taşıma</span></div>
+          </div>
+          <p class="canvas-help">İki yol da A ve B girişlerini alır. Değer değişimini sağdaki devre ve alttaki değişkenlerden izle.</p>
+        </div>
+        <section class="variables-panel" aria-label="Değişken değerleri">
+          <div class="pane-heading"><b>Değişkenler</b><span>Canlı değerler</span></div>
+          <div class="variable-row">
+            <button class="variable-toggle" id="toggle-a" type="button" aria-pressed="false"><span class="variable-name">A</span><span id="var-a" class="value-chip">0</span><small>Giriş</small></button>
+            <button class="variable-toggle" id="toggle-b" type="button" aria-pressed="false"><span class="variable-name">B</span><span id="var-b" class="value-chip">0</span><small>Giriş</small></button>
+            <div class="variable-value"><span class="variable-name">Toplam</span><span id="var-sum" class="value-chip">0</span><small>A XOR B</small></div>
+            <div class="variable-value"><span class="variable-name">Taşıma</span><span id="var-carry" class="value-chip">0</span><small>A AND B</small></div>
+          </div>
+          <p id="sim-status" class="sim-status" aria-live="polite">Elle giriş ver: A veya B anahtarını seç.</p>
+        </section>
+      </div>
+
+      <aside class="playground-right inspector-column" aria-label="Devre ve Verilog görünümü">
+        <section class="inspector-panel circuit-panel">
+          <div class="pane-heading"><b>Devre görünümü</b><span class="live-tag"><i></i> Canlı</span></div>
+          <p class="inspector-explainer">İki mantık kapısı aynı girişleri değerlendirir.</p>
+          <svg class="inspector-circuit" viewBox="0 0 360 220" role="img" aria-labelledby="inspector-title inspector-desc">
+            <title id="inspector-title">Yarım toplayıcının iki paralel mantık yolu</title>
+            <desc id="inspector-desc">A ve B sinyalleri XOR ve AND kapılarına paralel bağlanır. XOR toplamı, AND taşımayı verir.</desc>
+            <g class="mini-wires">
+              <path data-wire="a-xor" d="M28 55H92V75H132"/><path data-wire="b-xor" d="M28 165H104V100H132"/>
+              <path data-wire="a-and" d="M28 55H84V139H132"/><path data-wire="b-and" d="M28 165H94V162H132"/>
+              <path data-wire="xor-sum" d="M218 88H324"/><path data-wire="and-carry" d="M218 151H324"/>
+            </g>
+            <g class="mini-gates"><rect x="132" y="52" width="86" height="68" rx="13"/><rect x="132" y="126" width="86" height="50" rx="13"/></g>
+            <g class="mini-labels"><text x="22" y="43">A <tspan id="mini-a">0</tspan></text><text x="22" y="190">B <tspan id="mini-b">0</tspan></text><text x="156" y="93">XOR</text><text x="161" y="157">AND</text><text x="273" y="78">Toplam</text><text x="279" y="140">Taşıma</text><text id="mini-sum" x="326" y="101">0</text><text id="mini-carry" x="326" y="164">0</text></g>
+          </svg>
+        </section>
+        <section class="inspector-panel code-panel">
+          <div class="pane-heading"><b>Verilog kodu</b><span class="mono code-ext">top.v</span></div>
+          <pre class="code-window"><code><span class="code-muted">module</span> yari_toplayici (<br>  <span class="code-muted">input wire</span> a, b,<br>  <span class="code-muted">output wire</span> toplam, tasima<br>);<br>  <span class="code-keyword">assign</span> toplam = a ^ b;<br>  <span class="code-keyword">assign</span> tasima = a &amp; b;<br><span class="code-muted">endmodule</span></code></pre>
+          <p class="code-caption">Her <code>assign</code> bir mantık ilişkisini sürekli tanımlar.</p>
+        </section>
+      </aside>
+    </div>
+  </section>
+  <p class="prototype-note">Bu arayüz erken geliştirme taslağıdır. Sürükle-bırak, blueprint kaydetme ve sıralı mantık simülasyonu henüz uygulanmadı.</p>
+</section>
+<script src="{{ '/assets/js/playground.js' | relative_url }}" defer></script>

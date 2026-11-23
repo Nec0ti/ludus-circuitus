@@ -8,21 +8,39 @@
 
 Dolayısıyla yalnızca bir web uygulaması yapmak veya yalnızca son quiz puanı toplamak “Verilog eğitimine katkı” bulgusunu göstermeye yetmez. Etkiyi hangi öğrenme kazanımıyla sınadığımız, karşılaştırma düzeni ve puanlama önceden tanımlanmalıdır.
 
-## Ludus için dar fark hipotezi
+## Ludus için dar fark hipotezi ve örneklem sınırı
 
-**Aday araştırma sorusu:** “Blokları, gerçek Verilog'u ve adım adım mantıksal sinyal izini eşzamanlı gösteren kısa Ludus etkinliği, başlangıç düzeyindeki öğrencilerin basit Verilog devrelerinde bağımsız paralel yolların ve bunların çıktılarının davranışını tahmin etme başarısını eşdeğer bir başlangıç anlatımına kıyasla artırır mı?”
+**Aday araştırma sorusu:** “Blokları, gerçek Verilog'u ve adım adım mantıksal sinyal izini eşzamanlı gösteren kısa Ludus etkinliği, başlangıç düzeyindeki lise öğrencilerinin basit Verilog devrelerinde bağımsız paralel yolların ve bunların çıktılarının davranışını tahmin etme başarısını eşdeğer bir başlangıç anlatımına kıyasla artırır mı?”
 
 Bu, **hipotezdir; henüz doğrulanmış özgünlük değildir.** CircuitVerse zaten devre oluşturma/simülasyon, sıralı elemanlar, alt devre, zaman diyagramı, yerel kayıt ve deneysel Verilog dışa aktarımı belgeliyor. VPLAS web tabanlı Verilog öğretimi sunuyor. Bu yüzden yalnız “blok editörü + simülasyon + Verilog” yenilik iddiası olamaz. Aday fark, **başlangıç öğrencisine aynı anda görünen blok↔Verilog eşlemesi ve bağımsız mantıksal yolların doğru paralel/zamanlı anlatımıdır**. CircuitVerse ve VPLAS özelliklerini aynı görevlerle uygulamalı kıyaslamadan ürünlerin yapamadığı bir iş iddia edilmemeli. Ayrıntı: [`related-tools.md`](../references/related-tools.md).
 
+## Birincil ve ikincil kazanımlar
+
+Birden fazla kazanım ölçmek daha geniş bir resim verebilir; fakat bütün sonuçları eşit derecede birincil ilan etmek küçük örneklemde çok sayıda karşılaştırma ve seçici sonuç sunma riski doğurur. Öneri: **bir birincil sonuç, iki önceden belirtilmiş ikincil sonuç** kullan; örneklem azsa ikincil sonuçları keşfedici olarak raporla.
+
+| Öncelik | Kazanım taslağı | Örnek quiz maddesi |
+|---|---|---|
+| **Birincil** | Basit devrede bağımsız kombinasyonel yolların paralel çalışmasını ve birleşik çıkış değerini tahmin etme | İki ayrı AND/OR kolu aynı girişlerden besleniyor; belirli girişte iki kol ve birleşik çıkış kaç olur, yolların hangisi beklemez? |
+| **İkincil A** | Görsel blok/bağlantı ile gerçek Verilog'daki `assign` veya modül bağlantısını eşleme/okuma | Bir blokta görülen ilişkiyi iki kısa Verilog ifadesinden seçme veya bir Verilog satırının çıkışını açıklama |
+| **İkincil B** | Sıralı devrede register değerinin clock'un yükselen kenarında değiştiğini anlama | Clock kenarı gelmeden önce/sonra register'da hangi değer tutulur? |
+
+100 üzerinden puan toplamı kullanılabilir; cevap anahtarı ve her boyutun puanı baştan sabitlenmeli. Birincil sonuç tek başına raporlanmalı; toplam ve alt boyutlar onu tamamlayıcı biçimde gösterilmeli. Birincil kazanımın içeriği sabitlenmeden soru yazımına geçilmemeli.
+
+### Lise örnekleminin ortaokul hedefine sınırı
+
+Necati'nin ek kararı: **Konya'daki Adil Karaağaç MTAL hem ekip hem planlanan katılımcı okulu; örneklem bu okulun öğrencileri olacak.** Böyle bir örneklem erişilebilirliği artırır, fakat sonuç lise öğrencilerinden elde edilir. Uygulama ortaokul için sade tasarlansa bile bu çalışma **ortaokul öğrencilerinde etkiyi kanıtlamaz**; rapor yalnız katılan lise öğrencileri/başlangıç düzeyi alt grubu için sonuç çıkarabilir ve ortaokul genellemesini sınırlılık olarak söylemelidir. Ortaokul etkisi ayrıca izin alınmış, ortaokul örneklemli bir çalışmayla test edilir.
+
+Verilog/dijital mantığa daha önce maruz kalmamış öğrencileri hedefleyin. Tek sınıf düzeyinde katılımcı bulmak mümkünse yaş ve sınıf alt grup analizi için gerekmeyebilir; ön-test başlangıç bilgisi için daha doğrudan ölçüdür. Birden çok sınıf seçilecekse sınıf bandı araştırma sorusu veya analiz için gerekçelendirilip MEB'e sunulan araçta onaylatılmalı. Tam yaş, aynı okulun küçük gönüllü grubunda bilimsel değeri düşük ve yeniden tanımlama riskini artırabilir; şu an toplamama önerisi geçerlidir.
+
 ## Önerilen ölçüm, danışmanla netleştirilecek
 
-1. **Tek birincil kazanım seç:** Küçük bir Verilog örneğindeki bağımsız iki mantık yolunun birlikte değerlendirildiğini ve bu yollardan çıkan değerleri doğru tahmin etme. Register/clock bilgisi MVP'de öğretilebilir; bu ilk çalışmada ikinci birincil sonuç yapılmayabilir.
-2. **Ön-test ve son-test:** Aynı kazanımı ölçen, eşdeğer zorlukta fakat aynı soruları ezberletmeyen iki form hazırla. Soruları en başta bir belirtke tablosuna bağla (çıktı tahmini, bağımsız/paralel yol, Verilog ifadesini anlamlandırma); 100 puanlık ölçeği önceden sabitle.
-3. **Karşılaştırma koşulu:** Mümkünse benzer başlangıç seviyesindeki katılımcıları iki koşula ayır: Ludus etkinliği ve aynı kavram/süreyi işleyen eşdeğer bir metin/şema anlatımı veya yakın araç. Her iki gruba aynı yönerge, süre, öğretim içeriği ve eşdeğer test ver. Grup belirleme/örneklem sayısı yöntemi danışmanla gerekçelendir.
-4. **Daha az kaynaklı alternatif:** Tek grup ön-test→Ludus→son-test yapılabilir; ancak artış, tekrar etkisi/önbilgi/öğretmen etkisi gibi sebeplerden ayrılamayacağından “Ludus artırdı/kanıtladı” yerine yalnız “bu küçük pilotta puanlar değişti” denebilir.
-5. **Süre ikincil ölçüt:** Playground'da aktif geçirilen süre, öğrenme puanının yerine geçmez. Süreyi yalnız kullanışlılık/etkinlik süresi gibi ikincil bir ölçüt olarak al; sayfada açıkça bildir, mümkünse etkinlik sırasında otomatik ve sınırlı ölç. Serbest gezinme süresini öğrenmeyle eş tutma.
-6. **Tekrarlanabilirlik:** Quiz sürümü, cevap anahtarı, puanlama, etkinlik yönergesi, süre, örnek devreler, dışlama/eksik yanıt kuralı, veri temizleme ve analiz adımlarını kişisel verisiz yöntem ekinde sakla. Testi MEB başvurusunda sunulacak son hâliyle uygula.
-7. **Zaman/izin kısıtı:** Danışman hemen seçilmeli; TTKB kılavuzu zorunlu eğitime devam eden öğrencilerin başvurusunu danışmanın yaptığını söylüyor. İzin çıkmadan öğrenci üzerinde pilot/ön test bile yapma. İzin takvimi yetişmezse başvurunun niteliğini danışmanla tekrar değerlendir; izinsiz öğrenci verisi toplayarak takvimi kurtarmaya çalışma.
+1. **Ön-test/son-test:** Lise başlangıç grubunda aynı kazanımı ölçen, eşdeğer zorlukta fakat aynı soruları ezberletmeyen iki form hazırla. Belirtke tablosu, cevap anahtarı, her boyutun puanı ve 100'lük ölçek önceden sabitlensin.
+2. **Tercih edilen okul içi kıyas:** Gönüllü katılımcı bulunduktan ve MEB izni çıktıktan sonra, aynı sınıf düzeyi/benzer ön-test düzeyindeki öğrencileri iki koşula rastgele ata: (A) Ludus; (B) aynı kavramı aynı sürede anlatan kısa metin/şema çalışma kâğıdı. Ludus'un adım adım blok↔Verilog↔sinyal izini, karşılaştırma koşulunda göstermeyerek araştırılan katkıyı ayır. İki koşulda yönerge, süre ve quiz zorluğu aynı olsun. İzin sonrasında kontrol grubuna da aracı deneme fırsatı verilebilir.
+3. **Örneklem azsa:** İki koşul küçük ve dengesiz kalacaksa bunu danışmanla önceden belirleyin. Tek grup ön-test→Ludus→son-test daha yapılabilir bir pilot olur; artış, tekrar etkisi/önbilgi/öğretmen etkisinden ayrıştırılamayacağından “Ludus artırdı/kanıtladı” denmemeli.
+4. **Gönüllü bulma:** Önce danışman ve okul yönetimi örneklem sınıflarını ve MEB başvurusunu netleştirsin. MEB izninden sonra, okulun izin verdiği sınıflara araştırmanın amacını/seans süresini tarafsızca duyurup gönüllüleri davet edin; ders notu/öğretmen ilişkisi/katılım baskısı olmamalı. 18 yaş altı için veli onamı ve öğrencinin kendi gönüllü katılımı gerekir. Gönüllü örneklemin kendini seçme yanlılığını raporlayın.
+5. **Süre ikincil ölçüt:** Playground'da etkinlik sırasında geçirilen süre kullanılabilirlik/etkinlik süresi için ikincil ölçüttür, öğrenme puanının yerine geçmez. Sayfada ölçüm açıkça belirtilmeli; serbest gezinme/ayrıntılı tıklama geçmişi kaydetme.
+6. **Tekrarlanabilirlik ve izin:** Quiz sürümü, cevap anahtarı, yönerge, iki grup materyali, süre, örnek devreler, dışlama/eksik yanıt kuralı, veri temizleme ve analiz adımlarını kişisel verisiz yöntem ekinde sakla. MEB başvurusuna tüm koşul materyallerini ve veri araçlarını ekle; onaylanmayan araç/prosedürle uygulama yapma.
+7. **Takvim:** Danışman ve okul planı önümüzdeki hafta netleşecekse izin dosyası ve quiz/protokol aynı anda hazırlanmalı. Tek il için açıklanan süre en fazla 15 gündür, ancak revizyon ve okul uygulama planına zaman gerekir. İzin çıkmadan davet/quiz/ön-test verisi toplama.
 
 Bu öneri araştırma planlaması içindir; yeterli örneklem, ölçüm geçerliği veya istatistiksel çıkarım garantisi vermez. Uygunluk/veri toplama protokolünü danışman ve okul yönetimi onaylamalıdır.
 
@@ -34,10 +52,10 @@ Kılavuzun önemli uygulama kuralı: katılımcı/veli adı imzalı bilgilendirm
 
 ## Açık ölçüm kararları
 
-- Örneklem hangi okul ve sınıf/yaş aralığı olacak? Kullanıcının kendi okulu Konya/Adil Karaağaç MTAL olarak belirtilmiş olsa da katılımcı okulu henüz kararlaştırılmadı.
-- Araştırma “araç uygulaması/deneysel etkinlik” olarak mı yürütülecek, yoksa yalnız anket/ölçek mi? Bu, Konya İl MEM başvurusunda uygulama okulunun belirtilmesi seçeneğini etkileyebilir. TTKB SSS, araç/deney uygulamasında okulun özel bilgiler bölümünde belirtilmesine imkân tanırken anket/ölçek/görüşme uygulamalarında okul adı yazılmamasını söylüyor.
+- Örneklem okulu Adil Karaağaç MTAL olarak netleşti. Hangi sınıf düzeyi ve yaklaşık kaç gönüllü uygun olur; iki koşula ayıracak kadar katılımcı bulunur mu?
+- Araştırma “araç uygulaması/deneysel etkinlik” olarak planlanacak. Bu, Konya İl MEM başvurusunda uygulama okulunun belirtilmesi seçeneğini etkileyebilir. TTKB SSS, araç/deney uygulamasında okulun özel bilgiler bölümünde belirtilmesine imkân tanırken anket/ölçek/görüşme uygulamalarında okul adı yazılmamasını söylüyor. Nihai sınıflandırmayı danışman/Konya İl MEM teyit etmeli.
 - Ludus'u neyle karşılaştıracağız; aynı başlangıç görevi tüm koşullarda adil ve uygulanabilir olacak mı?
-- Aynı öğrenciye ön/son testi bağlamak için çalışma kodu gerçekten gerekiyor mu? Kod kullanılırsa silme/çekilme talebini kodla nasıl karşılayacağız?
+- Ön-son eşleştirme için rastgele çalışma kodu kullanmak gerekli mi ve kod/çekilme akışı nasıl işleyecek?
 - Örneklem sayısı, test maddeleri, süre ve ana analiz danışmanla nasıl gerekçelendirilecek?
 
 ### Kaynaklar

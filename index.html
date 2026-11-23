@@ -1,0 +1,124 @@
+---
+layout: default
+title: Tanıtım
+description: Görsel bloklar, mantıksal sinyaller ve gerçek Verilog arasındaki bağı keşfet.
+permalink: /
+---
+
+<section class="site-width hero-grid">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="eyebrow-dot"></span> Dijital mantığa görsel bir başlangıç</p>
+    <h1>Devreyi kur. Sinyali takip et. Verilog’u gör.</h1>
+    <p class="hero-lede">Donanım, kodu satır satır çalıştırmaz. Bağımsız mantık yolları aynı anda iş görür; register’lar durumlarını saat kenarında günceller. Ludus Circuitus bu davranışları bloklarla görünür kılmayı amaçlıyor.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-lg" href="{{ '/playground/' | relative_url }}">Atölye taslağını keşfet</a>
+      <a class="text-link" href="{{ '/docs/baslangic/' | relative_url }}">Nasıl çalıştığını öğren <span aria-hidden="true">↗</span></a>
+    </div>
+    <p class="hero-note"><span class="status-dot" aria-hidden="true"></span> Tarayıcıda çalışır · FPGA kartı gerekmez</p>
+  </div>
+
+  <figure class="signal-board" aria-labelledby="trace-title">
+    <div class="signal-board-top">
+      <div>
+        <p class="board-label">İki bağımsız mantık yolu</p>
+        <h2 id="trace-title">Aynı giriş, iki işlem</h2>
+      </div>
+      <span class="file-pill">top.v</span>
+    </div>
+    <svg class="hero-circuit" viewBox="0 0 640 350" role="img" aria-labelledby="circuit-title circuit-desc">
+      <title id="circuit-title">A ve B girişlerinden ayrılan iki paralel mantık yolu</title>
+      <desc id="circuit-desc">A=0 ve B=1 sinyalleri eş zamanlı olarak AND ve XOR kapılarına gider. AND sonucu 0, XOR sonucu 1 olur.</desc>
+      <g class="svg-labels">
+        <text x="30" y="96">A</text><text x="30" y="291">B</text>
+        <text x="380" y="99">taşıma</text><text x="380" y="259">toplam</text>
+      </g>
+      <g class="svg-input-values"><text x="51" y="96">0</text><text x="51" y="291">1</text></g>
+      <g class="wires">
+        <path d="M72 90H150V94H220"/>
+        <path d="M150 94V252H220"/>
+        <path d="M72 285H180V125H220"/>
+        <path d="M180 285H220"/>
+        <path d="M308 105H510"/>
+        <path d="M308 265H510"/>
+      </g>
+      <g class="input-nodes"><circle cx="72" cy="90" r="8"/><circle cx="72" cy="285" r="8"/></g>
+      <g class="gate-boxes">
+        <rect x="220" y="68" width="88" height="80" rx="16"/>
+        <rect x="220" y="222" width="88" height="80" rx="16"/>
+      </g>
+      <g class="gate-labels"><text x="264" y="114">AND</text><text x="264" y="268">XOR</text></g>
+      <g class="output-nodes"><circle cx="510" cy="105" r="8"/><circle cx="510" cy="265" r="8"/></g>
+      <g class="state-tags"><rect x="546" y="90" width="38" height="30" rx="8"/><text x="559" y="111">0</text><rect x="546" y="250" width="38" height="30" rx="8"/><text x="559" y="271">1</text></g>
+    </svg>
+    <figcaption class="board-caption"><span>AND ve XOR yolları</span><span class="mono">eş zamanlı</span></figcaption>
+    <div class="code-peek" aria-label="Örnek Verilog kodu">
+      <span class="code-line"><i>01</i><code>assign tasima = A &amp; B;</code></span>
+      <span class="code-line"><i>02</i><code>assign toplam = A ^ B;</code></span>
+    </div>
+  </figure>
+</section>
+
+<section class="learning-band">
+  <div class="site-width learning-inner">
+    <p class="band-kicker">Verilog öğrenmek neden zor gelebilir?</p>
+    <p class="learning-copy">Kodda gördüğün ifade ile kartın içinde kurulan devre aynı şeyin iki görünümüdür. Başlangıçta bu bağı ve paralel çalışan yolları zihinde canlandırmak güç olabilir.</p>
+    <p class="learning-copy learning-copy-accent">Ludus, blokları, devreyi ve HDL karşılığını bir arada göstererek aradaki bağı kurmana yardım etmeyi hedefler.</p>
+  </div>
+</section>
+
+<section class="site-width section-pad">
+  <div class="section-heading">
+    <p class="eyebrow eyebrow-ink">Tek tasarım, birden çok görünüm</p>
+    <h2>Bloktan devreye, devreden Verilog’a.</h2>
+    <p>Bir modülü kurarken mantık yollarını ve üretilen kodu yan yana incele. Bir değeri değiştir; sinyalin hangi çıkışlara ulaştığını gör.</p>
+  </div>
+  <div class="feature-grid">
+    <article class="card feature-card">
+      <div class="card-body">
+        <span class="feature-glyph glyph-violet" aria-hidden="true">⊞</span>
+        <h3 class="card-title">Bloklarla kur</h3>
+        <p>Girişleri, mantık işlemlerini ve çıkışları görsel olarak bağla. Küçük bir blok kümesiyle başlayıp devreni modüllere ayır.</p>
+        <a class="feature-link" href="{{ '/docs/bloklar/' | relative_url }}">Bloklara göz at <span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+    <article class="card feature-card">
+      <div class="card-body">
+        <span class="feature-glyph glyph-teal" aria-hidden="true">⌁</span>
+        <h3 class="card-title">Sinyali izle</h3>
+        <p>Fiziksel akımı değil, 0 ve 1 değerlerinin mantık yollarındaki ilişkisini gör. Saat geldiğinde register’ın nasıl durum tuttuğunu keşfet.</p>
+        <a class="feature-link" href="{{ '/playground/' | relative_url }}">Atölyeyi aç <span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+    <article class="card feature-card">
+      <div class="card-body">
+        <span class="feature-glyph glyph-amber" aria-hidden="true">{ }</span>
+        <h3 class="card-title">Gerçek HDL’yi oku</h3>
+        <p>Bloklarla kurduğun devrenin Verilog karşılığını incele. Her ifadenin hangi girişe ve çıkışa bağlandığını anlamaya çalış.</p>
+        <a class="feature-link" href="{{ '/docs/kullanim/' | relative_url }}">Kullanımı öğren <span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="study-band">
+  <div class="site-width study-inner">
+    <div>
+      <p class="band-kicker">Öğrenme etkisi araştırılacak</p>
+      <h2>Bir iddia değil, sınanacak bir soru.</h2>
+    </div>
+    <p>Bu araç başlangıç düzeyindeki öğrenenlere göre tasarlanıyor. Bloklarla kurma ve canlı sinyal görünümünün Verilog öğrenmeye katkısı quiz ve karşılaştırmalı etkinlikle ölçülecek; sonuç alınmadan öğrenme artışı kanıtlanmış gibi sunulmayacak.</p>
+  </div>
+</section>
+
+<p class="site-width open-source-note">Ludus Circuitus, açık kaynaklı bir eğitim aracı olarak yayımlanmayı ve katkıyla gelişmeyi hedefliyor.</p>
+
+<section class="site-width closing-callout">
+  <div class="closing-mark" aria-hidden="true">
+    <svg viewBox="0 0 92 70" fill="none"><path d="M4 18h24l14 17h44M4 53h24l14-18" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="18" r="4" fill="#20A69A"/><circle cx="4" cy="53" r="4" fill="#E8A144"/><circle cx="86" cy="35" r="4" fill="#20A69A"/></svg>
+  </div>
+  <div>
+    <h2>Bir mantık devresini birlikte inceleyelim.</h2>
+    <p>Devre Atölyesi henüz geliştirme aşamasında. İlk taslağı açıp arayüzün nasıl çalışacağını keşfet.</p>
+  </div>
+  <a class="btn btn-primary" href="{{ '/playground/' | relative_url }}">Taslağı keşfet</a>
+</section>

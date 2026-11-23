@@ -1,0 +1,24 @@
+title: Ludus Circuitus
+description: Görsel bloklarla dijital mantık ve Verilog öğrenme alanı.
+url: https://nec0ti.github.io
+baseurl: /ludus-circuitus
+markdown: kramdown
+permalink: pretty
+plugins:
+  - jekyll-seo-tag
+exclude:
+  - .codex
+  - .github
+  - node_modules
+  - research
+  - raports
+  - AGENTS.md
+  - backlog.md
+  - backloglog.md
+  - const.md
+  - notes.md
+  - package.json
+  - package-lock.json
+  - Gemfile
+  - README.md
+  - assets/css/input.css
