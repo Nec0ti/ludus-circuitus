@@ -293,7 +293,7 @@ test("shows concise help beside every block and opens its docs in a new tab", as
 test("canvas wheel zoom keeps the pointer fixed and right-click search adds a snapped block", async ({ page }) => {
   await page.goto("/playground/");
   const canvas = page.locator("#blueprint-canvas"), box = await canvas.boundingBox();
-  const px = box.x + box.width * 0.82, py = box.y + box.height * 0.24;
+  const px = box.x + 20, py = box.y + 20;
   const worldAtPointer = () => page.evaluate(({ px, py }) => {
     const matrix = new DOMMatrixReadOnly(getComputedStyle(document.querySelector("#camera-world")).transform);
     const rect = document.querySelector("#blueprint-canvas").getBoundingClientRect();
@@ -314,10 +314,14 @@ test("canvas wheel zoom keeps the pointer fixed and right-click search adds a sn
   await search.press("Enter");
   await expect(page.locator(".node-nand")).toHaveCount(1);
   const position = await page.locator(".node-nand").evaluate((node) => ({ x: parseFloat(node.style.left), y: parseFloat(node.style.top) }));
-  expect(position.x % 20).toBe(0);
-  expect(position.y % 20).toBe(0);
+  expect(Math.abs(position.x % 20)).toBe(0);
+  expect(Math.abs(position.y % 20)).toBe(0);
   await page.mouse.click(px, py, { button: "right" });
   await expect(search).toBeVisible();
+  await search.press("Escape");
+  await expect(search).toBeHidden();
+  await expect(canvas).toBeFocused();
+  await page.mouse.click(px, py, { button: "right" });
   await page.locator(".cad-canvas-topline").click();
   await expect(search).toBeHidden();
 });
