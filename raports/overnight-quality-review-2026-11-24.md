@@ -22,6 +22,10 @@ Bağımsız içerik kontrolü canlı kurs dizinini, kurs planını, altı dersi,
 - CircuitVerse misafir oturumunda giriş, AND/XOR ve çıkış blokları tuvale eklendi, kablo denendi. Girişi değiştirince contention uyarısı çıktı; kablo güzergâhı hatalı olabilir. Ortak AND/XOR görevinin doğru simülasyon sonucu doğrulanmadı. Bu, CircuitVerse kusuru veya Ludus üstünlüğü iddiası değildir. VPLAS canlı uygulaması denenmedi. Ayrıntı: [`research/references/related-tools.md`](../research/references/related-tools.md).
 - Quiz veya atölyede öğrenci/katılımcı verisi kullanılmadı. Quiz sonuçlarını sunucuya gönderme/API toplama açılmadı; araştırma uygulaması okul/MEB izinleri ve gereken onam süreçleri bekliyor.
 
+## Üretken yapay zekâ şeffaflığı
+
+TÜBİTAK'ın ayrı ÜYZ rehberi başvuru sahibi kapsamına öğrencileri de alıyor; destekleyici kod yardımı doğrulama ile mümkün, önemli ÜYZ katkısının başvuru hazırlığında beyanı gerekiyor ve AI ile üretilmiş görsellerin belirtilmesi isteniyor. Bu rehber görsel tasarımın iyi görünmesini yasaklamaz; gerçek katkının gizlenmesini desteklemez. 2204-A başvuru ekranındaki güncel beyan sorusu ve projenin kapsamı danışmanla kontrol edilmeli. Kaynaklar [`2027-2204-a.md`](../research/tubitak/2027-2204-a.md) içinde.
+
 ## Sonraki adımlar
 
 - CircuitVerse ortak görevini doğru kablo yerleşimiyle tamamlayıp sonucu bağımsız doğrula; VPLAS canlı uygulama bulunursa erişilebilirliğini ve aynı görevi kaydet.
