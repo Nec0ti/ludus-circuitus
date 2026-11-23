@@ -1,6 +1,6 @@
 # Yakın çevrim içi araçlar ve karşılaştırma notları
 
-**Erişim tarihi:** 2026-11-23. Bu, kaynak taraması ve sınırlı arayüz incelemesidir; aynı görevin iki üründe tamamlanarak ölçüldüğü uygulamalı kullanılabilirlik testi değildir.
+**Erişim tarihleri:** 2026-11-23 ve 2026-11-24. Bu, kaynak taraması ve sınırlı arayüz incelemesidir; aynı görevin iki üründe tamamlanarak ölçüldüğü uygulamalı kullanılabilirlik testi değildir.
 
 ## Aynı başlangıç görevi
 
@@ -28,3 +28,14 @@ Karşılaştırmada ortak görev şu şekilde sabitlendi: öğrenci A ve B giri�
 - CircuitVerse: [Key Features](https://docs.circuitverse.org/chapter1/chapter1-keyfeatures/), [Menubar / Export Verilog](https://docs.circuitverse.org/chapter3/chapter3-menubar/), [Timing Diagrams](https://docs.circuitverse.org/chapter6/chapter6-timingdiagram/), [Build a circuit](https://docs.circuitverse.org/chapter7/2buildwithcv/), [canlı simülatör](https://circuitverse.org/simulator).
 - VPLAS: Hsieh et al. (2025), [Future Internet 17(8), 333](https://www.mdpi.com/1999-5903/17/8/333); Jin et al. (2026), “An Extension of VPLAS with EFP Integration,” [IEICE technical report record](https://www.ieice.org/publications/ken/summary.php?contribution_id=142049&expandable=3&ken_id=ET&lang=jp&presen_date=2026-03-04&schedule_id=8798&society_cd=ISS&year=2026).
 - Ayrıntılı araştırma sınırlamaları: [`education-studies.md`](education-studies.md), öğrenme ölçüm taslağı: [`../measurement/learning-study.md`](../measurement/learning-study.md).
+
+## Aynı görev karşılaştırmasının sınırları — 2026-11-24
+
+Görev: A ve B girişlerini hem AND hem XOR yoluna bağlamak, iki çıkışın değerlerini verilen girişlerde bulmak ve iki yolun aynı devrede bağımsız değerlendirilmesini açıklamak.
+
+- **CircuitVerse:** Resmî belgeler şematik devre kurma, renkli kablo simülasyonu, alt devre ve multibit destek, timing diagram ve Verilog dışa aktarımını belgeliyor. Export özelliği deneysel olarak niteleniyor; bu nedenle kodu düzenlenebilir blok devreden otomatik ve senkron öğrenme akışıyla eşdeğer sayma. 24 Kasım taramasında canlı editörde ortak görevi baştan sona kurup doğrulayamadık; önceki misafir oturumu da canvas ekleme adımında kararlı değildi. Buradaki canlı görev performansı **doğrulanmadı**.
+- **VPLAS:** 2025 makalesi kademeli Verilog alıştırmalarını, temel kapıları ve kombinasyonel devreleri; ayrıca `reg`/`wire`, `always`, sıralı mantık ve D flip-flop konularını anlatıyor. Şemalar ve zaman diyagramları destekleyici materyal olarak sunuluyor. Yayında kullanıcı tarafından düzenlenen blok grafiği ile gerçek Verilog ve canlı mantıksal sinyali birlikte düzenleme gösterilmiyor; bu, yalnızca incelenen makalenin kapsam sınırıdır. Canlı VPLAS uygulamasında aynı görev test edilmedi.
+- **Ludus için güvenli katkı hipotezi:** Türkçe, başlangıç düzeyinde ders sırası içinde tek bir blueprint üzerinde iki bağımsız kombinasyonel yolu kurma, aynı tasarımı Verilog olarak okuma ve mantıksal sinyal değişimini görme. CircuitVerse devre simülasyonu ve export; VPLAS rehberli Verilog alıştırması ve otomatik geribildirim alanlarında yakın örneklerdir. Bunların tek başına kanıtlanmış birleştirilmemiş özellikler olduğunu veya Ludus'un benzersiz olduğunu ileri sürme.
+- **Sonraki karşılaştırma:** yalnızca izinli araştırma koşullarında ürün adımlarını, tamamlama süresini ve zorlanılan noktaları aynı yönergeyle belgelemek. Öğrenci katılımcı veya öğrenme puanı toplamadan önce okul/MEB ve gerekli onam süreçleri tamamlanmalı.
+
+Kaynaklar: CircuitVerse [özellikler](https://docs.circuitverse.org/chapter1/chapter1-keyfeatures/) ve [menü/Verilog dışa aktarımı](https://docs.circuitverse.org/chapter3/chapter3-menubar/); VPLAS [hakemli 2025 makalesi](https://www.mdpi.com/1999-5903/17/8/333). TÜBİTAK ölçütleriyle ilişki için [`../tubitak/evaluation-alignment-2027.md`](../tubitak/evaluation-alignment-2027.md).

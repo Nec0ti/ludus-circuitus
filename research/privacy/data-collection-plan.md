@@ -2,6 +2,8 @@
 
 **Durum:** Kaynaklı planlama notu; yayıma/uygulamaya hazır KVKK aydınlatma metni, açık rıza formu veya hukuk görüşü değildir. Kaynaklar 2026-11-23 tarihinde kontrol edildi. Veri sorumlusu, örneklem ve araştırma yöntemi henüz belirlenmedi.
 
+Uygulamanın kaynak düzeyindeki mevcut quiz/atölye veri akışı için 24.11.2026 denetimi: [`../../raports/privacy-flow-review-2026-11-24.md`](../../raports/privacy-flow-review-2026-11-24.md). Bu, yayın altyapısı loglarını denetlemez ve KVKK uygunluk görüşü değildir.
+
 ## İlk karar: isim-soyisim quiz/API verisine konmamalı
 
 Necati ilk akış için isim-soyisim, yaş, eğitim düzeyi/sınıf, 100 üzerinden puan ve Playground süresi önermiştir. Resmî TTKB kılavuzu bu alanlardan kritik birini doğrudan yanıtlıyor: **katılımcı adı/soyadı imzalı katılım/veli onam formlarında istenir; veri toplama araçlarında (ölçek, anket vb.) ad-soyad gibi kişisel bilgiler istenmemelidir.** TÜBİTAK başvurusu ve MEB izin aracı bu gereğe göre düzenlenmeli. Bu yüzden isim ve soyisim quiz formunda veya POST JSON'unda olmamalı. İmzalı veli/katılım evrakı ile puan/süre kayıtları ayrı tutulmalı; aralarında adla eşleme dosyası oluşturulmamalı. Kaynak: [TTKB başvuru kılavuzu, §6](https://ttkb.meb.gov.tr/meb_iys_dosyalar/2025_07/19211911_arastirmauygulamaizinleribasvuruvedegerlendirmekilavuzu.pdf).
