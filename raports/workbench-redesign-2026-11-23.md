@@ -39,4 +39,4 @@ MUX, sabit kaynak, çok bitli sinyaller, portlar arası sürükleyerek kablo çi
 - [x] NAND/NOR/XNOR için X semantiği, Verilog ve Icarus: 12 sabit tohumlu × 40 kapı, 252 vektör
 - [x] Ana SVG çalışma alanı görünür ve altı örnek bağlantının başlangıç/bitiş noktaları E2E ile gerçek port merkezlerine oturuyor
 - [x] Küçük ve mobil görünümde hizalama, clipping, focus: içerik fit'i, %58 en düşük ilk görünüm, dokunmatik pan ve sabit ekran boyutlu etiketler uygulandı. Bağımsız son inceleme desktop/mobile'da kabloları görünür ve gerçek port merkezlerine bağlı doğruladı; clipping veya taşma yok. 390×844 ilk ekranda node sırası alt kenarın biraz altında kaldığından kısa kaydırma gerekiyor.
-- [ ] Ana CI/Pages yayın kanıtı
+- [x] Ana CI/Pages yayın kanıtı: PR #11 squash merge `3ac1ca0`; Pages workflow run `45261362299` build (Node, Icarus, Playwright) ve deploy adımları başarılı. `https://nec0ti.github.io/ludus-circuitus/`, `/docs/` ve `/playground/` HTTP 200 döndürüyor.
