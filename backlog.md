@@ -4,6 +4,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
+- [~] 2026-11-24 canlı tarayıcı QA'sında kök `favicon.ico` için tek bir 404 görüldü. Marka işaretine uyan vektör favicon iki sayfa kabuğuna ekleniyor; E2E iki kabukta da dosyanın 200 dönmesini doğrulayacak.
 - [x] Türkçe sayfa metadatası: Jekyll SEO Tag kaynaklı yinelenen `<title>`/description ve `og:locale=en_US` düzeltildi. PR #17 Pages run `45286285879` build/deploy başarılı; landing, docs, playground ve quiz sayfalarında birer başlık/açıklama ve `og:locale=tr_TR` doğrulandı.
 - [x] 2026-11-24 mobil Devre Atölyesi `.bp` dışa aktarımı: gizlenen `#export-bp` düğmesi görünür kılındı; 390 px görünürlük ve `top.bp` indirmesi E2E ile doğrulandı. PR #18 `492a008` birleştirildi; Pages run `45287278491` başarılı, canlı 390 px Playwright indirme kontrolü geçti.
 - [x] 2026-11-24 gece kalite kapısı: PR #21 (`348d2de`) build ve Pages dağıtımı geçti. Node 27/27, Icarus scalar/vector/hiyerarşik oracle'ları ve CI Playwright 37/37 başarılı; yayımlanan artifact yerel Chromium ile ayrıca 37/37 geçti. Landing/docs masaüstü ve atölye masaüstü/mobil artifact'ı görsel incelendi. Canlı landing, docs, altı ders, atölye ve quiz 10/10 HTTP 200 ve tek `<title>` verdi. Ayrıntı: `backloglog.md`.
