@@ -5,7 +5,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 ## Devam ediyor
 
 - İlk çalışan uygulama MVP'si: etkileşimli blueprint editörü, gerçek Verilog üretimi, sıralı simülasyon ve yerel blueprint kaydı.
-- Herkese açık GitHub deposu ve GitHub Pages yayını: depo görünürlüğü değiştirilecek, Pages etkinleştirilecek ve URL doğrulanacak.
+- GitHub Pages yayını: workflow build'i geçti; değişken build başlarken ayarlandığı için ilk deploy adımı atlandı. Manuel yayın desteği eklenecek, site URL'si doğrulanacak.
 
 ## Sıradaki işler
 
@@ -43,3 +43,4 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] Jekyll/Tailwind iskeletini, Türkçe tanıtım ve dört docs sayfasını, responsive çok panelli playground prototipini ve Pages workflow'unu oluşturup yarım toplayıcı etkileşimini tarayıcıda doğrula.
 - [x] README ve sayfa metinlerini mevcut taslak durumunu doğru gösterecek şekilde güncelle; drag-drop, codegen, sıralı mantık ve kayıt özelliklerinin henüz olmadığını belirt.
 - [x] Öğrenme ölçümü için yeterli gönüllüde eşit süreli karşılaştırma, yetersiz örneklemde nedensel iddiasız tek grup pilotu ve ad-soyadsız kaba sınıf bandı tercihlerini kaydet.
+- [x] `Nec0ti/ludus-circuitus` deposunu açıkça onaylanan şekilde public yap; Git geçmişindeki merge commit kişisel yazar metadatasını kullanıcıya bildir.

@@ -96,6 +96,6 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 # 2026-11-23 — Ölçüm kararları ve açık repo hazırlığı
 
 - Necati'nin onayladığı karşılaştırma yaklaşımı kaydedildi: yeterli gönüllü varsa eşit süreli Ludus/statik anlatım koşullarına rastgele atama; örneklem küçükse nedensel iddiasız tek grup ön-test/Ludus/son-test pilotu. Quiz'de ad-soyad yok; kaba sınıf/eğitim bandı yalnız gerekçelendirilip izin aracında onaylanırsa.
-- Değişenler: `notes.md`, `research/measurement/learning-study.md`, `research/privacy/data-collection-plan.md`, `backlog.md`.
-- Hazırlık doğrulaması: `git diff --check` geçti; gitleaks 8.30.1 mevcut dosyalar ve tüm yerel Git geçmişinde bulgu döndürmedi. İlk merge commit'inde kişisel yazar metadatası bulunduğu için repository public olunca bu metadata da görünür olacak; geçmiş yeniden yazılmadı.
-- Kalan: belgeleri commit/push et; `Nec0ti/ludus-circuitus` deposunu public yap; GitHub Pages'i etkinleştirip URL ve deploy sonucunu doğrula; ardından MVP hedefini başlat.
+- Değişenler: `notes.md`, `research/measurement/learning-study.md`, `research/privacy/data-collection-plan.md`, `backlog.md`, `.github/workflows/pages.yml`.
+- Hazırlık doğrulaması: `git diff --check` geçti; gitleaks 8.30.1 mevcut dosyalar ve tüm yerel Git geçmişinde bulgu döndürmedi. İlk merge commit'inde kişisel yazar metadatası bulunduğu için public depoda görünür; geçmiş yeniden yazılmadı. Araştırma kararları `e92e0a7` ile gönderildi. Repo public yapıldı ve Pages workflow ayarı etkinleştirildi.
+- İlk Pages build'i geçti, ancak değişken workflow başlatıldıktan sonra ayarlandığı için deploy işi atlandı; `workflow_dispatch` deploy desteği eklendi. Kalan: bu workflow değişikliğini doğrula ve yayın URL'sini kontrol et. MVP uygulama hedefi açıldı.
