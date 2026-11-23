@@ -3,7 +3,7 @@ layout: default
 title: Bloklar
 description: Devre Atölyesi'nde kullanılabilen dijital mantık blokları.
 permalink: /docs/bloklar/
-reading_time: 5
+reading_time: 6
 ---
 <div class="site-width docs-shell">
   {% include docs-nav.html %}
@@ -12,7 +12,7 @@ reading_time: 5
     <h1>Bloklar</h1>
     <p class="docs-reading-time">Yaklaşık {{ page.reading_time }} dakika</p>
     <p class="docs-intro">Atölye şu anda 1 bitlik sinyallerle çalışır. Sinyal 0, 1 veya başlangıçta bilinmeyen <code>X</code> olabilir. Her kapı ayrı bir donanım yoludur; devreye bağlı yollar aynı anda değerlendirilir.</p>
-    <nav class="docs-page-toc" aria-label="Bu sayfadaki konular"><b>Bu sayfada</b><a href="#giris-cikis">Giriş ve çıkış <small>1 dk</small></a><a href="#mantik-kapilari">Mantık kapıları <small>1 dk</small></a><a href="#yazmac">Clock ve yazmaç <small>1 dk</small></a><a href="#portlar">Portlar ve bağlantı <small>1 dk</small></a><a href="#bp-modulleri">BP modülleri <small>1 dk</small></a></nav>
+    <nav class="docs-page-toc" aria-label="Bu sayfadaki konular"><b>Bu sayfada</b><a href="#giris-cikis">Giriş ve çıkış <small>1 dk</small></a><a href="#mantik-kapilari">Mantık kapıları <small>1 dk</small></a><a href="#ara-sinyal">Ara sinyal <small>1 dk</small></a><a href="#yazmac">Clock ve yazmaç <small>1 dk</small></a><a href="#portlar">Portlar ve bağlantı <small>1 dk</small></a><a href="#bp-modulleri">BP modülleri <small>1 dk</small></a></nav>
     <h2 id="giris-cikis">Giriş ve çıkış <span class="docs-section-time">~1 dk</span></h2>
     <div class="block-list">
       <div><span class="block-swatch swatch-input">A</span><p><b>Giriş</b><small>Devrenin dışından 0 veya 1 alan sinyal.</small></p></div>
@@ -25,6 +25,9 @@ reading_time: 5
       <div><span class="block-swatch gate-swatch">NOT</span><p><b>NOT</b><small>0 değerini 1'e, 1 değerini 0'a çevirir.</small></p></div>
       <div><span class="block-swatch gate-swatch">XOR</span><p><b>XOR</b><small>Girişler farklıysa 1 üretir.</small></p></div>
     </div>
+    <h2 id="ara-sinyal">Ara sinyal <span class="docs-section-time">~1 dk</span></h2>
+    <div class="block-list"><div><span class="block-swatch gate-swatch">SIG</span><p><b>Ara sinyal</b><small>Bir bağlantıya isim verir. Girişindeki 0, 1 veya X değerini anında çıkışına aktarır; aynı işareti değişkenler panelinde izleyebilirsin.</small></p></div></div>
+    <p>Ara sinyali, bir mantık sonucunu birden fazla yerde kullanırken kabloyu dallandırmak veya devreyi okunur bölümlere ayırmak için ekle. Bloğa çift tıklayıp anlamlı bir ad ver; Verilog çıktısında bu ad bir <code>wire</code> olur. Ara sinyal değer saklamaz ve clock beklemez.</p>
     <h2 id="yazmac">Clock ve yazmaç (register) <span class="docs-section-time">~1 dk</span></h2>
     <div class="block-list">
       <div><span class="block-swatch swatch-register">D</span><p><b>Register</b><small>D girişindeki değeri her yükselen clock kenarında Q çıkışına saklar. Başlangıç değeri <code>X</code>'tir.</small></p></div>

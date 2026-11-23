@@ -23,11 +23,12 @@ export function halfAdderBlueprint() {
   };
 }
 
-const inputPorts = (node) => ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], register: ["d"], output: ["in"] }[node.type] || []);
-const outputPorts = (node) => node.type === "input" || ["and", "or", "xor", "not", "register"].includes(node.type) ? ["out"] : [];
-const validTypes = new Set(["input", "output", "and", "or", "xor", "not", "register"]);
+const inputPorts = (node) => ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] }[node.type] || []);
+const outputPorts = (node) => node.type === "input" || ["and", "or", "xor", "not", "signal", "register"].includes(node.type) ? ["out"] : [];
+const validTypes = new Set(["input", "output", "and", "or", "xor", "not", "signal", "register"]);
 const validName = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 const verilogWords = new Set("always and assign begin buf case casex casez cell cmos config deassign default defparam design disable edge else end endcase endfunction endgenerate endmodule endprimitive endspecify endtable endtask event for force forever fork function generate genvar highz0 highz1 if ifnone incdir include initial inout input integer join large liblist library localparam macromodule medium module nand negedge nmos nor not notif0 notif1 or output parameter pmos posedge primitive pull0 pull1 pulldown pullup pulmos rcmos real realtime reg release repeat rnmos rpmos rtran rtranif0 rtranif1 scalared signed small specify specparam strong0 strong1 supply0 supply1 table task time tran tranif0 tranif1 tri tri0 tri1 triand trior trireg unsigned use vectored wait wand weak0 weak1 while wire wor xnor xor".split(" "));
+export const isValidSignalName = (name) => typeof name === "string" && validName.test(name) && !verilogWords.has(name);
 
 export function validateBlueprint(bp) {
   if (!bp || bp.version !== 1 || typeof bp.name !== "string" || bp.name.length > 80 || !validName.test(bp.name) || verilogWords.has(bp.name) || !Array.isArray(bp.nodes) || !Array.isArray(bp.wires) || bp.nodes.length > 500 || bp.wires.length > 2000) throw new Error("Blueprint biçimi, adı, boyutu veya sürümü geçersiz.");
@@ -38,11 +39,12 @@ export function validateBlueprint(bp) {
     if (!node || !validTypes.has(node.type) || typeof node.id !== "string" || !node.id || node.id.length > 100 || ids.has(node.id)) throw new Error("Blok türü veya kimliği geçersiz.");
     ids.add(node.id);
     nodes.set(node.id, node);
-    if (["input", "output"].includes(node.type)) {
-      if (!validName.test(node.name || "") || node.name.length > 40 || verilogWords.has(node.name) || names.has(node.name)) throw new Error("Giriş ve çıkış adları Verilog için geçerli ve benzersiz olmalı.");
+    if (["input", "output", "signal"].includes(node.type)) {
+      if (!isValidSignalName(node.name) || node.name.length > 40 || names.has(node.name)) throw new Error("Giriş, çıkış ve ara sinyal adları Verilog için geçerli ve benzersiz olmalı.");
       names.add(node.name);
     }
   }
+  if (bp.nodes.some((node) => node.type === "register") && ["clk", "reset"].some((name) => names.has(name))) throw new Error("Sinyal adları clk/reset ile çakışamaz.");
   const destinations = new Set();
   for (const wire of bp.wires) {
     const from = nodes.get(wire?.from?.node);
@@ -114,7 +116,7 @@ export function evaluate(bp, inputs = {}, registers = createState(bp)) {
     const node = nodes.get(id);
     const sources = incoming.get(id) || {};
     const args = Object.fromEntries(Object.entries(sources).map(([port, source]) => [port, values.get(source)]));
-    if (node.type === "output") values.set(node.id, args.in);
+    if (node.type === "output" || node.type === "signal") values.set(node.id, args.in);
     else values.set(node.id, logic(node.type, args.a ?? args.in, args.b));
   }
   const outputs = Object.fromEntries(bp.nodes.filter((node) => node.type === "output").map((node) => [node.name, values.get(node.id)]));
@@ -143,13 +145,14 @@ export function generateVerilog(bp) {
   const nodes = bp.nodes;
   const inputs = nodes.filter((node) => node.type === "input");
   const outputs = nodes.filter((node) => node.type === "output");
+  const signals = nodes.filter((node) => node.type === "signal");
   const regs = nodes.filter((node) => node.type === "register");
-  const names = [...inputs, ...outputs, ...(regs.length ? [{ name: "clk" }, { name: "reset" }] : [])].map((node) => hdlName(node.name));
+  const names = [...inputs, ...outputs, ...signals, ...(regs.length ? [{ name: "clk" }, { name: "reset" }] : [])].map((node) => hdlName(node.name));
   if (new Set(names).size !== names.length) throw new Error("Sinyal adı clk/reset ile çakışıyor veya Verilog adı yineleniyor.");
   const used = new Set(names);
   const vars = new Map();
   nodes.forEach((node, index) => {
-    if (node.type === "input" || node.type === "output") vars.set(node.id, hdlName(node.name));
+    if (["input", "output", "signal"].includes(node.type)) vars.set(node.id, hdlName(node.name));
     else {
       let candidate = `n_${index}`;
       while (used.has(candidate)) candidate += "_";
@@ -163,12 +166,14 @@ export function generateVerilog(bp) {
   for (const node of inputs) lines.push(`  input wire ${hdlName(node.name)};`);
   for (const node of outputs) lines.push(`  output wire ${hdlName(node.name)};`);
   if (regs.length) lines.push("  input wire clk;", "  input wire reset;");
+  for (const node of signals) lines.push(`  wire ${vars.get(node.id)};`);
   for (const node of nodes.filter((item) => ["and", "or", "xor", "not"].includes(item.type))) lines.push(`  wire ${vars.get(node.id)};`);
   for (const node of regs) lines.push(`  reg ${vars.get(node.id)};`);
   for (const node of nodes) {
     const variable = vars.get(node.id);
     if (["and", "or", "xor"].includes(node.type)) lines.push(`  assign ${variable} = ${wireByPort.get(`${node.id}:a`)} ${node.type === "and" ? "&" : node.type === "or" ? "|" : "^"} ${wireByPort.get(`${node.id}:b`)};`);
     if (node.type === "not") lines.push(`  assign ${variable} = ~${wireByPort.get(`${node.id}:in`)};`);
+    if (node.type === "signal") lines.push(`  assign ${variable} = ${wireByPort.get(`${node.id}:in`)};`);
     if (node.type === "output") lines.push(`  assign ${variable} = ${wireByPort.get(`${node.id}:in`)};`);
     if (node.type === "register") lines.push(`  always @(posedge clk or posedge reset) if (reset) ${variable} <= 1'b0; else ${variable} <= ${wireByPort.get(`${node.id}:d`)};`);
   }

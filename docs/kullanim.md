@@ -3,7 +3,7 @@ layout: default
 title: Kullanım
 description: Devre Atölyesi taslağında sinyalleri ve Verilog'u incele.
 permalink: /docs/kullanim/
-reading_time: 7
+reading_time: 8
 ---
 <div class="site-width docs-shell">
   {% include docs-nav.html %}
@@ -14,9 +14,10 @@ reading_time: 7
     <p class="docs-intro">Devre Atölyesi tam ekran bir çalışma alanıdır. Üst menü dosyaları ve simülasyonu, sol araçlık blokları, orta tuval blueprint'i, sağ panel mantıksal sinyalleri ve gerçek Verilog'u gösterir.</p>
     <nav class="docs-page-toc" aria-label="Bu sayfadaki konular"><b>Bu sayfada</b><a href="#devre-kur">Devre kurma <small>1 dk</small></a><a href="#girisleri-izle">Sinyali izleme <small>1 dk</small></a><a href="#simulasyon">Simülasyon ve clock <small>1 dk</small></a><a href="#blueprint-dosyalari">Blueprint ve Verilog <small>1 dk</small></a><a href="#moduller">.bp modülleri <small>2 dk</small></a><a href="#gizlilik">Yerel kayıt <small>1 dk</small></a></nav>
     <h2 id="devre-kur">Devre kur ve bağla <span class="docs-section-time">~1 dk</span></h2>
-    <p>Soldan Giriş, Çıkış, AND, OR, XOR, NOT veya Register ekle. Bir bloğu başlığından tutup ızgarada taşı. Bağlantı yapmak için bir bloğun çıkış portuna, ardından hedef bloğun giriş portuna tıkla. Giriş portuna tek bir sinyal bağlanır. Seçili bloğu Delete tuşuyla kaldırabilirsin.</p>
+    <p>Soldan Giriş, Çıkış, AND, OR, XOR, NOT, Ara Sinyal veya Yazmaç ekle. Bir bloğu başlığından tutup ızgarada taşı. Bağlantı yapmak için bir bloğun çıkış portuna, ardından hedef bloğun giriş portuna tıkla. Giriş portuna tek bir sinyal bağlanır. Seçili bloğu Delete tuşuyla kaldırabilirsin.</p>
     <h2 id="girisleri-izle">Girişleri değiştir ve sinyali izle <span class="docs-section-time">~1 dk</span></h2>
     <p>Alttaki Değişkenler bölümünde girişe tıklayarak 0 ve 1 arasında geçiş yap. Blueprint tuvalindeki ve sağdaki Sinyal Görünümü'ndeki değerler birlikte güncellenir. Turkuaz 1'i, gri 0'ı, kesik sarı çizgi henüz bilinmeyen <code>X</code> değerini gösterir. Bunlar mantıksal sinyallerdir; elektrik akımı canlandırması değildir.</p>
+    <p>Bir yolun değerini adlandırıp alttaki listede izlemek için Ara Sinyal ekle. Bloğa çift tıklayarak adını değiştir; bu değer saklanmaz, bağlı olduğu sinyalle birlikte anında değişir.</p>
     <h2 id="simulasyon">Oynat ve clock <span class="docs-section-time">~1 dk</span></h2>
     <p>Yalnız kombinasyonel kapılar varsa Oynat, giriş birleşimlerini sırayla dener; bağımsız mantık yolları aynı giriş durumunda birlikte değerlendirilir. Devrede Register varsa Tek tik veya Oynat bir yükselen clock kenarı oluşturur; register'lar yeni değerlerini aynı eski durumdan eşzamanlı alır. Başlangıçta register değeri <code>X</code>'tir. Duraklat ve Durdur değeri korur; Reset register'ları 0 yapar.</p>
     <h2 id="blueprint-dosyalari">Blueprint dosyaları ve Verilog <span class="docs-section-time">~1 dk</span></h2>

@@ -72,6 +72,28 @@ test("generated Verilog describes the same half adder", () => {
   assert.match(verilog, /endmodule/);
 });
 
+test("named intermediate signals preserve 0, 1 and X and generate a real Verilog wire", () => {
+  const bp = fixture("not");
+  bp.nodes.push({ id: "alias", type: "signal", name: "inverted", x: 400, y: 80 });
+  bp.wires = bp.wires.filter((wire) => wire.from.node !== "gate");
+  bp.wires.push(
+    { from: { node: "gate", port: "out" }, to: { node: "alias", port: "in" } },
+    { from: { node: "alias", port: "out" }, to: { node: "out_sum", port: "in" } }
+  );
+  assert.deepEqual([0, 1, X].map((a) => evaluate(bp, { a }).outputs.toplam), [1, 0, X]);
+  assert.match(generateVerilog(bp), /wire inverted;\n(?:  wire n_\d+;\n)?[\s\S]*assign inverted = n_\d+;/);
+  assert.throws(() => validateBlueprint({ ...bp, nodes: [...bp.nodes, { id: "dup", type: "signal", name: "a", x: 0, y: 0 }] }), /benzersiz/);
+  assert.throws(() => validateBlueprint({ ...bp, nodes: [...bp.nodes, { id: "keyword", type: "signal", name: "wire", x: 0, y: 0 }] }), /Verilog için geçerli/);
+  const cycle = halfAdderBlueprint();
+  cycle.nodes.push({ id: "loop", type: "signal", name: "loop", x: 200, y: 160 });
+  cycle.wires = cycle.wires.filter((wire) => !(wire.to.node === "sum" && wire.to.port === "a"));
+  cycle.wires.push(
+    { from: { node: "sum", port: "out" }, to: { node: "loop", port: "in" } },
+    { from: { node: "loop", port: "out" }, to: { node: "sum", port: "a" } }
+  );
+  assert.throws(() => validateBlueprint(cycle), /döngü/);
+});
+
 test("sanitizes internal names and rejects keyword or clock-port collisions", () => {
   const bp = halfAdderBlueprint();
   bp.nodes[0].name = "n_2";
@@ -81,6 +103,6 @@ test("sanitizes internal names and rejects keyword or clock-port collisions", ()
   bp.nodes[0].name = "clk";
   bp.nodes.push({ id: "reg", type: "register", name: "", x: 350, y: 300 });
   bp.wires.push({ from: { node: "sum", port: "out" }, to: { node: "reg", port: "d" } });
-  assert.throws(() => generateVerilog(bp), /clk\/reset ile çakışıyor/);
+  assert.throws(() => generateVerilog(bp), /clk\/reset ile çakış/);
 });
 

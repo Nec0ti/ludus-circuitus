@@ -198,3 +198,15 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Değişenler: `assets/js/quiz-data.mjs`, `tests/quiz.test.mjs`, `research/measurement/quiz-blueprint.md`, `research/measurement/learning-study.md`, `research/README.md`, `backlog.md`, `notes.md`, bu günlük.
 - Doğrulama: CSS build ve Jekyll build geçti; `npm test` 15/15; tüm Playwright E2E 17/17; Icarus Verilog oracle'ları geçti; quiz E2E 3/3; `git diff --check` temiz. Ayrı worktree'deki quiz denetimi anahtarları/form eşlemesini kontrol etti; p2 eleştirisi uygulanıp yeni koda test eklendi.
 - Kalan: danışman/alan öğretmeni, öğrencilerle anlaşılabilirlik incelemesi, madde güçlük/eşdeğerlik kanıtı, okul/MEB onaylı protokol ve örneklem. Bunlar tamamlanana kadar quiz araştırma aracı veya öğrenme etkisi kanıtı olarak kullanılmayacak. Commit `ce89a00` PR #3 ile gönderildi; `52ae1ebb` ile `main`e birleştirildi. PR CI ve `main` Pages build/deploy run `45232526762` başarılı oldu. Canlı `/quiz/` sayfasında yeni p2 sorusu, 390 px taşmasızlığı, yerel storage boşluğu ve hiç POST isteği çıkmaması Playwright ile doğrulandı.
+
+
+## 2026-11-23 — Adlandırılmış ara sinyal
+
+- Devre Atölyesi'ne tek girişli/tek çıkışlı `signal` bloğu eklendi. Kullanıcı bloğu araçlıktan ekler, başlığına çift tıklayıp İngilizce Verilog tanımlayıcısı verir; blok değeri alttaki Değişkenler panelinde canlı görünür. Üretilen HDL'de aynı adla `wire` ve `assign` bulunur. Sinyal 0/1/X'i aynen geçirir, durum saklamaz; feedback kombinasyonel döngü olarak reddedilir.
+- Proje/blueprint doğrulaması geçersiz, anahtar kelime, yinelenen ve `clk`/`reset` çakışmalı adları engeller. Modül düzleştirme her modül örneğinin ara sinyaline ayrı kapsam adı verir. Eski `.bp` sürüm 1 dosyaları geçerliliğini korur. Blok yardımı ve Bloklar/Kullanım dokümanları güncellendi.
+- Bağımsız kod denetimi bütün entegrasyon noktalarını ve modül ad çakışması riskini belirledi; uygulama ve testler buna göre tamamlandı.
+- Doğrulama: `npm test` 16/16; Icarus Verilog iki oracle (yarım toplayıcıda 4 binary + 4 X vektörü, iç ara sinyalli ve iki örnekli `.bp` modülü); CSS build; Jekyll 4.4.1 ile site build; Playwright E2E 18/18; `git diff --check` geçti. Araçlar yerel Nix paketleriyle sağlandı.
+- Bağımsız görsel inceleme: 1440×900 ve 390×844 ölçülerinde hizalama/taşma sorunu yok. Ara Sinyal satırı yanlışlıkla kapı sanılmasın diye Giriş/Çıkış grubuna taşındı. İlk yerel ve PR CI kapıları geçiyor; son konumla PR CI sonucu bekleniyor.
+
+
+- Son görsel değerlendirme `/tmp/ludus-a855858-1440.png` ve `/tmp/ludus-a855858-390.png` ekran görüntülerinde yapıldı. İlk konumda hizalama doğruydu, mobilde metin iki satıra kırılıyordu; yalnız araçlık başlığına göre sınıflandırma netliği iyileştirildi. Son konum PR başlığında incelenecek.
