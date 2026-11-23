@@ -16,6 +16,7 @@ Bu klasör, Ludus Circuitus'un ürün ve TÜBİTAK araştırma kararlarını day
 - [`privacy/data-collection-plan.md`](privacy/data-collection-plan.md): MEB öğrenci izni, KVKK, ad/soyad toplamama ve veri minimizasyonu planı.
 - [`architecture/github-pages-post.md`](architecture/github-pages-post.md): statik GitHub Pages'ten POST ve yerel/ev API erişim kısıtları.
 - [`quality/benchmark-gates.md`](quality/benchmark-gates.md): Verilog oracle corpus'u, blueprint boyut sınırları ve CI merge kapısı.
+- [`../raports/privacy-flow-review-2026-11-24.md`](../raports/privacy-flow-review-2026-11-24.md): quiz ve atölye kodunun mevcut veri akışı, yerel saklama ve denetimin dışında kalan yayın altyapısı logları.
 - [`examples/README.md`](examples/README.md): lise/ortaokul başlangıç düzeyine uygun, proje için özgün Verilog örnekleri.
 
 ## Kaynak etiketleri
