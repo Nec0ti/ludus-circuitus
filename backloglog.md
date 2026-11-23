@@ -293,4 +293,12 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Ekran görüntüleri: `/tmp/ludus-wire-94350c0-1440-viewport.png`, `/tmp/ludus-wire-94350c0-390-viewport.png`, `/tmp/ludus-wire-94350c0-1440-canvas.png`, `/tmp/ludus-wire-94350c0-390-canvas.png`, `/tmp/ludus-wire-94350c0-1440-signal.png`. Yalnız küçük akış notu: 390×844 ilk görünüm node sırasının az üstünde biter; kullanıcı biraz kaydırınca tüm devre görünür.
 - Güncel PR build'i geçti (`45260520482`). Yerel kontroller: CSS/Jekyll build, Node **21/21**, Icarus **252** seeded kapı vektörü ve hiyerarşik `.bp` oracle'ları, Playwright **27/27**, `git diff --check`.
 - Değişenler: bu rapor, backlog ve günlük.
-- Kalan: bu inceleme kaydını küçük commit/push yapmak; PR #11'i birleştirmek ve Pages deploy/live smoke kontrolünü kaydetmek.
+- Kalan: Pages yayın kanıtını bu kayıt dalında PR ile eklemek.
+
+## 2026-11-23 — Atölye güncellemesini yayınlama
+
+- PR #11 (`3ac1ca0`, squash) main'e alındı. Pages run `45261362299` build, 21 Node testi, Icarus oracle'ları, 27 Playwright testi ve deploy adımlarını başarıyla tamamladı.
+- Canlı smoke kontrolü doğru Pages alan adından yapıldı: `https://nec0ti.github.io/ludus-circuitus/`, `/docs/` ve `/playground/` üçü de HTTP 200. Ana sayfada başlık/devre, docs sayfasında kurs içeriği ve atölyede standalone uygulama HTML'i mevcut.
+- İlk smoke denemesinde alan adı yanlışlıkla `necoti` (harf o) yazıldığı için GitHub Pages'in Site not found yanıtı alındı; yapılandırmadaki doğru kullanıcı adı `nec0ti` (sıfır) üzerinden tekrar kontrol edildi ve tüm sayfalar 200 verdi.
+- Değişenler: `backlog.md`, `raports/workbench-redesign-2026-11-23.md`, bu günlük.
+- Kalan uygulama işi yok. Araştırma kapsamı, danışman/okul izinleri ve öğrenme ölçümü sonraki proje aşamalarında açık kalıyor.
