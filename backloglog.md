@@ -218,4 +218,7 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - `docs/yerel-kurulum.md`, güncel package scriptleri ve Pages workflow'u ile karşılaştırıldı. Node.js 22, Python 3 ve Icarus Verilog gereksinimleri eklendi; Ruby sürümü sabitlenmiş gibi gösterilmedi.
 - E2E adımlarına önce `bundle exec jekyll build` eklenerek Playwright'ın `_site` klasörünü Python HTTP sunucusuyla servis ettiği açıklandı. Linux için Chromium sistem bağımlılıklarını kuran `npx playwright install --with-deps chromium`, macOS/Windows için tarayıcı kurulum komutu belirtildi. Yayın kapısının PR build'i ve Pages dağıtımıyla ilişkisi güncellendi; okuma süresi ve içindekiler eşleştirildi.
 - Yeni docs E2E kontrolü gereken araçları, okuma süresini ve E2E öncesi Jekyll build adımını doğruluyor. Doğrulama: Jekyll build; docs Playwright E2E 3/3; `npm test` 16/16; `git diff --check` geçti.
-- Kalan: PR CI ve bağımsız docs ekran incelemesi.
+- Bağımsız görsel inceleme 1440×900/390×844 ölçülerinde geçti; kod satırları taşmıyor. Ekranlar `/tmp/ludus-doc-setup-1440-viewport.png` ve `/tmp/ludus-doc-setup-390-viewport.png`. Mobilde docs menüsü yazının önünde yaklaşık 378 px yer kaplıyor; başlık yine ilk ekranda görünür ve bu mevcut docs düzenidir.
+
+
+- PR #5, CI build kapısı ve görsel inceleme geçtikten sonra `6276373` merge commit’iyle `main`e alındı. Main Pages build ve deploy (`45238310345`) başarılı. Canlı `docs/yerel-kurulum/` sayfasında Node.js 22, Python 3, Icarus, `bundle exec jekyll build`, Linux Chromium komutu ve 6 dk okuma süresi `curl` ile doğrulandı.

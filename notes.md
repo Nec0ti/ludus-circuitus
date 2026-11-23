@@ -226,3 +226,5 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 
 - Yerel proje için Node.js 22, Ruby/Bundler, Git gerekir; Playwright E2E ayrıca Python 3 ve Chromium, `test:verilog` ise Icarus `iverilog`/`vvp` ister. Repo şu anda Ruby sürümünü pinlemiyor.
 - `npm run test:e2e`, Jekyll'i çalıştırmaz; güncel `npm run build:css` ve `bundle exec jekyll build` ardından `_site` klasörünü Python sunucusuyla açar. Linux Playwright kurulumunda OS bağımlılıkları `--with-deps` ile kurulabilir. Ayrıntı güncel `docs/yerel-kurulum.md` içinde.
+
+- Yerel katkı kılavuzu PR #5 (`6276373`) ile main'e alındı; PR build, main Pages build/deploy başarılı. Canlı `/docs/yerel-kurulum/` içeriği güncel Node 22/Python/Icarus/Jekyll/Playwright komutlarını içeriyor. Ayrıntı `backloglog.md`.
