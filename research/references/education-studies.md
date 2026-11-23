@@ -7,9 +7,12 @@
 **Hsieh ve diğerleri (2025), “A Verilog Programming Learning Assistant System Focused on Basic Verilog with a Guided Learning Method.”** [Future Internet 17(8), 333](https://www.mdpi.com/1999-5903/17/8/333), DOI: 10.3390/fi17080333.
 
 - **Kanıt türü:** Hakemli araştırma makalesi; web tabanlı, temel Verilog öğretimi ve otomatik değerlendirilen alıştırmalar sunan VPLAS sistemini anlatıyor.
-- **Örneklem/sınır:** Makale değerlendirmeyi giriş chip-design dersi alan 50 üniversite öğrencisiyle yapıyor; ortaokul veya lise başlangıç öğrencilerine doğrudan genellenemez.
-- **İlk inceleme notu:** VPLAS metin ve yönlendirilmiş alıştırmaya odaklanıyor. Ludus'un olası farkı Scratch-benzeri donanım blokları, aynı tasarımın Verilog/gate görünümü, paralel bağımsız yollar ve clock'lu register davranışını birlikte öğretmek olabilir. Bu farkı makalenin tüm yöntemi ve benzer sistemler tarandıktan sonra kanıtlamak gerekir.
+- **İçerik:** Sistem Source Coding, Answer ve Related Information alanlarını birleştiriyor; referans alanında kod açıklamasıyla birlikte devre şeması veya zaman diyagramı bulunabiliyor. GUP ve Value Trace görevleriyle, öğrenci verilen Verilog'u ve davranışı yorumluyor. Kaynaklar bunları destekleyici referans materyali olarak anlatıyor; canlı senkron animasyon veya kullanıcı tarafından düzenlenen blok diyagram olarak tanımlamıyor. Bu nedenle “Verilog ile devre görünümünü birlikte veren öğrenme aracı yok” denemez; olası ayrım ancak bu görsellerin üretim şekli ve etkileşim düzeyi olarak incelenebilir.
+- **Örneklem/sınır:** Makale özeti 50 öğrenciyi bildirirken sonuç bölümü iki grupta toplam 112 lisans öğrencisi yazıyor. Makale içindeki bu sayı farkı çözülmeden tek bir örneklem büyüklüğü tekrar edilmemeli. Katılımcılar giriş chip-design dersi alan üniversite öğrencileri; ortaokul veya lise başlangıç öğrencilerine doğrudan genellenemez.
+- **Ludus ile karşılaştırma:** İncelenen 2025 makalesi kademeli kod/boşluk doldurma ve kod/devre yorumlama akışını tarif ediyor; öğrencinin sürükleyip bağladığı blok grafik devreyi tasarım aracı olarak yazması belgelenmiyor. Bu yalnızca makale kapsamı hakkında bir gözlemdir; VPLAS'ın her sürümünde böyle bir özellik olmadığını veya Ludus'un bu nedenle özgün olduğunu kanıtlamaz. Güncel canlı VPLAS uygulamasına erişim linki bu taramada bulunamadı.
 - Makalenin yüksek quiz doğruluğu gibi yazar sonuçları, Ludus için öğrenme etkisi iddiası olarak kullanılamaz.
+
+**2026 uzantısı:** Jin ve diğerleri, VPLAS'ın GUP ve Value Trace Problem (VTP) görevlerine sekiz Element Fill-in-the-blank (EFP) örneği ekleyen bir IEICE teknik raporu sunuyor. EFP, kombine ve sıralı devrelerin Verilog açıklamalarındaki temel öğeleri öğrencinin tamamlamasını istiyor; çalışma 99 NTUT lisans öğrencisinin cevap kayıtlarını analiz ettiğini bildiriyor. Bu da Verilog kodunu adım adım yeniden kurma alıştırmasının Ludus'a özgü olmadığını gösterir. [IEICE teknik rapor kaydı](https://www.ieice.org/publications/ken/summary.php?contribution_id=142049&expandable=3&ken_id=ET&lang=jp&presen_date=2026-03-04&schedule_id=8798&society_cd=ISS&year=2026).
 
 ## Blok tabanlı programlama kanıtı — doğrudan donanım kanıtı değil
 
@@ -31,4 +34,4 @@
 4. Sınavın anlık başarısı yanında daha sonra yapılan kısa gecikmeli test, devreyi yeni örneğe aktarabilme ve Verilog'u okuyabilme aday ölçülerdir; kapasite/zaman ve izinlere göre danışmanla seç.
 5. Ortaokul öğrencileri insan katılımcıdır; TÜBİTAK çağrısı, MEB izni ve veli/katılımcı onam süreci tamamlanmadan pilot verisi toplanmamalı.
 
-Yakın ürünlerin erken karşılaştırması için [`related-tools.md`](related-tools.md) dosyasına bak. Özellikle CircuitVerse'in Verilog export, sequential circuits, multi-tab/subcircuits ve browser local save özellikleri, projenin yalnızca bu işlevleri bir araya getirmesinin özgün değer sayılmayabileceğini gösteriyor.
+Yakın ürünlerin güncel kanıt/sınırlama dökümü için [`related-tools.md`](related-tools.md) dosyasına bak. CircuitVerse'in editör/simülatör ve Verilog export özellikleri ile VPLAS'ın kod alıştırmalarını devre/waveform bağlamında sunması, bu özellikleri tek başına özgün değer olarak sunmamamız gerektiğini gösteriyor.

@@ -10,7 +10,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 ## Sıradaki işler
 
 - [ ] Birincil kazanım ve ikincil quiz alt sonuçlarını (paralel yollar; blok↔Verilog; clock/register) danışmanla ve örneklem düzeyiyle uyumlu kesinleştir.
-- [ ] CircuitVerse ve VPLAS'ı aynı başlangıç göreviyle uygulamalı karşılaştır; Ludus'un kanıtlanabilir farkını ürün ve araştırma sorusuna bağla.
+- [~] CircuitVerse ve VPLAS'ı aynı başlangıç göreviyle karşılaştır; Ludus'un kanıtlanabilir farkını ürün ve araştırma sorusuna bağla. Resmî kaynak matrisi ve VPLAS görev/arayüz kanıtları yenilendi; CircuitVerse misafir arayüzü incelendi ancak tekrarlanan tarayıcı hataları nedeniyle yarım-toplayıcı görevi tamamlanamadı. Tam uygulamalı kıyas ve benzersizlik sonucu hâlâ açık.
 - [x] Kaynaklı renk/okunabilirlik araştırmasına göre koyu-yumuşak paleti seçip landing'e ve dokümantasyona uygula; atölye temasını ayrı tut. Öğrenme etkisi iddiası değil, okunabilirlik ve durum ayrımı gerekçesiyle seçildi.
 - [x] Landing'i somut devre etkileşimli bir hikâyeye dönüştür; tamamlanan görev ve merak ilerlemesi kullan, baskılı streak/infinite scroll ekleme. Yarım toplayıcı 4 giriş durumunu sayfa belleğinde gösterir; ağ/kalıcı izleme yok.
 - [x] Docs'u eğitim portalı olarak yeniden kur: açılır/kapanır ana gruplar, alt başlıklar, içerik içi gezinme ve her sayfa/bölüm için yaklaşık okuma süresi.
