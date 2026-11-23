@@ -818,7 +818,7 @@ button.cad-variable:hover { border-color: #738295; }
   .cad-topbar { gap: 5px; padding: 6px; }
   .cad-title { min-width: 113px; }
   .cad-title strong { font-size: 9px; }
-  .cad-divider, .cad-save-state, .cad-menu-item:nth-of-type(3) { display: none; }
+  .cad-divider, .cad-save-state { display: none; }
   .cad-filename { font-size: 8px; }
   .cad-exit { margin-left: auto; }
   .cad-simulation-bar { min-height: 82px; flex-wrap: wrap; gap: 5px 9px; padding: 6px; }

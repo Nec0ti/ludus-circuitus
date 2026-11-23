@@ -342,7 +342,7 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - CircuitVerse misafir simülatöründe input, AND/XOR ve output bileşenleri tuvale sürüklenerek eklendi; bağlantılar görsel olarak kuruldu. Bir input'u değiştirme adımında contention uyarısı oluştu. Kablo güzergâhı/kesişimi denemeyi bozmuş olabileceği için bu bulgu ürün kusuru olarak yorumlanmadı; AND/XOR doğruluk görevi tamamlanmış sayılmadı.
 - Aynı oturumda konsolda tekrarlanan `transformCallback` hataları görüldü; yalnızca mevcut oturumun gözlemidir. VPLAS için canlı oturum yok, yalnızca yayımlanmış kaynaklar kullanıldı.
 - Değişenler: `research/references/related-tools.md`, `backlog.md`, bu günlük.
-- Kontroller: güncel Pages landing, docs, playground ve quiz yolları HTTP **200/200/200/200**; `git diff --check` ve araştırma Markdown bağlantı kontrolü yapılacak. Ürün kodu değişmedi.
+- Kontroller: güncel Pages landing, docs, playground ve quiz yolları HTTP **200/200/200/200**; `git diff --check` ve araştırma Markdown bağlantı kontrolü geçti. Ürün kodu değişmedi.
 - Katılımcı kullanılmadı; kişisel bilgi, quiz sonucu veya süre toplanmadı.
 - Kalan: aynı devre görevini CircuitVerse'te doğru kablo yerleşimiyle yeniden denemek ve VPLAS için erişilebilir canlı uygulama olup olmadığını araştırmak. İki üründe de öğrenme etkisi veya üstünlük sonucu yok.
 
@@ -360,4 +360,13 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Resmî Jekyll SEO Tag rehberine göre `locale` yapılandırılabilir ve SEO etiketi title/description üretir. İki layout'taki yinelenen etiketler kaldırıldı, `_config.yml` için `locale: tr_TR` eklendi; `lang="tr"` korundu.
 - Değişenler: `_config.yml`, `_layouts/default.html`, `_layouts/workbench.html`, `research/references/site-metadata.md`, `research/README.md`, `backlog.md`, bu günlük.
 - Önceki Pages artifact'ında dört sayfada da 2 `<title>`, 2 description ve `og:locale=en_US` görüldü. Güncel canlı rotalar HTTP 200; bu kontrol hatanın eski yayında olduğunu kesinleştirdi.
-- Yerel Jekyll build henüz çalıştırılamadı: Nix Ruby ile `bundle install` sırasında `openssl 4.0.2` native extension derlemesi başarısız oldu; GitHub Pages CI üretim build'i zorunlu doğrulama olacak. PR CI ve Pages smoke bekliyor.
+- Yerel `bundle exec jekyll build` başarılı oldu. PR #17 Pages run `45286285879` build ve deploy adımları da başarılı tamamlandı.
+- Canlı landing, docs, playground ve quiz rotalarında HTTP **200/200/200/200**; her sayfada tek `<title>`, tek description ve `og:locale=tr_TR` doğrulandı. Tam Pages artifact'ı ayrıca incelendi.
+
+## 2026-11-24 — Mobil Devre Atölyesi dışa aktarma
+
+- Bağımsız Playwright QA'sı 390 px görünümde `.cad-menu-item:nth-of-type(3)` kuralının üçüncü düğme olan `#export-bp` öğesini gizlediğini ve mobil dışa aktarma akışını engellediğini buldu. Üst araç çubuğundaki DOM sırası kontrol edildi; düzeltme yalnızca mobil `display:none` seçicisinden bu öğeyi çıkardı.
+- `tests/e2e/playground.spec.mjs` içine 390×844 görünümde Dışa aktar düğmesinin görünürlüğünü ve `top.bp` dosyasının indirilmesini doğrulayan regresyon testi eklendi.
+- Doğrulama: `npm run build:css`, Node testleri 27/27, Jekyll build ve Playwright E2E 37/37 geçti; hedefli mobil dışa aktarma testi ayrıca 1/1 geçti. PR CI durumu PR açılışında kaydedilecek.
+- Değişenler: `assets/css/input.css`, derlenmiş `assets/css/site.css`, `tests/e2e/playground.spec.mjs`, `backlog.md`, bu günlük.
+- PR #18 `05eeda1` ile açıldı ve birleştirilmedi. Güncel GitHub `build` kontrolü run `45286844702` için kuyrukta; CI sonucu bu kayda eklenecek.
