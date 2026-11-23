@@ -74,6 +74,20 @@ test("mobile block shelf starts collapsed and exposes its accessible block contr
   await expect(page.locator(".node-nand")).toHaveCount(1);
 });
 
+test("ignores a malformed saved blueprint and keeps the starter circuit usable", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("ludus-circuitus-documents-v1", JSON.stringify([
+    { id: "corrupt", name: "corrupt.bp", bp: { version: 1, name: "corrupt", nodes: null, wires: [] } }
+  ])));
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/playground/");
+  await expect(page.locator(".cad-app")).toBeVisible();
+  await expect(page.locator("#file-name")).toHaveText("top.bp");
+  await expect(page.locator("#verilog-code")).toContainText("assign toplam =");
+  await expect(page.locator("#sim-status")).toContainText("Yerel blueprint verisi okunamadı");
+  expect(errors).toEqual([]);
+});
+
 test("builds a connection, saves locally, reloads and exports a .bp file", async ({ page }) => {
   await page.goto("/playground/");
   await page.getByRole("button", { name: "Yeni BP" }).click();

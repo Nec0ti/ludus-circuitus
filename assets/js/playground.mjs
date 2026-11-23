@@ -875,6 +875,7 @@ window.addEventListener("resize", () => { if (!cameraReady || !cameraEngaged) fi
 try {
   const saved = JSON.parse(localStorage.getItem(storeKey) || "null");
   if (Array.isArray(saved) && saved.length && saved.length <= 8 && new Set(saved.map((doc) => doc.id)).size === saved.length && saved.every((doc) => typeof doc?.id === "string" && doc.bp && typeof doc.name === "string")) {
+    validateProject(saved);
     documents = saved;
     documents.forEach((doc) => snapBlueprintPositions(doc.bp));
     activeId = documents[0].id;
