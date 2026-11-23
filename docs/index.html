@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Dokümantasyon
-description: Dijital mantık, Verilog ve Devre Atölyesi için Türkçe başlangıç rehberi.
+description: Dijital mantık, Verilog ve Devre Atölyesi için Türkçe adım adım rehber.
 permalink: /docs/
 reading_time: 2
 ---
@@ -9,15 +9,31 @@ reading_time: 2
   {% include docs-nav.html %}
   <article class="docs-article">
     <p class="eyebrow eyebrow-ink">Dokümantasyon</p>
-    <h1>Devreleri adım adım anlamak için rehber.</h1>
-    <p class="docs-reading-time">Rehberin tamamı yaklaşık 20 dakika</p>
-    <p class="docs-intro">Önce sinyaller ve temel mantık, sonra bloklarla devre kurma ve Verilog çıktısını okuma. Terimler ilk kez geçtiğinde kısa ve sade biçimde açıklanır.</p>
+    <h1>Kısa derslerle devreleri öğren.</h1>
+    <p class="docs-reading-time">Tüm rehber yaklaşık 41 dakika</p>
+    <p class="docs-intro">Her temel ders tek bir konuya odaklanır ve yaklaşık 2–3 dakika sürer. Hiç ön bilgi gerektirmeyen dersleri sırayla oku, sonra atölyede dene.</p>
+
+    <h2>Temel dersler <span class="docs-section-time">~18 dk</span></h2>
     <div class="docs-link-list">
-      <a href="{{ '/docs/baslangic/' | relative_url }}"><span><b>Başlangıç</b><small>Dijital mantığın ilk kavramları, paralel yollar ve clock.</small></span><i>4 dk</i></a>
-      <a href="{{ '/docs/kullanim/' | relative_url }}"><span><b>Kullanım</b><small>Atölyede devre kurma, sinyal izleme, simülasyon ve modüller.</small></span><i>7 dk</i></a>
-      <a href="{{ '/docs/bloklar/' | relative_url }}"><span><b>Bloklar</b><small>Giriş, kapı, ara sinyal, yazmaç ve bağlantı kavramları.</small></span><i>7 dk</i></a>
-      <a href="{{ '/docs/yerel-kurulum/' | relative_url }}"><span><b>Yerel kullanım ve kurulum</b><small>Siteyi bilgisayarında çalıştırma ve katkıda bulunma.</small></span><i>5 dk</i></a>
+      <a href="{{ '/docs/baslangic/' | relative_url }}"><span><b>Kurs haritası</b><small>Altı temel dersin sırası ve devam rehberleri.</small></span><i>2 dk</i></a>
+      <a href="{{ '/docs/dijital-sinyaller/' | relative_url }}"><span><b>1. 0 ve 1: dijital sinyaller</b><small>Bir bit, iki değer ve ikilik gösterim.</small></span><i>3 dk</i></a>
+      <a href="{{ '/docs/mantik-kapilari/' | relative_url }}"><span><b>2. Mantık kapıları</b><small>Doğruluk tablosundan kapı çıkışını bul.</small></span><i>3 dk</i></a>
+      <a href="{{ '/docs/yarim-toplayici/' | relative_url }}"><span><b>3. Yarım toplayıcı</b><small>XOR ve AND ile iki bitin toplamını kur.</small></span><i>3 dk</i></a>
+      <a href="{{ '/docs/paralel-yollar/' | relative_url }}"><span><b>4. Paralel yollar</b><small>Bağımsız donanım yollarının birlikte çalışması.</small></span><i>2 dk</i></a>
+      <a href="{{ '/docs/saat-yazmac/' | relative_url }}"><span><b>5. Saat ve yazmaç</b><small>Kombinasyonel hesap ile değer saklamayı ayır.</small></span><i>3 dk</i></a>
+      <a href="{{ '/docs/bloktan-verilog/' | relative_url }}"><span><b>6. Bloktan Verilog'a</b><small>Görsel devreyi gerçek Verilog sözdizimiyle eşleştir.</small></span><i>2 dk</i></a>
     </div>
-    <aside class="docs-callout"><b>Okuma sırası</b><p>İlk kez geliyorsan Başlangıç ile ilerle; sonra Kullanım sayfasında blueprint, sinyal ve Verilog'un atölyede nasıl yan yana geldiğini gör. Okuma süreleri yaklaşık değerlerdir.</p></aside>
+
+    <h2>Atölye rehberi <span class="docs-section-time">~17 dk</span></h2>
+    <div class="docs-link-list">
+      <a href="{{ '/docs/kullanim/' | relative_url }}"><span><b>Devre Atölyesi'ni kullan</b><small>Blok ekle, sinyalleri izle, simüle et ve `.bp` modüllerini birleştir.</small></span><i>8 dk</i></a>
+      <a href="{{ '/docs/bloklar/' | relative_url }}"><span><b>Blok kataloğu</b><small>Giriş, kapı, ara sinyal, yazmaç ve modül bloklarının açıklaması.</small></span><i>9 dk</i></a>
+    </div>
+
+    <h2>Geliştirici rehberi <span class="docs-section-time">~6 dk</span></h2>
+    <div class="docs-link-list">
+      <a href="{{ '/docs/yerel-kurulum/' | relative_url }}"><span><b>Yerel kullanım ve kurulum</b><small>Siteyi bilgisayarında çalıştır ve katkı vermeye başla.</small></span><i>6 dk</i></a>
+    </div>
+    <aside class="docs-callout"><b>Başlangıç önerisi</b><p><a href="{{ '/docs/baslangic/' | relative_url }}">Kurs haritasını</a> aç veya ilk ders olan <a href="{{ '/docs/dijital-sinyaller/' | relative_url }}">0 ve 1: dijital sinyaller</a> sayfasından başla. Okuma süreleri yaklaşık değerlerdir.</p></aside>
   </article>
 </div>

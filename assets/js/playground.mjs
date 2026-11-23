@@ -8,8 +8,8 @@ const el = (tag, className, text) => {
   if (text !== undefined) node.textContent = text;
   return node;
 };
-const icons = { input: "IN", output: "OUT", and: "&", or: "≥1", xor: "=1", not: "¬", signal: "SIG", register: "D" };
-const labels = { input: "GİRİŞ", output: "ÇIKIŞ", and: "AND", or: "OR", xor: "XOR", not: "NOT", signal: "ARA SİNYAL", register: "YAZMAÇ" };
+const icons = { input: "IN", output: "OUT", and: "&", nand: "&○", or: "≥1", nor: "≥1○", xor: "=1", xnor: "=1○", not: "¬", signal: "SIG", register: "D" };
+const labels = { input: "GİRİŞ", output: "ÇIKIŞ", and: "AND", nand: "NAND", or: "OR", nor: "NOR", xor: "XOR", xnor: "XNOR", not: "NOT", signal: "ARA SİNYAL", register: "YAZMAÇ" };
 const storeKey = "ludus-circuitus-documents-v1";
 const maxImportBytes = 1024 * 1024;
 
@@ -28,6 +28,11 @@ let documents = [{ id: crypto.randomUUID(), name: "top.bp", bp: halfAdderBluepri
 let activeId = documents[0].id;
 let selectedId = null;
 let pendingSource = null;
+let camera = { x: 0, y: 0, zoom: 1 };
+let cameraReady = false;
+let cameraEngaged = false;
+const renderedNodes = new Map();
+let pointCache = new Map();
 let state = { registers: projectState(documents[0]), inputs: {}, timer: null, tick: 0, vector: -1 };
 
 function activeDocument() { return documents.find((doc) => doc.id === activeId); }
@@ -36,8 +41,8 @@ function moduleBlueprint(node) { return documents.find((doc) => doc.bp.name === 
 function inputNodes(bp) { return bp.nodes.filter((node) => node.type === "input"); }
 function hasRegisters(bp) { try { return flattenProject(documents, bp.name).bp.nodes.some((node) => node.type === "register"); } catch { return bp.nodes.some((node) => node.type === "register"); } }
 function currentInputs(bp) { return Object.fromEntries(inputNodes(bp).map((node) => [node.name, state.inputs[node.name] ?? 0])); }
-function portInputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "input").map((item) => item.name) || []) : ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] })[node.type] || []; }
-function portOutputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "output").map((item) => item.name) || []) : ["input", "and", "or", "xor", "not", "signal", "register"].includes(node.type) ? ["out"] : []; }
+function portInputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "input").map((item) => item.name) || []) : ({ and: ["a", "b"], nand: ["a", "b"], or: ["a", "b"], nor: ["a", "b"], xor: ["a", "b"], xnor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] })[node.type] || []; }
+function portOutputs(node) { return node.type === "module" ? (moduleBlueprint(node)?.nodes.filter((item) => item.type === "output").map((item) => item.name) || []) : ["input", "and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register"].includes(node.type) ? ["out"] : []; }
 
 function safeEvaluate(doc) {
   try {
@@ -92,8 +97,10 @@ function renderModuleTools() {
     const row = el("div", "cad-tool-row");
     const button = el("button", "cad-block-tool");
     button.type = "button";
+    button.draggable = true;
     button.append(el("i", "cad-tool-symbol module-symbol", "BP"), el("span", "", doc.bp.name));
     button.addEventListener("click", () => addModule(doc.bp.name));
+    button.addEventListener("dragstart", (event) => event.dataTransfer.setData("application/x-ludus-module", doc.bp.name));
     row.append(button);
     const help = el("a", "cad-help-icon");
     help.href = shelf.dataset.helpHref;
@@ -143,19 +150,48 @@ function render() {
   renderWires(bp, result.values);
   renderVariables(bp, result);
   renderSignalView(bp, result.values);
+  updateCamera();
   try { $("#verilog-code").textContent = generateProjectVerilog(documents, bp.name); }
   catch (error) { $("#verilog-code").textContent = `// ${error.message}\n// Tüm portları bağladıktan sonra Verilog oluşur.`; }
   $("#tick-count").textContent = String(state.tick).padStart(3, "0");
   $("#step-sim").disabled = state.timer !== null;
 }
 
+function fitCamera() {
+  const canvas = $("#blueprint-canvas"), nodes = activeDocument().bp.nodes;
+  const width = canvas.clientWidth, height = canvas.clientHeight;
+  const minX = Math.min(...nodes.map((node) => node.x)), minY = Math.min(...nodes.map((node) => node.y));
+  const maxX = Math.max(...nodes.map((node) => node.x + 150)), maxY = Math.max(...nodes.map((node) => node.y + (node.type === "module" ? Math.max(88, 36 + Math.max(portInputs(node).length, portOutputs(node).length) * 16) : 88)));
+  camera.zoom = Math.max(0.58, Math.min(1.5, (width - 64) / (maxX - minX), (height - 64) / (maxY - minY)));
+  camera.x = (width - (maxX - minX) * camera.zoom) / 2 - minX * camera.zoom;
+  camera.y = (height - (maxY - minY) * camera.zoom) / 2 - minY * camera.zoom;
+  cameraReady = true;
+  cameraEngaged = false;
+}
+
+function updateCamera() {
+  const canvas = $("#blueprint-canvas"), world = $("#camera-world");
+  if (!cameraReady) fitCamera();
+  world.style.setProperty("--camera-zoom", camera.zoom);
+  world.style.transform = `translate(${camera.x}px, ${camera.y}px) scale(${camera.zoom})`;
+  canvas.style.backgroundSize = `${20 * camera.zoom}px ${20 * camera.zoom}px, ${100 * camera.zoom}px ${100 * camera.zoom}px, ${100 * camera.zoom}px ${100 * camera.zoom}px`;
+  canvas.style.backgroundPosition = `${camera.x}px ${camera.y}px, ${camera.x}px ${camera.y}px, ${camera.x}px ${camera.y}px`;
+  $("#zoom-level").textContent = `${Math.round(camera.zoom * 100)}%`;
+}
+
+function screenToWorld(clientX, clientY) {
+  const rect = $("#blueprint-canvas").getBoundingClientRect();
+  return { x: Math.round(((clientX - rect.left - camera.x) / camera.zoom) / 20) * 20, y: Math.round(((clientY - rect.top - camera.y) / camera.zoom) / 20) * 20 };
+}
+
 function renderNodes(bp, values) {
   const layer = $("#node-layer");
   layer.replaceChildren();
+  renderedNodes.clear();
   for (const node of bp.nodes) {
     const card = el("article", `cad-node node-${node.type}${selectedId === node.id ? " is-selected" : ""}`);
-    card.style.left = `${node.x / 9}%`;
-    card.style.top = `${node.y / 6}%`;
+    card.style.left = `${node.x}px`;
+    card.style.top = `${node.y}px`;
     if (node.type === "module") card.style.height = `${Math.max(88, 36 + Math.max(portInputs(node).length, portOutputs(node).length) * 16)}px`;
     card.dataset.id = node.id;
     const header = el("div", "cad-node-head");
@@ -190,6 +226,7 @@ function renderNodes(bp, values) {
     card.addEventListener("pointerdown", (event) => beginDrag(event, node));
     card.addEventListener("click", () => { selectedId = node.id; render(); });
     layer.append(card);
+    renderedNodes.set(node.id, card);
   }
 }
 
@@ -213,11 +250,18 @@ function makePort(node, port, direction) {
 }
 
 function point(node, port, direction) {
-  if (node.type === "module") {
-    const all = direction === "input" ? portInputs(node) : portOutputs(node);
-    const index = Math.max(0, all.indexOf(port));
-    return { x: direction === "output" ? node.x + 150 : node.x, y: node.y + 50 + index * 16 };
-  }
+  const key = `${node.id}:${direction}:${port}`;
+  if (pointCache.has(key)) return pointCache.get(key);
+  const button = [...(renderedNodes.get(node.id)?.querySelectorAll(".cad-port") || [])].find((item) => item.dataset.port === port && item.dataset.direction === direction);
+  if (!button) return { x: node.x + (direction === "output" ? 150 : 0), y: node.y + 44 };
+  const rect = button.getBoundingClientRect(), canvas = $("#blueprint-canvas").getBoundingClientRect();
+  const result = { x: (rect.left + rect.width / 2 - canvas.left - camera.x) / camera.zoom, y: (rect.top + rect.height / 2 - canvas.top - camera.y) / camera.zoom };
+  pointCache.set(key, result);
+  return result;
+}
+
+function miniPoint(node, port, direction) {
+  if (node.type === "module") return point(node, port, direction);
   if (direction === "output") return { x: node.x + 150, y: node.y + 44 };
   if (port === "a") return { x: node.x, y: node.y + 27 };
   if (port === "b") return { x: node.x, y: node.y + 59 };
@@ -225,22 +269,31 @@ function point(node, port, direction) {
 }
 
 function makePath(from, to, className, value) {
-  const mid = Math.round((from.x + to.x) / 2);
+  const mid = Math.round(from.x + Math.max(38, (to.x - from.x) * 0.5));
+  const radius = Math.min(12, Math.abs(mid - from.x) / 2, Math.abs(to.y - from.y) / 2);
+  const dir = to.y >= from.y ? 1 : -1;
+  const d = `M${from.x} ${from.y} H${mid - radius} Q${mid} ${from.y} ${mid} ${from.y + dir * radius} V${to.y - dir * radius} Q${mid} ${to.y} ${mid + radius} ${to.y} H${to.x}`;
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute("d", `M${from.x} ${from.y} H${mid} V${to.y} H${to.x}`);
+  path.setAttribute("d", d);
   path.setAttribute("class", `${className} signal-${String(value ?? X).toLowerCase()}`);
   return path;
 }
 
 function renderWires(bp, values) {
   const svg = $("#wire-layer");
+  pointCache = new Map();
   svg.replaceChildren();
   const nodes = new Map(bp.nodes.map((node) => [node.id, node]));
   for (const wire of bp.wires) {
     const source = nodes.get(wire.from.node);
     const target = nodes.get(wire.to.node);
     if (!source || !target) continue;
-    svg.append(makePath(point(source, wire.from.port, "output"), point(target, wire.to.port, "input"), "cad-wire", values[`${source.id}:${wire.from.port}`] ?? values[source.id] ?? X));
+    const path = makePath(point(source, wire.from.port, "output"), point(target, wire.to.port, "input"), "cad-wire", values[`${source.id}:${wire.from.port}`] ?? values[source.id] ?? X);
+    path.dataset.fromNode = source.id;
+    path.dataset.fromPort = wire.from.port;
+    path.dataset.toNode = target.id;
+    path.dataset.toPort = wire.to.port;
+    svg.append(path);
   }
   if (pendingSource) {
     const source = nodes.get(pendingSource.node);
@@ -278,7 +331,7 @@ function renderSignalView(bp, values) {
   const nodes = new Map(bp.nodes.map((node) => [node.id, node]));
   for (const wire of bp.wires) {
     const source = nodes.get(wire.from.node), target = nodes.get(wire.to.node);
-    if (source && target) svg.append(makePath(point(source, wire.from.port, "output"), point(target, wire.to.port, "input"), "cad-mini-wire", values[`${source.id}:${wire.from.port}`] ?? values[source.id] ?? X));
+    if (source && target) svg.append(makePath(miniPoint(source, wire.from.port, "output"), miniPoint(target, wire.to.port, "input"), "cad-mini-wire", values[`${source.id}:${wire.from.port}`] ?? values[source.id] ?? X));
   }
   for (const node of bp.nodes) {
     const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -322,10 +375,11 @@ function beginDrag(event, node) {
   event.currentTarget.setPointerCapture(event.pointerId);
   const card = event.currentTarget;
   const move = (e) => {
-    node.x = Math.round(Math.max(0, Math.min(740, x + (e.clientX - startX) * 900 / rect.width)) / 20) * 20;
-    node.y = Math.round(Math.max(0, Math.min(510, y + (e.clientY - startY) * 600 / rect.height)) / 20) * 20;
-    card.style.left = `${node.x / 9}%`;
-    card.style.top = `${node.y / 6}%`;
+    node.x = Math.round((x + (e.clientX - startX) / camera.zoom) / 20) * 20;
+    node.y = Math.round((y + (e.clientY - startY) / camera.zoom) / 20) * 20;
+    card.style.left = `${node.x}px`;
+    card.style.top = `${node.y}px`;
+    updateCamera();
     const values = safeEvaluate(activeDocument()).values;
     renderWires(activeDocument().bp, values);
     renderSignalView(activeDocument().bp, values);
@@ -335,13 +389,13 @@ function beginDrag(event, node) {
   card.addEventListener("pointerup", up, { once: true });
 }
 
-function addNode(type) {
+function addNode(type, at = null) {
   const bp = activeDocument().bp;
   const count = bp.nodes.filter((node) => node.type === type).length;
   if (type === "input" && count >= 12) return announce("Bir devrede en fazla 12 giriş ekleyebilirsin.");
   const index = bp.nodes.length;
-  const x = type === "input" ? 60 : type === "output" ? 700 : 310 + (index % 2) * 190;
-  const y = 60 + Math.floor(index / 2) % 5 * 100;
+  const x = at ? at.x : type === "input" ? 60 : type === "output" ? 700 : 310 + (index % 2) * 190;
+  const y = at ? at.y : 60 + Math.floor(index / 2) % 5 * 100;
   const defaultName = type === "input" ? `giris${count ? count + 1 : ""}` : type === "output" ? `cikis${count ? count + 1 : ""}` : `ara_sinyal_${count + 1}`;
   let name = ["input", "output", "signal"].includes(type) ? defaultName : "";
   if (type === "signal") while (bp.nodes.some((item) => item.name === name)) name += "_";
@@ -352,11 +406,11 @@ function addNode(type) {
   persist();
 }
 
-function addModule(moduleName) {
+function addModule(moduleName, at = null) {
   const bp = activeDocument().bp;
   const index = bp.nodes.length;
   const count = bp.nodes.filter((node) => node.type === "module" && node.module === moduleName).length;
-  const node = { id: crypto.randomUUID(), type: "module", module: moduleName, name: `${moduleName}_${count + 1}`, x: 310 + (index % 2) * 190, y: 60 + Math.floor(index / 2) % 5 * 100 };
+  const node = { id: crypto.randomUUID(), type: "module", module: moduleName, name: `${moduleName}_${count + 1}`, x: at?.x ?? 310 + (index % 2) * 190, y: at?.y ?? 60 + Math.floor(index / 2) % 5 * 100 };
   bp.nodes.push(node);
   selectedId = node.id;
   render();
@@ -443,7 +497,11 @@ $("#pause-sim").addEventListener("click", () => { stopTimer(); announce("Simüla
 $("#stop-sim").addEventListener("click", () => { stopTimer(); announce("Simülasyon durdu; yazmaç değerleri korundu."); render(); });
 $("#reset-sim").addEventListener("click", () => { stopTimer(); try { state.registers = resetProject(documents, activeDocument().bp.name); } catch { state.registers = createState(activeDocument().bp); } state.tick = 0; render(); announce("Yazmaç değerleri sıfırlandı; girişler değişmedi."); });
 $("#step-speed").addEventListener("change", () => { if (state.timer !== null) { stopTimer(); state.timer = window.setInterval(tickOnce, Number($("#step-speed").value)); } });
-document.querySelectorAll("[data-add]").forEach((button) => button.addEventListener("click", () => addNode(button.dataset.add)));
+document.querySelectorAll("[data-add]").forEach((button) => {
+  button.draggable = true;
+  button.addEventListener("click", () => addNode(button.dataset.add));
+  button.addEventListener("dragstart", (event) => event.dataTransfer.setData("application/x-ludus-block", button.dataset.add));
+});
 document.querySelectorAll(".cad-help-icon").forEach((link) => {
   const position = () => {
     const tooltip = link.querySelector(".cad-tooltip");
@@ -466,6 +524,102 @@ document.addEventListener("keydown", (event) => {
   const shortcuts = { i: "input", o: "output", a: "and", r: "or", x: "xor", n: "not", q: "register" };
   if (shortcuts[event.key.toLowerCase()]) addNode(shortcuts[event.key.toLowerCase()]);
 });
+
+const canvas = $("#blueprint-canvas"), search = $("#node-search");
+let spaceDown = false;
+function openSearchAt(clientX, clientY) {
+  const bounds = canvas.getBoundingClientRect();
+  search.style.left = `${Math.max(8, Math.min(bounds.width - 250, clientX - bounds.left))}px`;
+  search.style.top = `${Math.max(8, Math.min(bounds.height - 42, clientY - bounds.top))}px`;
+  search.dataset.world = JSON.stringify(screenToWorld(clientX, clientY));
+  search.hidden = false;
+  search.setAttribute("aria-expanded", "true");
+  search.value = "";
+  search.focus();
+}
+document.addEventListener("keydown", (event) => { if (event.code === "Space" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) { spaceDown = true; event.preventDefault(); } });
+document.addEventListener("keyup", (event) => { if (event.code === "Space") spaceDown = false; });
+canvas.addEventListener("wheel", (event) => {
+  event.preventDefault();
+  const rect = canvas.getBoundingClientRect(), px = event.clientX - rect.left, py = event.clientY - rect.top;
+  const next = Math.max(0.25, Math.min(2.5, camera.zoom * (event.deltaY < 0 ? 1.12 : 1 / 1.12)));
+  const worldX = (px - camera.x) / camera.zoom, worldY = (py - camera.y) / camera.zoom;
+  camera = { x: px - worldX * next, y: py - worldY * next, zoom: next };
+  cameraReady = true;
+  cameraEngaged = true;
+  updateCamera();
+}, { passive: false });
+canvas.addEventListener("pointerdown", (event) => {
+  if (event.target.closest(".cad-node") || event.target === search) return;
+  if (event.pointerType === "touch" && event.button === 0) {
+    event.preventDefault();
+    const start = { x: event.clientX, y: event.clientY, cameraX: camera.x, cameraY: camera.y };
+    let moved = false;
+    canvas.setPointerCapture(event.pointerId);
+    const move = (next) => {
+      if (Math.hypot(next.clientX - start.x, next.clientY - start.y) > 5) moved = true;
+      if (moved) { camera.x = start.cameraX + next.clientX - start.x; camera.y = start.cameraY + next.clientY - start.y; cameraEngaged = true; updateCamera(); }
+    };
+    const up = (next) => {
+      canvas.removeEventListener("pointermove", move);
+      canvas.removeEventListener("pointerup", up);
+      if (!moved) openSearchAt(next.clientX, next.clientY);
+    };
+    canvas.addEventListener("pointermove", move);
+    canvas.addEventListener("pointerup", up, { once: true });
+    return;
+  }
+  if (event.button === 1 || (event.button === 0 && spaceDown)) {
+    event.preventDefault();
+    const start = { x: event.clientX, y: event.clientY, cameraX: camera.x, cameraY: camera.y };
+    canvas.setPointerCapture(event.pointerId);
+    const move = (next) => { camera.x = start.cameraX + next.clientX - start.x; camera.y = start.cameraY + next.clientY - start.y; cameraEngaged = true; updateCamera(); };
+    const up = () => { canvas.removeEventListener("pointermove", move); canvas.removeEventListener("pointerup", up); };
+    canvas.addEventListener("pointermove", move);
+    canvas.addEventListener("pointerup", up, { once: true });
+    return;
+  }
+  if (event.button !== 0) return;
+  event.preventDefault();
+  openSearchAt(event.clientX, event.clientY);
+});
+canvas.addEventListener("dragover", (event) => { if ([...event.dataTransfer.types].some((type) => type.startsWith("application/x-ludus-"))) event.preventDefault(); });
+canvas.addEventListener("drop", (event) => {
+  const type = event.dataTransfer.getData("application/x-ludus-block"), moduleName = event.dataTransfer.getData("application/x-ludus-module");
+  if (!type && !moduleName) return;
+  event.preventDefault();
+  const position = screenToWorld(event.clientX, event.clientY);
+  if (moduleName) addModule(moduleName, position); else addNode(type, position);
+});
+search.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") { search.hidden = true; search.setAttribute("aria-expanded", "false"); canvas.focus(); return; }
+  if (event.key !== "Enter") return;
+  event.preventDefault();
+  const key = search.value.trim().toLocaleLowerCase("tr");
+  if (!key) return announce("Eklemek istediğin bloğun adını yaz.");
+  const entries = Object.entries(labels).map(([type, label]) => [type, `${type} ${label}`.toLocaleLowerCase("tr")]);
+  const synonyms = { and: "ve", or: "veya", xor: "ayrık veya", not: "değil", register: "yazmaç" };
+  const hit = entries.find(([type, text]) => text.includes(key) || synonyms[type]?.includes(key));
+  const position = JSON.parse(search.dataset.world);
+  search.hidden = true;
+  search.setAttribute("aria-expanded", "false");
+  if (hit) return addNode(hit[0], position);
+  const module = documents.find((doc) => doc.id !== activeId && doc.bp.name.toLocaleLowerCase("tr").includes(key));
+  if (module) return addModule(module.bp.name, position);
+  announce("Bu adla eklenebilen bir blok bulunamadı.");
+});
+function zoomAtCenter(factor) {
+  const rect = canvas.getBoundingClientRect(), next = Math.max(0.25, Math.min(2.5, camera.zoom * factor));
+  camera.x = rect.width / 2 - (rect.width / 2 - camera.x) * next / camera.zoom;
+  camera.y = rect.height / 2 - (rect.height / 2 - camera.y) * next / camera.zoom;
+  camera.zoom = next;
+  cameraEngaged = true;
+  updateCamera();
+}
+$("#zoom-in").addEventListener("click", () => zoomAtCenter(1.2));
+$("#zoom-out").addEventListener("click", () => zoomAtCenter(1 / 1.2));
+$("#zoom-fit").addEventListener("click", () => { fitCamera(); updateCamera(); });
+window.addEventListener("resize", () => { if (!cameraReady || !cameraEngaged) fitCamera(); updateCamera(); });
 
 try {
   const saved = JSON.parse(localStorage.getItem(storeKey) || "null");

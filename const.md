@@ -9,7 +9,7 @@ Bu dosya kalıcı ürün ve çalışma kurallarını tutar. Bu kurallar Necati'n
 - İlk sürüm için sunucu tarafı bileşen gerekmez. Devre Atölyesi'nin tarayıcı içinde etkileşimli çalışması bu statik yayın kararına aykırı değildir.
 - Ana uygulama ve istemcinin gördüğü bütün metinler Türkçe olmalıdır; buna arayüz, tanıtım ve yayımlanan dokümantasyon dahildir. İç geliştirme notları Türkçe veya İngilizce olabilir. Standart Verilog sözdizimi, teknik özel adlar ve `.bp` gibi dosya uzantıları özgün yazımlarıyla kalabilir.
 - Tasarım estetik, sürükleyici ve anlaşılır olmalı; öğrenme aracı karmaşık bir profesyonel EDA arayüzüne dönüşmemelidir.
-- Blok kümesi olabildiğince küçük tutulmalı ve başlangıç düzeyinde kolay kullanılmalıdır.
+- Blok kümesi olabildiğince küçük tutulmalı ve başlangıç düzeyinde kolay kullanılmalıdır. Bir blok eklenmesi, anlaşılır bir öğrenme adımı sağlamalı; simülatör, Verilog, `.bp` uyumluluğu, yardım, ders içeriği ve zorlayıcı oracle testleri birlikte güncellenmelidir.
 - İçerik ve etkileşimler ortaokul düzeyindeki bir başlangıç öğrencisinin de takip edebileceği sadelikte tasarlanmalıdır. Arayüzde onluk değerlerle çalışmak uygundur; donanımın ikili mantıkla çalıştığı saklanmamalı, ikilik gösterim gerektiğinde sade bir köprüyle açıklanmalıdır.
 - İlk ürün web tarayıcısında çalışır; masaüstü uygulaması ve fiziksel FPGA kartına yükleme MVP kapsamı dışındadır. Tarayıcıda benzetim ve Verilog çıktısı yeterlidir.
 - Öğrenme kazanımı bir quiz/test ile ölçülebilir olacak şekilde kurulmalıdır. Ölçülmemiş bir etki iddiası sonuç gibi sunulmaz.

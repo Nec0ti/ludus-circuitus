@@ -260,3 +260,37 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR #9 `05c3be0` ile birleştirildi; CI build geçti, Pages deploy (`45246752372`) başarılı. Canlı `https://nec0ti.github.io/ludus-circuitus/` HTTP 200 döndürdü; yayındaki `/docs/bloklar/` başlığı ve ilgili bölüm metinleri doğrulandı.
 - Aynı kayıt güncellemesinde `notes.md` içindeki eski açık kararlar, uygulamadaki reset, `.bp` modül bileşimi, sinyal paneli ve 1-bit semantiğiyle eşleştirildi.
 - Kalan: CircuitVerse üzerinde yarım-toplayıcıyı aynı adımlarla kurup sonucu/Verilog görünürlüğünü doğrulamak; VPLAS canlı demosunu bulmak veya makale kapsamıyla sınırlı kaldığını korumak; rakip arayüzlerde aynı görevi gerekirse bağımsız bir gözlemciyle yeniden incelemek. Özgünlük ve öğrenme etkisi onaylanmış/kanıtlanmış değildir.
+
+## 2026-11-23 — Sonsuz blueprint tuvali ve ders yolunun modülerleştirilmesi
+
+- Devre Atölyesi'nde sınırlandırılmış kaydırma alanı yerine kamera ile pan/zoom yapan blueprint düzlemi kuruldu. Mouse tekerleği imlecin altındaki dünya noktasını sabit tutuyor; Space+sürükleme ve orta tuş pan yapıyor. Dokunmatik ekranda sürükleme pan, kısa dokunma blok araması açıyor. Sığdır görünümü mevcut `.bp` node koordinatlarına göre çerçeveliyor; kaydedilmiş sürüm 1 belgeleri değişmedi.
+- Araçlıktaki bloklar tıklamayla mevcut ekleme davranışını koruyor; drag/drop bırakıldığı grid koordinatında oluşturuyor. Boş tuval araması isimle blok ekliyor. Ortogonal kablo köşeleri yuvarlatıldı.
+- NAND/NOR/XNOR eklendi: port ve geçerli tür sözleşmesi, 0/1/X benzetimi, Verilog kod üretimi, `.bp` modül doğrulama/düzleştirme, yardım ve doğruluk tabloları eşlendi. 12 × 40 sabit tohumlu devre, 16 ikili + 5 X vektörüyle toplam 252 Icarus sonucu kontrol etti.
+- Kullanıcı “dokümantasyon hâlâ karışık” geri bildirimi verdi. Başlangıç sayfası kurs haritasına döndü; dijital sinyaller, mantık kapıları, yarım toplayıcı, paralel yollar, saat/yazmaç ve bloktan Verilog'a altı kısa sayfaya ayrıldı. Kullanım, blok kataloğu ve yerel kurulum ayrı katlanabilir gruplar olarak kaldı; yaklaşık toplam rehber süresi 41 dk.
+- Bağımsız docs QA: masaüstü/mobilde sıra, etkin menü, sonraki ders bağlantıları, tablo sığması ve taşma kontrol edildi; bloklayıcı sorun yok. Mobilde menü 381 px yüksekliğinde ve konu içindekiler aşağıda kalıyor; ders başlığı ilk ekranda görünüyor. Görseller `raports/docs-curriculum-review-2026-11-23.md` içinde.
+- İlk bağımsız workbench görsel incelemesi mobil ölçekte küçük node ve pan eksikliği buldu. İçeriğe göre fit, %58 asgari ilk görünüm, resize'da otomatik sığdırma, dokunmatik pan ve mobil üst satır düzeni eklendi. Son bağımsız workbench görsel geri kontrolü bekleniyor.
+- Değişenler: `assets/js/{engine,project,playground}.mjs`, `playground/index.html`, CSS çıktısı/kaynağı, `tests/{engine,project}.test.mjs`, E2E ve iverilog oracle, docs gezinmesi ve altı yeni ders sayfası, `const.md`, `notes.md`, backlog, raporlar.
+- Doğrulama: Tailwind CSS build ve Jekyll build geçti; Node **20/20**; Icarus 252 kapı vektörü ve hiyerarşik `.bp` oracle'ları geçti; Playwright E2E **26/26** geçti (tam ekran, mobil fit, arama, imleç-zoom, pan, drag/drop, kayıt/bağlantı, gate yardımı, docs gezinme ve süreler dahil); `git diff --check` temiz.
+- İlk ve ikinci uygulama commitleri `a2955cc` ve `30a031b`. Son workbench masaüstü/mobil ekran incelemesi sürüyor; bu log ekinde yalnız koordinat doğrulama güvenlik düzeltmesi `21/21` Node testinden geçti. Kalan: son görsel QA, bu küçük düzeltme için commit, PR CI ve yeşil kontroller sonrası main merge/Pages yayını.
+
+## 2026-11-23 — Mobil yakınlaştırmada node etiketlerini okunur tutma
+
+- Son mobil görsel inceleme node kartlarının sığdığını, fakat kamera transformunun 9 px başlıkları yaklaşık 5 px'e düşürdüğünü belirtti. Node başlığı, ikon, silme düğmesi, değer ve modül port metinleri artık kamera zoom oranına ters ölçeklenerek ekranda sabit ölçüde çiziliyor; graph geometrisi ve node konumu değişmiyor.
+- Doğrulama: CSS ve Jekyll build; Playwright **26/26**, mobil test tüm başlangıç bloklarının sığdığını ve etiketin ekranda 9 px kaldığını doğruluyor. Dokunma pan ve tıklama davranışı önceki akışla korunuyor. `git diff --check` geçti.
+- Kalan: bağımsız ekran geri kontrolü, bu son görsel düzeltme commit'i, PR CI ve Pages yayın doğrulaması.
+
+## 2026-11-23 — Ana blueprint kablolarını görünür ve portlara hizalı yapma
+
+- Bağımsız inceleme, orta çalışma alanındaki SVG'nin sıfır boyutlu kaldığını ve bu yüzden kabloların görünmediğini buldu; sağdaki minik devre görünümü bunu gizlemişti. SVG'ye blueprint koordinat alanı verildi. Kablo uçları artık çizilmiş node portlarının gerçek DOM merkezlerinden hesaplanıyor; mini devredeki ayrı görünüm korunuyor.
+- Yeni E2E testi ana SVG'nin görünür alanını ve altı kablonun iki ucunun da gerçek port merkezlerine 0.75 ekran pikselinden yakınlığını doğruluyor.
+- Değişenler: `playground/index.html`, `assets/css/input.css`, derlenmiş `assets/css/site.css`, `assets/js/playground.mjs`, `tests/e2e/playground.spec.mjs`, bu rapor, backlog ve bu günlük.
+- Doğrulama: Tailwind CSS ve Jekyll build geçti; Node **21/21**; Icarus 252 seeded kapı vektörü ve hiyerarşik `.bp` oracle'ları geçti; Playwright **27/27**; `git diff --check` temiz.
+- Kalan: commit/push, ayrı worktree'de son masaüstü/mobil görsel geri kontrolü, güncel PR CI ve Pages yayın doğrulaması.
+
+## 2026-11-23 — Son atölye masaüstü/mobil görsel kontrolü
+
+- Bağımsız ajan temiz worktree'de `94350c0` commitini inceledi. Ana çalışma SVG'sinde desktop ve mobilde altı kablonun tamamı görünür; uçlar fit/zoom/dokunmatik pan sonrasında gerçek port merkezlerine kayan hata olmadan oturuyor ve yollar tuval dışına taşmıyor. Kablolar yumuşak dirsekli; mobil etiketler okunur; yatay taşma/toolbar çakışması yok.
+- Ekran görüntüleri: `/tmp/ludus-wire-94350c0-1440-viewport.png`, `/tmp/ludus-wire-94350c0-390-viewport.png`, `/tmp/ludus-wire-94350c0-1440-canvas.png`, `/tmp/ludus-wire-94350c0-390-canvas.png`, `/tmp/ludus-wire-94350c0-1440-signal.png`. Yalnız küçük akış notu: 390×844 ilk görünüm node sırasının az üstünde biter; kullanıcı biraz kaydırınca tüm devre görünür.
+- Güncel PR build'i geçti (`45260520482`). Yerel kontroller: CSS/Jekyll build, Node **21/21**, Icarus **252** seeded kapı vektörü ve hiyerarşik `.bp` oracle'ları, Playwright **27/27**, `git diff --check`.
+- Değişenler: bu rapor, backlog ve günlük.
+- Kalan: bu inceleme kaydını küçük commit/push yapmak; PR #11'i birleştirmek ve Pages deploy/live smoke kontrolünü kaydetmek.

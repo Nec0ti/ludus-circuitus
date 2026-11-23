@@ -22,6 +22,30 @@ test("Devre Atölyesi is a standalone full-screen industrial workspace", async (
   expect(errors).toEqual([]);
 });
 
+test("main blueprint wires render in the SVG viewport and meet their port centers", async ({ page }) => {
+  await page.goto("/playground/");
+  const svg = page.locator("#wire-layer");
+  const bounds = await svg.boundingBox();
+  expect(bounds.width).toBeGreaterThan(0);
+  expect(bounds.height).toBeGreaterThan(0);
+  await expect(svg.locator(".cad-wire")).toHaveCount(6);
+  const mismatches = await svg.locator(".cad-wire").evaluateAll((paths) => {
+    const world = new DOMMatrixReadOnly(getComputedStyle(document.querySelector("#camera-world")).transform);
+    const canvas = document.querySelector("#blueprint-canvas").getBoundingClientRect();
+    const screenPoint = (point) => ({ x: canvas.left + world.e + point.x * world.a, y: canvas.top + world.f + point.y * world.d });
+    return paths.map((path) => {
+      const start = screenPoint(path.getPointAtLength(0)), end = screenPoint(path.getPointAtLength(path.getTotalLength()));
+      const fromButton = document.querySelector(`.cad-node[data-id="${path.dataset.fromNode}"] .cad-port[data-port="${path.dataset.fromPort}"][data-direction="output"]`);
+      const toButton = document.querySelector(`.cad-node[data-id="${path.dataset.toNode}"] .cad-port[data-port="${path.dataset.toPort}"][data-direction="input"]`);
+      if (!fromButton || !toButton) return { missing: [path.dataset.fromNode, path.dataset.fromPort, path.dataset.toNode, path.dataset.toPort] };
+      const from = fromButton.getBoundingClientRect(), to = toButton.getBoundingClientRect();
+      const distance = (point, rect) => Math.hypot(point.x - rect.left - rect.width / 2, point.y - rect.top - rect.height / 2);
+      return Math.max(distance(start, from), distance(end, to));
+    });
+  });
+  expect(mismatches.every((distance) => distance < 0.75), JSON.stringify(mismatches)).toBe(true);
+});
+
 test("keeps the full-screen workbench usable at narrow viewport widths", async ({ page }) => {
   await page.goto("/playground/");
   for (const width of [320, 390, 768, 1440]) {
@@ -147,8 +171,11 @@ test("shows concise help beside every block and opens its docs in a new tab", as
     ["Giriş", /#giris-cikis/, "Devreye dışarıdan 0 veya 1 değerinde sinyal verir."],
     ["Çıkış", /#giris-cikis/, "Bir mantık yolunun ürettiği 0, 1 veya X değerini gösterir."],
     ["AND", /#mantik-kapilari/, "Yalnızca iki girişi de 1 olduğunda 1 üretir."],
+    ["NAND", /#mantik-kapilari/, "AND sonucunu tersine çevirir."],
     ["OR", /#mantik-kapilari/, "Girişlerinden en az biri 1 ise 1 üretir."],
+    ["NOR", /#mantik-kapilari/, "OR sonucunu tersine çevirir."],
     ["XOR", /#mantik-kapilari/, "İki girişi farklıysa 1 üretir."],
+    ["XNOR", /#mantik-kapilari/, "XOR sonucunu tersine çevirir; girişler aynıysa 1 üretir."],
     ["NOT", /#mantik-kapilari/, "Girişteki 0'ı 1'e, 1'i 0'a çevirir."],
     ["Ara sinyal", /#ara-sinyal/, "Bir mantık yoluna ad verir; değerini değişkenler panelinde canlı izle."],
     ["Yazmaç", /#yazmac/, "D girişini bir yükselen clock kenarında saklar ve Q çıkışında tutar."]
@@ -162,7 +189,7 @@ test("shows concise help beside every block and opens its docs in a new tab", as
     await expect(help.getByRole("tooltip")).toHaveText(summary);
   }
 
-  const help = page.getByRole("link", { name: "AND bloğu yardımı, yeni sekmede" });
+  const help = page.getByRole("link", { name: "AND bloğu yardımı, yeni sekmede", exact: true });
   const popupPromise = page.waitForEvent("popup");
   await help.click();
   const popup = await popupPromise;
@@ -176,5 +203,75 @@ test("shows concise help beside every block and opens its docs in a new tab", as
   await expect(moduleHelp).toHaveAttribute("href", /docs\/bloklar\/#bp-modulleri/);
   await moduleHelp.hover();
   await expect(moduleHelp.getByRole("tooltip")).toHaveText("Bu blueprint'i giriş ve çıkış portlarıyla tek blok olarak kullanır.");
+});
+
+test("canvas wheel zoom keeps the pointer's world point stable and click-to-search adds a snapped block", async ({ page }) => {
+  await page.goto("/playground/");
+  const canvas = page.locator("#blueprint-canvas"), box = await canvas.boundingBox();
+  const px = box.x + box.width * 0.82, py = box.y + box.height * 0.24;
+  const worldAtPointer = () => page.evaluate(({ px, py }) => {
+    const matrix = new DOMMatrixReadOnly(getComputedStyle(document.querySelector("#camera-world")).transform);
+    const rect = document.querySelector("#blueprint-canvas").getBoundingClientRect();
+    return [(px - rect.left - matrix.e) / matrix.a, (py - rect.top - matrix.f) / matrix.d];
+  }, { px, py });
+  const before = await worldAtPointer();
+  await page.mouse.move(px, py);
+  await page.mouse.wheel(0, -160);
+  const after = await worldAtPointer();
+  expect(Math.abs(after[0] - before[0])).toBeLessThan(0.2);
+  expect(Math.abs(after[1] - before[1])).toBeLessThan(0.2);
+  await page.mouse.click(px, py);
+  const search = page.getByRole("combobox", { name: "Blok ara ve ekle" });
+  await expect(search).toBeFocused();
+  await search.fill("NAND");
+  await search.press("Enter");
+  await expect(page.locator(".node-nand")).toHaveCount(1);
+  const position = await page.locator(".node-nand").getAttribute("style");
+  expect(position).toMatch(/left: -?\d+px; top: -?\d+px/);
+});
+
+test("block tools can be dragged onto the canvas and grid snapping remains enabled", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.locator('[data-add="nand"]').dragTo(page.locator("#blueprint-canvas"), { targetPosition: { x: 220, y: 180 } });
+  await expect(page.locator(".node-nand")).toHaveCount(1);
+  const position = await page.locator(".node-nand").getAttribute("style");
+  expect(position).toMatch(/left: -?\d+px; top: -?\d+px/);
+});
+
+test("space-drag pans the blueprint camera without moving blocks", async ({ page }) => {
+  await page.goto("/playground/");
+  const card = page.locator('.cad-node[data-id="a"]');
+  const blockBefore = await card.getAttribute("style");
+  const cameraBefore = await page.locator("#camera-world").evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).e);
+  const box = await page.locator("#blueprint-canvas").boundingBox();
+  await page.keyboard.down("Space");
+  await page.mouse.move(box.x + 30, box.y + 30);
+  await page.mouse.down();
+  await page.mouse.move(box.x + 95, box.y + 75, { steps: 4 });
+  await page.mouse.up();
+  await page.keyboard.up("Space");
+  const cameraAfter = await page.locator("#camera-world").evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).e);
+  expect(cameraAfter - cameraBefore).toBeCloseTo(65, 0);
+  await expect(card).toHaveAttribute("style", blockBefore);
+});
+
+test("fit keeps every sample block legible and inside the mobile canvas", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.setViewportSize({ width: 390, height: 844 });
+  const canvas = await page.locator("#blueprint-canvas").boundingBox();
+  await expect(page.locator("#zoom-level")).toHaveText(/^(5[8-9]|[6-9]\d|100)%$/);
+  for (const node of await page.locator(".cad-node").all()) {
+    const box = await node.boundingBox();
+    expect(box.x).toBeGreaterThanOrEqual(canvas.x - 1);
+    expect(box.y).toBeGreaterThanOrEqual(canvas.y - 1);
+    expect(box.x + box.width).toBeLessThanOrEqual(canvas.x + canvas.width + 1);
+    expect(box.y + box.height).toBeLessThanOrEqual(canvas.y + canvas.height + 1);
+  }
+  const labelScale = await page.locator(".cad-node-name").first().evaluate((node) => {
+    const world = new DOMMatrixReadOnly(getComputedStyle(document.querySelector("#camera-world")).transform);
+    return parseFloat(getComputedStyle(node).fontSize) * world.a;
+  });
+  expect(labelScale).toBeGreaterThanOrEqual(8.9);
+  expect(labelScale).toBeLessThanOrEqual(9.1);
 });
 

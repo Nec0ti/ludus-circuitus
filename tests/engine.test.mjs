@@ -29,8 +29,17 @@ test("logic gates follow Verilog four-state truth tables", () => {
     assert.equal(evaluate(fixture("and"), { a, b }).outputs.toplam, a === 0 || b === 0 ? 0 : a === 1 && b === 1 ? 1 : X);
     assert.equal(evaluate(fixture("or"), { a, b }).outputs.toplam, a === 1 || b === 1 ? 1 : a === 0 && b === 0 ? 0 : X);
     assert.equal(evaluate(fixture("xor"), { a, b }).outputs.toplam, a === X || b === X ? X : a ^ b);
+    assert.equal(evaluate(fixture("nand"), { a, b }).outputs.toplam, a === 0 || b === 0 ? 1 : a === 1 && b === 1 ? 0 : X);
+    assert.equal(evaluate(fixture("nor"), { a, b }).outputs.toplam, a === 1 || b === 1 ? 0 : a === 0 && b === 0 ? 1 : X);
+    assert.equal(evaluate(fixture("xnor"), { a, b }).outputs.toplam, a === X || b === X ? X : 1 - (a ^ b));
   }
   assert.deepEqual([0, 1, X].map((a) => evaluate(fixture("not"), { a }).outputs.toplam), [1, 0, X]);
+});
+
+test("complementary gate Verilog uses bitwise operators with matching polarity", () => {
+  assert.match(generateVerilog(fixture("nand")), /assign n_\d+ = ~\(a & b\);/);
+  assert.match(generateVerilog(fixture("nor")), /assign n_\d+ = ~\(a \| b\);/);
+  assert.match(generateVerilog(fixture("xnor")), /assign n_\d+ = a ~\^ b;/);
 });
 
 test("rejects undriven inputs, duplicate drivers and combinational cycles", () => {
@@ -41,6 +50,14 @@ test("rejects undriven inputs, duplicate drivers and combinational cycles", () =
   cycle.wires = cycle.wires.filter((wire) => !(wire.from.node === "a" && wire.to.node === "sum"));
   cycle.wires.push({ from: { node: "sum", port: "out" }, to: { node: "sum", port: "a" } });
   assert.throws(() => validateBlueprint(cycle), /döngü/);
+});
+
+test("rejects non-finite or unsafe blueprint coordinates before rendering", () => {
+  const bp = halfAdderBlueprint();
+  bp.nodes[0].x = Number.POSITIVE_INFINITY;
+  assert.throws(() => validateBlueprint(bp), /koordinatları geçersiz/);
+  bp.nodes[0].x = 1_000_001;
+  assert.throws(() => validateBlueprint(bp), /çalışma alanı sınırını/);
 });
 
 test("registers start X, reset explicitly and update from one old-state snapshot", () => {

@@ -5,14 +5,14 @@ const key = (node, port) => node + ":" + port;
 const maxExpandedNodes = 500;
 const inputsOf = (node, modules) => node.type === "module"
   ? (modules.get(node.module)?.nodes.filter((item) => item.type === "input").map((item) => item.name) || [])
-  : ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] })[node.type] || [];
+  : ({ and: ["a", "b"], nand: ["a", "b"], or: ["a", "b"], nor: ["a", "b"], xor: ["a", "b"], xnor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] })[node.type] || [];
 const outputsOf = (node, modules) => node.type === "module"
   ? (modules.get(node.module)?.nodes.filter((item) => item.type === "output").map((item) => item.name) || [])
-  : node.type === "input" || ["and", "or", "xor", "not", "signal", "register"].includes(node.type) ? ["out"] : [];
+  : node.type === "input" || ["and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register"].includes(node.type) ? ["out"] : [];
 
 function inspectBlueprint(bp, modules) {
   if (!bp || bp.version !== 1 || typeof bp.name !== "string" || !validName.test(bp.name) || !Array.isArray(bp.nodes) || !Array.isArray(bp.wires) || bp.nodes.length > 500 || bp.wires.length > 2000) throw new Error("Blueprint biçimi, adı, boyutu veya sürümü geçersiz.");
-  const nodes = new Map(), names = new Set(), allowed = new Set(["input", "output", "and", "or", "xor", "not", "signal", "register", "module"]);
+  const nodes = new Map(), names = new Set(), allowed = new Set(["input", "output", "and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register", "module"]);
   for (const node of bp.nodes) {
     if (!node || typeof node.id !== "string" || !node.id || node.id.length > 100 || nodes.has(node.id) || !allowed.has(node.type)) throw new Error("Blok türü veya kimliği geçersiz.");
     if (node.type === "module" && (!modules.has(node.module) || !validName.test(node.name || "instance"))) throw new Error("Modül bloğu geçerli bir blueprint modülünü göstermeli.");
