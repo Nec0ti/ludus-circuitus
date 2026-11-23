@@ -71,6 +71,8 @@ test("block catalog documents exact ports and distinguishes named wires from reg
   await expect(portsExplanation).toContainText("Ara Sinyal yalnızca isim verilmiş bir");
   await expect(portsExplanation).toContainText("aktif-yüksek asenkron reset");
   await expect(page.locator(".docs-callout")).toContainText("fiziksel kapı gecikmesini");
+  await expect(page.locator(".docs-callout")).toContainText("Ekrandaki 0/1 değerleri onluk gösterimdir");
+  await expect(page.locator(".docs-callout")).toContainText("ikilik 0/1 ile aynıdır");
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     const overflowing = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);

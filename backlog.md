@@ -22,7 +22,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [ ] Danışman/alan öğretmeniyle kazanımları ve maddeleri gözden geçir; okul içinde gönüllü/karşılaştırma koşulunu belirle ve MEB izin dosyasında onaylat.
 - [x] MVP blok kümesini ve port sözleşmesini tanımla. Giriş/çıkış + AND/OR/XOR/NOT + adlandırılmış ara sinyal + yazmaç + dinamik `.bp` modülü; sabit/MUX/çok bit/clock bloğu MVP dışında.
 - [x] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle ve çalışan editör akışına bağla.
-- [ ] Onluk kullanıcı değerleri, Verilog bit genişliği ve ikilik fiziksel davranış arasındaki pedagojik eşlemeyi tasarla.
+- [x] Onluk kullanıcı değerleri, Verilog bit genişliği ve ikilik gösterim eşlemesini MVP için belirle: yalnızca 1-bit 0/1 gösterilir; onluk değer doğrudan aynı Verilog biti olur, yazmaç başlangıç X’i korunur, çok bit kapsam dışıdır.
 - [x] Değişken paneli kapsamını belirle ve adlandırılmış Ara Sinyal bloğunu ekle. Giriş/çıkış/yazmaç ve ara sinyallerin canlı değerleri görünür; sabit/parametre yönetimi MVP dışında.
 - [ ] Zorlayıcı test/benchmark şartnamesi, veri kümesi, eşikler ve başarısız kontrollerde push engelini tasarla.
 - [ ] Gerçek Verilog üretimini, benzetimi ve `.bp` kaydet/yükle akışını benchmark kapılarından geçir.
