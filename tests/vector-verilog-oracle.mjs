@@ -26,10 +26,11 @@ const vectorsFor = (width) => {
     vector(width, zero, ones, X), vector(width, ones, zero, X),
     vector(width, `1${"0".repeat(width - 1)}`, `0${"1".repeat(width - 1)}`, 0),
     vector(width, `${"0".repeat(width - 1)}1`, `${"1".repeat(width - 1)}0`, 1),
+    vector(width, zero, `1${"0".repeat(width - 1)}`, X),
     vector(width, alternating, alternating.split("").map((bit) => bit === "0" ? "1" : "0").join(""), X),
     vector(width, `X${"0".repeat(width - 1)}`, `${"1".repeat(width - 1)}X`, X)
   ];
-  for (let index = 0; index < 40; index++) pattern.push(vector(width, randomBits(width), randomBits(width), [0, 1, X][nextRandom() % 3]));
+  for (let index = 0; index < 39; index++) pattern.push(vector(width, randomBits(width), randomBits(width), [0, 1, X][nextRandom() % 3]));
   return pattern;
 };
 
