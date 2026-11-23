@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build:css": "tailwindcss -i assets/css/input.css -o assets/css/site.css --minify",
-    "watch:css": "tailwindcss -i assets/css/input.css -o assets/css/site.css --watch=always"
+    "watch:css": "tailwindcss -i assets/css/input.css -o assets/css/site.css --watch=always",
+    "test": "node --test"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.5",

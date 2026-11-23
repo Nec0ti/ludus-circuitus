@@ -4,7 +4,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
-- İlk çalışan uygulama MVP'si: etkileşimli blueprint editörü, gerçek Verilog üretimi, sıralı simülasyon ve yerel blueprint kaydı.
+- İlk çalışan uygulama MVP'si: pure graph motoru ve Node benchmark'ları başlatıldı; henüz arayüze bağlı değil. Sonraki sıra: etkileşimli editör, canlı Verilog/sinyal görünümü, .bp saklama ve clock/register; sonra quiz/docs.
 - GitHub Pages yayını: workflow build'i geçti; değişken build başlarken ayarlandığı için ilk deploy adımı atlandı. Manuel yayın desteği eklenecek, site URL'si doğrulanacak.
 
 ## Sıradaki işler
@@ -43,4 +43,5 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] Jekyll/Tailwind iskeletini, Türkçe tanıtım ve dört docs sayfasını, responsive çok panelli playground prototipini ve Pages workflow'unu oluşturup yarım toplayıcı etkileşimini tarayıcıda doğrula.
 - [x] README ve sayfa metinlerini mevcut taslak durumunu doğru gösterecek şekilde güncelle; drag-drop, codegen, sıralı mantık ve kayıt özelliklerinin henüz olmadığını belirt.
 - [x] Öğrenme ölçümü için yeterli gönüllüde eşit süreli karşılaştırma, yetersiz örneklemde nedensel iddiasız tek grup pilotu ve ad-soyadsız kaba sınıf bandı tercihlerini kaydet.
+- [x] Pure grafik motorunun ilk katmanı: half-adder evaluation, X dahil kapı semantiği, döngü/eksik port/çoklu sürücü reddi, register reset ve toplu kenar güncellemesi, başlangıç Verilog codegen; Node test kapısı.
 - [x] `Nec0ti/ludus-circuitus` deposunu açıkça onaylanan şekilde public yap; Git geçmişindeki merge commit kişisel yazar metadatasını kullanıcıya bildir.
