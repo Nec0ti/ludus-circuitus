@@ -18,7 +18,7 @@ function seededCircuits() {
     const wires = [];
     const sources = nodes.map((node) => node.id);
     for (let index = 0; index < 40; index++) {
-      const type = ["and", "or", "xor", "not"][random(4)];
+      const type = ["and", "nand", "or", "nor", "xor", "xnor", "not"][random(7)];
       const id = `g${index}`;
       nodes.push({ id, type, name: "", x: 100 + (index % 8) * 80, y: index * 20 });
       const first = sources[random(sources.length)];
@@ -115,7 +115,7 @@ endmodule
   const actualRows = [...randomRun.stdout.matchAll(/^R\d+=(\S+)$/gmi)].map((match) => match[1].toLowerCase());
   const expectedRows = vectors.map((vector) => circuits.map((bp) => evaluate(bp, Object.fromEntries(inputs.map((name, index) => [name, vector[index]]))).outputs.y).reverse().map((value) => value === X ? "x" : value).join(""));
   assert.deepEqual(actualRows, expectedRows, "12 seeded 40-gate circuits, 16 binary vectors and 5 X vectors");
-  console.log("Icarus Verilog: yarım toplayıcı/register oracle'ları ve 12 seeded 40-gate devrenin 252 vektörü benzetimle eşleşti.");
+  console.log("Icarus Verilog: yarım toplayıcı/register oracle'ları ve 12 seeded 40-gate AND/NAND/OR/NOR/XOR/XNOR/NOT devresinin 252 vektörü benzetimle eşleşti.");
 } finally {
   await rm(dir, { recursive: true, force: true });
 }

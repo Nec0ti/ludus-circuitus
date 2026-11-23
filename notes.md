@@ -17,6 +17,12 @@ Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde ö
 
 Detay, alternatifler ve sınırlılıklar: [`research/measurement/learning-study.md`](research/measurement/learning-study.md) ve [`research/privacy/data-collection-plan.md`](research/privacy/data-collection-plan.md).
 
+## Devre Atölyesi etkileşim ve ders yönü: 2026-11-23
+
+- Kullanıcı, örnek görseller üzerinden Atölye'nin endüstriyel ve araç merkezli görünmesini; sonsuz 2B grid, grid snap, tekerlekle yakınlaştırma, araçlıktan sürükleyip bırakma ve boş alanda isim yazarak blok çağırmayı istedi. Bu istek [yeniden tasarım raporunda](raports/workbench-redesign-2026-11-23.md) uygulama sınırı ve dışarıda bırakılanlarla kayıtlı.
+- 1-bit başlangıç kataloğunu ölçülü büyütme isteği doğrultusunda NAND, NOR ve XNOR seçildi. MUX, sabit giriş ve çok bitli değerler şimdilik kapsam dışı; her yeni blok tam simülasyon/Verilog/docs/test eşleşmesine tabi.
+- Kullanıcı docs'un hâlâ karışık olduğunu ve daha fazla küçük sayfa/kategori istediğini belirtti. Taslak bilgi mimarisi: dijital sinyaller, mantık kapıları, kombinasyonel devre kurma, paralel yollar, saat/yazmaç ve Verilog'a geçiş. Ayrı sayfa yapısı uygulanıp kullanıcı geri bildirimiyle gözden geçirilecek.
+
 ## İlk etkileşimli atölye dilimi: 2026-11-23
 
 - Devre Atölyesi site nav/footer'ından ayrıldı ve tam ekran koyu endüstriyel CAD/CAM çalışma alanına alındı. Izgara, araçlık, belge sekmeleri, saat kontrolü, değişken şeridi, sinyal görünümü ve Verilog paneli aynı ekranda yer alıyor.

@@ -70,6 +70,15 @@ test("composes a named .bp module and matches all half-adder vectors", () => {
   assert.match(verilog, /wire __ludus_instance_1_xor_tap;/);
 });
 
+test("new gate types validate inside reusable .bp modules", () => {
+  const gateDoc = structuredClone(adder), top = topWithModule();
+  gateDoc.bp.nodes.find((node) => node.id === "carry").type = "nand";
+  const docs = [top, gateDoc];
+  validateProject(docs);
+  assert.deepEqual(evaluateProject(docs, "top", { x: 1, y: 1 }).outputs, { sum_out: 0, carry_out: 0 });
+  assert.match(generateProjectVerilog(docs, "top"), /assign n_\d+ = ~\(x & y\);/);
+});
+
 test("clocked registers inside a nested .bp module share project tick and reset semantics", () => {
   const sequential = {
     id: "seq-file", name: "flipflop.bp",

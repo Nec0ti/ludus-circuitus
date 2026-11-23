@@ -147,8 +147,11 @@ test("shows concise help beside every block and opens its docs in a new tab", as
     ["Giriş", /#giris-cikis/, "Devreye dışarıdan 0 veya 1 değerinde sinyal verir."],
     ["Çıkış", /#giris-cikis/, "Bir mantık yolunun ürettiği 0, 1 veya X değerini gösterir."],
     ["AND", /#mantik-kapilari/, "Yalnızca iki girişi de 1 olduğunda 1 üretir."],
+    ["NAND", /#mantik-kapilari/, "AND sonucunu tersine çevirir."],
     ["OR", /#mantik-kapilari/, "Girişlerinden en az biri 1 ise 1 üretir."],
+    ["NOR", /#mantik-kapilari/, "OR sonucunu tersine çevirir."],
     ["XOR", /#mantik-kapilari/, "İki girişi farklıysa 1 üretir."],
+    ["XNOR", /#mantik-kapilari/, "XOR sonucunu tersine çevirir; girişler aynıysa 1 üretir."],
     ["NOT", /#mantik-kapilari/, "Girişteki 0'ı 1'e, 1'i 0'a çevirir."],
     ["Ara sinyal", /#ara-sinyal/, "Bir mantık yoluna ad verir; değerini değişkenler panelinde canlı izle."],
     ["Yazmaç", /#yazmac/, "D girişini bir yükselen clock kenarında saklar ve Q çıkışında tutar."]
@@ -162,7 +165,7 @@ test("shows concise help beside every block and opens its docs in a new tab", as
     await expect(help.getByRole("tooltip")).toHaveText(summary);
   }
 
-  const help = page.getByRole("link", { name: "AND bloğu yardımı, yeni sekmede" });
+  const help = page.getByRole("link", { name: "AND bloğu yardımı, yeni sekmede", exact: true });
   const popupPromise = page.waitForEvent("popup");
   await help.click();
   const popup = await popupPromise;
@@ -176,5 +179,55 @@ test("shows concise help beside every block and opens its docs in a new tab", as
   await expect(moduleHelp).toHaveAttribute("href", /docs\/bloklar\/#bp-modulleri/);
   await moduleHelp.hover();
   await expect(moduleHelp.getByRole("tooltip")).toHaveText("Bu blueprint'i giriş ve çıkış portlarıyla tek blok olarak kullanır.");
+});
+
+test("canvas wheel zoom keeps the pointer's world point stable and click-to-search adds a snapped block", async ({ page }) => {
+  await page.goto("/playground/");
+  const canvas = page.locator("#blueprint-canvas"), box = await canvas.boundingBox();
+  const px = box.x + box.width * 0.82, py = box.y + box.height * 0.24;
+  const worldAtPointer = () => page.evaluate(({ px, py }) => {
+    const matrix = new DOMMatrixReadOnly(getComputedStyle(document.querySelector("#camera-world")).transform);
+    const rect = document.querySelector("#blueprint-canvas").getBoundingClientRect();
+    return [(px - rect.left - matrix.e) / matrix.a, (py - rect.top - matrix.f) / matrix.d];
+  }, { px, py });
+  const before = await worldAtPointer();
+  await page.mouse.move(px, py);
+  await page.mouse.wheel(0, -160);
+  const after = await worldAtPointer();
+  expect(Math.abs(after[0] - before[0])).toBeLessThan(0.2);
+  expect(Math.abs(after[1] - before[1])).toBeLessThan(0.2);
+  await page.mouse.click(px, py);
+  const search = page.getByRole("combobox", { name: "Blok ara ve ekle" });
+  await expect(search).toBeFocused();
+  await search.fill("NAND");
+  await search.press("Enter");
+  await expect(page.locator(".node-nand")).toHaveCount(1);
+  const position = await page.locator(".node-nand").getAttribute("style");
+  expect(position).toMatch(/left: -?\d+px; top: -?\d+px/);
+});
+
+test("block tools can be dragged onto the canvas and grid snapping remains enabled", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.locator('[data-add="nand"]').dragTo(page.locator("#blueprint-canvas"), { targetPosition: { x: 220, y: 180 } });
+  await expect(page.locator(".node-nand")).toHaveCount(1);
+  const position = await page.locator(".node-nand").getAttribute("style");
+  expect(position).toMatch(/left: -?\d+px; top: -?\d+px/);
+});
+
+test("space-drag pans the blueprint camera without moving blocks", async ({ page }) => {
+  await page.goto("/playground/");
+  const card = page.locator('.cad-node[data-id="a"]');
+  const blockBefore = await card.getAttribute("style");
+  const cameraBefore = await page.locator("#camera-world").evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).e);
+  const box = await page.locator("#blueprint-canvas").boundingBox();
+  await page.keyboard.down("Space");
+  await page.mouse.move(box.x + 30, box.y + 30);
+  await page.mouse.down();
+  await page.mouse.move(box.x + 95, box.y + 75, { steps: 4 });
+  await page.mouse.up();
+  await page.keyboard.up("Space");
+  const cameraAfter = await page.locator("#camera-world").evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).e);
+  expect(cameraAfter - cameraBefore).toBeCloseTo(65, 0);
+  await expect(card).toHaveAttribute("style", blockBefore);
 });
 

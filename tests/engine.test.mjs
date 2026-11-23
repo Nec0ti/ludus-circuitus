@@ -29,8 +29,17 @@ test("logic gates follow Verilog four-state truth tables", () => {
     assert.equal(evaluate(fixture("and"), { a, b }).outputs.toplam, a === 0 || b === 0 ? 0 : a === 1 && b === 1 ? 1 : X);
     assert.equal(evaluate(fixture("or"), { a, b }).outputs.toplam, a === 1 || b === 1 ? 1 : a === 0 && b === 0 ? 0 : X);
     assert.equal(evaluate(fixture("xor"), { a, b }).outputs.toplam, a === X || b === X ? X : a ^ b);
+    assert.equal(evaluate(fixture("nand"), { a, b }).outputs.toplam, a === 0 || b === 0 ? 1 : a === 1 && b === 1 ? 0 : X);
+    assert.equal(evaluate(fixture("nor"), { a, b }).outputs.toplam, a === 1 || b === 1 ? 0 : a === 0 && b === 0 ? 1 : X);
+    assert.equal(evaluate(fixture("xnor"), { a, b }).outputs.toplam, a === X || b === X ? X : 1 - (a ^ b));
   }
   assert.deepEqual([0, 1, X].map((a) => evaluate(fixture("not"), { a }).outputs.toplam), [1, 0, X]);
+});
+
+test("complementary gate Verilog uses bitwise operators with matching polarity", () => {
+  assert.match(generateVerilog(fixture("nand")), /assign n_\d+ = ~\(a & b\);/);
+  assert.match(generateVerilog(fixture("nor")), /assign n_\d+ = ~\(a \| b\);/);
+  assert.match(generateVerilog(fixture("xnor")), /assign n_\d+ = a ~\^ b;/);
 });
 
 test("rejects undriven inputs, duplicate drivers and combinational cycles", () => {

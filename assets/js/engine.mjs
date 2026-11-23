@@ -23,9 +23,9 @@ export function halfAdderBlueprint() {
   };
 }
 
-const inputPorts = (node) => ({ and: ["a", "b"], or: ["a", "b"], xor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] }[node.type] || []);
-const outputPorts = (node) => node.type === "input" || ["and", "or", "xor", "not", "signal", "register"].includes(node.type) ? ["out"] : [];
-const validTypes = new Set(["input", "output", "and", "or", "xor", "not", "signal", "register"]);
+const inputPorts = (node) => ({ and: ["a", "b"], nand: ["a", "b"], or: ["a", "b"], nor: ["a", "b"], xor: ["a", "b"], xnor: ["a", "b"], not: ["in"], signal: ["in"], register: ["d"], output: ["in"] }[node.type] || []);
+const outputPorts = (node) => node.type === "input" || ["and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register"].includes(node.type) ? ["out"] : [];
+const validTypes = new Set(["input", "output", "and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register"]);
 const validName = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 const verilogWords = new Set("always and assign begin buf case casex casez cell cmos config deassign default defparam design disable edge else end endcase endfunction endgenerate endmodule endprimitive endspecify endtable endtask event for force forever fork function generate genvar highz0 highz1 if ifnone incdir include initial inout input integer join large liblist library localparam macromodule medium module nand negedge nmos nor not notif0 notif1 or output parameter pmos posedge primitive pull0 pull1 pulldown pullup pulmos rcmos real realtime reg release repeat rnmos rpmos rtran rtranif0 rtranif1 scalared signed small specify specparam strong0 strong1 supply0 supply1 table task time tran tranif0 tranif1 tri tri0 tri1 triand trior trireg unsigned use vectored wait wand weak0 weak1 while wire wor xnor xor".split(" "));
 export const isValidSignalName = (name) => typeof name === "string" && validName.test(name) && !verilogWords.has(name);
@@ -89,8 +89,11 @@ function topologicalOrder(bp) {
 
 function logic(type, a, b) {
   if (type === "and") return a === 0 || b === 0 ? 0 : a === 1 && b === 1 ? 1 : X;
+  if (type === "nand") { const value = logic("and", a, b); return value === X ? X : 1 - value; }
   if (type === "or") return a === 1 || b === 1 ? 1 : a === 0 && b === 0 ? 0 : X;
+  if (type === "nor") { const value = logic("or", a, b); return value === X ? X : 1 - value; }
   if (type === "xor") return a === X || b === X ? X : a ^ b;
+  if (type === "xnor") { const value = logic("xor", a, b); return value === X ? X : 1 - value; }
   if (type === "not") return a === X ? X : 1 - a;
 }
 
@@ -167,11 +170,15 @@ export function generateVerilog(bp) {
   for (const node of outputs) lines.push(`  output wire ${hdlName(node.name)};`);
   if (regs.length) lines.push("  input wire clk;", "  input wire reset;");
   for (const node of signals) lines.push(`  wire ${vars.get(node.id)};`);
-  for (const node of nodes.filter((item) => ["and", "or", "xor", "not"].includes(item.type))) lines.push(`  wire ${vars.get(node.id)};`);
+  for (const node of nodes.filter((item) => ["and", "nand", "or", "nor", "xor", "xnor", "not"].includes(item.type))) lines.push(`  wire ${vars.get(node.id)};`);
   for (const node of regs) lines.push(`  reg ${vars.get(node.id)};`);
   for (const node of nodes) {
     const variable = vars.get(node.id);
-    if (["and", "or", "xor"].includes(node.type)) lines.push(`  assign ${variable} = ${wireByPort.get(`${node.id}:a`)} ${node.type === "and" ? "&" : node.type === "or" ? "|" : "^"} ${wireByPort.get(`${node.id}:b`)};`);
+    if (["and", "nand", "or", "nor", "xor", "xnor"].includes(node.type)) {
+      const left = wireByPort.get(`${node.id}:a`), right = wireByPort.get(`${node.id}:b`);
+      const expression = ({ and: `${left} & ${right}`, nand: `~(${left} & ${right})`, or: `${left} | ${right}`, nor: `~(${left} | ${right})`, xor: `${left} ^ ${right}`, xnor: `${left} ~^ ${right}` })[node.type];
+      lines.push(`  assign ${variable} = ${expression};`);
+    }
     if (node.type === "not") lines.push(`  assign ${variable} = ~${wireByPort.get(`${node.id}:in`)};`);
     if (node.type === "signal") lines.push(`  assign ${variable} = ${wireByPort.get(`${node.id}:in`)};`);
     if (node.type === "output") lines.push(`  assign ${variable} = ${wireByPort.get(`${node.id}:in`)};`);
