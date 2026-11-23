@@ -115,3 +115,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - `tests/engine.test.mjs` ve `npm test` eklendi; yarım toplayıcı dört giriş birleşimi, AND/OR/XOR/NOT dört-durum doğruluk tabloları, geçersiz bağlantılar, iki register'ın aynı eski durumdan güncellenmesi ve HDL çıktısı doğrulanıyor.
 - Doğrulama: `npm test` 5/5 geçti; `node --check assets/js/engine.mjs` ve `git diff --check` geçti. İlk test koşusunda döngü fixture'ında çoklu sürücüyle erken reddetme ve yalnız register içeren devreye gereksiz giriş şartı yakalandı; test ve doğrulama kökü düzeltildi, sonra tamamı geçti.
 - Kalan: Icarus Verilog ile codegen oracle, editör bağlantısı/drag-drop, sinyal SVG, `.bp` kayıt-yükleme, kullanıcıya görünen hata ve sequential UI; Pages dağıtım URL'si hâlâ kontrol bekliyor. Bu dal henüz push edilmedi.
+# 2026-11-23 — Blok yardım bağlantısı doğrulaması
+
+- Atölyedeki Giriş, Çıkış, AND, OR, XOR, NOT ve Yazmaç araçlarında soru işareti bağlantısı bulunuyor. İmleçle veya klavye odağıyla kısa Türkçe açıklama gösteriyor; tıklama hedefi ilgili docs başlığına gidiyor ve `target="_blank"` ile yeni sekme açıyor.
+- Mevcut Playwright testini kullandım; AND yardımında yeni sekme hedefi, doküman anchor'ı ve tooltip metni doğrulandı. Nix Chromium ile `npm run test:e2e`: 7/7 geçti. Sistem Playwright Chromium'u eksik `libglib` nedeniyle açılamadı; Nix Chromium bu ortam için çalışan test ikilisi oldu.
+- Değişen dosyalar: `backlog.md`, `backloglog.md`. Uygulama kodu değişmedi; özellik daha önceki atölye commit'inde yer alıyordu.
+- Kalan: yardım davranışı diğer bloklarda aynı ortak görünüm ve anchor yapısını kullanıyor; her blok için ayrı tarayıcı testi henüz yok.
