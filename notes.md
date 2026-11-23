@@ -203,3 +203,10 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 
 - Ayrı worktree'de yapılan quiz denetimi, ilk sürümde cevap konumlarının yalnızca B/C'de kaldığını ve birincil maddelerin çoğunlukla kapı doğruluk tablosu sorduğunu buldu. Yerel prototipte seçenekler A–D arasında dengelendi; birincil havuza iki bağımsız `assign` yolunun hem çıkışlarını hem paralel ilişkisini birlikte sorması sağlandı; A/B beceri anahtarı ve test eşikleri tanımlandı.
 - [`research/measurement/quiz-blueprint.md`](research/measurement/quiz-blueprint.md) kazanım belirtkesi, soru çifti eşlemesi, cevap anahtarı, puanlama ve sınırlılıkları içerir. A/B formları hâlâ aday taslaklardır; istatistiksel eşdeğerlik, madde güçlüğü, geçerlik veya ortaokul/lise anlaşılabilirliği kanıtlanmış değildir. Katılımcı verisi toplama/API yoktur.
+
+
+### 2026-11-23 — Quiz belirtkesi canlıya alındı
+
+- PR #3 (`ce89a00`) `52ae1ebb` merge commit'iyle `main`e geçti. PR build ve ana dal Pages build/deploy (`45232526762`) başarılı.
+- Canlı quiz'de p2'nin her seçeneği hem AND/XOR değerlerini hem paralel/seri ilişkiyi söylüyor; doğru seçenek ikisini doğru kuruyor. 390 px'te yatay taşma yok; local/session storage boş, GET harici istek yok.
+- A/B'nin eşdeğerliği ve soruların geçerliği kanıtlanmış değildir. Bu sürüm alıştırma olarak kullanılabilir; okul araştırmasında kullanmak için danışman/öğrenci incelemesi ve MEB onayı beklenir.
