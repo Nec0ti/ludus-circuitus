@@ -405,3 +405,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Canlı Pages smoke kontrolünde `/`, `/docs/`, `/playground/`, `/quiz/` ve altı ders rotası 10/10 HTTP 200, her birinde tek `<title>` döndürdü. `git diff --check` temiz ve çalışma ağacı temiz.
 - İnsan katılımcı veya kişisel veri kullanılmadı. Kalan: MEB/okul/veli izinleri ve danışman kararı olmadan araştırma verisi toplama veya API'yi açma.
 - Değişenler: `backlog.md`, bu günlük; ürün kodu değişmedi.
+
+## 2026-11-24 — Tarayıcı favicon 404 düzeltmesi
+
+- Canlı tarayıcıda kök `https://nec0ti.github.io/favicon.ico` isteğinin 404 olduğu görüldü; dört ürün rotası ve uygulama etkileşimleri çalışıyordu, başka ağ/JavaScript hatası yoktu.
+- Var olan marka işaretini 32×32 vektör favicon olarak kullanan `assets/favicon.svg` eklendi. Varsayılan ve tam ekran Devre Atölyesi layout'larına `relative_url` üzerinden bağlandı.
+- `tests/e2e/visual.spec.mjs` iki layout'ta da favicon URL'sini alıp `fetch` ile 200 döndüğünü kontrol ediyor. PR #23'ün ilk tam CI run'ı `45291562074`: Node 27/27, Icarus oracle, Jekyll build ve Playwright 38/38 başarılı.
+- Değişenler: `_layouts/default.html`, `_layouts/workbench.html`, `assets/favicon.svg`, `tests/e2e/visual.spec.mjs`, `backlog.md`. Canlı doğrulama birleştirme/yayın sonrasında tamamlanacak.

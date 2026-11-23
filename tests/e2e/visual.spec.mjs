@@ -8,6 +8,15 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
+test("both page shells load the Ludus brand favicon", async ({ page }) => {
+  for (const path of ["/", "/playground/"]) {
+    await page.goto(path);
+    const href = await page.locator('link[rel="icon"]').getAttribute("href");
+    expect(href).toMatch(/\/assets\/favicon\.svg$/);
+    expect(await page.evaluate(async (url) => (await fetch(url)).status, href)).toBe(200);
+  }
+});
+
 test("landing, docs and workbench geometry stays aligned at desktop size", async ({ page }) => {
   await page.goto("/");
   const hero = await Promise.all([page.locator(".hero-copy").boundingBox(), page.locator(".signal-board").boundingBox()]);
