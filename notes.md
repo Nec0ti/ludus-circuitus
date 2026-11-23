@@ -192,3 +192,9 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - Son ekran kontrolleri: landing mobil devre etiketleri yaklaşık 11–12 px; docs ana başlığı 390×844'te y=643; docs yatay taşmasız ve tek etkin bölüm açık; atölye değiştirilen yardımcı metinleri koyu yüzeylerde 6.5:1 üstü kontrastla okunuyor.
 - Playwright hizalama ve mobil içerik konumu eşiği ile WCAG kontrast eşikleri `npm test`/`npm run test:e2e` kapılarına eklendi; mevcut Pages workflow bu testleri PR'da çalıştırır.
 - İnceleme raporu: [`raports/visual-review-2026-11-23.md`](raports/visual-review-2026-11-23.md). Açık kullanım notu: atölye mobil tuvali yatay kaydırılır ve kaydırma gereksinimi görsel olarak belirtilmiyor.
+
+
+### 2026-11-23 — Görsel güncellemenin yayını
+
+- Görsel benchmarklar ve bağımsız incelemeler geçtikten sonra PR #2 `bfaf4b18` merge commit'iyle `main`e alındı. Main Pages build, Verilog oracle'ı, E2E ve deploy başarılı. Canlı site `https://nec0ti.github.io/ludus-circuitus/`.
+- Deploy sonrası canlı Chromium kontrolü mobil landing/docs ve Devre Atölyesi'ni açtı; docs ilk ekran başlığı y=642.875, açık grup sayısı 1, taşma ve JS hatası yok. Atölyede 7 blok yardım bağlantısı var. Ayrıntı görev günlüğünde.

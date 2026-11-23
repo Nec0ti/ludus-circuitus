@@ -181,3 +181,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Değişenler: `_includes/docs-nav.html`, `assets/css/input.css`, derlenmiş `assets/css/site.css`, `tests/e2e/visual.spec.mjs`, `tests/visual-colors.test.mjs`, `backlog.md`, `notes.md`, `raports/visual-review-2026-11-23.md`, bu günlük.
 - Doğrulama: CSS ve Jekyll build geçti; `npm test` 14/14; Playwright E2E 17/17; Icarus Verilog kombinasyonel ve çok modüllü clock/register oracle'ları geçti; `git diff --check` temiz. Ajan incelemeleri landing/docs/workbench için ayrı worktree'de; son geri kontrollerinde mobil/desktop hizalama ve okunabilirlikte regresyon yok.
 - Kalan: mobil Devre Atölyesi tuvali yatay kaydırılır ama kaydırma gereksinimi açıkça işaretlenmiyor. Commit `ebc6b9e` gönderildi; PR #2 CI run `45228751303` build başarıyla tamamlandı, Pages deploy PR aşamasında beklendiği üzere atlandı.
+
+
+## 2026-11-23 — Görsel kalite kapılarının birleşmesi ve canlı yayın
+
+- PR #2, tüm bölüm incelemeleri ve benchmarklar geçince `bfaf4b18` merge commit'iyle `main`e birleştirildi. PR CI (`45229055964`) başarılıydı; `main` Pages build + Icarus + E2E (`45229361530`) ve deploy adımı da başarılı tamamlandı.
+- Yayın adresi `https://nec0ti.github.io/ludus-circuitus/` üzerinde landing ve docs 200 döndü. Canlı Playwright 390×844'te landing temasını ve 20 px SVG yazısını; docs başlığını y=642.875, tek açık grubu ve taşmasızlığı; atölyede `ludus-cad` temasını, 7 blok yardım işaretini ve site nav/footer bulunmadığını doğruladı. Üç sayfada tarayıcı hatası yok.
+- Yerel çalışma ağacı `origin/main` ile fast-forward eşitlendi ve temiz. İnsan katılımcılı araştırma/kişisel veri toplama ve API işleri gerekli danışman-okul-MEB/KVKK koşulları tamamlanana kadar açık backlog'da.
