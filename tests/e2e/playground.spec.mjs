@@ -103,6 +103,16 @@ test("builds a connection, saves locally, reloads and exports a .bp file", async
   expect((await download).suggestedFilename()).toBe("devre2.bp");
 });
 
+test("exports a .bp file from the mobile workbench", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/playground/");
+  const exportButton = page.getByRole("button", { name: "Dışa aktar" });
+  await expect(exportButton).toBeVisible();
+  const download = page.waitForEvent("download");
+  await exportButton.click();
+  expect((await download).suggestedFilename()).toBe("top.bp");
+});
+
 test("adds, names, simulates and exports a named intermediate signal", async ({ page }) => {
   await page.goto("/playground/");
   await page.getByRole("button", { name: "Yeni BP" }).click();
