@@ -206,7 +206,8 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Proje/blueprint doğrulaması geçersiz, anahtar kelime, yinelenen ve `clk`/`reset` çakışmalı adları engeller. Modül düzleştirme her modül örneğinin ara sinyaline ayrı kapsam adı verir. Eski `.bp` sürüm 1 dosyaları geçerliliğini korur. Blok yardımı ve Bloklar/Kullanım dokümanları güncellendi.
 - Bağımsız kod denetimi bütün entegrasyon noktalarını ve modül ad çakışması riskini belirledi; uygulama ve testler buna göre tamamlandı.
 - Doğrulama: `npm test` 16/16; Icarus Verilog iki oracle (yarım toplayıcıda 4 binary + 4 X vektörü, iç ara sinyalli ve iki örnekli `.bp` modülü); CSS build; Jekyll 4.4.1 ile site build; Playwright E2E 18/18; `git diff --check` geçti. Araçlar yerel Nix paketleriyle sağlandı.
-- Bağımsız görsel inceleme: 1440×900 ve 390×844 ölçülerinde hizalama/taşma sorunu yok. Ara Sinyal satırı yanlışlıkla kapı sanılmasın diye Giriş/Çıkış grubuna taşındı. İlk yerel ve PR CI kapıları geçiyor; son konumla PR CI sonucu bekleniyor.
+- Bağımsız görsel inceleme iki turda yapıldı: 1440×900 ve 390×844 ölçülerinde hizalama/taşma sorunu yok. Ara Sinyal Giriş/Çıkış grubuna alındı; son kontrolde sınıflandırma daha açık, yeni satır ve yardım işareti hizalı. Ekranlar `/tmp/ludus-ab3a75f-1440.png` ve `/tmp/ludus-ab3a75f-390.png` olarak kaydedildi.
 
 
-- Son görsel değerlendirme `/tmp/ludus-a855858-1440.png` ve `/tmp/ludus-a855858-390.png` ekran görüntülerinde yapıldı. İlk konumda hizalama doğruydu, mobilde metin iki satıra kırılıyordu; yalnız araçlık başlığına göre sınıflandırma netliği iyileştirildi. Son konum PR başlığında incelenecek.
+- PR #4, son Ara Sinyal yerleşimiyle PR CI (`45236581066`) yeşil olduktan sonra `452c539` merge commit’iyle `main`e alındı. Main build ve Pages deploy (`45236869647`) başarıyla tamamlandı.
+- Canlı Pages Playwright kontrolü atölyenin 200 döndüğünü, Ara Sinyal/yardım bağlantısını ve docs `#ara-sinyal` hedefini doğruladı; yalnız GET istekleri oluştu. Öğrenci verisi veya API yok.

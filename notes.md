@@ -218,3 +218,5 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - **Verilog karşılığı:** Verilen ad bir yerel `wire` olarak üretilir ve bağlı kaynakla `assign` edilir. İsimler Verilog tanımlayıcı kurallarına uyar, modül içi giriş/çıkış/ara sinyaller arasında benzersizdir; register kullanılan tasarımlarda `clk` ve `reset` ile çakışamaz. Aynı `.bp` modülü birden fazla kullanılırsa düzleştirilmiş kodda ara sinyaller örneğe göre adlandırılır.
 - **Kapsam sınırı:** Sabitler, parametreler ve çok bitli değişkenler eklenmedi. Değer saklama için var olan Yazmaç kullanılır. `.bp` sürümü 1 değişmedi; yeni node tipi `signal` eklemelidir.
 - **Doğrulama kaydı:** Uygulama/test ayrıntıları `backloglog.md` içindeki 2026-11-23 ara sinyal girdisinde.
+
+- Ara Sinyal değişikliği PR #4 ile `452c539` commit’inde birleştirildi. PR kontrolü ve main Pages build/deploy başarılı; canlı `https://nec0ti.github.io/ludus-circuitus/playground/` smoke testinde blok/yeni sekme yardım hedefi doğrulandı ve POST/diğer yazan istek görülmedi. Ayrıntı `backloglog.md` içindeki aynı tarihli kayıt ve `/tmp/ludus-ab3a75f-{1440,390}.png` görsel kontrolüdür.
