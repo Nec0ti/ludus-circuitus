@@ -29,6 +29,7 @@ Bağımsız içerik kontrolü canlı kurs dizinini, kurs planını, altı dersi,
 - Verilog Labs'ın sayaç dersinde editör, Icarus/WASM, waveform ve quiz; HDLPath'te adaptif problem/progress paneli görüldü. İki üründe de half-adder eş görevini çalıştırıp ölçemedik. ChipXpert Lab özellikleri ürün sayfasından incelendi, laboratuvar çalıştırılmadı. Bu araçlar adım adım HDL öğretimi, quiz, waveform ve simülasyonun yeni olmadığını gösteriyor; Ludus'un editlenebilir blueprint → Verilog + canlı mantıksal değer akışı yalnızca test edilmesi gereken bir ürün hipotezidir.
 - Güncel Pages yayını `45299489446` başarılı. Nix Chromium ile güncel Pages artifact'ında Playwright 38/38, Node 27/27, Icarus scalar/hiyerarşik ve 1.920 vektör-çıkış karşılaştırması geçti. Live landing/docs/workbench/quiz 200. Desktop 1440×900 ve workbench mobile 390×844 görüntüleri hizalama/taşma bakımından incelendi; bağımsız görsel incelemesi bloklayıcı bulmadı. Küçük ekran devre etiketleri küçük olabilir; yakınlaştırma mevcut.
 - Araştırma güncellemeleri PR #29 (`1cdeee8`), #30 (`0771490`) ve #31 (`a7f3d28`) ile yeşil CI sonrası birleştirildi. PR #31'in build run'ı `45302122322`; main Pages run `45302304568` build ve deploy'u tamamladı. Sonrasında canlı landing, docs, atölye ve quiz yeniden HTTP 200 verdi.
+- PR #32 (`b1de899`, bu rapordaki son dağıtım kaydını kapatma) CI run `45302632818` ile geçti ve merge edildi. Main Pages run `45302934279` build ve deploy adımlarıyla başarılı tamamlandı; sonrasında canlı dört rota HTTP 200 verdi.
 
 ## Üretken yapay zekâ şeffaflığı
 

@@ -63,6 +63,14 @@ Kaynaklar: CircuitVerse [özellikler](https://docs.circuitverse.org/chapter1/cha
 - Oturumda tekrarlanan `Cannot read properties of undefined (reading 'transformCallback')` konsol hataları görüldü; önceki QA notundaki gibi bu mesajları tek başına ürün hatası saymıyorum. Hesap veya kişisel/öğrenme verisi kullanılmadı. Ekran görüntüleri `/tmp` altında geçici QA dosyalarıdır.
 - **Sonuç:** canlı aynı-görev karşılaştırması açık kalıyor. Bu tarama Ludus'un üstünlüğünü, özgünlüğünü veya CircuitVerse kusurunu kanıtlamıyor.
 
+## Dördüncü CircuitVerse misafir oturumu — 2026-11-24
+
+- Resmî [Input](https://docs.circuitverse.org/chapter4/chapter4-input/) rehberi tekrar okunduktan sonra Button yerine iki gerçek Input kullanıldı; XOR, AND ve iki Output ile A/B girişleri tuvale yerleştirilip adlandırıldı.
+- Resmî [kablo](https://docs.circuitverse.org/chapter3/chapter3-wires/) ve [devre kurma](https://docs.circuitverse.org/chapter7/2buildwithcv/) yönergelerindeki porttan porta sürükleme ve Ctrl ile tel üzerine junction ekleme adımları denendi. Kablolar çizilmiş görünse de A/B hatlarının otomatik güzergâhı aynı dikey koordinatta birleşiyor/kesişiyor gibi kaldı; junction yöntemiyle güvenilir dallar kurulamadı.
+- Bu nedenle AND kapısının iki girişi, her girişin iki kapıya fan-out bağlantısı ve 00/01/10/11 doğruluk tablosu doğrulanmadı. Görülen varsayılan çıkışlar geçerli devre sonucu sayılmaz. Canlı aynı-görev karşılaştırması **açık** kalır.
+- Konsolda `transformCallback` TypeError'ları görüldü; sebep ve bağlantı başarısızlığıyla ilişkisi belirlenmedi. Bunlar CircuitVerse kusuru olarak raporlanmıyor. Anonim misafir oturumu dışında hesap, insan katılımcı veya veri kullanılmadı; ekran `/tmp/cv-wired-test.png` altında geçici kaldı.
+- Bu başarısız deneme Ludus'un kullanılabilirlik üstünlüğünü kanıtlamaz. Aynı devre ve bütün giriş durumları güvenilir biçimde doğrulanmadan kıyas yapılmış sayılmamalı.
+
 ## HDLBoard ve VeriSim canlı görev gözlemi — 2026-11-24
 
 Görev, A ve B'nin XOR toplam ile AND taşıma sonuçlarını 00, 01, 10 ve 11 girişlerinde kontrol etmektir. Bunlar araç araştırması için anonim, kişisel veri içermeyen denemelerdir; katılımcı veya öğrenme ölçümü kullanılmadı.
