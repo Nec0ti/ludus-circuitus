@@ -55,3 +55,10 @@ Kaynaklar: CircuitVerse [özellikler](https://docs.circuitverse.org/chapter1/cha
 - Resmî [kablo rehberi](https://docs.circuitverse.org/chapter3/chapter3-wires/) çıkış portundan giriş portuna sürükleyerek tel çizimini, [devre kurma rehberi](https://docs.circuitverse.org/chapter7/2buildwithcv/) ise Ctrl ile tel üzerine ara düğüm ekleme adımını anlatıyor. Kesişmesiz branşları bu yöntemle kurup aynı görevin bütün sonuçlarını tekrar etmeye ihtiyaç var.
 - İki oturumda da misafir arayüz yüklenirken tekrarlayan `transformCallback` konsol mesajları ve bir 401 ağ yanıtı görüldü. Gözlem bu QA oturumlarına özgüdür; tek başına uygulamanın işlevsiz olduğunu göstermez. Hesap, insan katılımcı veya kişisel/öğrenme verisi kullanılmadı.
 - **Sonuç:** CircuitVerse'ün canlı aynı-görev çıktıları hâlâ doğrulanmadı. Ludus için paralel devre + Verilog + mantıksal sinyal birlikteliği bir ürün hipotezidir; özgünlük veya üstünlük iddiası değildir.
+
+## Üçüncü CircuitVerse misafir oturumu — 2026-11-24
+
+- Chromium ile anonim `https://circuitverse.org/simulator` oturumu açıldı. İlk kullanım rehberinin Properties paneli kapatıldı; Input paletinde Input ve Button bileşenleri ayrı ayrı görüldü. İki Input, XOR, AND ve iki Output öğesi paletten tuvale sürüklendi; yerleşim ekran görüntüsünde doğrulandı.
+- Kablolama denemesi sonrası devreyi güvenilir şekilde tam ve bağlı olarak doğrulayamadım. Bu nedenle CircuitVerse'te aynı yarım-toplayıcı görevi kurulduğunu veya çalıştığını söylemiyorum; 00/01/10/11 doğruluk tablosu ölçülmedi. Önceki bölümdeki Input/Button ayrımı ve resmî kablolama talimatları geçerlidir.
+- Oturumda tekrarlanan `Cannot read properties of undefined (reading 'transformCallback')` konsol hataları görüldü; önceki QA notundaki gibi bu mesajları tek başına ürün hatası saymıyorum. Hesap veya kişisel/öğrenme verisi kullanılmadı. Ekran görüntüleri `/tmp` altında geçici QA dosyalarıdır.
+- **Sonuç:** canlı aynı-görev karşılaştırması açık kalıyor. Bu tarama Ludus'un üstünlüğünü, özgünlüğünü veya CircuitVerse kusurunu kanıtlamıyor.
