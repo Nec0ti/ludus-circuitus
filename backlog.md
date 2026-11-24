@@ -4,10 +4,6 @@ Bu dosya güncel iş panosudur. Yalnızca açık kararları ve son doğrulama du
 
 ## Açık işler
 
-### Yayın güvenilirliği
-
-- [~] Pull request testleri ana dal Pages dağıtımını iptal etmemeli. GitHub Actions concurrency grubu workflow ve ref'e göre ayrılmalı; PR kontrolü ve ana dal dağıtımı ayrı ayrı doğrulanmalı.
-
 ### Danışmanla netleştir
 
 - [ ] Danışman öğretmeni belirle; iki ekip üyesinin 2204-A lise/yaş uygunluğunu ve danışman koşullarını doğrula.
@@ -34,4 +30,5 @@ Bu dosya güncel iş panosudur. Yalnızca açık kararları ve son doğrulama du
 
 - MVP'nin web uygulaması, Devre Atölyesi, altı modüllü başlangıç kursu ve yerel quiz'i GitHub Pages'te yayında. Teknik doğruluk benchmarkları ve Playwright kapıları geçmiştir; bunlar öğrenme etkisini kanıtlamaz.
 - Referans alınan son ana ürün yayını PR #43 (`f1d7f4b`). CI `45315138623` başarılı; Pages build/deploy tamamlandı. Son yayında Tanıtım, Dokümantasyon ve Devre Atölyesi rotaları HTTP 200 döndü.
+- Pages concurrency PR #49 (`db10412`) ile workflow/ref'e göre ayrıldı. PR CI `45320410289` ve main build/deploy `45320584351` başarılı; tanıtım, docs ve atölye rotaları canlıda HTTP 200 döndü.
 - Araştırma yöntemi, ölçme aracının geçerliği, katılımcı izinleri, KVKK veri akışı ve öğrenme etkisi hâlâ çözülmemiştir. Ayrıntılı kanıt ve geçmiş görevler [`backloglog.md`](backloglog.md) ile [`raports/overnight-quality-review-2026-11-24.md`](raports/overnight-quality-review-2026-11-24.md) içinde.
