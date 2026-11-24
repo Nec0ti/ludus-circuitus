@@ -565,3 +565,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - `curl -I` ile TÜBİTAK'ın 2023, 2024, 2025 ve 2026 başlık/davet PDF'leri ile 2024 davet istatistik PDF'si kontrol edildi; tümü doğrudan 404 döndürdü. Web arama dizininde bazı eski PDF metin parçaları hâlâ görünüyor, fakat bu bugün indirilebilir birincil dosya değildir.
 - Önceki notlardaki dokuz 2023–2025 başlığı, altı 2026 yazılım kaydı ve tematik etiket bulguları silinmedi; mevcut kaynak sınırlaması eklendi. Başvuruda kullanmadan önce kalıcı resmî kaynağı yeniden bulma işi açık kaldı. Bu arşiv taraması özgünlük kanıtı değildir.
 - Değişenler: `research/tubitak/past-award-title-scan.md`, `research/tubitak/2026-konya-software-scan.md`, `research/references/index.md`, `notes.md`, `backlog.md`, gece kalite raporu ve bu günlük. `git diff --check` geçti; önceki sürümün CI/Pages kapıları run `45316552886` ile başarılı (40/40 E2E). Bu kayıt değişikliği CI/Pages PR'ında tekrarlanacak. Katılımcı verisi yok.
+
+
+## 2026-11-24 — Geçmiş derece kayıtları için alternatif MEB teyidi
+
+- TÜBİTAK'ın kayıtlı 2023–2026 sonuç/davet PDF adresleri doğrudan 404 verdiğinden Konya İl MEM kaynakları tarandı. Erişilebilir Temmuz 2024 AR-GE bülteni TellCord başlığı ve bölge üçüncülüğünü; 2025 ödül töreni duyurusu TİDAP'ın Yazılım alanında bölge üçüncülüğünü doğruluyor.
+- Bu iki kurum kaynağı yalnız ilgili birer kaydı kısmen destekliyor; 2023/2024/2025 tam listelerini veya 2026 başlıklarını geri getirmiyor. Özgünlük iddiası ve tam tarama sonucu hâlâ açık sınırlı kanıt olarak tutuluyor.
+- Değişenler: geçmiş başlık taraması, kaynak haritası, notes/backlog, gece kalite raporu ve bu günlük. `git diff --check` CI öncesi çalıştırılacak. İnsan/veri katılımcısı kullanılmadı.
