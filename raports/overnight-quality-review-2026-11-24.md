@@ -51,3 +51,5 @@ TÜBİTAK'ın ayrı ÜYZ rehberi başvuru sahibi kapsamına öğrencileri de al�
 - CircuitVerse'te ortak görevi güvenilir biçimde tamamla; VPLAS canlı uygulamasına erişim bulunursa aynı görevi kaydet; HDLPath'teki kilitli Half-adder problemine erişim varsa tekrar dene. Verilog Labs ve diğer iki araçta canlı yarım-toplayıcı örnekleri çalıştı; bu sınırlı gözlemler tam kıyas değildir.
 - Danışmanla öğrenme kazanımı, örneklem ve karşılaştırma yöntemini kararlaştır; izin/onam dosyalarını tamamlamadan öğrenci verisi toplama.
 - Başvuru öncesi 2204-A kriter PDF'lerinin sürümünü yeniden kontrol et.
+
+- Ek taramada Konya Meram İlçe MEM'in 2026 duyurusu Yazılım alanındaki bölge üçüncülüğünü doğruluyor ancak başlığı açıklamıyor. Bu, 2026 davet kaydındaki konu belirsizliğini çözmüyor; kaynak: [`../research/tubitak/2026-konya-software-scan.md`](../research/tubitak/2026-konya-software-scan.md).

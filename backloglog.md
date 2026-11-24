@@ -572,3 +572,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - TÜBİTAK'ın kayıtlı 2023–2026 sonuç/davet PDF adresleri doğrudan 404 verdiğinden Konya İl MEM kaynakları tarandı. Erişilebilir Temmuz 2024 AR-GE bülteni TellCord başlığı ve bölge üçüncülüğünü; 2025 ödül töreni duyurusu TİDAP'ın Yazılım alanında bölge üçüncülüğünü doğruluyor.
 - Bu iki kurum kaynağı yalnız ilgili birer kaydı kısmen destekliyor; 2023/2024/2025 tam listelerini veya 2026 başlıklarını geri getirmiyor. Özgünlük iddiası ve tam tarama sonucu hâlâ açık sınırlı kanıt olarak tutuluyor.
 - Değişenler: geçmiş başlık taraması, kaynak haritası, notes/backlog, gece kalite raporu ve bu günlük. `git diff --check` CI öncesi çalıştırılacak. İnsan/veri katılımcısı kullanılmadı.
+
+
+## 2026-11-24 — 2026 Konya sonucu için yerel MEM teyidi
+
+- Meram İlçe MEM'in 2026 2204-A duyurusu Yazılım kategorisinde bir bölge üçüncülüğünü bildiriyor ancak proje başlığını vermiyor. Bu, 2026 başlıksız davet listesine yalnız kategori/derece teyidi ekliyor; aynı projeyi eşleştirme veya içerik benzerliği çıkarımı yapılamıyor.
+- Kaynak sınırı `research/tubitak/2026-konya-software-scan.md`, kaynak haritası ve notes/backlog'a işlendi. Katılımcı/okul kimlikleri aktarılmadı; kişi verisi araştırma notuna kopyalanmadı. `git diff --check` ve PR CI bekleniyor.
