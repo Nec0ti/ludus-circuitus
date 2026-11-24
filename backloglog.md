@@ -578,3 +578,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 
 - Meram İlçe MEM'in 2026 2204-A duyurusu Yazılım kategorisinde bir bölge üçüncülüğünü bildiriyor ancak proje başlığını vermiyor. Bu, 2026 başlıksız davet listesine yalnız kategori/derece teyidi ekliyor; aynı projeyi eşleştirme veya içerik benzerliği çıkarımı yapılamıyor.
 - Kaynak sınırı `research/tubitak/2026-konya-software-scan.md`, kaynak haritası ve notes/backlog'a işlendi. Katılımcı/okul kimlikleri aktarılmadı; kişi verisi araştırma notuna kopyalanmadı. `git diff --check` ve PR CI bekleniyor.
+
+
+## 2026-11-24 — 2023–2024 sonuç PDF'lerinin tarihli arşiv kopyaları
+
+- TÜBİTAK'ın doğrudan PDF GET URL'leri 404 verdi; Internet Archive CDX üzerinden 2023 (07.04.2023) ve 2024 (16.04.2024) resmî derece PDF snapshotları bulundu. İki PDF indirildi, `%PDF` imzası ve SHA-256 ile doğrulandı; hash ve snapshot URL'leri kaynak notuna eklendi.
+- 2025 derece PDF'i ve 2026 Konya davet PDF'i için aynı CDX sorgusunda snapshot bulunmadı. 2024 davet istatistikleri için katalogda 200 snapshot kaydı görüldü, ancak bu denemede indirme zaman aşımına uğradı; içeriği doğrulanmış diye işaretlenmedi.
+- Bu üçüncü taraf arşiv kopyaları yaşayan TÜBİTAK kaynağı değildir; rapor/başvuruda arşiv tarihi ve erişim sınırı belirtilmeli. Değişenler: geçmiş tarama, kaynak haritası, 2026 tarama uyarısı, notes/backlog, kalite raporu ve bu günlük. `git diff --check` CI öncesi çalıştırılacak; insan katılımcı/verisi kullanılmadı.
