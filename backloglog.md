@@ -597,3 +597,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - `backlog.md` içindeki son sürüm satırı PR #50 (`f781ff1`) ve onu izleyen main Pages run `45321050779` ile güncellendi. PR #50 CI `45320899184` başarılıydı; Pages run build/deploy adımlarını tamamladı ve tanıtım/docs/atölye rotaları HTTP 200 döndü.
 - Yalnızca proje kayıtları değişti; ürün kodu ve araştırma yöntemi değişmedi. `git diff --check` ve diff kapsamı kontrol edildi. PR CI merge öncesinde yeniden çalışacak.
 - Açık kalanlar aynı: öğrenme etkisi, karşılaştırma yöntemi, danışman, MEB/etik sınıflandırması ve veri koruma onayı.
+
+## 2026-11-24 — 2204-A ve MEB izin koşullarını yeniden kontrol etme
+
+- Resmî 2026–2027 TÜBİTAK çağrı sayfasını yeniden açtım: iki kişilik ekip sınırı içinde; danışman zorunlu değil ve farklı okuldan olabilir; proje sonlandırılmış olmalı. MEB paydaşlarını hedefleyen araştırma için MEB izin belgesini TYBS'ye yükleme, imzalı gönüllü katılım formu ve 18 yaş altı katılımcılarda imzalı veli onam koşulları sayfada açıkça listeleniyor. Son tarih hâlâ 4 Ocak 2027 17.30; kriter bağlantısı ise 2025 adlı forma gidiyor.
+- TTKB'nin canlı SSS'si izin portalını, tek il için en fazla 15 günlük değerlendirme süresini ve eylem/deney/belirli araç uygulamalarında okulun özel bilgi alanında belirtilebilmesini açıklıyor; anket/ölçek/görüşme için okul adı belirtilmemesi ayrımı da not edildi. TTKB'de 2026'da yayımlanmış/güncellenmiş ayrı izin sayfası bulundu ancak açılan gövde metni boş olduğundan oradan yeni kural çıkarılmadı; teyit edilebilen ayrıntılar 2025 yönerge/kılavuzu ve canlı SSS'ye dayandırıldı.
+- Bu, okulda planlanan aracın hangi MEB izin sınıfına girdiğini çözmüyor. Danışman, okul ve izin mercii teyidi olmadan katılımcı uygulaması/API açılmayacak. Kaynak ve ayrıntı: [`research/tubitak/2027-2204-a.md`](research/tubitak/2027-2204-a.md).
+- Değişenler: 2027 çağrı/izin notu, kaynak haritası, bu günlük ve son sürüm backlog kaydı. `git diff --check` CI öncesinde çalıştırılacak; PR CI/Pages dağıtımı bekleniyor.
