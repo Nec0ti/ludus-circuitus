@@ -540,3 +540,11 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - 2024 resmî davet istatistiği yalnızca ana alan/bölge adetlerini verir, proje başlıklarını değil. Bulgular 2024–2025 derece listelerinde toplam altı başlığın sınırlı taramasıdır; bütün başvuru arşivi veya özgünlük kanıtı değildir.
 - Kaynak notlarına yalnızca başlık, ana alan, tematik alan ve derece bilgisi eklendi; öğrenci/danışman adı, okul ve başvuru numarası aktarılmadı. İnsan katılımcı/verisi yok.
 - Değişenler: `research/tubitak/past-award-title-scan.md`, `research/references/index.md`, `notes.md`, `backlog.md`, `backloglog.md`, gece kalite raporu. `git diff --check` ve bağımsız kaynak incelemesi bekleniyor.
+
+## 2026-11-24 — 2024 başlık taraması kaynak ve yayın kaydı
+
+- Bağımsız inceleme, resmî 2024 PDF'inde kayıtlı üç Konya/Yazılım başlığının adını, tematik alanını ve derece sırasını doğruladı. Başlıktan çıkarılamayan “cerrahi eğitim” ifadesi çıkarılıp “simülasyonu ve yardım” olarak daraltıldı; kişi/okul/başvuru bilgisi notta yer almıyor.
+- PR #42 (`b95c0f8`) yeşil tam CI ile merge edildi. CI run `45314389986`: Node, Icarus Verilog, Jekyll ve Playwright **40/40 E2E** geçti. Main Pages run `45314541714` build ve deploy adımlarıyla başarılı tamamlandı.
+- Root `main` dalı `origin/main` üzerine fast-forward edildi; çalışma ağacı temizdi. Bu kayıt güncellemesi ayrı PR'da tutuluyor.
+- Araştırmanın sınırı değişmedi: yalnız erişilebilir 2024–2025 Konya derece başlıkları (altı proje) incelendi; 2026 Konya listesinde Yazılım başlıkları görünmüyor. Tüm başvurular, rapor içerikleri, başka bölgeler/yıllar incelenmedi; özgünlük veya “ilk/tek” sonucu yok.
+- Değişenler: `backlog.md`, `backloglog.md`, `raports/overnight-quality-review-2026-11-24.md`. `git diff --check` ve markdown/Jekyll/CI kontrolü bu kayıt PR'ında çalışacak. İnsan katılımcı veya veri kullanılmadı.
