@@ -93,6 +93,7 @@ test("builds a connection, saves locally, reloads and exports a .bp file", async
   await page.getByRole("button", { name: "Yeni BP" }).click();
   await page.getByRole("button", { name: "giris out çıkışı" }).click();
   await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await expect(page.locator("#sim-status")).toHaveText("Bağlantı eklendi.");
   await expect(page.locator("#verilog-code")).toContainText("assign cikis = giris;");
   await page.getByRole("button", { name: "Kaydet" }).click();
   await page.reload();

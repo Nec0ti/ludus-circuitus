@@ -480,6 +480,7 @@ function connectPort(nodeId, port, direction) {
   pendingSource = null;
   render();
   persist();
+  announce("Bağlantı eklendi.");
 }
 
 function beginDrag(event, node) {
