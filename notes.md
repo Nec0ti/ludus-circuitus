@@ -272,3 +272,10 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - **Resmî kaynakla doğrulandı, sürüm sınırı var:** Çağrı sayfasının şu an bağladığı TYBS başvuru kılavuzu `2025-2026` dosya adında ve 2026 TYBS kılavuzu. §2.4 başvuru ekranında KVKK aydınlatma metni ile “Yapay Zekâ kullanım beyanı” olduğunu söyler. 2027 kılavuzu veya giriş gerektiren canlı formdaki beyan metni/seçenekleri doğrulanmış değildir.
 - **Açık soru:** TTKB'nin 2025 kılavuzu ilgili zorunlu-eğitim öğrencisi MEB izin başvuru yolunda etik kurul belgesi istemiyor; bu, TÜBİTAK'ın 2027 Proje Rehberinde insan deneyi için belirttiği ayrı etik kurul koşulunun uygulanıp uygulanmadığını yanıtlamıyor. Ludus öğrenme quizinin hangi etik sınıfa girdiği danışman/izin merciyle netleştirilmelidir. Bu soru çözülmeden okul katılımcısıyla veri toplama başlamaz.
 - Kaynak ve ayrıntı: [`research/tubitak/2027-2204-a.md`](research/tubitak/2027-2204-a.md), [`research/tubitak/evaluation-alignment-2027.md`](research/tubitak/evaluation-alignment-2027.md). Başvuru sayfası ve 2026 TYBS kılavuzu resmî TÜBİTAK bağlantılarıdır.
+
+### 2026-11-24 — Yakın Verilog araçlarında canlı görev gözlemi
+
+- HDLBoard'un canlı tarayıcı arayüzünde Verilog yarım-toplayıcı, sanal kartın SW girişleri ve LED çıkışlarıyla çalıştırıldı; dört ikili vektörün XOR/AND sonuçları doğru izlendi. Bu arayüz kod + kart simülatörüdür; kapı şeması düzenleyicisi değildir.
+- VeriSim'in hazır Gate-Level Half Adder örneği Icarus/WASM ile çalıştırıldı; konsolun dört vektör sonucu ve VCD/waveform alanı görüldü. Denenen akış kod/testbench odaklıydı.
+- İki araç da Ludus'un benzerlerinin bulunabileceğini gösteriyor; “ilk/tek” iddiası yapılmamalı. Aday katkı, öğrencinin düzenlediği blueprint ile gerçek Verilog ve mantıksal sinyal değerlerini aynı başlangıç görevinde birlikte kurmasıdır. Bu henüz karşılaştırmalı veya pedagojik olarak kanıtlanmış değildir.
+- Kaynak/oturum ayrıntıları [`research/references/related-tools.md`](research/references/related-tools.md) içinde. İnsan katılımcı/veri kullanılmadı.

@@ -62,3 +62,16 @@ Kaynaklar: CircuitVerse [özellikler](https://docs.circuitverse.org/chapter1/cha
 - Kablolama denemesi sonrası devreyi güvenilir şekilde tam ve bağlı olarak doğrulayamadım. Bu nedenle CircuitVerse'te aynı yarım-toplayıcı görevi kurulduğunu veya çalıştığını söylemiyorum; 00/01/10/11 doğruluk tablosu ölçülmedi. Önceki bölümdeki Input/Button ayrımı ve resmî kablolama talimatları geçerlidir.
 - Oturumda tekrarlanan `Cannot read properties of undefined (reading 'transformCallback')` konsol hataları görüldü; önceki QA notundaki gibi bu mesajları tek başına ürün hatası saymıyorum. Hesap veya kişisel/öğrenme verisi kullanılmadı. Ekran görüntüleri `/tmp` altında geçici QA dosyalarıdır.
 - **Sonuç:** canlı aynı-görev karşılaştırması açık kalıyor. Bu tarama Ludus'un üstünlüğünü, özgünlüğünü veya CircuitVerse kusurunu kanıtlamıyor.
+
+## HDLBoard ve VeriSim canlı görev gözlemi — 2026-11-24
+
+Görev, A ve B'nin XOR toplam ile AND taşıma sonuçlarını 00, 01, 10 ve 11 girişlerinde kontrol etmektir. Bunlar araç araştırması için anonim, kişisel veri içermeyen denemelerdir; katılımcı veya öğrenme ölçümü kullanılmadı.
+
+| Araç | Canlı olarak doğrulanan | Arayüzün öğrenme modeli ve sınırı |
+|---|---|---|
+| **HDLBoard** | [Canlı web uygulaması](https://hdlboard.onrender.com/) 24.11.2026'da HTTP 200 verdi. Hazır `DE1_SoC.v` dosyasının Verilog kodu XOR/AND yarım-toplayıcıya değiştirildi; SW0/SW1 girişleri sırasıyla 00, 01, 10, 11 yapıldığında LEDR sonuçları sırasıyla `00`, `01`, `01`, `10` görüldü. Bit 0 toplamı, bit 1 taşımayı gösterdi. Simülasyon arayüzü ve switch/LED geri bildirimi çalıştı; sayfa hatası görülmedi. | Kod editörü ve sanal kart giriş/çıkışları birlikte. Bu oturumda kullanıcı tarafından düzenlenen kapı şeması yoktu. Waveform düğmesinin ipucu kart simülasyonlarının dalga kaydetmediğini ve bunun için testbench gerektiğini belirtiyor. Kaynak/repo özellikleri için [HDLBoard README](https://github.com/rlangoy/HDLBoard); canlı deneme yalnızca bu görev ve oturum için kanıt sayılır. |
+| **VeriSim** | [Canlı uygulama](https://senolgulgonul.github.io/verisim/) 24.11.2026'da HTTP 200 verdi. Hazır Gate-Level Half Adder örneği `Run` ile tarayıcıdaki Icarus/WASM üzerinde çalıştırıldı; konsol 00→(0,0), 01→(1,0), 10→(1,0), 11→(0,1) değerlerini verdi. VCD indirme ve Waveform sekmesi görüldü. | Kod/testbench merkezli düzenleyici; bu oturumda düzenlenebilir kapı şeması veya blok grafiği yoktu. Bu, canlı HDL+simülasyon+waveform örneğidir; öğrenci tarafından kurulmuş grafik editörü değildir. Proje iddiaları için [VeriSim README](https://github.com/senolgulgul/verisim/). |
+
+**Araştırma sonucu ve sınır:** Bu iki canlı örnek, Verilog simülasyonu ve devre/çıktı gösteriminin mevcut olduğunu doğrular. İncelenen akışlarda kullanıcı tarafından kurulabilen blok grafiği görülmedi. Ludus'un aday katkısı, aynı görevde blok bağlantısını öğrencinin kurmasıyla bu grafikten üretilen Verilog'u ve mantıksal sinyal değerlerini birlikte inceletmesidir; bu, incelenen arayüzlere dair ürün hipotezidir, pazar çapında benzersizlik/üstünlük sonucu değildir. CircuitVerse'te aynı görev hâlâ uçtan uca doğrulanmadı; VPLAS karşılaştırması yayımlanmış makalelerle sınırlı.
+
+Ekran görüntüleri geçici QA kanıtı olarak `/tmp/hdlboard-half.png` ve `/tmp/verisim-run.png` konumlarında kaldı; araştırma deposuna alınmadı.
