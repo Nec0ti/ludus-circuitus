@@ -388,12 +388,18 @@ select:focus-visible {
 .docs-nav-group summary { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; padding: 0.65rem 0.5rem; border-radius: 0.45rem; color: var(--color-base-content); font-size: 0.9rem; font-weight: 700; cursor: pointer; list-style: none; }
 .docs-nav-group summary::-webkit-details-marker { display: none; }
 .docs-nav-group summary::before { content: "›"; color: var(--color-primary); font-size: 1.15rem; transition: transform 160ms ease; }
-.docs-nav-group[open] summary::before { transform: rotate(90deg); }
+.docs-nav-group[open] > summary::before,
+.docs-nav-subgroup[open] > summary::before { transform: rotate(90deg); }
 .docs-nav-group summary small,
 .docs-nav a small { color: color-mix(in srgb, var(--color-base-content) 58%, transparent); font-size: 0.875rem; font-weight: 500; white-space: nowrap; }
 .docs-nav a { display: flex; align-items: baseline; justify-content: space-between; gap: 0.4rem; padding: 0.45rem 0.55rem 0.45rem 1.45rem; border-left: 2px solid transparent; border-radius: 0 0.35rem 0.35rem 0; color: color-mix(in srgb, var(--color-base-content) 75%, transparent); font-size: 0.9rem; line-height: 1.35; text-decoration: none; }
 .docs-nav a:hover { color: var(--color-primary); background: color-mix(in srgb, var(--color-primary) 8%, transparent); }
 .docs-nav a[aria-current="page"] { border-left-color: var(--color-primary); color: var(--color-primary); background: color-mix(in srgb, var(--color-primary) 12%, transparent); font-weight: 700; }
+.docs-nav-subgroup { margin-left: 0.65rem; border-left: 1px solid var(--color-base-300); }
+.docs-nav-subgroup summary { padding: 0.38rem 0.4rem; font-size: 0.78rem; }
+.docs-nav-subgroup summary small { font-size: 0.75rem; }
+.docs-nav-subgroup a { min-width: 0; justify-content: flex-start; padding: 0.3rem 0.35rem 0.3rem 0.65rem; font-size: 0.76rem; overflow-wrap: anywhere; }
+
 .docs-intro { margin-top: 1.2rem; color: color-mix(in srgb, var(--color-base-content) 73%, transparent); font-size: 1.15rem; line-height: 1.75; }
 .docs-reading-time { width: fit-content; margin: 0.85rem 0 0; padding: 0.35rem 0.6rem; border: 1px solid var(--color-base-300); border-radius: 99px; color: color-mix(in srgb, var(--color-base-content) 70%, transparent); font-size: 0.875rem; }
 .docs-page-toc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem 0.8rem; margin-block: 1.7rem 2.4rem; padding: 1rem 1.1rem; border: 1px solid var(--color-base-300); border-radius: 0.75rem; background: color-mix(in srgb, var(--color-base-200) 60%, transparent); }
@@ -528,6 +534,13 @@ select:focus-visible {
   letter-spacing: -0.055em;
   line-height: 1.02;
 }
+
+.docs-error-article h1 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.08; letter-spacing: -0.045em; }
+.docs-error-article h1 code { font-size: 0.72em; white-space: nowrap; color: var(--color-primary); }
+.docs-error-article .docs-reading-time + h2 { margin-top: 1.8rem; }
+.docs-error-back { margin-top: 1.5rem; }
+.docs-error-back a { display: inline-flex; align-items: center; padding: 0.55rem 0.8rem; border: 1px solid var(--color-base-300); border-radius: 0.55rem; color: var(--color-base-content); font-size: 0.9rem; font-weight: 650; text-decoration: none; }
+.docs-error-back a:hover { border-color: var(--color-primary); color: var(--color-primary); }
 
 .docs-article h2 {
   margin-top: 3rem;
@@ -894,6 +907,8 @@ button.cad-variable:hover { border-color: #738295; }
   .docs-shell { grid-template-columns: minmax(0, 1fr); }
   .docs-nav { position: static; }
   .docs-nav-group summary { padding-block: .5rem; }
+  .docs-nav-subgroup { margin-left: 0.35rem; }
+  .docs-nav-subgroup a { padding-block: .28rem; }
   .docs-nav a { padding-block: .3rem; }
   .playground-frame { grid-template-columns: minmax(0, 1fr); }
   .playground-side { border-right: 0; border-bottom: 1px solid var(--color-base-300); }

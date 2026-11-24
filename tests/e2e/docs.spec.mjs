@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
 
 test("course introduction is brief and docs use collapsible topic groups", async ({ page }) => {
   await page.goto("/docs/baslangic/");
-  await expect(page.locator(".docs-nav details")).toHaveCount(4);
+  await expect(page.locator(".docs-nav > .docs-nav-group")).toHaveCount(4);
   await expect(page.getByRole("link", { name: /Kurs planı/ })).toHaveAttribute("aria-current", "page");
   await expect(page.locator(".docs-reading-time")).toContainText("Yaklaşık 1 dakika");
   await expect(page.locator(".docs-article h2")).toHaveCount(2);
@@ -156,7 +156,18 @@ test("error catalog lists categories and every diagnostic has its own deep-linke
   for (const code of ["VL0001", "VL1001", "VL1002", "VL1003", "VL1004", "VL2001", "VL2002", "VL3001", "VL3002", "VL3003", "VL3004", "VL4001", "VL4002", "VL4003", "VL4004", "VL5001", "VL6001", "VL6002", "VL9999"]) {
     await page.goto(`/docs/errors/${code.toLowerCase()}/`);
     await expect(page.locator("h1")).toContainText(code);
+    await expect(page.getByRole("link", { name: new RegExp(code) })).toHaveAttribute("aria-current", "page");
+    await expect(page.locator(".docs-nav > .docs-nav-group[open]")).toHaveCount(1);
+    await expect(page.locator(".docs-nav-subgroup[open]")).toHaveCount(1);
+    await expect(page.locator(".docs-nav-subgroup[open] a[aria-current='page']")).toHaveCount(1);
     await expect(page.getByRole("link", { name: "Tüm hata kodlarına dön" })).toHaveAttribute("href", /\/ludus-circuitus\/docs\/errors\//);
+    await expect(page.locator(".docs-error-article")).not.toContainText(/\[[^\]]+\]\(\//);
+    await expect(page.locator(".docs-error-article > p a").first()).toHaveAttribute("href", /\/ludus-circuitus\//);
+    for (const width of [320, 390, 768]) {
+      await page.setViewportSize({ width, height: 900 });
+      const overflowing = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+      expect(overflowing, `${code} page overflow at ${width}px`).toBe(false);
+    }
   }
 });
 
