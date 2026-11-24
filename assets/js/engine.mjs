@@ -1,3 +1,5 @@
+import { ludusError } from "./errors.mjs";
+
 export const X = "X";
 
 export function halfAdderBlueprint() {
@@ -35,7 +37,7 @@ const isValidValue = (value, width) => width === 1
   ? value === 0 || value === 1 || value === X
   : typeof value === "string" && value.length === width && /^[01X]+$/.test(value);
 const valueBits = (value, width) => {
-  if (!isValidValue(value, width)) throw new Error(`Sinyal ${width} bit genişliğinde geçerli bir 0/1/X değeri olmalı.`);
+  if (!isValidValue(value, width)) throw ludusError("VL2002", `Sinyal ${width} bit genişliğinde geçerli bir 0/1/X değeri olmalı.`);
   return width === 1 ? String(value) : value;
 };
 const fromBits = (bits) => bits.length === 1 ? bits === X ? X : Number(bits) : bits;
@@ -43,36 +45,36 @@ const zeroValue = (width) => width === 1 ? 0 : "0".repeat(width);
 const unknownValue = (width) => width === 1 ? X : X.repeat(width);
 
 export function validateBlueprint(bp) {
-  if (!bp || bp.version !== 1 || typeof bp.name !== "string" || bp.name.length > 80 || !validName.test(bp.name) || verilogWords.has(bp.name) || !Array.isArray(bp.nodes) || !Array.isArray(bp.wires) || bp.nodes.length > 500 || bp.wires.length > 2000) throw new Error("Blueprint biçimi, adı, boyutu veya sürümü geçersiz.");
+  if (!bp || bp.version !== 1 || typeof bp.name !== "string" || bp.name.length > 80 || !validName.test(bp.name) || verilogWords.has(bp.name) || !Array.isArray(bp.nodes) || !Array.isArray(bp.wires) || bp.nodes.length > 500 || bp.wires.length > 2000) throw ludusError("VL3001", "Blueprint biçimi, adı, boyutu veya sürümü geçersiz.");
   const ids = new Set();
   const nodes = new Map();
   const names = new Set();
   for (const node of bp.nodes) {
-    if (!node || !validTypes.has(node.type) || typeof node.id !== "string" || !node.id || node.id.length > 100 || ids.has(node.id)) throw new Error("Blok türü veya kimliği geçersiz.");
-    if (!Number.isFinite(node.x) || !Number.isFinite(node.y) || Math.abs(node.x) > 1_000_000 || Math.abs(node.y) > 1_000_000) throw new Error("Blok koordinatları geçersiz veya çalışma alanı sınırını aşıyor.");
+    if (!node || !validTypes.has(node.type) || typeof node.id !== "string" || !node.id || node.id.length > 100 || ids.has(node.id)) throw ludusError("VL3002", "Blok türü veya kimliği geçersiz.");
+    if (!Number.isFinite(node.x) || !Number.isFinite(node.y) || Math.abs(node.x) > 1_000_000 || Math.abs(node.y) > 1_000_000) throw ludusError("VL3002", "Blok koordinatları geçersiz veya çalışma alanı sınırını aşıyor.");
     const width = nodeWidth(node);
-    if (!Number.isInteger(width) || width < 1 || width > 32) throw new Error("Blok genişliği 1–32 bit arasında tam sayı olmalı.");
-    if (node.type === "constant" && !isValidValue(node.value, width)) throw new Error(`Sabit değer ${width} bit genişliğinde 0/1/X içermeli.`);
+    if (!Number.isInteger(width) || width < 1 || width > 32) throw ludusError("VL2001", "Blok genişliği 1–32 bit arasında tam sayı olmalı.");
+    if (node.type === "constant" && !isValidValue(node.value, width)) throw ludusError("VL2002", `Sabit değer ${width} bit genişliğinde 0/1/X içermeli.`);
     ids.add(node.id);
     nodes.set(node.id, node);
     if (["input", "output", "signal"].includes(node.type)) {
-      if (!isValidSignalName(node.name) || node.name.length > 40 || names.has(node.name)) throw new Error("Giriş, çıkış ve ara sinyal adları Verilog için geçerli ve benzersiz olmalı.");
+      if (!isValidSignalName(node.name) || node.name.length > 40 || names.has(node.name)) throw ludusError("VL3003", "Giriş, çıkış ve ara sinyal adları Verilog için geçerli ve benzersiz olmalı.");
       names.add(node.name);
     }
   }
-  if (bp.nodes.some((node) => node.type === "register") && ["clk", "reset"].some((name) => names.has(name))) throw new Error("Sinyal adları clk/reset ile çakışamaz.");
+  if (bp.nodes.some((node) => node.type === "register") && ["clk", "reset"].some((name) => names.has(name))) throw ludusError("VL3003", "Sinyal adları clk/reset ile çakışamaz.");
   const destinations = new Set();
   for (const wire of bp.wires) {
     const from = nodes.get(wire?.from?.node);
     const to = nodes.get(wire?.to?.node);
-    if (!from || !to || !outputPorts(from).includes(wire.from.port) || !inputPorts(to).includes(wire.to.port)) throw new Error("Bağlantı geçersiz bir blok girişine veya çıkışına ulaşıyor.");
-    if (portWidth(from, wire.from.port) !== portWidth(to, wire.to.port)) throw new Error("Bağlantıdaki port genişlikleri eşleşmeli; genişlik dönüştürme otomatik yapılmaz.");
+    if (!from || !to || !outputPorts(from).includes(wire.from.port) || !inputPorts(to).includes(wire.to.port)) throw ludusError("VL1001", "Bağlantı geçersiz bir blok girişine veya çıkışına ulaşıyor.");
+    if (portWidth(from, wire.from.port) !== portWidth(to, wire.to.port)) throw ludusError("VL0001", `Bağlantıdaki port genişlikleri eşleşmeli: kaynak ${portWidth(from, wire.from.port)} bit, hedef ${portWidth(to, wire.to.port)} bit. Genişlik dönüşümü otomatik yapılmaz.`);
     const key = `${to.id}:${wire.to.port}`;
-    if (destinations.has(key)) throw new Error("Bir blok girişine birden fazla sinyal bağlanamaz.");
+    if (destinations.has(key)) throw ludusError("VL1002", "Bir blok girişine birden fazla sinyal bağlanamaz.");
     destinations.add(key);
   }
-  for (const node of bp.nodes) for (const port of inputPorts(node)) if (!destinations.has(`${node.id}:${port}`)) throw new Error("Her blok girişi bir sinyale bağlı olmalı.");
-  if (!bp.nodes.some((node) => node.type === "output")) throw new Error("Blueprint en az bir çıkış içermeli.");
+  for (const node of bp.nodes) for (const port of inputPorts(node)) if (!destinations.has(`${node.id}:${port}`)) throw ludusError("VL1003", "Her blok girişi bir sinyale bağlı olmalı.");
+  if (!bp.nodes.some((node) => node.type === "output")) throw ludusError("VL3004", "Blueprint en az bir çıkış içermeli.");
   topologicalOrder(bp);
   return true;
 }
@@ -100,7 +102,7 @@ function topologicalOrder(bp) {
       if (indegree.get(next) === 0) queue.push(next);
     }
   }
-  if (order.length !== combinational.length) throw new Error("Kombinasyonel döngü var; sinyal kendi sonucuna geri bağlanamaz.");
+  if (order.length !== combinational.length) throw ludusError("VL1004", "Kombinasyonel döngü var; sinyal kendi sonucuna geri bağlanamaz.");
   return order;
 }
 
@@ -138,8 +140,8 @@ export function evaluate(bp, inputs = {}, registers = createState(bp)) {
   validateBlueprint(bp);
   const inputWidths = new Map(bp.nodes.filter((node) => node.type === "input").map((node) => [node.name, nodeWidth(node)]));
   const registerWidths = new Map(bp.nodes.filter((node) => node.type === "register").map((node) => [node.id, nodeWidth(node)]));
-  for (const [name, value] of Object.entries(inputs)) if (!isValidValue(value, inputWidths.get(name) ?? 1)) throw new Error("Giriş sinyali genişliğiyle uyumlu bir 0/1/X değeri olmalı.");
-  for (const [id, value] of Object.entries(registers)) if (!isValidValue(value, registerWidths.get(id) ?? 1)) throw new Error("Yazmaç sinyali genişliğiyle uyumlu bir 0/1/X değeri olmalı.");
+  for (const [name, value] of Object.entries(inputs)) if (!isValidValue(value, inputWidths.get(name) ?? 1)) throw ludusError("VL5001", "Giriş sinyali genişliğiyle uyumlu bir 0/1/X değeri olmalı.");
+  for (const [id, value] of Object.entries(registers)) if (!isValidValue(value, registerWidths.get(id) ?? 1)) throw ludusError("VL5001", "Yazmaç sinyali genişliğiyle uyumlu bir 0/1/X değeri olmalı.");
   const values = new Map();
   const nodes = new Map(bp.nodes.map((node) => [node.id, node]));
   const incoming = new Map();
@@ -191,7 +193,7 @@ export function generateVerilog(bp) {
   const regs = nodes.filter((node) => node.type === "register");
   const widthRange = (node) => nodeWidth(node) === 1 ? "" : `[${nodeWidth(node) - 1}:0] `;
   const names = [...inputs, ...outputs, ...signals, ...(regs.length ? [{ name: "clk" }, { name: "reset" }] : [])].map((node) => hdlName(node.name));
-  if (new Set(names).size !== names.length) throw new Error("Sinyal adı clk/reset ile çakışıyor veya Verilog adı yineleniyor.");
+  if (new Set(names).size !== names.length) throw ludusError("VL3003", "Sinyal adı clk/reset ile çakışıyor veya Verilog adı yineleniyor.");
   const used = new Set(names);
   const vars = new Map();
   nodes.forEach((node, index) => {

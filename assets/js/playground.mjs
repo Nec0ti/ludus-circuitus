@@ -1,5 +1,6 @@
 import { createState, halfAdderBlueprint, isValidSignalName, nodeWidth, X } from "./engine.mjs";
 import { createProjectState, evaluateProject, flattenProject, generateProjectVerilog, resetProject, tickProject, validateProject } from "./project.mjs";
+import { errorCatalog, ludusError, normalizeLudusError } from "./errors.mjs";
 
 const $ = (selector) => document.querySelector(selector);
 const el = (tag, className, text) => {
@@ -37,6 +38,10 @@ let documents = [{ id: crypto.randomUUID(), name: "top.bp", bp: snapBlueprintPos
 let activeId = documents[0].id;
 let selectedIds = new Set();
 let pendingSource = null;
+let wireDrag = null;
+let selectedWire = null;
+let consoleEntries = [];
+let consoleOpen = false;
 let camera = { x: 0, y: 0, zoom: 1 };
 let cameraReady = false;
 let cameraEngaged = false;
@@ -71,6 +76,39 @@ function safeEvaluate(doc) {
     return evaluateProject(documents, doc.bp.name, currentInputs(doc.bp), state.registers);
   } catch (error) {
     return { values: Object.fromEntries(doc.bp.nodes.map((node) => [node.id, node.type === "input" ? state.inputs[node.name] ?? 0 : X])), outputs: {}, error };
+  }
+}
+
+function recordError(error) {
+  const normalized = normalizeLudusError(error), code = normalized.code;
+  const existing = consoleEntries.find((entry) => entry.document === activeId && entry.code === code && entry.message === normalized.message);
+  if (existing) return;
+  consoleEntries.unshift({ document: activeId, file: activeDocument()?.name || "", code, message: normalized.message, time: new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) });
+  consoleEntries = consoleEntries.slice(0, 40);
+  consoleOpen = true;
+  renderConsole();
+}
+
+function renderConsole() {
+  const list = $("#console-entries"), panel = $("#console-panel"), toggle = $("#console-toggle");
+  if (!list || !panel || !toggle) return;
+  list.replaceChildren();
+  toggle.textContent = `Konsol${consoleEntries.length ? ` · ${consoleEntries.length}` : ""}`;
+  toggle.setAttribute("aria-expanded", String(consoleOpen));
+  panel.classList.toggle("is-open", consoleOpen);
+  if (!consoleEntries.length) {
+    list.append(el("p", "cad-console-empty", "Hatalar ve bağlantı uyarıları burada görünür."));
+    return;
+  }
+  for (const entry of consoleEntries) {
+    const row = el("div", "cad-console-entry");
+    const code = el("a", "cad-console-code", entry.code);
+    code.href = `${$("#error-docs-base").dataset.base}${errorCatalog[entry.code].slug}/`;
+    code.target = "_blank";
+    code.rel = "noopener";
+    code.setAttribute("aria-label", `${entry.code}: hata açıklamasını yeni sekmede aç`);
+    row.append(code, el("span", "cad-console-message", entry.message), el("small", "cad-console-source", `${entry.file} · ${entry.time}`));
+    list.append(row);
   }
 }
 
@@ -192,7 +230,7 @@ function render() {
   $("#hdl-file").textContent = doc.name.replace(/\.bp$/, ".v");
   $("#canvas-mode").textContent = hasRegisters(bp) ? "SIRALI DEVRE · YÜKSELEN KENAR" : "KOMBİNASYONEL DEVRE · PARALEL YOLLAR";
   $(".cad-clock").classList.toggle("is-hidden", !hasRegisters(bp));
-  $("#graph-status").textContent = result.error ? result.error.message : "Tüm girişler bağlı · Blueprint geçerli";
+  $("#graph-status").textContent = result.error ? `${result.error.code || "VL9999"} · ${result.error.message}` : "Tüm girişler bağlı · Blueprint geçerli";
   $("#selection-info").textContent = selectedIds.size ? `${selectedIds.size} blok seçili · Delete ile sil` : "Blok seçili değil";
   renderTabs();
   renderModuleTools();
@@ -202,7 +240,7 @@ function render() {
   renderSignalView(bp, result.values);
   updateCamera();
   try { $("#verilog-code").textContent = generateProjectVerilog(documents, bp.name); }
-  catch (error) { $("#verilog-code").textContent = `// ${error.message}\n// Tüm portları bağladıktan sonra Verilog oluşur.`; }
+  catch (error) { if (!["VL1003", "VL3004"].includes(error.code)) recordError(error); $("#verilog-code").textContent = `// ${error.code || "VL9999"}: ${error.message}\n// Tüm portları bağladıktan sonra Verilog oluşur.`; }
   $("#tick-count").textContent = String(state.tick).padStart(3, "0");
   $("#step-sim").disabled = !hasRegisters(bp);
   $("#signal-view").classList.toggle("is-playing", signalAnimation === "playing");
@@ -237,6 +275,11 @@ function updateCamera() {
 function screenToWorld(clientX, clientY) {
   const rect = $("#blueprint-canvas").getBoundingClientRect();
   return { x: Math.round(((clientX - rect.left - camera.x) / camera.zoom) / 20) * 20, y: Math.round(((clientY - rect.top - camera.y) / camera.zoom) / 20) * 20 };
+}
+
+function screenToWorldPoint(clientX, clientY) {
+  const rect = $("#blueprint-canvas").getBoundingClientRect();
+  return { x: (clientX - rect.left - camera.x) / camera.zoom, y: (clientY - rect.top - camera.y) / camera.zoom };
 }
 
 function renderNodes(bp, values) {
@@ -327,7 +370,7 @@ function renderNodes(bp, values) {
 }
 
 function setNodeWidth(node, width) {
-  if (!Number.isInteger(width) || width < 1 || width > 32) return announce("Bit genişliği 1–32 arasında olmalı.");
+  if (!Number.isInteger(width) || width < 1 || width > 32) { const error = ludusError("VL2001", "Bit genişliği 1–32 arasında olmalı."); recordError(error); return announce(error.message); }
   const oldWidth = nodeWidth(node), oldValue = node.type === "constant" ? String(node.value ?? 0) : null;
   node.width = width;
   if (node.type === "constant") node.value = width === 1 ? Number(oldValue.at(-1) === "1") : oldValue.padStart(width, "0").slice(-width);
@@ -351,7 +394,7 @@ function editConstant(node) {
   const raw = window.prompt(`Sabit değeri (0–${(1n << BigInt(nodeWidth(node))) - 1n})`, String(BigInt(`0b${String(node.value).replaceAll("X", "0")}`)));
   if (raw === null) return;
   const value = decimalBits(raw.trim(), nodeWidth(node));
-  if (value === null) return announce(`0 ile ${(1n << BigInt(nodeWidth(node))) - 1n} arasında bir tam sayı gir.`);
+  if (value === null) { const error = ludusError("VL2002", `0 ile ${(1n << BigInt(nodeWidth(node))) - 1n} arasında bir tam sayı gir.`); recordError(error); return announce(error.message); }
   node.value = nodeWidth(node) === 1 ? value : value.toString(2).padStart(nodeWidth(node), "0");
   render(); persist();
 }
@@ -363,6 +406,7 @@ function makePort(node, port, direction) {
   button.dataset.port = port;
   button.dataset.direction = direction;
   button.setAttribute("aria-label", `${node.name || labels[node.type]} ${port} ${direction === "output" ? "çıkışı" : "girişi"}`);
+  button.title = direction === "output" ? "Bağlantı için giriş portuna sürükle. Klavyeyle Enter kullan." : "Uyumlu çıkıştan buraya sürükle. Klavyeyle Enter ile tamamla.";
   if (direction === "output" && pendingSource?.node === node.id) button.classList.add("is-pending");
   if (node.type === "module") {
     const all = direction === "input" ? portInputs(node) : portOutputs(node);
@@ -370,8 +414,14 @@ function makePort(node, port, direction) {
     button.style.top = `${top}px`;
     button.style[direction === "input" ? "left" : "right"] = direction === "input" ? "-6px" : "4px";
   }
-  button.addEventListener("pointerdown", (event) => event.stopPropagation());
-  button.addEventListener("click", (event) => { event.stopPropagation(); connectPort(node.id, port, direction); });
+  button.addEventListener("pointerdown", (event) => {
+    event.stopPropagation();
+    if (event.button === 0) beginWireDrag(event, { node: node.id, port });
+  });
+  button.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (event.detail === 0) connectPort(node.id, port, direction);
+  });
   return button;
 }
 
@@ -420,11 +470,24 @@ function renderWires(bp, values) {
     path.dataset.fromPort = wire.from.port;
     path.dataset.toNode = target.id;
     path.dataset.toPort = wire.to.port;
+    const wireKey = `${wire.from.node}:${wire.from.port}>${wire.to.node}:${wire.to.port}`;
+    path.dataset.wireKey = wireKey;
+    path.setAttribute("role", "button");
+    path.setAttribute("tabindex", "0");
+    path.setAttribute("aria-label", `${source.name || labels[source.type]} çıkışından ${target.name || labels[target.type]} girişine bağlantı. Seç ve Delete ile kaldır.`);
+    if (selectedWire === wireKey) path.classList.add("is-selected");
+    path.addEventListener("pointerdown", (event) => event.stopPropagation());
+    path.addEventListener("click", (event) => { event.stopPropagation(); selectedIds.clear(); selectedWire = wireKey; path.classList.add("is-selected"); announce("Kablo seçildi · Delete ile kaldır."); });
+    path.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); selectedIds.clear(); selectedWire = wireKey; path.classList.add("is-selected"); announce("Kablo seçildi · Delete ile kaldır."); } });
     svg.append(path);
   }
   if (pendingSource) {
     const source = nodes.get(pendingSource.node);
-    if (source) svg.append(makePath(point(source, "out", "output"), { x: source.x + 260, y: source.y + 44 }, "cad-wire wire-pending", X));
+    if (source) svg.append(makePath(point(source, pendingSource.port, "output"), { x: source.x + 260, y: source.y + 44 }, "cad-wire wire-pending", X));
+  }
+  if (wireDrag) {
+    const source = nodes.get(wireDrag.from.node);
+    if (source) svg.append(makePath(point(source, wireDrag.from.port, "output"), wireDrag.point, "cad-wire wire-pending", X));
   }
 }
 
@@ -489,22 +552,123 @@ function renderSignalView(bp, values) {
   host.append(svg);
 }
 
+function portWidth(node, port, direction) {
+  if (node.type === "module") {
+    const type = direction === "output" ? "output" : "input";
+    const childPort = moduleBlueprint(node)?.nodes.find((item) => item.type === type && item.name === port);
+    return childPort ? nodeWidth(childPort) : undefined;
+  }
+  return node.type === "mux" && port === "sel" ? 1 : nodeWidth(node);
+}
+
+function connectWire(from, to) {
+  const bp = activeDocument().bp;
+  const source = bp.nodes.find((node) => node.id === from.node), target = bp.nodes.find((node) => node.id === to.node);
+  if (!source || !target || !portOutputs(source).includes(from.port) || !portInputs(target).includes(to.port)) {
+    const error = ludusError("VL1001", "Kabloyu bir çıkış portundan uyumlu bir giriş portuna bırak.");
+    recordError(error); announce(error.message); return false;
+  }
+  const sourceWidth = portWidth(source, from.port, "output"), targetWidth = portWidth(target, to.port, "input");
+  if (sourceWidth !== targetWidth) {
+    const error = ludusError("VL0001", `Bit genişliği uyuşmuyor: ${source.name || labels[source.type]} ${sourceWidth} bit, ${target.name || labels[target.type]} ${targetWidth} bit. Aynı genişlikte port seç.`);
+    recordError(error); announce(error.message); return false;
+  }
+  const existing = bp.wires.find((wire) => wire.to.node === to.node && wire.to.port === to.port);
+  if (existing) {
+    if (existing.from.node === from.node && existing.from.port === from.port) { announce("Bu bağlantı zaten var."); return true; }
+    const error = ludusError("VL1002", "Bu giriş portu zaten bağlı. Önce mevcut kabloyu seçip Delete ile kaldır.");
+    recordError(error); announce(error.message); return false;
+  }
+  if (createsCombinationalLoop(bp, from, to)) {
+    const error = ludusError("VL1004", "Bu kablo kombinasyonel döngü oluşturur. Geri besleme için bir Yazmaç kullan.");
+    recordError(error); announce(error.message); return false;
+  }
+  const wire = { from: { ...from }, to: { ...to } };
+  bp.wires.push(wire);
+  try {
+    validateProject(documents);
+  } catch (error) {
+    if (!["VL1003", "VL3004"].includes(error.code)) {
+      bp.wires.pop(); recordError(error); announce(error.message); return false;
+    }
+  }
+  pendingSource = null;
+  selectedWire = null;
+  render(); persist(); announce("Bağlantı eklendi.");
+  return true;
+}
+
+function createsCombinationalLoop(bp, from, to) {
+  const nodes = new Map(bp.nodes.map((node) => [node.id, node]));
+  const source = nodes.get(from.node), target = nodes.get(to.node);
+  if (!source || !target || ["input", "register"].includes(source.type) || ["input", "register"].includes(target.type)) return false;
+  const pending = [to.node], seen = new Set();
+  while (pending.length) {
+    const id = pending.pop();
+    if (id === from.node) return true;
+    if (seen.has(id)) continue;
+    seen.add(id);
+    for (const wire of bp.wires) {
+      const next = nodes.get(wire.to.node), previous = nodes.get(wire.from.node);
+      if (wire.from.node === id && next && previous && !["input", "register"].includes(next.type) && !["input", "register"].includes(previous.type)) pending.push(next.id);
+    }
+  }
+  return false;
+}
+
+function removeSelectedWire() {
+  if (!selectedWire) return false;
+  const [from, to] = selectedWire.split(">");
+  const [fromNode, fromPort] = from.split(":");
+  const [toNode, toPort] = to.split(":");
+  activeDocument().bp.wires = activeDocument().bp.wires.filter((wire) => !(wire.from.node === fromNode && wire.from.port === fromPort && wire.to.node === toNode && wire.to.port === toPort));
+  selectedWire = null;
+  render(); persist(); announce("Bağlantı kaldırıldı.");
+  return true;
+}
+
 function connectPort(nodeId, port, direction) {
   if (direction === "output") {
     pendingSource = { node: nodeId, port };
-    $("#sim-status").textContent = "Şimdi bağlanacak bloğun giriş portunu seç.";
-    render();
+    announce("Giriş portunu odakta Enter ile seç. Vazgeçmek için Escape.");
+    renderWires(activeDocument().bp, safeEvaluate(activeDocument()).values);
     return;
   }
-  if (!pendingSource) return announce("Önce bir çıkış portu seç.");
-  const bp = activeDocument().bp;
-  bp.wires = bp.wires.filter((wire) => !(wire.to.node === nodeId && wire.to.port === port));
-  bp.wires.push({ from: pendingSource, to: { node: nodeId, port } });
-  pendingSource = null;
-  render();
-  persist();
-  announce("Bağlantı eklendi.");
+  if (!pendingSource) return;
+  connectWire(pendingSource, { node: nodeId, port });
 }
+
+function beginWireDrag(event, from) {
+  if (event.button !== 0 || event.pointerType === "mouse" && event.buttons !== 1) return;
+  event.preventDefault();
+  pendingSource = null;
+  wireDrag = { pointerId: event.pointerId, from, point: screenToWorldPoint(event.clientX, event.clientY) };
+  renderWires(activeDocument().bp, safeEvaluate(activeDocument()).values);
+}
+
+function cancelWireDrag() {
+  if (!wireDrag && !pendingSource) return;
+  wireDrag = null; pendingSource = null;
+  render();
+}
+
+window.addEventListener("pointermove", (event) => {
+  if (!wireDrag || event.pointerId !== wireDrag.pointerId) return;
+  wireDrag.point = screenToWorldPoint(event.clientX, event.clientY);
+  renderWires(activeDocument().bp, safeEvaluate(activeDocument()).values);
+});
+window.addEventListener("pointerup", (event) => {
+  if (!wireDrag || event.pointerId !== wireDrag.pointerId) return;
+  const from = wireDrag.from, target = [...document.querySelectorAll(".cad-port")].find((port) => {
+    const rect = port.getBoundingClientRect();
+    return event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
+  });
+  wireDrag = null;
+  if (target) connectWire(from, { node: target.dataset.node, port: target.dataset.port });
+  else { renderWires(activeDocument().bp, safeEvaluate(activeDocument()).values); announce("Bağlantı iptal edildi; kablo boş alana bırakıldı."); }
+});
+window.addEventListener("pointercancel", (event) => { if (wireDrag?.pointerId === event.pointerId) cancelWireDrag(); });
+document.addEventListener("keydown", (event) => { if (event.key === "Escape" && (wireDrag || pendingSource)) cancelWireDrag(); });
 
 function beginDrag(event, node) {
   if (event.button !== 0 || event.target.closest("button")) return;
@@ -580,6 +744,7 @@ function removeNodes(ids) {
   bp.wires = bp.wires.filter((wire) => !ids.has(wire.from.node) && !ids.has(wire.to.node));
   for (const id of ids) if (state.registers[id] !== undefined) delete state.registers[id];
   selectedIds = new Set();
+  selectedWire = null;
   render();
   if (focusedNode) (renderedNodes.get(focusedNode) || renderedNodes.values().next().value || $("#blueprint-canvas")).focus({ preventScroll: true });
   persist();
@@ -591,6 +756,7 @@ function newDocument() {
   const doc = { id: crypto.randomUUID(), name: `devre${documents.length + 1}.bp`, bp: basicBlueprint(`devre${documents.length + 1}`) };
   documents.push(doc);
   activeId = doc.id;
+  cameraReady = false;
   state = { registers: projectState(doc), inputs: {}, tick: 0 };
   render();
   persist();
@@ -608,7 +774,7 @@ function exportBlueprint() {
 }
 
 async function importBlueprint(file) {
-  if (file.size > maxImportBytes) return announce("Blueprint dosyası 1 MB sınırını aşıyor.");
+  if (file.size > maxImportBytes) { const error = ludusError("VL6002", "Blueprint dosyası 1 MB sınırını aşıyor."); recordError(error); return announce(error.message); }
   const doc = activeDocument(), previous = { bp: doc.bp, name: doc.name };
   try {
     const bp = JSON.parse(await file.text());
@@ -618,13 +784,15 @@ async function importBlueprint(file) {
     state = { registers: projectState(doc), inputs: {}, tick: 0 };
     stopSignalAnimation();
     render(); persist(); announce("Blueprint açıldı.");
-  } catch (error) { doc.bp = previous.bp; doc.name = previous.name; announce(`Dosya açılamadı: ${error.message}`); }
+  } catch (error) { doc.bp = previous.bp; doc.name = previous.name; const diagnostic = error.code ? error : ludusError("VL6001", "Dosya açılamadı: geçerli bir BP JSON dosyası seç."); recordError(diagnostic); announce(diagnostic.message); }
 }
 
 function announce(message) { $("#sim-status").textContent = message; }
 function stopSignalAnimation() { signalAnimation = "stopped"; }
 
 function play() {
+  try { validateProject(documents); }
+  catch (error) { recordError(error); announce(error.message); return; }
   signalAnimation = "playing";
   announce("Sağdaki devrede mantıksal sinyal yolları canlandırılıyor. Giriş ve yazmaç değerleri değişmez.");
   render();
@@ -655,7 +823,7 @@ function tickOnce() {
     render();
     announce(`Yükselen kenar ${state.tick}: yazmaç değerleri birlikte güncellendi.`);
     return true;
-  } catch (error) { announce(error.message); return false; }
+  } catch (error) { recordError(error); announce(error.message); return false; }
 }
 
 $("#play-sim").addEventListener("click", play);
@@ -688,10 +856,13 @@ $("#import-file").addEventListener("change", (event) => { if (event.target.files
 $("#copy-verilog").addEventListener("click", async () => { try { await navigator.clipboard.writeText($("#verilog-code").textContent); announce("Verilog kodu panoya kopyalandı."); } catch { announce("Tarayıcı panoya erişim izni vermedi."); } });
 document.addEventListener("keydown", (event) => {
   if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName) || event.ctrlKey || event.metaKey) return;
+  if (event.key === "Delete" && selectedWire) { event.preventDefault(); removeSelectedWire(); return; }
   if (event.key === "Delete" && selectedIds.size) removeSelectedNodes();
   const shortcuts = { i: "input", o: "output", a: "and", r: "or", x: "xor", n: "not", q: "register" };
   if (shortcuts[event.key.toLowerCase()]) addNode(shortcuts[event.key.toLowerCase()]);
 });
+$("#console-toggle").addEventListener("click", () => { consoleOpen = !consoleOpen; renderConsole(); });
+$("#console-clear").addEventListener("click", () => { consoleEntries = []; consoleOpen = true; renderConsole(); });
 
 const canvas = $("#blueprint-canvas"), caller = $("#node-caller"), search = $("#node-search"), options = $("#node-options"), selectionBox = $("#selection-box");
 $("#shelf-toggle").addEventListener("click", (event) => {
@@ -907,5 +1078,5 @@ try {
     activeId = documents[0].id;
     state.registers = projectState(activeDocument());
   }
-} catch { announce("Yerel blueprint verisi okunamadı; kayıtlı içerik değiştirilmedi."); }
+} catch { recordError(ludusError("VL6001", "Yerel blueprint verisi okunamadı; kayıtlı içerik değiştirilmedi.")); announce("Yerel blueprint verisi okunamadı; kayıtlı içerik değiştirilmedi."); }
 render();

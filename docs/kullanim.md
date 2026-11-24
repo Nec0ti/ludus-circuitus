@@ -11,7 +11,7 @@ reading_time: 9
     <p class="eyebrow eyebrow-ink">Atölye rehberi</p>
     <h1>Atölye kullanımı</h1>
     <p class="docs-reading-time">Yaklaşık {{ page.reading_time }} dakika</p>
-    <p class="docs-intro">Çalışma alanında soldan blok ekle, ortada bağla, sağdaki görünüm ve Verilog çıktısıyla sonucu incele. Bu sayfa dört ayrı işi sırayla anlatır.</p>
+    <p class="docs-intro">Çalışma alanında soldan blok ekle, ortada bağla, sağdaki görünüm ve Verilog çıktısıyla sonucu incele. Bu sayfa devre kurma, inceleme, çalıştırma ve dosya yönetimini anlatır.</p>
     <nav class="docs-page-toc" aria-label="Bu sayfadaki konular"><b>Adımlar</b><a href="#devre-kur">1. Devreyi kur <small>2 dk</small></a><a href="#girisleri-izle">2. Sinyalleri incele <small>2 dk</small></a><a href="#simulasyon">3. Görselleştirmeyi ve yazmacı çalıştır <small>1 dk</small></a><a href="#blueprint-dosyalari">4. Dosya ve modülleri yönet <small>3 dk</small></a></nav>
 
     <h2 id="devre-kur">1. Devreyi kur <span class="docs-section-time">~2 dk</span></h2>
@@ -20,7 +20,7 @@ reading_time: 9
     <h3>Tuvalde gezin ve çoklu seçim yap</h3>
     <p>Tuval boşluğuna sağ tıkla: arama ve kısa açıklama içeren blok listesi açılır; bir öğeyi seç veya Escape/dışarı tıklamayla kapat. Boş alanda sol tuşu sürüklemek seçim kutusu oluşturur. Sağ tuşu basılı sürüklemek veya orta tuşu kullanmak tuvali kaydırır; tekerlek yakınlaştırır. Araçlıktaki bloğu tuvale sürükleyerek de ekleyebilirsin.</p>
     <h3>Portları birbirine bağla</h3>
-    <p>Önce bir bloğun çıkış portuna, sonra hedef bloğun giriş portuna tıkla. Her giriş portuna tek bir kaynak bağlanır; bir çıkış birden fazla hedefe dallanabilir. Seçili bloğu Delete tuşuyla kaldırabilirsin.</p>
+    <p>Bir çıkış portundan uyumlu giriş portuna sürükleyip bırak. Bit genişliği uyuşmuyorsa kablo bağlanmaz; konsolda <code>VL0001</code> görünür ve kodu seçerek düzeltme rehberini yeni sekmede açabilirsin. Her giriş portuna tek kaynak bağlanır; bir çıkış birden fazla hedefe dallanabilir. Kabloyu seçip Delete ile kaldır. Klavyeyle portta Enter kullan; Escape bağlantıyı iptal eder.</p>
 
     <h2 id="girisleri-izle">2. Sinyalleri incele <span class="docs-section-time">~2 dk</span></h2>
     <h3>Giriş değerlerini değiştir</h3>
@@ -36,7 +36,9 @@ reading_time: 9
 
     <h2 id="blueprint-dosyalari">4. Dosya ve modülleri yönet <span class="docs-section-time">~3 dk</span></h2>
     <h3>Blueprint dosyaları ve Verilog</h3>
-    <p><em>Yeni BP</em> veya <code>+</code> ile yeni belge aç. Kaydet, açık belgeleri bu tarayıcıda saklar. Dışa aktar etkin belgeyi <code>.bp</code> JSON dosyası olarak indirir; İçe aktar en fazla 1 MB boyutundaki bir dosyayı açar. Geçerli blueprint için sağdaki Verilog çıktısı otomatik üretilir; bağlantı hatalarında açıklayıcı uyarı gösterilir.</p>
+    <p><em>Yeni BP</em> veya <code>+</code> ile yeni belge aç. Kaydet, açık belgeleri bu tarayıcıda saklar. Dışa aktar etkin belgeyi <code>.bp</code> JSON dosyası olarak indirir; İçe aktar en fazla 1 MB boyutundaki bir dosyayı açar. Geçerli blueprint için sağdaki Verilog çıktısı otomatik üretilir.</p>
+    <h3>Hata konsolunu kullan</h3>
+    <p>Tuvalin altındaki Konsol düğmesi bağlantı, doğrulama ve simülasyon sorunlarını listeler. Kod yanında kısa açıklama görünür; kodu seçince neden ve çözüm adımları yeni sekmede açılır. Boş giriş, yanlış port, bit genişliği ve modül hatalarının tüm kataloğu <a href="{{ '/docs/errors/' | relative_url }}">Hata kodları</a> sayfasındadır. Konsol yalnızca atölye sorunlarını gösterir; sentezleyici veya harici Verilog derleyicisi çalıştırmaz.</p>
     <h3 id="moduller">.bp dosyalarını modül olarak birleştir</h3>
     <p>Bir modül, kendi giriş ve çıkışlarıyla tek blok gibi kullanılabilen başka bir açık blueprint'tir. Modülün içindeki kapılar ve yazmaçlar üst devreyle birlikte değerlendirilir.</p>
     <ol>

@@ -57,7 +57,7 @@ permalink: /playground/
       <div class="cad-tool-row"><button class="cad-block-tool" type="button" data-add="register"><i class="cad-tool-symbol register-symbol">D</i><span>Yazmaç</span><kbd>Q</kbd></button><a class="cad-help-icon" href="{{ '/docs/bloklar/#yazmac' | relative_url }}" target="_blank" rel="noopener" aria-label="Yazmaç bloğu yardımı, yeni sekmede"><span>?</span><span class="cad-tooltip" role="tooltip">D girişini bir yükselen clock kenarında saklar ve Q çıkışında tutar.</span></a></div>
       <p class="cad-tool-group">BP MODÜLLERİ</p>
       <div id="module-tools" data-help-href="{{ '/docs/bloklar/#bp-modulleri' | relative_url }}"></div>
-      <div class="cad-tool-help"><b>Bağlantı</b><span>Çıkış portuna, sonra giriş portuna tıkla.</span></div>
+      <div class="cad-tool-help"><b>Bağlantı</b><span>Bir çıkıştan uyumlu girişe sürükle. Klavyeyle çıkış ve hedef portta Enter kullan; Escape ile vazgeç.</span></div>
       <div class="cad-selection" id="selection-info">Blok seçili değil</div>
       </div>
     </aside>
@@ -81,6 +81,15 @@ permalink: /playground/
       <section class="cad-variables">
         <div class="cad-panel-title"><span>DEĞİŞKENLER</span><span class="cad-dim" id="variable-count">0 SİNYAL</span></div>
         <div class="cad-variable-list" id="variable-list"></div>
+      </section>
+      <section class="cad-console" id="console-panel" aria-label="Devre Atölyesi hata konsolu">
+        <div class="cad-console-head">
+          <button class="cad-console-toggle" id="console-toggle" type="button" aria-expanded="false" aria-controls="console-entries">Konsol</button>
+          <span class="cad-console-caption">Bağlantı · doğrulama · simülasyon</span>
+          <button class="cad-console-clear" id="console-clear" type="button">Temizle</button>
+        </div>
+        <div class="cad-console-entries" id="console-entries" role="log" aria-live="polite" aria-relevant="additions text"></div>
+        <span id="error-docs-base" data-base="{{ '/docs/errors/' | relative_url }}" hidden></span>
       </section>
       <div class="cad-bottom-status"><span id="graph-status">Tüm girişler bağlı</span><span>YEREL PROJE <b>·</b> VERİ GÖNDERİMİ KAPALI</span></div>
     </section>

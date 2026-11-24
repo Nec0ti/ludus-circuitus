@@ -12,6 +12,16 @@ Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde ö
 
 ## Atölye genişletme ve görsel yenileme: 2026-11-24
 
+### Sürükle-bağla ve hata yardım sistemi: 2026-11-24 kullanıcı isteği
+
+- Kullanıcı, çıkış portundan giriş portuna sürükleyip bırakarak kablo bağlanmasını istedi; iki ayrı porta tıklayıp bağlama akışı kaldırılmalı. Tuvalde kablo önizlemesi imleci izler. Boş/yanlış porta bırakma ya da Escape bağlantıyı iptal eder. Bağlantı başarılı olduğunda sinyal ve Verilog anında güncellenir.
+- Kullanıcı, çalışma alanında basit konsol görmek istedi. Doğrulama, bağlantı ve simülasyon hataları stabil `VL` kodu, kısa Türkçe açıklama ve çözüm yolu ile listelenir; hata kodu ayrı Jekyll hata sayfasını yeni sekmede açar. Kod-kategori örneği: `VL0001` bit genişliği uyuşmazlığı.
+- Dokümantasyon `docs/errors/` altında her desteklenen kod için ayrı `/docs/errors/vl0001/` sayfası içerir; katalog bağlantıları Atölye yardımından erişilir. Başlangıç kategorileri bağlantı/port, bit genişliği-değeri, adlandırma/sözdizimi, BP yapısı/modül birleştirme ve simülasyondur.
+- Sınır: uygulama Verilog parser'ı, sentez motoru veya harici simulator çalıştırmıyor. Bu nedenle derleyici/sentez hatası kodu uydurulmayacak; dokümantasyonda bu hata türlerinin hangi aşamada anlamlı olacağı açıklanacak.
+- Klavye erişimi korunmalı: port odağında Enter ile bağlantı başlatma/uyumlu hedefte tamamlama, Escape ile vazgeçme. Dolu girişe yeni bağlantı sessizce eski bağlantıyı silmemeli; kullanıcıya kodlu hata göstermeli.
+
+Değişiklik ve doğrulamalar backlog ve `backloglog.md` içinde izlenecek.
+
 ### Araştırma ve katılımcı verisi yönü: 2026-11-24 kullanıcı kararları
 
 - **Bit genişliği teyit edildi:** Kullanıcının kastı 1–32 bit aralığıdır; mevcut uygulama ve `.bp` kapsamı sürer.
@@ -300,3 +310,11 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - ChipXpert ürün sayfası öğrenme laboratuvarları, Verilog simülasyonu, waveform ve HDL sentez/netlist özelliklerini listeliyor; canlı aynı görev çalıştırılmadı.
 - VeriSim README'si canlı denemede görülmeyen, HDL'den sentezlenen Gate/RTL şemalarını da belgeledi. Ludus'un aday farkı “şema ve kodu bir arada göstermek” kadar geniş tutulmamalı: kullanıcı bağlantı grafiğinin kaynak olması ve aynı öğrenme adımında üretilen Verilog ile mantıksal sinyal değerlerinin beraber gösterilmesi, denenen akışlarda gözlenmeyen bir hipotezdir; alan yazını/pazar taraması tam değildir ve benzersizlik kanıtı değildir.
 - Ayrıntı ve kaynaklar [`research/references/index.md`](research/references/index.md) ile [`research/references/related-tools.md`](research/references/related-tools.md) içinde. Canlı araç bakışlarında katılımcı veya kişisel veri kullanılmadı.
+
+### 2026-11-24 — Hata konsolu ve porttan porta bağlantı
+
+- Atölye bağlantıları artık çıkış portundan giriş portuna sürükle-bırak ile kurulur; önizleme çizgisi, boş alan/Escape iptali ve klavyeyle Enter akışı vardır. Geçersiz yön, bit genişliği uyuşmazlığı, dolu hedef ve kombinasyonel döngü bağlantıyı değiştirmeden kararlı hata kodu verir.
+- Alt tuval konsolu tanılamaları geçici olarak bellekte listeler (en fazla 40 kayıt); kodu yeni sekmede o hatanın Türkçe dokümanına gider. Eksik giriş gibi taslak durumu, kullanıcı simülasyonu başlatmayı deneyene kadar konsolu açmaz. Yeni BP açılırken kamera o devreye göre yeniden kadrajlanır.
+- Hata kataloğu bağlantı/port, bit genişliği/değer, blueprint/adlandırma, modül birleştirme, simülasyon ve dosya/uygulama başlıklarına ayrılır; 19 kodun her birinin bağımsız `/docs/errors/vlxxxx/` sayfası vardır. Ürün harici Verilog compiler veya sentez çalıştırmadığı için bu alanlara sahte hata kodları eklenmez; sinyal adı denetimi kullanıcı-Verilog sözdizimi denetimi değildir.
+- `VL9999` beklenmeyen çalışma zamanı hataları için güvenli genel mesajdır. Bozuk `.bp` JSON'u ham tarayıcı istisnasını konsola yazmaz.
+- Değişiklik uygulandı; doğrulama/PR/deploy durumu [`backlog.md`](backlog.md) ve [`backloglog.md`](backloglog.md) içindeki aynı tarihli kayıtta tutulur.

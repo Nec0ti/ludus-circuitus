@@ -1,5 +1,19 @@
 import { test, expect } from "@playwright/test";
 
+async function dragConnect(page, sourceName, targetName) {
+  const source = page.getByRole("button", { name: sourceName, exact: true });
+  const target = page.getByRole("button", { name: targetName, exact: true });
+  await dragBetween(page, source, target);
+}
+
+async function dragBetween(page, source, target) {
+  const from = await source.boundingBox(), to = await target.boundingBox();
+  await page.mouse.move(from.x + from.width / 2, from.y + from.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(to.x + to.width / 2, to.y + to.height / 2, { steps: 8 });
+  await page.mouse.up();
+}
+
 test.beforeEach(async ({ page }) => {
   await page.context().route("**/*", (route) => {
     const url = new URL(route.request().url());
@@ -112,8 +126,7 @@ test("ignores a malformed saved blueprint and keeps the starter circuit usable",
 test("builds a connection, saves locally, reloads and exports a .bp file", async ({ page }) => {
   await page.goto("/playground/");
   await page.getByRole("button", { name: "Yeni BP" }).click();
-  await page.getByRole("button", { name: "giris out çıkışı" }).click();
-  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await dragConnect(page, "giris out çıkışı", "cikis in girişi");
   await expect(page.locator("#sim-status")).toHaveText("Bağlantı eklendi.");
   await expect(page.locator("#verilog-code")).toContainText("assign cikis = giris;");
   await page.getByRole("button", { name: "Kaydet" }).click();
@@ -123,6 +136,87 @@ test("builds a connection, saves locally, reloads and exports a .bp file", async
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Dışa aktar" }).click();
   expect((await download).suggestedFilename()).toBe("devre2.bp");
+});
+
+test("drag-to-connect rejects a vector width mismatch without mutating the blueprint and opens the matching help page", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.getByRole("button", { name: "Yeni BP" }).click();
+  await page.locator(".node-input").click();
+  await page.getByLabel("GİRİŞ bit genişliği").selectOption("8");
+  await page.locator('[data-add="not"]').click();
+  await dragConnect(page, "giris out çıkışı", "NOT in girişi");
+  await expect(page.locator("#wire-layer .cad-wire:not(.wire-pending)")).toHaveCount(0);
+  await expect(page.locator("#console-panel")).toHaveClass(/is-open/);
+  const codeLink = page.getByRole("link", { name: /VL0001:/ });
+  await expect(codeLink).toContainText("VL0001");
+  const popup = page.waitForEvent("popup");
+  await codeLink.click();
+  const docs = await popup;
+  await expect(docs.locator("h1")).toContainText("VL0001");
+  await expect(docs.locator("article")).toContainText("NOT bloğu için giriş ve NOT genişliğini 8 bit yap");
+});
+
+test("console diagnoses reversed, occupied and cyclic connections without damaging valid wires", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.getByRole("button", { name: "Yeni BP" }).click();
+  await page.locator('[data-add="and"]').click();
+  const gate = page.locator(".node-and");
+  const andA = gate.locator('.cad-port[data-direction="input"][data-port="a"]');
+  const outputInput = page.locator(".node-output .cad-port");
+  await dragBetween(page, andA, outputInput);
+  await expect(page.getByRole("link", { name: /VL1001:/ })).toBeVisible();
+  await expect(page.locator("#wire-layer .cad-wire:not(.wire-pending)")).toHaveCount(0);
+
+  await dragBetween(page, page.locator(".node-input .cad-port.port-output"), andA);
+  await page.locator('[data-add="constant"]').click();
+  const constantOutput = page.locator(".node-constant .cad-port.port-output");
+  await dragBetween(page, constantOutput, andA);
+  await expect(page.getByRole("link", { name: /VL1002:/ })).toBeVisible();
+  await expect(page.locator("#wire-layer .cad-wire:not(.wire-pending)")).toHaveCount(1);
+
+  await dragBetween(page, gate.locator('.cad-port[data-direction="output"]'), gate.locator('.cad-port[data-direction="input"][data-port="b"]'));
+  await expect(page.getByRole("link", { name: /VL1004:/ })).toBeVisible();
+  await expect(page.locator("#wire-layer .cad-wire:not(.wire-pending)")).toHaveCount(1);
+});
+
+test("dragging to blank space cancels the cable and keyboard users can connect ports with Enter", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.getByRole("button", { name: "Yeni BP" }).click();
+  const source = page.getByRole("button", { name: "giris out çıkışı" });
+  const bounds = await source.boundingBox();
+  await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+  await page.mouse.down();
+  const canvas = await page.locator("#blueprint-canvas").boundingBox();
+  await page.mouse.move(canvas.x + canvas.width / 2, canvas.y + canvas.height / 2, { steps: 6 });
+  await page.mouse.up();
+  await expect(page.locator("#wire-layer .cad-wire:not(.wire-pending)")).toHaveCount(0);
+  await expect(page.locator("#sim-status")).toContainText("boş alana bırakıldı");
+  await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(canvas.x + canvas.width / 2, canvas.y + canvas.height / 2, { steps: 3 });
+  await page.keyboard.press("Escape");
+  await page.mouse.up();
+  await expect(page.locator("#wire-layer .cad-wire:not(.wire-pending)")).toHaveCount(0);
+  await source.focus();
+  await source.press("Enter");
+  const target = page.getByRole("button", { name: "cikis in girişi" });
+  await target.focus();
+  await target.press("Enter");
+  await expect(page.locator("#wire-layer .cad-wire:not(.wire-pending)")).toHaveCount(1);
+  await expect(page.locator("#verilog-code")).toContainText("assign cikis = giris;");
+});
+
+test("keeps the console out of the way while drafting and reports incomplete circuits when simulation is requested", async ({ page }) => {
+  await page.goto("/playground/");
+  await page.getByRole("button", { name: "Yeni BP" }).click();
+  await expect(page.locator("#console-panel")).not.toHaveClass(/is-open/);
+  await page.getByRole("button", { name: "Sinyal görselleştirmesini başlat" }).click();
+  await expect(page.locator("#console-panel")).toHaveClass(/is-open/);
+  await expect(page.getByRole("link", { name: /VL1003:/ })).toBeVisible();
+  await expect(page.locator("#sim-status")).toContainText("Her blok girişi bir sinyale bağlı olmalı");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.getByRole("link", { name: /VL1003:/ })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
 });
 
 test("exports a .bp file from the mobile workbench", async ({ page }) => {
@@ -141,10 +235,8 @@ test("adds, names, simulates and exports a named intermediate signal", async ({ 
   page.on("dialog", (dialog) => dialog.accept("ara_deger"));
   await page.locator('[data-add="signal"]').click();
   await page.locator(".node-signal .cad-node-name").dblclick();
-  await page.getByRole("button", { name: "giris out çıkışı" }).click();
-  await page.getByRole("button", { name: "ara_deger in girişi" }).click();
-  await page.getByRole("button", { name: "ara_deger out çıkışı" }).click();
-  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await dragConnect(page, "giris out çıkışı", "ara_deger in girişi");
+  await dragConnect(page, "ara_deger out çıkışı", "cikis in girişi");
   await expect(page.locator("#verilog-code")).toContainText("wire ara_deger;");
   await expect(page.locator("#verilog-code")).toContainText("assign ara_deger = giris;");
   await expect(page.locator("#variable-list .cad-variable-name")).toHaveText(["giris", "cikis", "ara_deger"]);
@@ -178,10 +270,8 @@ test("clocked registers change only on a manual tick; reset stays separate from 
   await page.goto("/playground/");
   await page.getByRole("button", { name: "Yeni BP" }).click();
   await page.locator('[data-add="register"]').click();
-  await page.getByRole("button", { name: "giris out çıkışı" }).click();
-  await page.getByRole("button", { name: "YAZMAÇ d girişi" }).click();
-  await page.getByRole("button", { name: "YAZMAÇ out çıkışı" }).click();
-  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await dragConnect(page, "giris out çıkışı", "YAZMAÇ d girişi");
+  await dragConnect(page, "YAZMAÇ out çıkışı", "cikis in girişi");
   await expect(page.locator("#verilog-code")).toContainText("always @(posedge clk or posedge reset)");
   await page.locator(".cad-variable.is-input").click();
   await page.getByRole("button", { name: "Sinyal görselleştirmesini başlat" }).click();
@@ -199,14 +289,11 @@ test("clocked registers change only on a manual tick; reset stays separate from 
 test("composes open .bp files through named module ports and keeps the project after reload", async ({ page }) => {
   await page.goto("/playground/");
   await page.getByRole("button", { name: "Yeni BP" }).click();
-  await page.getByRole("button", { name: "giris out çıkışı" }).click();
-  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await dragConnect(page, "giris out çıkışı", "cikis in girişi");
   await page.getByRole("button", { name: "Yeni BP" }).click();
   await page.locator("#module-tools").getByRole("button", { name: "devre2" }).click();
-  await page.getByRole("button", { name: "giris out çıkışı" }).click();
-  await page.getByRole("button", { name: "devre2_1 giris girişi" }).click();
-  await page.getByRole("button", { name: "devre2_1 cikis çıkışı" }).click();
-  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await dragConnect(page, "giris out çıkışı", "devre2_1 giris girişi");
+  await dragConnect(page, "devre2_1 cikis çıkışı", "cikis in girişi");
   await expect(page.locator("#verilog-code")).toContainText("assign cikis = giris;");
   await expect(page.locator("#graph-status")).toContainText("Blueprint geçerli");
   await page.reload();
@@ -218,8 +305,7 @@ test("composes open .bp files through named module ports and keeps the project a
 test("renaming a blueprint updates module references and deleting it removes dependent blocks safely", async ({ page }) => {
   await page.goto("/playground/");
   await page.getByRole("button", { name: "Yeni BP" }).click();
-  await page.getByRole("button", { name: "giris out çıkışı" }).click();
-  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await dragConnect(page, "giris out çıkışı", "cikis in girişi");
   await page.getByRole("button", { name: "Yeni BP" }).click();
   page.on("dialog", (dialog) => dialog.accept("yardimci"));
   await page.getByRole("tab", { name: "devre2.bp" }).dblclick();
@@ -228,10 +314,8 @@ test("renaming a blueprint updates module references and deleting it removes dep
   await expect(page.locator("#module-tools").getByRole("button", { name: "yardimci" })).toBeVisible();
   await page.locator("#module-tools").getByRole("button", { name: "yardimci" }).click();
   await expect(page.locator(".node-module")).toHaveCount(1);
-  await page.getByRole("button", { name: "giris out çıkışı" }).click();
-  await page.getByRole("button", { name: "yardimci_1 giris girişi" }).click();
-  await page.getByRole("button", { name: "yardimci_1 cikis çıkışı" }).click();
-  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await dragConnect(page, "giris out çıkışı", "yardimci_1 giris girişi");
+  await dragConnect(page, "yardimci_1 cikis çıkışı", "cikis in girişi");
   await expect(page.locator("#verilog-code")).toContainText("module devre3");
   page.removeAllListeners("dialog");
   page.on("dialog", (dialog) => dialog.accept());
@@ -248,8 +332,7 @@ test("1–32-bit inputs display decimal and binary while Verilog keeps the selec
   await input.getByRole("combobox").selectOption("8");
   await page.locator(".node-output").first().click();
   await page.locator(".node-output").first().getByRole("combobox").selectOption("8");
-  await page.getByRole("button", { name: "giris out çıkışı" }).click();
-  await page.getByRole("button", { name: "cikis in girişi" }).click();
+  await dragConnect(page, "giris out çıkışı", "cikis in girişi");
   await expect(page.locator("#graph-status")).toContainText("Blueprint geçerli");
   await expect(page.locator("#verilog-code")).toContainText("input wire [7:0] giris");
   page.on("dialog", (dialog) => dialog.accept("173"));
