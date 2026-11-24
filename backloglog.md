@@ -616,3 +616,8 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Güncel `const.md`, `notes.md`, README, Atölye, docs ve testler 1–32 bitlik sinyallerde tutarlı; vektör genişlikleri kullanıcı tarafından seçilip Verilog ve `.bp` dosyalarına yansıyor. Geçmiş kapsam kaydı da RISC-V/assembly kapsam dışına alınırken 1–32 bit desteğinin seçildiğini söylüyor.
 - Kullanıcının sonraki “sadece 1 bitin dışına çık” ifadesi tek-bitte kalma veya 1-bit dışına, sınırlı biçimde çıkma olarak anlaşılabilir. İki bağımsız okuma aynı belirsizliği saptadı. Çok-bitli `.bp` projeleri/localStorage kayıtları var olabileceğinden, açıklık gelmeden daraltma bu projeleri bozabilir.
 - Değişenler: bu belirsizlik ve güvenli mevcut varsayım `notes.md` ile `backlog.md` içine eklendi; uygulama kodu değişmedi. `git diff --check` CI öncesi çalıştırılacak. Sabah kullanıcıdan tek bit mi 1–32 bit mi diye teyit istenecek.
+
+## 2026-11-24 — Kapsam notu ve son yayın doğrulaması
+
+- PR #54 (`702acf5`) CI `45323331670` ve Pages main run [`45323463002`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45323463002) başarılı. CI Node, Icarus Verilog, Jekyll ve Playwright adımlarını tamamladı; Pages build/deploy tamamlandı.
+- Yayındaki tanıtım, docs ve atölye rotaları HTTP 200 verdi. Bu değişiklik yalnız proje notlarını ve iş listesini düzenledi; uygulama kodu değişmedi. `git diff --check` PR öncesinde çalıştırılacak.
