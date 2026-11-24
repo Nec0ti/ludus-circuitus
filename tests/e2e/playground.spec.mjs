@@ -46,6 +46,27 @@ test("main blueprint wires render in the SVG viewport and meet their port center
   expect(mismatches.every((distance) => distance < 0.75), JSON.stringify(mismatches)).toBe(true);
 });
 
+test("blueprint blocks support keyboard selection, grid movement, and deletion", async ({ page }) => {
+  await page.goto("/playground/");
+  const input = page.locator(".node-input").first();
+  const initialX = await input.evaluate((card) => Number.parseInt(card.style.left, 10));
+  await input.focus();
+  await expect(input).toHaveCSS("outline-width", "2px");
+  await input.press("Enter");
+  await expect(page.locator(".node-input.is-selected")).toHaveCount(1);
+  await expect(page.locator(".node-input.is-selected")).toBeFocused();
+  await page.keyboard.press("ArrowRight");
+  const moved = page.locator(".node-input.is-selected");
+  await expect(moved).toBeFocused();
+  expect(await moved.evaluate((card) => Number.parseInt(card.style.left, 10))).toBe(initialX + 20);
+  await page.keyboard.press("Delete");
+  await expect(page.locator(".node-input")).toHaveCount(1);
+  const remaining = page.locator(".node-input");
+  await remaining.focus();
+  await remaining.press("Space");
+  await expect(page.locator(".node-input.is-selected")).toBeFocused();
+});
+
 test("keeps the full-screen workbench usable at narrow viewport widths", async ({ page }) => {
   await page.goto("/playground/");
   for (const width of [320, 390, 768, 1440]) {
