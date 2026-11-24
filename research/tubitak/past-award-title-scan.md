@@ -4,6 +4,18 @@
 **Kaynak türü:** TÜBİTAK'ın yayımladığı derece listesi ve bölgeye davet listesi  
 **Amaç:** Erişilebilir proje başlıklarında Ludus Circuitus'a doğrudan yakın görünen bir örnek var mı diye sınırlı tarama yapmak. Bu bir özgünlük tescili veya tam literatür taraması değildir.
 
+## 2023 Konya derece listesi
+
+TÜBİTAK'ın 2023 bölge sonucu listesinde Konya bölgesi/Yazılım alanındaki üç derece başlığı şunlar:
+
+| Proje başlığı | Tematik alan | Derece | Başlık düzeyinde yakınlık |
+|---|---|---|---|
+| **Video Processing ve Hand Tracking Yoluyla OCR Tabanlı Öğrenci Değerlendirme Sistemi** | Görüntü ve Ses Tanıma Teknolojileri | Konya Bölge Birinciliği | Genel anlamda öğrenci değerlendirmesine yakın; dijital mantık/Verilog öğretimi başlıktan görünmüyor |
+| **Derin Öğrenme ile Beyin Kanamasına Çok Sistemli Bir Yaklaşım** | Yapay Zekâ | Konya Bölge İkinciliği | Tıbbi görüntü/analiz; HDL eğitimi görünmüyor |
+| **Tweetler Üzerinden Bulut Tabanlı, Gerçek Zamanlı Duygu ve Düşünce Analizi Sistemi** | Veri Madenciliği | Konya Bölge Üçüncülüğü | Metin/duygu analizi; HDL eğitimi görünmüyor |
+
+Bu, eğitimle genel tematik yakınlığı olan bir başlığın bulunduğu anlamına gelir; doğrudan Verilog veya dijital mantık öğretimi örtüşmesi görülmedi. PDF'deki “bölge” ve “il” ayrı sütunlardır. Bu nedenle Konya bölgesi kaydı, projenin mutlaka Konya ilinden geldiği anlamına gelmez; bu notta okul/kişi ayrıntısı tutulmaz.
+
 ## 2025 Konya derece listesi
 
 2025 listesinde Konya bölgesinde ana alanı `YAZILIM` olan üç derece projesi başlık ve tematik alanıyla görünüyor:
@@ -34,13 +46,14 @@ Bu başlıklar da Ludus'un dijital mantık/Verilog öğretim odağıyla doğruda
 
 ## Sonuç ve sınırlar
 
-- Erişilebilen 2024 ve 2025 Konya derece listelerinde Yazılım alanından üçer başlık (toplam altı) incelendi; doğrudan bir Verilog/FPGA dijital elektronik eğitim başlığı görünmüyor.
+- Erişilebilen 2023–2025 Konya bölge derece listelerinde Yazılım alanından üçer başlık (toplam dokuz) incelendi. 2023'te öğrenci değerlendirmesi temalı genel bir eğitim-yakını başlık var; bu başlık dâhil, doğrudan Verilog/FPGA dijital elektronik öğretimi başlığı görünmüyor.
 - 2026 Konya'daki altı Yazılım projesinin başlığı bilinmediğinden benzerlik konusunda sonuç yoktur.
-- Bu tarama yalnızca yayımlanmış Konya listelerindeki 2024–2025 derece başlıklarını ve 2026 davet listesindeki başlıksız Yazılım kayıtlarını kapsıyor. Tüm başvurular, başka bölgeler, derece almayan projeler, başka yıllar ve yayımlanmamış raporlar kapsanmıyor.
+- Bu tarama yalnızca yayımlanmış Konya bölgesi listelerindeki 2023–2025 derece başlıklarını ve 2026 davet listesindeki başlıksız Yazılım kayıtlarını kapsıyor. Tüm başvurular, başka bölgeler, derece almayan projeler, başka yıllar ve yayımlanmamış raporlar kapsanmıyor.
 - Dolayısıyla “ilk”, “tek” veya “özgünlüğü kanıtlandı” denemez. Ürünün olası dar katkısı—kullanıcının blok grafiğini kurması ve aynı grafiğin mantıksal sinyal durumlarıyla Verilog çıktısını birlikte izlemesi—literatür ve araç kıyasıyla ayrıca sınanmalı.
 
 ## Kaynaklar
 
+- **PRIMARY:** TÜBİTAK, [2023 Yılı Lise Öğrencileri Araştırma Projeleri Yarışması bölge derece listesi](https://tubitak.gov.tr/sites/default/files/26487/bolge_asamasi_sonuc_lise_2023.pdf), Konya bölgesi/Yazılım derece kayıtları (PDF sıraları 376–378).
 - **PRIMARY:** TÜBİTAK, [2024 Yılı Lise Öğrencileri Araştırma Projeleri Yarışması sonuç listesi](https://www.tubitak.gov.tr/sites/default/files/26487/bolge_sergisi_sonuc_lise_2024.pdf), PDF'deki Konya bölgesi/Yazılım derece kayıtları.
 - **PRIMARY:** TÜBİTAK, [2025 Yılı Lise Öğrencileri Araştırma Projeleri Yarışması derece listesi](https://tubitak.gov.tr/sites/default/files/2025-03/2204-A_DERECE_LISTESI_LISTESI_1.pdf), PDF'deki Konya bölgesi/Yazılım derece kayıtları.
 - **PRIMARY:** TÜBİTAK, [2024 bölgeye davet edilen proje istatistikleri](https://www.tubitak.gov.tr/sites/default/files/26487/lise_bolgeye_davet_edilenlere_iliskin_istatistikler_2024_v2.pdf), 55. yarışma için bölge/ana alan düzeyinde toplam sayılar; başlık arşivi değildir.
