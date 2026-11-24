@@ -652,3 +652,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Görsel incelemede mobil hata sayfasında Temeller grubunun hata sayfasıyla birlikte açık kalıp menüyü gereksiz uzattığı görüldü; etkin bölüm koşulu daraltılarak düzeltildi. Ekran görüntüleri 1280×900 ve 390×844 ölçülerinde yeniden incelendi.
 - Doğrulama: `npm run build:css`, `jekyll build`, `npm test` (29/29), `npm run test:e2e -- --workers=2` (45/45), `git diff --check`. E2E testi 19 hata rotasının hepsinde doğru etkin bağlantıyı, açık kategori/grubu, ham Markdown kalmamasını ve 320/390/768 px yatay taşma olmamasını denetliyor.
 - Değişenler: `_includes/docs-nav.html`, `assets/css/input.css`, üretilmiş `assets/css/site.css`, 19 `docs/errors/vl*.md` sayfası, `tests/e2e/docs.spec.mjs`, `backlog.md` ve bu günlük. Worktree dalı `fix/error-docs-navigation`; PR/CI/merge ve Pages canlı kontrolü bekleniyor.
+
+
+## 2026-11-24 — Hata dokümantasyonu yayım kapanışı
+
+- PR #58 (`28c140f`) merge edildi. PR CI run [`45393047000`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45393047000) Node, Jekyll ve Playwright kapılarını geçti; Pages main run [`45393398657`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45393398657) build/deploy adımlarını tamamladı.
+- Canlı `https://nec0ti.github.io/ludus-circuitus/docs/errors/vl5001/` HTTP 200 döndürdü; hata kodu sidebar bağlantıları mevcut ve düzeltilmiş VL5001 yardım bağlantısı sayfada bulundu.
+- Yerel test/görsel denetimin ayrıntıları bu görevden önceki kayıtta; quiz/API ve araştırma kapsamı değişmedi.
