@@ -23,6 +23,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Sıradaki işler
 
+- [~] Geçmiş 2204-A proje örneklerinde Ludus'a yakın başlık var mı araştır. 2026 Konya'nın resmî bölge listesinde yazılım alanındaki altı kayıt görüldü, ancak başlık/özet yayımlanmamış; benzerliğe dair sonuç çıkarılamıyor. Tam arşiv/başlıklar ve aynı görev araç karşılaştırması danışmanla sürmeli. Ayrıntı: `research/tubitak/2026-konya-software-scan.md`.
 - [ ] Birincil kazanım ve ikincil quiz alt sonuçlarını (paralel yollar; blok↔Verilog; clock/register) danışmanla ve örneklem düzeyiyle uyumlu kesinleştir.
 - [x] 2026–2027 2204-A için erişilebilir resmî kriterleri Ludus'un kanıtları ve eksikleriyle eşle; teknik doğruluk testlerini öğrenme etkisinden ayır, etik/onam ve öğrenci projeye hâkimiyet koşullarını görünür kıl. Ayrıntı: [`research/tubitak/evaluation-alignment-2027.md`](research/tubitak/evaluation-alignment-2027.md); çağrı sayfası 24.11.2026'da tekrar kontrol edildi ve kriter bağlantılarının 2025 adlı dosyalara gittiği doğrulandı.
 - [x] Quiz ve atölye kodundaki mevcut veri akışını bağımsız kaynak incelemesiyle doğrula. Quiz cevap/puan/süre sunucuya gitmiyor; atölye `.bp` belgeleri yerel tarayıcı belleğinde kalabilir. Yayın sağlayıcısı erişim günlükleri incelenmedi. Ayrıntı: [`raports/privacy-flow-review-2026-11-24.md`](raports/privacy-flow-review-2026-11-24.md).
