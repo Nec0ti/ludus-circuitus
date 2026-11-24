@@ -29,7 +29,7 @@ test("course introduction is brief and docs use collapsible topic groups", async
 
 test("docs landing page orders concepts, workshop practice and contributor setup", async ({ page }) => {
   await page.goto("/docs/");
-  await expect(page.locator(".docs-reading-time")).toHaveText("Tüm rehber yaklaşık 48 dakika");
+  await expect(page.locator(".docs-reading-time")).toHaveText("Tüm rehber yaklaşık 50 dakika");
   await expect(page.locator(".docs-article")).toContainText("Tam işlemci veya assembly geliştirme ortamı kapsamda değildir.");
   const headings = await page.locator(".docs-article h2").allTextContents();
   expect(headings.map((heading) => heading.replace(/~\d+ dk/, "").trim())).toEqual([
@@ -67,18 +67,19 @@ test("short lessons show their estimated reading times and active navigation lin
     ["/docs/mantik-kapilari/", "Mantık kapıları ve doğruluk tabloları", "Mantık kapıları", 4],
     ["/docs/yarim-toplayici/", "İki kapı, bir yarım toplayıcı", "Yarım toplayıcı", 4],
     ["/docs/paralel-yollar/", "Paralel yollar nasıl çalışır?", "Paralel yollar", 3],
-    ["/docs/saat-yazmac/", "Saat ve yazmaç", "Saat ve yazmaç", 3],
-    ["/docs/bloktan-verilog/", "Bloktan Verilog'a", "Bloktan Verilog'a", 2],
+    ["/docs/saat-yazmac/", "Saat ve yazmaç", "Saat ve yazmaç", 4],
+    ["/docs/bloktan-verilog/", "Bloktan Verilog'a", "Bloktan Verilog'a", 3],
   ];
   for (const [route, heading, navLabel, minutes] of lessons) {
     await page.goto(route);
     await expect(page.locator(".docs-article h1")).toHaveText(heading);
     await expect(page.locator(".docs-reading-time")).toHaveText(`Yaklaşık ${minutes} dakika`);
     await expect(page.locator(".docs-nav a[aria-current='page']")).toContainText(navLabel);
+    await expect(page.locator(".docs-nav a[aria-current='page'] small")).toHaveText(`${minutes} dk`);
     await expect(page.locator(".docs-article h2 .docs-section-time")).toHaveCount(minutes);
   }
   await page.goto("/docs/");
-  await expect(page.locator(".docs-reading-time")).toHaveText("Tüm rehber yaklaşık 48 dakika");
+  await expect(page.locator(".docs-reading-time")).toHaveText("Tüm rehber yaklaşık 50 dakika");
 });
 
 test("local setup guide lists test tools and builds the static site before E2E", async ({ page }) => {
@@ -150,6 +151,8 @@ test("core lessons provide keyboard-friendly local self-checks with immediate fe
     ["/docs/mantik-kapilari/", "gate-check", "one", "zero"],
     ["/docs/yarim-toplayici/", "adder-check", "sum-one-carry-zero", "sum-zero-carry-one"],
     ["/docs/paralel-yollar/", "parallel-check", "in-order", "together"],
+    ["/docs/saat-yazmac/", "register-check", "updates-now", "holds-zero"],
+    ["/docs/bloktan-verilog/", "assign-check", "and-sum", "xor-sum"],
   ];
   const writes = [];
   page.on("request", (request) => {

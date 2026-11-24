@@ -18,6 +18,8 @@ Bağımsız içerik kontrolü canlı kurs dizinini, kurs planını, altı dersi,
 
 2026-11-24'te ilk dört temel derse 1 dakikalık klavyeyle yanıtlanan öz kontrol ve anlık açıklama eklendi; tüm rehber tahmini 48 dakika oldu. PR #37 `8713ef7` CI build/Jekyll/Playwright tam kapısı geçti; CI'dan indirilen gerçek Jekyll artifact'ında ders E2E **9/9** ve bağımsız 1440/390 px görsel incelemesi başarılı. Main Pages run `45309389309` build/deploy adımlarını geçti. Canlı dört ders rotasında yanlış/doğru yanıt akışı, 200 yanıt, 390 px genişlik, boş tarayıcı saklaması, yazan ağ isteği olmaması ve sıfır sayfa hatası doğrulandı. Alıştırmalar yalnızca ders içi pratik; quiz belirtkesinin geçerliği veya öğrenme etkisi kanıtı değildir.
 
+Altı temel dersin tamamını kapsamak için PR #39'da saat/yazmaç ve bloktan Verilog alıştırmaları eklendi; toplam süre 50 dakika. Saat kenarı öncesi Q'nun değerini koruması ve `assign sum = a ^ b;` eşlemesi soruluyor. Kaynak ve görsel incelemeleri geçti; main merge/deploy doğrulaması bekliyor. Önceki dört alıştırmayla aynı şekilde, cevaplar saklanmaz/gönderilmez ve araştırma etkisi ölçmez.
+
 ## TÜBİTAK ve rakip kanıtlarının sınırı
 
 - Canlı [2204-A 2026–2027 çağrı sayfası](https://tubitak.gov.tr/tr/yarismalar/2204-lise-ogrencileri-arastirma-projeleri-yarismasi) 4 Ocak 2027 saat 17.30 kapanışını gösteriyor. Ön değerlendirme ve bölge/final bağlantıları hâlâ adında `2025` taşıyan PDF'lere gidiyor. Bu ağırlıklar erişilebilir son formlardır; 2027 formu oldukları doğrulanmış değildir. Ayrıntı: [`research/tubitak/evaluation-alignment-2027.md`](../research/tubitak/evaluation-alignment-2027.md).
