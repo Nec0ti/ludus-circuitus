@@ -430,3 +430,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR #26 `d29c018` ile birleştirildi. CI/Pages run `45296241658` build ve deploy adımlarını başarıyla bitirdi.
 - Canlı 390×844 Playwright doğrulamasında atölye HTTP 200, başlangıç durumu port seçme yönergesi, bağlantı sonrası “Bağlantı eklendi.”, üretilen Verilog ve sıfır `pageerror` doğrulandı.
 - Değişenler: `assets/js/playground.mjs`, `tests/e2e/playground.spec.mjs`, `backlog.md`, bu günlük. Kullanıcı verisi veya ağ API'si yok.
+
+## 2026-11-24 — CircuitVerse aynı görev yeniden denemesi
+
+- Canlı CircuitVerse misafir arayüzünde ilk kullanım Properties paneli kapatıldı. Ayrı Input ve Button palette bileşenleri görüldü; iki Input, XOR, AND ve iki Output tuvale sürüklendi.
+- Bu oturumdaki kablo etkileşiminden sonra tam devrenin bağlantıları güvenilir biçimde doğrulanamadı; doğruluk tablosu alınmadı. Bu nedenle karşılaştırma işini kapatmadım ve CircuitVerse'e ait hata iddiası üretmedim.
+- Birden çok `transformCallback` console hatası gözlendi, fakat bunların görev başarısızlığına neden olduğunu göstermedim. Misafir oturumu dışında hesap, insan katılımcı veya veri yok.
+- Değişenler: `research/references/related-tools.md`, `backlog.md`, bu günlük. Ürün kodu değişmedi.
