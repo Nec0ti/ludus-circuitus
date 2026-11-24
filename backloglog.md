@@ -516,11 +516,13 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR #39 (`bd4d562`) `main` dalında. Pages run [`45311425041`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45311425041) başarıyla tamamlandı. Canlı altı ders rotası 200 döndü; sayfadaki/menüdeki süreler 4/4/4/3/4/3 dakika, kurs toplamı 50 dakika. 390 px görünümde taşma yok; her derste yanlış→yeniden dene→doğru akışı çalıştı. `localStorage`/`sessionStorage` boş; yazan ağ isteği ve JavaScript hatası yok.
 - Resmî 2025 derece PDF'inin Konya bölümündeki üç Yazılım başlığı (Sinapsis Vision, SmartRun ve TİDAP) gözden geçirildi; başlık düzeyinde Verilog/FPGA öğretimi görünmüyor. 2026 Konya davet PDF'inde altı Yazılım kaydı var, başlık/özet yok. Bulguların kapsamı ve özgünlük iddiası oluşturmadığı sınırı `research/tubitak/past-award-title-scan.md` içinde.
 - Resmî kaynaklardan başlık/alan/sonuç bilgisi kullanıldı; kişi adı, okul adı veya başvuru numarası araştırma notlarına taşınmadı. Öğrenci katılımcı veya veri kullanılmadı.
-- Değişenler: `backlog.md`, `backloglog.md`, `notes.md`, `research/references/index.md`, yeni geçmiş başlık tarama notu ve gece kalite raporu. `git diff --check` ile belge kapsamı ve fark biçimi kontrol edilecek; PR CI henüz bekliyor.
+- Değişenler: `backlog.md`, `backloglog.md`, `notes.md`, `research/references/index.md`, yeni geçmiş başlık tarama notu ve gece kalite raporu. `git diff --check` geçti; PR #40'ın tam CI ve yayın sonucu aşağıdaki kayıtta.
 
 ## 2026-11-24 — Ders kapsamı ve başlangıç durumu tutarlılığı
 
 - Bağımsız ikinci içerik incelemesi iki küçük karışıklık buldu: dersin “tek bit” çerçevesinin yanında 4-bit örneklerin ileri düzey not olarak işaretlenmemesi ve yazmaç sorusunda 0 değerinin resetten geldiğinin belirtilmemesi.
 - Dijital Sinyaller sayfasında çok bitli sinyaller “Biraz ileri” olarak ayrıldı; Mantık Kapıları sayfasındaki 4-bit AND örneği isteğe bağlı ileri notu oldu. Yazmaç alıştırması reset uygulanıp bırakılmış durumu açıkça belirtiyor. Üç metin için Playwright içerik regresyonları eklendi.
-- Doğrulama henüz PR CI aşamasında; çalıştırılacak güncel docs E2E/Jekyll build ve tam suite zorunlu. İnsan/veri toplama yok.
+- PR #40 (`c355460`) için Node, Icarus Verilog, Jekyll ve Playwright tam CI geçti; E2E **40/40**. PR `b00df83` olarak birleştirildi, Pages run `45312962052` build/deploy ile başarılı.
+- Güncel canlı sayfa için Chromium/Playwright ile altı ders rotası kontrol edildi: tümü 200; yanlış yanıt/yeniden dene/doğru yanıt akışı çalıştı; reset açıklaması, ileri düzey etiketleri, 390 px taşmasızlık ve boş local/session storage doğrulandı. Yazma isteği ve page error yok.
+- `git diff --check` geçti. İnsan/veri toplama yok.
 - Değişenler: `docs/dijital-sinyaller.md`, `docs/mantik-kapilari.md`, `docs/saat-yazmac.md`, `tests/e2e/docs.spec.mjs`, `backlog.md`, bu günlük ve gece kalite raporu.
