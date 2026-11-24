@@ -585,3 +585,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - TÜBİTAK'ın doğrudan PDF GET URL'leri 404 verdi; Internet Archive CDX üzerinden 2023 (07.04.2023) ve 2024 (16.04.2024) resmî derece PDF snapshotları bulundu. İki PDF indirildi, `%PDF` imzası ve SHA-256 ile doğrulandı; hash ve snapshot URL'leri kaynak notuna eklendi.
 - 2025 derece PDF'i ve 2026 Konya davet PDF'i için aynı CDX sorgusunda snapshot bulunmadı. 2024 davet istatistikleri için katalogda 200 snapshot kaydı görüldü, ancak bu denemede indirme zaman aşımına uğradı; içeriği doğrulanmış diye işaretlenmedi.
 - Bu üçüncü taraf arşiv kopyaları yaşayan TÜBİTAK kaynağı değildir; rapor/başvuruda arşiv tarihi ve erişim sınırı belirtilmeli. Değişenler: geçmiş tarama, kaynak haritası, 2026 tarama uyarısı, notes/backlog, kalite raporu ve bu günlük. `git diff --check` CI öncesi çalıştırılacak; insan katılımcı/verisi kullanılmadı.
+
+## 2026-11-24 — Pages workflow concurrency incelemesi
+
+- PR #47'nin test workflow'u ve ana dal Pages workflow'u aynı global `pages` concurrency grubunu kullanıyordu. PR #48 açılınca çalışan main dağıtım run'ı `45318637625` iptal edildi; PR #48'in kendi testleri yeşil olsa da dağıtım kapısı kesildi.
+- Çözüm: grubu `${{ github.workflow }}-${{ github.ref }}` yapıp aynı ref'teki eski run'ları iptal etme davranışını koru. Böylece güncel PR testleri main branch run'larını iptal etmemeli; değişikliği PR testinde ve merge sonrası Pages run'ında doğrula.
+- Değişenler: `.github/workflows/pages.yml`, `backlog.md` ve bu günlük. `git diff --check` geçti; PR CI ve merge sonrası run henüz bekleniyor.

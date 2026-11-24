@@ -4,6 +4,10 @@ Bu dosya güncel iş panosudur. Yalnızca açık kararları ve son doğrulama du
 
 ## Açık işler
 
+### Yayın güvenilirliği
+
+- [~] Pull request testleri ana dal Pages dağıtımını iptal etmemeli. GitHub Actions concurrency grubu workflow ve ref'e göre ayrılmalı; PR kontrolü ve ana dal dağıtımı ayrı ayrı doğrulanmalı.
+
 ### Danışmanla netleştir
 
 - [ ] Danışman öğretmeni belirle; iki ekip üyesinin 2204-A lise/yaş uygunluğunu ve danışman koşullarını doğrula.
