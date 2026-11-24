@@ -279,3 +279,11 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - VeriSim'in hazır Gate-Level Half Adder örneği Icarus/WASM ile çalıştırıldı; konsolun dört vektör sonucu ve VCD/waveform alanı görüldü. Denenen akış kod/testbench odaklıydı.
 - İki araç da Ludus'un benzerlerinin bulunabileceğini gösteriyor; “ilk/tek” iddiası yapılmamalı. Aday katkı, öğrencinin düzenlediği blueprint ile gerçek Verilog ve mantıksal sinyal değerlerini aynı başlangıç görevinde birlikte kurmasıdır. Bu henüz karşılaştırmalı veya pedagojik olarak kanıtlanmış değildir.
 - Kaynak/oturum ayrıntıları [`research/references/related-tools.md`](research/references/related-tools.md) içinde. İnsan katılımcı/veri kullanılmadı.
+
+### 2026-11-24 — Ek eğitim aracı taraması ve katkı sınırı
+
+- Verilog Labs'ın 4-bit sayaç dersinde tarayıcı Icarus/WASM, editör, testbench, çıktı/waveform, eğitim yönergesi, statik diyagram ve quiz akışı görüldü. Half-adder bölümü 00/01/10/11 görevinde çalıştırılamadı.
+- HDLPath paneli adaptif problem önerisi, konu ilerleme/hâkimiyet ve 182 problem iddiası gösterdi; Half-adder sorusu listede kilitliydi, çalıştırılmadı.
+- ChipXpert ürün sayfası öğrenme laboratuvarları, Verilog simülasyonu, waveform ve HDL sentez/netlist özelliklerini listeliyor; canlı aynı görev çalıştırılmadı.
+- VeriSim README'si canlı denemede görülmeyen, HDL'den sentezlenen Gate/RTL şemalarını da belgeledi. Ludus'un aday farkı “şema ve kodu bir arada göstermek” kadar geniş tutulmamalı: kullanıcı bağlantı grafiğinin kaynak olması ve aynı öğrenme adımında üretilen Verilog ile mantıksal sinyal değerlerinin beraber gösterilmesi, denenen akışlarda gözlenmeyen bir hipotezdir; alan yazını/pazar taraması tam değildir ve benzersizlik kanıtı değildir.
+- Ayrıntı ve kaynaklar [`research/references/index.md`](research/references/index.md) ile [`research/references/related-tools.md`](research/references/related-tools.md) içinde. Canlı araç bakışlarında katılımcı veya kişisel veri kullanılmadı.
