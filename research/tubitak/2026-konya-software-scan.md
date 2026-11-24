@@ -10,6 +10,10 @@
 
 TÜBİTAK'ın [2026 Konya Bölge Sergisine Davet Edilen Projeler Listesi](https://tubitak.gov.tr/sites/default/files/2026-01/KONYA.pdf) içerisinde 95–100 sıra numaralı altı kayıt ana alan olarak `YAZILIM` şeklinde listeleniyor. Görünen tematik etiketler Yapay Zekâ (iki), Biyomedikal Cihaz Teknolojileri (bir), Makine Öğrenmesi (iki) ve Erişilebilir Yaşam Teknolojileri (bir).
 
+## Ek kamu kaynağı kontrolü (24.11.2026)
+
+Konya Meram İlçe MEM’in [2026 bölge finalleri duyurusu](https://meram.meb.gov.tr/www/tubitak-2204-a-bolge-finallerinde-meram039dan-buyuk-basari/icerik/1116/tr), 57. yarışmada Yazılım alanında bir bölge üçüncülüğü olduğunu belirtiyor; ancak proje başlığını vermiyor. Bu kayıt kategori ve dereceyi kısmen doğrular, altı başlıklı davet kaydının hangisiyle ilişkili olduğunu veya Verilog eğitimiyle benzerliği göstermez.
+
 ## Kanıt sınırı
 
 - Bu, 2026 Konya bölge sergisine davet edilmiş projelerin listesidir; tüm başvurular, ödül alanlar veya tam proje arşivi değildir.
