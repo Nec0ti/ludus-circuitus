@@ -621,3 +621,13 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 
 - PR #54 (`702acf5`) CI `45323331670` ve Pages main run [`45323463002`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45323463002) başarılı. CI Node, Icarus Verilog, Jekyll ve Playwright adımlarını tamamladı; Pages build/deploy tamamlandı.
 - Yayındaki tanıtım, docs ve atölye rotaları HTTP 200 verdi. Bu değişiklik yalnız proje notlarını ve iş listesini düzenledi; uygulama kodu değişmedi. `git diff --check` PR öncesinde çalıştırılacak.
+
+## 2026-11-24 — Kapsam, örneklem ve istatistik yayımlama kararları
+
+- Kullanıcı sinyal genişliği kapsamını açıkça **1–32 bit** olarak teyit etti. Tek-bit/çok-bit belirsizliği kapatıldı.
+- Kullanıcı bir birincil (paralel mantık yollarının çıkışlarını tahmin etme) ve iki ikincil (blok↔Verilog eşlemesi; clock/yazmaç davranışı) öğrenme sonucunu kabul etti. Araç ve puanlama danışman/alan öğretmeni incelemesine açık tutuldu.
+- Erişilebilir katılımcı sayısı yaklaşık 20 olarak tahmin edildi; kesin örneklem veya güç hesabı diye kaydedilmedi. Yaklaşık 10/kol gibi bir bölünmenin yeterliliği danışmanla değerlendirilecek.
+- Kullanıcı ekibin veri sorumlusu olmasını, ham verilerin yarışma sonrasında imhasını ve landing'de istatistik yayımlamayı istiyor. Bu niyet `notes.md` ve KVKK planına işlendi; gerçek/tüzel sorumlu kimliği, irtibatı, hukuki dayanak, kesin saklama-imha takvimi ve yayın istatistiğinin anonimliği açık kaldı.
+- Resmî KVKK kaynaklarına göre veri sorumluluğu amaç/araçları fiilen belirleyen gerçek/tüzel kişiye bağlı; anonimleştirme ise başka verilerle ilişkilendirme ihtimali dâhil kişiyi belirlenemez kılmalı. Tek okul/az sayılı örneklemde alt grup istatistiği yayımlamama ve genel toplamı da yayından önce yeniden tanınma açısından inceleme önerisi kaydedildi.
+- Değişenler: `notes.md`, `backlog.md`, `research/measurement/learning-study.md`, `research/privacy/data-collection-plan.md` ve bu günlük. `git diff --check` geçti; kod/test/uygulama değişmedi. Quiz API'si ve katılımcı verisi kapalı kaldı.
+- Kalan: danışman/okul ile örneklem ve araştırma yöntemi; veri sorumlusunun gerçek kimliği ve aydınlatma irtibatı; kamuya istatistik açıklamanın onaylı protokoldeki yeri; ham kayıt ve onam belgeleri için kesin imha planı.

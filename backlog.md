@@ -6,10 +6,11 @@ Bu dosya güncel iş panosudur. Yalnızca açık kararları ve son doğrulama du
 
 ### Danışmanla netleştir
 
-- [ ] “Sadece 1 bitin dışına çık” yönlendirmesini netleştir: ürün yalnız 1 bit mi olmalı, yoksa mevcut 1–32 bitlik yollar sürmeli mi? Yanıt gelene kadar mevcut kapsamı ve `.bp` uyumluluğunu koru; daraltma yapma.
 - [ ] Danışman öğretmeni belirle; iki ekip üyesinin 2204-A lise/yaş uygunluğunu ve danışman koşullarını doğrula.
-- [ ] Bir birincil kazanımı ve en fazla iki ikincil sonucu, sınıf düzeyini ve erişilebilir örneklem büyüklüğünü danışmanla kesinleştir. Mevcut adaylar: bağımsız paralel yolların sonucunu tahmin etme; blok↔Verilog eşlemesi; clock kenarında yazmaç davranışı.
-- [ ] Araştırma düzenini seç: yeterli gönüllü varsa eşit süreli Ludus/metin-şema karşılaştırması; örneklem küçükse nedensellik iddiası taşımayan tek grup pilotu. Gönüllüleri okulda tarafsız ve baskısız çağırma yolunu yönetimle belirle.
+- [x] Kullanıcı 1–32 bit kapsamını teyit etti; uygulama kapsamı bu aralıkta sürer.
+- [~] Kullanıcı önerilen bir birincil (paralel yolların çıktısını tahmin etme) ve iki ikincil (blok↔Verilog eşlemesi; clock/yazmaç davranışı) kazanımı kabul etti. Quiz aracı, puanlama ve araştırma yöntemi danışman/alan öğretmeni incelemesine açık.
+- [ ] Kullanıcının tahmini yaklaşık 20 erişilebilir katılımcı; sayı kesin değil ve güç analizi değildir. Danışmanla iki kola ayrılmanın uygunluğunu değerlendir; küçük/dengesiz örneklemde pilot ve sınırlı iddia seçeneğini kararlaştır.
+- [ ] Araştırma düzenini ve gönüllü davet biçimini danışman/okul ile seç: eşit süreli Ludus/metin-şema karşılaştırması veya uygun görülürse nedensellik iddiasız tek grup pilotu.
 - [ ] Quiz maddelerini, cevap anahtarını ve A/B formlarını danışman/alan öğretmeniyle gözden geçir. Mevcut `/quiz/` geri bildirimli bir ürün alıştırmasıdır; geçerliği kanıtlı araştırma aracı değildir ve doğrudan ön-test/son-test aracı olarak kullanılmamalıdır.
 - [ ] Başvuru öncesi 2204-A çağrı sayfasındaki değerlendirme formlarının yeni dönem sürümünü ve 2027 TYBS yapay zekâ beyanının kapsamını yeniden kontrol et.
 
@@ -18,6 +19,9 @@ Bu dosya güncel iş panosudur. Yalnızca açık kararları ve son doğrulama du
 - [ ] Quiz/ön-son test uygulamasının MEB araştırma izni ve etik kurul bakımından hangi yola girdiğini danışman, okul ve ilgili izin merciiyle teyit et. Bu sınıflandırma netleşmeden katılımcı uygulaması yapma.
 - [ ] Onaylı örneklem ve araçlara göre MEB izin dosyasını, tarafsız gönüllü davetini, 18 yaş altı için veli onamını ve öğrencinin kendi gönüllü katılımını hazırla.
 - [ ] Veri sorumlusunu, amaç ve hukuki işleme şartını, en az veri alanlarını, saklama/imha süresini ve başvuru/çekilme akışını netleştir; gerekiyorsa KVKK aydınlatmasını ve açık rızayı ayrı hazırla. Quiz'e ad-soyad koyma.
+- [ ] Kullanıcının “ekip veri sorumlusu” niyetini gerçek/tüzel kişi ve irtibat bilgisi olarak danışman/okul/KVKK uzmanıyla doğrula; amaç ve araçları fiilen kimin belirlediğini tespit et.
+- [ ] Landing istatistiğini ayrı ve açık bir yayımlama amacı olarak onaylı protokol/katılımcı bilgilendirmesine ekle. Tek okul ve yaklaşık 20 kişilik örneklemde alt grup kırılımı yayımlama; toplam istatistiği de KVKK anonimlik ölçütüne göre yeniden tanınma riski açısından gözden geçir.
+- [ ] “Yarışma sonrası” ifadesini kesin imha tarihi/olayına dönüştür; ham yanıt, eşleştirme anahtarı, onam evrakı, yedek/log ve yayımlanacak istatistiğin saklama/imha planını ayrı tanımla.
 - [ ] Sunucu, HTTPS erişimi, ağ günlükleri, güvenlik ve silme akışı onaylanmadan quiz API'sini veya canlı veri toplamayı açma. Şimdiki quiz puan/süre/yanıtları göndermiyor; bu hâlini koru.
 
 ### Araştırma kanıtı
@@ -32,4 +36,4 @@ Bu dosya güncel iş panosudur. Yalnızca açık kararları ve son doğrulama du
 - MVP'nin web uygulaması, Devre Atölyesi, altı modüllü başlangıç kursu ve yerel quiz'i GitHub Pages'te yayında. Teknik doğruluk benchmarkları ve Playwright kapıları geçmiştir; bunlar öğrenme etkisini kanıtlamaz.
 - Referans alınan son ana ürün yayını PR #43 (`f1d7f4b`). CI `45315138623` başarılı; Pages build/deploy tamamlandı. Son yayında Tanıtım, Dokümantasyon ve Devre Atölyesi rotaları HTTP 200 döndü.
 - Pages concurrency PR #49 (`db10412`) ile workflow/ref'e göre ayrıldı. En son kapsam notu PR #54 (`702acf5`) build CI `45323331670` ve main Pages build/deploy [`45323463002`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45323463002) ile geçti. Değişiklik kayıt düzeyindedir; sonrasında tanıtım, docs ve atölye rotaları HTTP 200 döndü.
-- Araştırma yöntemi, ölçme aracının geçerliği, katılımcı izinleri, KVKK veri akışı ve öğrenme etkisi hâlâ çözülmemiştir. Ayrıntılı kanıt ve geçmiş görevler [`backloglog.md`](backloglog.md) ile [`raports/overnight-quality-review-2026-11-24.md`](raports/overnight-quality-review-2026-11-24.md) içinde.
+- Araştırma yöntemi, yaklaşık 20 kişilik tahminin yeterliliği, ölçme aracının geçerliği, katılımcı izinleri, KVKK veri akışı, veri sorumlusunun kimliği, istatistik yayımlama güvenliği ve öğrenme etkisi hâlâ çözülmemiştir. Ayrıntılı kanıt ve geçmiş görevler [`backloglog.md`](backloglog.md) ile [`raports/overnight-quality-review-2026-11-24.md`](raports/overnight-quality-review-2026-11-24.md) içinde.
