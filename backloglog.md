@@ -488,3 +488,11 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - TÜBİTAK'ın 2026 Konya Bölge Sergisine davet edilenler PDF'sinde 95–100 kayıt numaralı altı `YAZILIM` alanı projesi ve bunların tematik etiketleri gözlendi. İsimler/başvuru numaraları araştırma notuna kopyalanmadı.
 - Listede başlık/özet bulunmadığı için Verilog/FPGA/eğitim benzerliği belirlenemedi; geçmişte aynı projenin bulunmadığı sonucu çıkarılamaz. Bu sınırlı kanıt ve kaynak `research/tubitak/2026-konya-software-scan.md`, kaynak indeksine ve `notes.md`'ye eklendi.
 - Doğrulama: resmî TÜBİTAK PDF ve çağrı sayfası okundu; `git diff --check` geçti. Yeni proje/özgünlük iddiası veya öğrenci verisi üretilmedi.
+
+## 2026-11-24 — Temel dersler için sayfa içi öz kontrol
+
+- Dijital sinyaller, mantık kapıları, yarım toplayıcı ve paralel yollar derslerine klavyeyle kullanılabilen çoktan seçmeli mini alıştırmalar eklendi. Yanlış yanıtta açıklayıcı ipucu, doğru yanıtta kısa gerekçe gösteriliyor; seçenek değişince eski geri bildirim siliniyor. Yanıtlar DOM içinde değerlendirilir; ağ isteği, localStorage ve sessionStorage kullanımı yoktur.
+- Bölüm bağlantıları ve yaklaşık süreler eklendi. Temel kurs 18'den 22 dakikaya, rehber toplamı 44'ten 48 dakikaya güncellendi. Quiz/araştırma ölçüm akışı değiştirilmedi; bu alıştırmaların öğrenme etkisi veya ölçme geçerliği kanıtlanmış değildir.
+- Yerel kontroller: Node **27/27**, CSS build, `node --check`, Playwright Chromium smoke'ta Space/Tab/Enter, yanlış/doğru yanıt, geri bildirim temizleme, sayfa hatası olmaması ve 320 px taşmasız görünüm geçti. CI Jekyll artifact'ında docs E2E **9/9**; yerel suite 320/390/768 px, dört ders, klavye akışı, depolama 0 ve yazan istek 0 doğruladı.
+- PR **#37** build `45308624453` Node, Icarus, Jekyll ve tüm Playwright suite kapılarından geçti. Bağımsız kaynak ve görsel inceleme gerçek 1440/390 px Jekyll artifact'ında hizalama, okunabilirlik ve taşma bloklayıcısı bulmadı. Canlı main yayını birleştirme sonrasında ayrıca doğrulanacak.
+- Değişenler: `_layouts/default.html`, `assets/js/docs-practice.mjs`, `assets/css/input.css` ve build çıktısı, dört ders ve kurs haritası, `tests/e2e/docs.spec.mjs`, bu kayıtlar. Tam ekran okuyucu denetimi yapılmadı.

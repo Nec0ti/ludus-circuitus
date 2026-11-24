@@ -29,7 +29,7 @@ test("course introduction is brief and docs use collapsible topic groups", async
 
 test("docs landing page orders concepts, workshop practice and contributor setup", async ({ page }) => {
   await page.goto("/docs/");
-  await expect(page.locator(".docs-reading-time")).toHaveText("Tüm rehber yaklaşık 44 dakika");
+  await expect(page.locator(".docs-reading-time")).toHaveText("Tüm rehber yaklaşık 48 dakika");
   await expect(page.locator(".docs-article")).toContainText("Tam işlemci veya assembly geliştirme ortamı kapsamda değildir.");
   const headings = await page.locator(".docs-article h2").allTextContents();
   expect(headings.map((heading) => heading.replace(/~\d+ dk/, "").trim())).toEqual([
@@ -63,10 +63,10 @@ test("every docs navigation, course card and in-page topic link resolves", async
 
 test("short lessons show their estimated reading times and active navigation link", async ({ page }) => {
   const lessons = [
-    ["/docs/dijital-sinyaller/", "0 ve 1: dijital sinyaller", "Dijital sinyaller", 3],
-    ["/docs/mantik-kapilari/", "Mantık kapıları ve doğruluk tabloları", "Mantık kapıları", 3],
-    ["/docs/yarim-toplayici/", "İki kapı, bir yarım toplayıcı", "Yarım toplayıcı", 3],
-    ["/docs/paralel-yollar/", "Paralel yollar nasıl çalışır?", "Paralel yollar", 2],
+    ["/docs/dijital-sinyaller/", "0 ve 1: dijital sinyaller", "Dijital sinyaller", 4],
+    ["/docs/mantik-kapilari/", "Mantık kapıları ve doğruluk tabloları", "Mantık kapıları", 4],
+    ["/docs/yarim-toplayici/", "İki kapı, bir yarım toplayıcı", "Yarım toplayıcı", 4],
+    ["/docs/paralel-yollar/", "Paralel yollar nasıl çalışır?", "Paralel yollar", 3],
     ["/docs/saat-yazmac/", "Saat ve yazmaç", "Saat ve yazmaç", 3],
     ["/docs/bloktan-verilog/", "Bloktan Verilog'a", "Bloktan Verilog'a", 2],
   ];
@@ -78,7 +78,7 @@ test("short lessons show their estimated reading times and active navigation lin
     await expect(page.locator(".docs-article h2 .docs-section-time")).toHaveCount(minutes);
   }
   await page.goto("/docs/");
-  await expect(page.locator(".docs-reading-time")).toHaveText("Tüm rehber yaklaşık 44 dakika");
+  await expect(page.locator(".docs-reading-time")).toHaveText("Tüm rehber yaklaşık 48 dakika");
 });
 
 test("local setup guide lists test tools and builds the static site before E2E", async ({ page }) => {
@@ -142,4 +142,47 @@ test("beginner lessons distinguish single-bit examples from supported vector sig
   await expect(page.locator(".docs-article")).toContainText("kapı aynı kuralı her bit konumuna ayrı uygular");
   await page.goto("/docs/saat-yazmac/");
   await expect(page.locator(".docs-article")).toContainText("aynı genişlikteki Q çıkışına alınır");
+});
+
+test("core lessons provide keyboard-friendly local self-checks with immediate feedback", async ({ page }) => {
+  const checks = [
+    ["/docs/dijital-sinyaller/", "signal-check", "released", "pressed"],
+    ["/docs/mantik-kapilari/", "gate-check", "one", "zero"],
+    ["/docs/yarim-toplayici/", "adder-check", "sum-one-carry-zero", "sum-zero-carry-one"],
+    ["/docs/paralel-yollar/", "parallel-check", "in-order", "together"],
+  ];
+  const writes = [];
+  page.on("request", (request) => {
+    if (request.method() !== "GET") writes.push(`${request.method()} ${request.url()}`);
+  });
+  for (const [route, name, wrong, right] of checks) {
+    await page.goto(route);
+    const form = page.locator("[data-docs-practice]");
+    const wrongOption = form.locator(`input[name="${name}"][value="${wrong}"]`);
+    const checkButton = form.getByRole("button", { name: "Yanıtı denetle" });
+    await expect(form).toBeVisible();
+    await expect(form).toHaveAttribute("data-answer", right);
+    await expect(form.locator("fieldset")).toHaveCount(1);
+    await wrongOption.focus();
+    await page.keyboard.press("Space");
+    await expect(wrongOption).toBeChecked();
+    await page.keyboard.press("Tab");
+    await expect(checkButton).toBeFocused();
+    await page.keyboard.press("Enter");
+    const feedback = form.locator("[data-feedback]");
+    await expect(feedback).toHaveAttribute("data-state", "retry");
+    await expect(feedback).not.toBeEmpty();
+    await form.locator(`input[name="${name}"][value="${right}"]`).check();
+    await expect(feedback).toBeEmpty();
+    await checkButton.click();
+    await expect(feedback).toHaveAttribute("data-state", "correct");
+    await expect(feedback).toContainText("Doğru");
+    expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0]);
+    for (const width of [320, 390, 768]) {
+      await page.setViewportSize({ width, height: 844 });
+      const hasOverflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
+      expect(hasOverflow, `unexpected ${route} overflow at ${width}px`).toBe(false);
+    }
+  }
+  expect(writes).toEqual([]);
 });

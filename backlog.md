@@ -4,6 +4,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
+- [x] Dört temel derse klavyeyle kullanılabilen, anlık doğru/yeniden dene geri bildirimi veren öz-kontrol ekle; ders içi cevaplar ağa gönderilmiyor ve saklanmıyor. Okuma süreleri ve ders içi gezinme güncellendi. PR #37 CI, belge E2E 9/9, 320/390/768 px ve klavye smoke kontrolleri, bağımsız gerçek Jekyll artifact görsel incelemesi geçti. Bunlar araştırma ölçme aracı geçerliği veya öğrenme etkisi kanıtı değildir.
 - [x] Atölye bloklarına klavye odağı, seçim, 20 px grid taşıma ve silme yolu eklendi; odak yeniden çizim sonrası korunuyor. Kaynak/diff incelemesi ve 39/39 E2E geçti; canlı Pages'te odak/taşıma/silme/boşlukla seçim ve sıfır sayfa hatası doğrulandı. Tam ekran okuyucu audit'i yapılamadı. Ayrıntı `backloglog.md`.
 - [x] 2026-11-24 CircuitVerse anonim görev denemesini resmî Input/kablo/junction yönergeleriyle son kez yaptım; devre ve 00/01/10/11 sonuçları güvenilir doğrulanamadı. Aynı-görev karşılaştırması açık bırakıldı; ayrıntı/kaynaklar `research/references/related-tools.md`.
 - [x] 2026-11-24 son Pages yayını 1440×900 masaüstünde ve Devre Atölyesi 390×844 mobilde görsel olarak yeniden incelendi. Landing, docs, atölye ve quiz 200; atölyede yatay taşma ve JavaScript sayfa hatası yok. Ekran görüntüleri geçici `/tmp` QA dosyaları.
