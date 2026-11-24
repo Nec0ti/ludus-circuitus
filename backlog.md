@@ -6,6 +6,7 @@ Bu dosya güncel iş panosudur. Yalnızca açık kararları ve son doğrulama du
 
 ### Danışmanla netleştir
 
+- [ ] “Sadece 1 bitin dışına çık” yönlendirmesini netleştir: ürün yalnız 1 bit mi olmalı, yoksa mevcut 1–32 bitlik yollar sürmeli mi? Yanıt gelene kadar mevcut kapsamı ve `.bp` uyumluluğunu koru; daraltma yapma.
 - [ ] Danışman öğretmeni belirle; iki ekip üyesinin 2204-A lise/yaş uygunluğunu ve danışman koşullarını doğrula.
 - [ ] Bir birincil kazanımı ve en fazla iki ikincil sonucu, sınıf düzeyini ve erişilebilir örneklem büyüklüğünü danışmanla kesinleştir. Mevcut adaylar: bağımsız paralel yolların sonucunu tahmin etme; blok↔Verilog eşlemesi; clock kenarında yazmaç davranışı.
 - [ ] Araştırma düzenini seç: yeterli gönüllü varsa eşit süreli Ludus/metin-şema karşılaştırması; örneklem küçükse nedensellik iddiası taşımayan tek grup pilotu. Gönüllüleri okulda tarafsız ve baskısız çağırma yolunu yönetimle belirle.

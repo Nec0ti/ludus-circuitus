@@ -610,3 +610,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR #52 (`cd4f456`) build kontrolü `45322307642` ile geçti. Main Pages run [`45322453097`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45322453097) build ve deploy adımlarını tamamladı.
 - Canlı `https://nec0ti.github.io/ludus-circuitus/`, `/docs/` ve `/playground/` rotaları HTTP 200 verdi. Çalışma ağacı temiz; açık PR bulunmuyor.
 - Değişenler yalnızca `backlog.md` ve bu günlük. Kalan insan kararları ve izin/veri koruma kapıları değişmedi; katılımcı verisi veya API açılmadı. `git diff --check` PR öncesi çalıştırılacak.
+
+## 2026-11-24 — Bit genişliği kapsamını korumalı biçimde denetleme
+
+- Güncel `const.md`, `notes.md`, README, Atölye, docs ve testler 1–32 bitlik sinyallerde tutarlı; vektör genişlikleri kullanıcı tarafından seçilip Verilog ve `.bp` dosyalarına yansıyor. Geçmiş kapsam kaydı da RISC-V/assembly kapsam dışına alınırken 1–32 bit desteğinin seçildiğini söylüyor.
+- Kullanıcının sonraki “sadece 1 bitin dışına çık” ifadesi tek-bitte kalma veya 1-bit dışına, sınırlı biçimde çıkma olarak anlaşılabilir. İki bağımsız okuma aynı belirsizliği saptadı. Çok-bitli `.bp` projeleri/localStorage kayıtları var olabileceğinden, açıklık gelmeden daraltma bu projeleri bozabilir.
+- Değişenler: bu belirsizlik ve güvenli mevcut varsayım `notes.md` ile `backlog.md` içine eklendi; uygulama kodu değişmedi. `git diff --check` CI öncesi çalıştırılacak. Sabah kullanıcıdan tek bit mi 1–32 bit mi diye teyit istenecek.

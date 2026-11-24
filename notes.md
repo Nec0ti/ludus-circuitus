@@ -22,6 +22,8 @@ Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde ö
 
 **Durum:** Tuval seçim kutusu, sağ tıkla aramalı blok çağırma, dışarı/Escape ile iptal, sağ tuş sürükleme/orta tuş pan, grid snap, imleç merkezli yakınlaştırma ve seçili düğümde genişlik düzenleme uygulandı. Blueprint yeniden adlandırma bağlı modül örneklerini günceller; silme bağımlılıkları açıkça temizler. Silme öncesi kullanıcı onayıyla bağlı tasarımın değişmesi bilerek görünürdür. Süreçler E2E ile sınanır. Güncel geçerli blok listesi `docs/bloklar.md`'de tutulur.
 
+**Bit genişliği kapsamı için açık teyit:** “Sadece 1 bitin dışına çık” ifadesi tek-bit ile sınırlı kalma ya da tek bitten çok-bit desteğine geçme şeklinde anlaşılabilir. Geçmiş kapsam kaydı ve uygulama 1–32 bit olarak yorumlamıştır; güncel ürün ve `.bp` biçimi bu desteği kullanır. Kullanıcıdan teyit gelene kadar 1–32 bit kapsamını koru, mevcut tasarımları daraltma ve açık genişlikli `.bp` verisine dönüştürme uygulama. Tek-bit istenirse geçiş/uyumluluk ayrıca tasarlanmalıdır.
+
 **TÜBİTAK ile ilişki:** Güncel erişilebilir 2204-A değerlendirme formlarının proje kanıtlarıyla eşlemesi [`research/tubitak/evaluation-alignment-2027.md`](research/tubitak/evaluation-alignment-2027.md) içinde. Tasarım kalitesi ve otomatik oracle testleri ürünün çalışırlığını destekler; öğrenme artışını kanıtlamaz. Başvuru materyali öğrencilerin gerçekte verdiği kararları doğru yansıtmalı; araç kullanımı veya dış katkı olduğundan farklı gösterilmemeli. Ekip üyelerinin sunduğu tasarımı, kod akışını ve testlerin sınırlarını kendilerinin anlayıp açıklaması gerekir.
 
 ## Araştırma ölçümü: 2026-11-23 kullanıcı kararları
