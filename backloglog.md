@@ -508,5 +508,19 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 
 - Saat/yazmaç dersi, yazmaç başlangıçta 0 iken D saat kenarından önce 1'e değiştiğinde Q'nun 0 kalmasını soruyor. Bloktan Verilog'a dersi, XOR toplam çıkışının `assign sum = a ^ b;` eşlemesini soruyor. İki form da yanlış yanıt için kısa bir ipucu ve doğru yanıt için gerekçe verir.
 - Kurs haritası 50 dakika olarak, Temeller grubu 24 dakika olarak güncellendi. Altı dersin kart, yan menü ve sayfa okuma süreleri aynı; her içerik sayfasının TOC'sinde öz kontrol bağlantısı var.
-- Bağımsız teknik/içerik incelemesi soru cevaplarını, başlangıç düzeyini ve süre eşleşmesini doğru buldu. PR #39 CI build/Jekyll/Icarus/tüm Playwright suite geçti (`45310559485`); CI artifact'ına karşı docs E2E **9/9**, altı ders klavye/yanlış/doğru akışı ve 320/390/768 px taşmasızlığı doğrulandı. Gerçek artifact'ın 1440/390 px görünüm incelemesinde kartlar ve seçenek sarımı geçti. Main merge/deploy doğrulaması bu kayıt sırasında bekliyor.
+- Bağımsız teknik/içerik incelemesi soru cevaplarını, başlangıç düzeyini ve süre eşleşmesini doğru buldu. PR #39 CI build/Jekyll/Icarus/tüm Playwright suite geçti (`45310559485`); CI artifact'ına karşı docs E2E **9/9**, altı ders klavye/yanlış/doğru akışı ve 320/390/768 px taşmasızlığı doğrulandı. Gerçek artifact'ın 1440/390 px görünüm incelemesinde kartlar ve seçenek sarımı geçti. O sırada main merge/deploy doğrulaması henüz bekliyordu; sonrasında PR `bd4d562` ve Pages run `45311425041` ile tamamlandı.
 - Değişenler: `_includes/docs-nav.html`, iki ders, `docs/index.html`, `tests/e2e/docs.spec.mjs`, `backlog.md` ve bu günlük. Yeni veri saklama/gönderme yolu eklenmedi. Tam ekran okuyucu denetimi yapılmadı.
+
+## 2026-11-24 — Ana yayın kaydı ve 2204-A geçmiş başlık taraması
+
+- PR #39 (`bd4d562`) `main` dalında. Pages run [`45311425041`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45311425041) başarıyla tamamlandı. Canlı altı ders rotası 200 döndü; sayfadaki/menüdeki süreler 4/4/4/3/4/3 dakika, kurs toplamı 50 dakika. 390 px görünümde taşma yok; her derste yanlış→yeniden dene→doğru akışı çalıştı. `localStorage`/`sessionStorage` boş; yazan ağ isteği ve JavaScript hatası yok.
+- Resmî 2025 derece PDF'inin Konya bölümündeki üç Yazılım başlığı (Sinapsis Vision, SmartRun ve TİDAP) gözden geçirildi; başlık düzeyinde Verilog/FPGA öğretimi görünmüyor. 2026 Konya davet PDF'inde altı Yazılım kaydı var, başlık/özet yok. Bulguların kapsamı ve özgünlük iddiası oluşturmadığı sınırı `research/tubitak/past-award-title-scan.md` içinde.
+- Resmî kaynaklardan başlık/alan/sonuç bilgisi kullanıldı; kişi adı, okul adı veya başvuru numarası araştırma notlarına taşınmadı. Öğrenci katılımcı veya veri kullanılmadı.
+- Değişenler: `backlog.md`, `backloglog.md`, `notes.md`, `research/references/index.md`, yeni geçmiş başlık tarama notu ve gece kalite raporu. `git diff --check` ile belge kapsamı ve fark biçimi kontrol edilecek; PR CI henüz bekliyor.
+
+## 2026-11-24 — Ders kapsamı ve başlangıç durumu tutarlılığı
+
+- Bağımsız ikinci içerik incelemesi iki küçük karışıklık buldu: dersin “tek bit” çerçevesinin yanında 4-bit örneklerin ileri düzey not olarak işaretlenmemesi ve yazmaç sorusunda 0 değerinin resetten geldiğinin belirtilmemesi.
+- Dijital Sinyaller sayfasında çok bitli sinyaller “Biraz ileri” olarak ayrıldı; Mantık Kapıları sayfasındaki 4-bit AND örneği isteğe bağlı ileri notu oldu. Yazmaç alıştırması reset uygulanıp bırakılmış durumu açıkça belirtiyor. Üç metin için Playwright içerik regresyonları eklendi.
+- Doğrulama henüz PR CI aşamasında; çalıştırılacak güncel docs E2E/Jekyll build ve tam suite zorunlu. İnsan/veri toplama yok.
+- Değişenler: `docs/dijital-sinyaller.md`, `docs/mantik-kapilari.md`, `docs/saat-yazmac.md`, `tests/e2e/docs.spec.mjs`, `backlog.md`, bu günlük ve gece kalite raporu.

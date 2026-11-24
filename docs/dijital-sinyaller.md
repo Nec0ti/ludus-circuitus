@@ -20,7 +20,7 @@ docs_practice: true
     <p>Günlük hayatta sayıları onluk sistemle yazarız; bu sistemde 0'dan 9'a kadar rakamlar vardır. İkilik sistem yalnızca iki rakam kullanır: 0 ve 1. Tek bitlik değerlerde onluk ve ikilik yazım aynı görünür: 0 yine 0, 1 yine 1'dir. Ekrandaki tek bitlik girişler bu nedenle kolayca okunur. Atölye daha geniş yolları da destekler: örneğin 4 bitlik <code>1001</code>, onluk sistemde <code>9</code> değeridir.</p>
     <h2 id="sinyal">Sinyal, bilginin yoludur <span class="docs-section-time">~1 dk</span></h2>
     <p>Bir sinyal, bir devre noktasındaki mantıksal değeri başka bir noktaya taşır. Giriş, dışarıdan değiştirdiğin değeri alır; çıkış, devrenin sonucunu gösterir. Sinyal çizgileri elektriğin fiziksel akışını canlandırmaz; hangi mantıksal değerin hangi yola gittiğini gösterir.</p>
-    <aside class="docs-callout"><b>Hatırla</b><p>Bu dersteki örnekler tek bit kullanır. Atölyede ise bir sinyal birden çok bitten oluşabilir. Yazmaç için gösterilen <code>X</code>, sonraki derste göreceğin başlangıçta bilinmeyen değerdir.</p></aside>
+    <aside class="docs-callout"><b>Biraz ileri: geniş sinyaller</b><p>Önce tek bitli örneklerle başlayalım. Atölyede bir sinyal birden çok bitten oluşabilir. Yazmaç için gösterilen <code>X</code>, sonraki derste göreceğin başlangıçta bilinmeyen değerdir.</p></aside>
     <h2 id="kendini-dene">Kendini dene <span class="docs-section-time">~1 dk</span></h2>
     <form class="docs-practice" data-docs-practice data-answer="pressed" data-correct-text="Doğru. Bu örnekte 1, düğmeye basıldığını gösteriyor." data-retry-text="Bir daha dene: örnekte 0, düğmenin basılmadığını anlatıyor.">
       <fieldset>
