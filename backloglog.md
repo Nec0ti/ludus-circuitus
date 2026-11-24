@@ -518,6 +518,13 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Resmî kaynaklardan başlık/alan/sonuç bilgisi kullanıldı; kişi adı, okul adı veya başvuru numarası araştırma notlarına taşınmadı. Öğrenci katılımcı veya veri kullanılmadı.
 - Değişenler: `backlog.md`, `backloglog.md`, `notes.md`, `research/references/index.md`, yeni geçmiş başlık tarama notu ve gece kalite raporu. `git diff --check` geçti; PR #40'ın tam CI ve yayın sonucu aşağıdaki kayıtta.
 
+## 2026-11-24 — 2024 Konya 2204-A derece başlıkları taraması
+
+- TÜBİTAK'ın 2024 resmî sonuç PDF'inde Konya bölgesi/Yazılım ana alanında üç derece başlığı bulundu: 3D Pulmosim, fMRI/derin öğrenme ile iletişim ve TellCord ses ayırma modeli. Üçünün de tematik alanı Yapay Zekâ; başlıklar dijital mantık/Verilog eğitimiyle doğrudan örtüşmüyor.
+- 2024 resmî davet istatistiği yalnızca ana alan/bölge adetlerini verir, proje başlıklarını değil. Bulgular 2024–2025 derece listelerinde toplam altı başlığın sınırlı taramasıdır; bütün başvuru arşivi veya özgünlük kanıtı değildir.
+- Kaynak notlarına yalnızca başlık, ana alan, tematik alan ve derece bilgisi eklendi; öğrenci/danışman adı, okul ve başvuru numarası aktarılmadı. İnsan katılımcı/verisi yok.
+- Bağımsız kaynak incelemesi üç başlığın alan, tema ve derece sırasını doğruladı; başlıktan çıkarılamayan “cerrahi eğitim” ifadesi simülasyon/yardım olarak daraltıldı. `git diff --check` geçti; tam PR CI bekleniyor.
+- Değişenler: `research/tubitak/past-award-title-scan.md`, `research/references/index.md`, `notes.md`, `backlog.md`, `backloglog.md`, gece kalite raporu.
 ## 2026-11-24 — Ders kapsamı ve başlangıç durumu tutarlılığı
 
 - Bağımsız ikinci içerik incelemesi iki küçük karışıklık buldu: dersin “tek bit” çerçevesinin yanında 4-bit örneklerin ileri düzey not olarak işaretlenmemesi ve yazmaç sorusunda 0 değerinin resetten geldiğinin belirtilmemesi.
@@ -526,3 +533,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Güncel canlı sayfa için Chromium/Playwright ile altı ders rotası kontrol edildi: tümü 200; yanlış yanıt/yeniden dene/doğru yanıt akışı çalıştı; reset açıklaması, ileri düzey etiketleri, 390 px taşmasızlık ve boş local/session storage doğrulandı. Yazma isteği ve page error yok.
 - `git diff --check` geçti. İnsan/veri toplama yok.
 - Değişenler: `docs/dijital-sinyaller.md`, `docs/mantik-kapilari.md`, `docs/saat-yazmac.md`, `tests/e2e/docs.spec.mjs`, `backlog.md`, bu günlük ve gece kalite raporu.
+
+## 2026-11-24 — 2024 Konya 2204-A derece başlıkları taraması
+
+- TÜBİTAK'ın 2024 resmî sonuç PDF'inde Konya bölgesi/Yazılım ana alanında üç derece başlığı bulundu: 3D Pulmosim, fMRI/derin öğrenme ile iletişim ve TellCord ses ayırma modeli. Üçünün de tematik alanı Yapay Zekâ; başlıklar dijital mantık/Verilog eğitimiyle doğrudan örtüşmüyor.
+- 2024 resmî davet istatistiği yalnızca ana alan/bölge adetlerini verir, proje başlıklarını değil. Bulgular 2024–2025 derece listelerinde toplam altı başlığın sınırlı taramasıdır; bütün başvuru arşivi veya özgünlük kanıtı değildir.
+- Kaynak notlarına yalnızca başlık, ana alan, tematik alan ve derece bilgisi eklendi; öğrenci/danışman adı, okul ve başvuru numarası aktarılmadı. İnsan katılımcı/verisi yok.
+- Değişenler: `research/tubitak/past-award-title-scan.md`, `research/references/index.md`, `notes.md`, `backlog.md`, `backloglog.md`, gece kalite raporu. `git diff --check` ve bağımsız kaynak incelemesi bekleniyor.
