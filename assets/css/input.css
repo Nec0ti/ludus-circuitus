@@ -719,6 +719,7 @@ select:focus-visible {
 .cad-wire.signal-x, .cad-mini-wire.signal-x { stroke: #e4ad58; stroke-dasharray: 5 5; }
 .cad-wire.wire-pending { stroke: var(--cad-amber); stroke-dasharray: 7 6; }
 .cad-node { position: absolute; z-index: 1; width: 150px; height: 88px; border: 1px solid #566273; border-radius: 7px; background: linear-gradient(145deg, #28323e, #202832); box-shadow: 0 7px 16px #0005; color: #e0e7ef; touch-action: none; }
+.cad-node:focus-visible { outline: 2px solid var(--cad-teal); outline-offset: 2px; }
 .cad-node:hover { border-color: #8a98a8; }
 .cad-node.is-selected { border-color: var(--cad-amber); box-shadow: 0 0 0 1px #f4b84a55, 0 8px 18px #0006; }
 .node-input { border-color: #477966; }

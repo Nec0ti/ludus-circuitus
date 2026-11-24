@@ -473,3 +473,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - CircuitVerse'ün resmî Input, wiring ve build yönergelerini izleyerek Button yerine iki Input ile XOR, AND ve iki Output yerleştirildi. Port kabloları ve Ctrl junction adımı denendi; A/B yolları güvenilir biçimde fan-out edilemedi. Dört giriş vektörü ölçülmedi, varsayılan değerler sonuç sayılmadı.
 - Console `transformCallback` TypeError'ları görüldü ancak sebep/etki kanıtlanmadı; CircuitVerse kusuru veya Ludus avantajı iddiası yok. Anonim oturumda katılımcı/veri kullanılmadı.
 - Değişenler: `research/references/related-tools.md`, `notes.md`, `backlog.md`, bu günlük ve kalite raporu. `git diff --check` yapıldı; ürün kodu değişmedi. Canlı aynı-görev karşılaştırması açık kalıyor.
+
+## 2026-11-24 — Devre Atölyesi klavye erişimi
+
+- Blok kartları artık klavyeyle odaklanabilir; Enter/boşluk seçer, yön tuşları seçili blok(lar)ı bir 20 px grid adımı taşır, Delete siler. Odak kartlar yeniden oluşturulurken korunur ve silme sonrası kalan bloğa/tuvale taşınır; görünür focus halkası eklendi.
+- Regresyon: yeni Playwright testi tek başına ve tam E2E takımında **39/39** geçti (güncel Pages artifact'ı üzerine yerel kaynak JS/CSS kopyalanarak, Nix Chromium ile). Node **27/27**, CSS build, Icarus scalar/hiyerarşik/vector ve 1.920 vektör karşılaştırması, `node --check` ve `git diff --check` geçti.
+- Bağımsız kaynak incelemesi iç içe buton/select/port davranışında belirgin regresyon veya odak tuzağı bulmadı. Önceki live browser aracı bu oturumda açılamadığı için tam klavye, ekran okuyucu ve canlı kontrast taraması doğrulanmadı; tam CI ve PR kapısı bekleniyor.
+- Değişenler: `assets/js/playground.mjs`, `assets/css/input.css`, derlenmiş `assets/css/site.css`, `tests/e2e/playground.spec.mjs`, `backlog.md` ve bu günlük. Atölye değişikliği blueprint/internet verisini sunucuya göndermez.

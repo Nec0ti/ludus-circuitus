@@ -245,6 +245,9 @@ function renderNodes(bp, values) {
   renderedNodes.clear();
   for (const node of bp.nodes) {
     const card = el("article", `cad-node node-${node.type}${selectedIds.has(node.id) ? " is-selected" : ""}`);
+    card.tabIndex = 0;
+    card.setAttribute("role", "group");
+    card.setAttribute("aria-label", `${node.name || labels[node.type]} bloğu. Enter veya boşlukla seç, yön tuşlarıyla taşı, Delete ile sil.`);
     card.style.left = `${node.x}px`;
     card.style.top = `${node.y}px`;
     if (node.type === "module") card.style.height = `${Math.max(88, 36 + Math.max(portInputs(node).length, portOutputs(node).length) * 16)}px`;
@@ -298,6 +301,26 @@ function renderNodes(bp, values) {
     card.append(ports);
     card.addEventListener("pointerdown", (event) => beginDrag(event, node));
     card.addEventListener("click", () => { selectedIds = new Set([node.id]); render(); });
+    card.addEventListener("keydown", (event) => {
+      if (event.target !== card) return;
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        selectedIds = new Set([node.id]);
+        render();
+        renderedNodes.get(node.id)?.focus({ preventScroll: true });
+        return;
+      }
+      const delta = { ArrowLeft: [-20, 0], ArrowRight: [20, 0], ArrowUp: [0, -20], ArrowDown: [0, 20] }[event.key];
+      if (!selectedIds.has(node.id) || !delta) return;
+      event.preventDefault();
+      for (const selected of bp.nodes.filter((item) => selectedIds.has(item.id))) {
+        selected.x += delta[0];
+        selected.y += delta[1];
+      }
+      render();
+      persist();
+      renderedNodes.get(node.id)?.focus({ preventScroll: true });
+    });
     layer.append(card);
     renderedNodes.set(node.id, card);
   }
@@ -552,11 +575,13 @@ function removeSelectedNodes() {
 
 function removeNodes(ids) {
   const bp = activeDocument().bp;
+  const focusedNode = document.activeElement?.closest?.(".cad-node")?.dataset.id;
   bp.nodes = bp.nodes.filter((node) => !ids.has(node.id));
   bp.wires = bp.wires.filter((wire) => !ids.has(wire.from.node) && !ids.has(wire.to.node));
   for (const id of ids) if (state.registers[id] !== undefined) delete state.registers[id];
   selectedIds = new Set();
   render();
+  if (focusedNode) (renderedNodes.get(focusedNode) || renderedNodes.values().next().value || $("#blueprint-canvas")).focus({ preventScroll: true });
   persist();
 }
 
@@ -784,7 +809,7 @@ function beginSelection(event) {
   canvas.addEventListener("pointermove", move);
   canvas.addEventListener("pointerup", up, { once: true });
 }
-document.addEventListener("keydown", (event) => { if (event.code === "Space" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) { spaceDown = true; event.preventDefault(); } });
+document.addEventListener("keydown", (event) => { if (!event.defaultPrevented && event.code === "Space" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) { spaceDown = true; event.preventDefault(); } });
 document.addEventListener("keyup", (event) => { if (event.code === "Space") spaceDown = false; });
 canvas.addEventListener("wheel", (event) => {
   event.preventDefault();
