@@ -4,6 +4,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
+- [x] 2026-11-24 2027 2204-A Proje Rehberi ve çağrı sayfasının bağladığı TYBS kılavuzu yeniden incelendi: MEB/veli/gönüllü onam şartları ile TYBS'teki genel Yapay Zekâ kullanım beyanı adımı kaynaklandı. Quiz/anketin etik kurul kapsamına girip girmediği ve 2027 beyanının tam metni ayrı danışman sorusu olarak açık. Ayrıntı: `research/tubitak/2027-2204-a.md` ve `research/tubitak/evaluation-alignment-2027.md`.
 - [x] 2026-11-24 canlı mobil QA'sında bulunan bağlantı sonrası eski yönerge sorunu düzeltildi. PR #26 `d29c018` yeşil CI ile birleştirildi; Pages deploy `45296241658` ve canlı mobil bağlantı/verilog kontrolü başarılı. Ayrıntı: `backloglog.md`.
 - [x] 2026-11-24 canlı tarayıcı QA'sında kök `favicon.ico` için tek bir 404 görüldü. Marka işaretine uyan vektör favicon iki sayfa kabuğuna eklendi; PR #23 `97056b0` ile birleştirildi. CI Node 27/27, Icarus, Jekyll ve E2E 38/38 geçti; Pages run `45292033268` başarılı. Canlı favicon `image/svg+xml` 200 dönüyor ve dört ana rotada ağ/JavaScript hatası kalmadı.
 - [x] Türkçe sayfa metadatası: Jekyll SEO Tag kaynaklı yinelenen `<title>`/description ve `og:locale=en_US` düzeltildi. PR #17 Pages run `45286285879` build/deploy başarılı; landing, docs, playground ve quiz sayfalarında birer başlık/açıklama ve `og:locale=tr_TR` doğrulandı.
@@ -40,7 +41,8 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 - [x] Zorlayıcı test/benchmark şartnamesi, veri kümesi ve eşikleri belirle; main için PR + yeşil build zorunlu kuralını açıp GitHub API'den doğrula. Ayrıntı: [`research/quality/benchmark-gates.md`](research/quality/benchmark-gates.md).
 - [x] Verilog üretimi, benzetim ve `.bp` içe/dışa aktarma/kayıt akışını kapılardan geçir: 12 × 40 kapılı sabit tohumlu corpus, 252 Icarus karşılaştırması, 500 birleşmiş blok ve 1 MiB aktarım sınırı, yerel saklama/yeniden yükleme E2E.
 - [x] Yerel kurulum, önizleme, katkı ve yayın akışını son MVP'ye göre tamamla; Node 22, Python 3, Icarus Verilog ve `_site`/E2E sıralaması belgelendi, Playwright kontrolü eklendi.
-- [ ] TÜBİTAK ÜYZ rehberine göre proje geliştirme ve başvuru hazırlığında kullanılan üretken yapay zekâ desteğinin güncel 2204-A TYBS beyan alanını danışmanla doğrula; gerçek katkıyı ve insan denetimini doğru kaydet.
+- [ ] TÜBİTAK ÜYZ rehberine göre proje geliştirme ve başvuru hazırlığında kullanılan üretken yapay zekâ desteğini danışmanla doğru beyan et. Çağrı sayfasının bağladığı 2026 TYBS kılavuzunda genel “Yapay Zekâ kullanım beyanı” adımı var; 2027 formundaki tam soru/format ve projeye uygulanması hâlâ doğrulanmalı.
+- [ ] 2027 Proje Rehberi §2.3'teki insan davranışı deneyi/etik kurul koşulunun eğitim amaçlı quiz/ön-son testimize uygulanıp uygulanmadığını danışman ve ilgili izin merciyle netleştir; bu soruyu TTKB öğrenci başvurusu kılavuzundaki etik kurul belgesi açıklamasıyla birlikte değerlendir. Açıkça teyit edilmeden katılımcı çalışması başlatma.
 - [ ] İki öğrencinin 2204-A lise/yaş uygunluğunu ve varsa danışman koşulunu teyit et.
 - [ ] Danışman öğretmeni belirle; Adil Karaağaç MTAL'deki örneklem sınıfı, tarafsız gönüllü çağrısı ve iki çalışma koşulu için okul yönetimiyle plan yap.
 - [ ] Öğrencilerle öğrenme testi yapılacaksa MEB izni, veli onamı ve gönüllü katılım akışını başlat.

@@ -8,6 +8,10 @@
 
 2026-11-24 yeniden kontrolünde sayfa aynı çağrı dönemini ve 4 Ocak 2027 saat 17.30 kapanışını gösteriyordu; iki kriter bağlantısı da hâlâ `on_degerlendirme_kriterleri_2025_web.pdf` ve `sergi_kriterleri_2025_web.pdf` dosyalarına gidiyordu. Bu nedenle ağırlıklar güncel sayfada erişilebilen son formlardan aktarılmıştır; resmî 2027 ölçütü olarak doğrulanmış değildir.
 
+2026-11-24'te aynı çağrı sayfasındaki 2027 Proje Rehberi indirildi ve §2.3, basılı ss. 61–63 incelendi: insan davranışını ölçen deneylerde anlaşılır bilgilendirme, yazılı gönüllü onam ve etik kurul izni; anketlerde gönüllülük, kurum izni, 18 yaş altındakiler için veli onayı ve gizlilik ilkeleri açıklanıyor. Çağrı sayfası ve rehber ayrıca MEB paydaşlarını içeren araştırmada MEB Araştırma Uygulama İzin Belgesi gerektiğini söylüyor. 2025 TTKB öğrenci başvuru kılavuzunda etik kurul belgesi istisnası da bulunduğundan, bu proje için quiz/ön-son testin hangi kategoriye girdiği danışman/izin merciiyle teyit edilmeli; iki hükümden biri sessizce varsayılmamalı.
+
+Aynı çağrı sayfasının TYBS kılavuz bağlantısı 2025–2026 dosya adlı 2026 TYBS kılavuzuna gidiyor. Kılavuz §2.4, başvuru ana sayfasında KVKK aydınlatma metni ve “Yapay Zekâ kullanım beyanı” adımını tarif ediyor. Bu, son kamuya açık bağlantıda genel beyan adımının varlığını doğrular; 2027'ye özel kılavuz veya giriş gerektiren canlı formdaki tam metin/seçenekler bu incelemede bulunmadı. ÜYZ kullanımına ilişkin doğru kayıt ve danışman doğrulaması açık kalır.
+
 - Ön değerlendirme: problem/araştırma sorusu 20; yöntem 20; yaratıcılık ve etki 30; sonuçlar ve tartışma 30.
 - Bölge/final: problem/araştırma sorusu 15; yöntem 10; yaratıcılık ve etki 15; sonuçlar ve tartışma 20; sunum ve projeye hâkimiyet 40.
 - Her iki form da etik ilkelere uyumu eşik koşulu yapıyor: gerekli izinlerin eksikliği, veri bütünlüğü ihlali, kaynak göstermeme, kişisel verilerin gizliliğini ihlal etme veya çalışmanın ekip tarafından geliştirilmediğinin tespiti elenme nedeni.
@@ -29,9 +33,10 @@ Bu tablo “tamamlandı” puanı vermez. Teknik testler, öğrenme ölçümün�
 ## Resmî birincil kaynaklar
 
 - [TÜBİTAK 2204-A yarışma ve 2026–2027 çağrı sayfası](https://tubitak.gov.tr/tr/yarismalar/2204-lise-ogrencileri-arastirma-projeleri-yarismasi) — duyuru tarihi 23.09.2026; başvuru kuralları ile güncel kriter bağlantıları.
+- [2027 Proje Rehberi (PDF)](https://tubitak.gov.tr/sites/default/files/2026-10/2204A_proje_rehberi_2027.pdf) — §2.3, basılı ss. 61–63; insan araştırmaları, anket, katılım onamı, MEB izni ve gizlilik.
+- [TYBS Başvuru Kılavuzu (çağrı sayfasındaki mevcut bağlantı, 2026 kılavuzu)](https://tubitak.gov.tr/sites/default/files/2025-10/tybs_basvuru_kilavuzu_2025-2026_son_0.pdf) — §2.4; başvuru sayfasında KVKK aydınlatması ve Yapay Zekâ kullanım beyanı bulunduğunu söyler; 2027 sürümü olduğu doğrulanmış değildir.
 - [Ön değerlendirme formu (sayfanın mevcut bağlantısı)](https://tubitak.gov.tr/sites/default/files/2025-11/on_degerlendirme_kriterleri_2025_web.pdf) — sayfa 1; problem, yöntem, yaratıcılık/etki, sonuç/tartışma ve etik.
 - [Bölge/final değerlendirme formu (sayfanın mevcut bağlantısı)](https://tubitak.gov.tr/sites/default/files/2025-11/sergi_kriterleri_2025_web.pdf) — sayfa 1; ölçüt ağırlıkları ve sunum/projeye hâkimiyet.
-- [2027 2204-A Proje Rehberi](https://tubitak.gov.tr/sites/default/files/2026-10/2204A_proje_rehberi_2027.pdf) — özellikle yazılım projeleri bölümü ve araştırma raporu düzeni. PDF bu kontrol sırasında web önizlemesinde zaman aşımına uğradı; proje dosyası hazırlarken doğrudan indirilip doğrulanmalı.
 - [MEB Araştırma Uygulama İzinleri sistemi](https://arastirmaizinleri.meb.gov.tr/) ve [TTKB izin başvuru/değerlendirme kılavuzu](https://ttkb.meb.gov.tr/meb_iys_dosyalar/2025_07/19211911_arastirmauygulamaizinleribasvuruvedegerlendirmekilavuzu.pdf) — öğrenci/okul uygulaması ve onam belgeleri.
 
 ## İlgili proje kayıtları

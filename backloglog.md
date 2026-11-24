@@ -437,3 +437,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Bu oturumdaki kablo etkileşiminden sonra tam devrenin bağlantıları güvenilir biçimde doğrulanamadı; doğruluk tablosu alınmadı. Bu nedenle karşılaştırma işini kapatmadım ve CircuitVerse'e ait hata iddiası üretmedim.
 - Birden çok `transformCallback` console hatası gözlendi, fakat bunların görev başarısızlığına neden olduğunu göstermedim. Misafir oturumu dışında hesap, insan katılımcı veya veri yok.
 - Değişenler: `research/references/related-tools.md`, `backlog.md`, bu günlük. Ürün kodu değişmedi.
+
+## 2026-11-24 — 2204-A Proje Rehberi ve TYBS beyan yeniden kontrolü
+
+- TÜBİTAK'ın resmî 2026–2027 çağrı sayfasından güncel Proje Rehberi PDF'si indirildi ve basılı ss. 61–63 metni incelendi. §2.3 insan davranışı deneyleri için bilgilendirme, gönüllü yazılı onam ve etik kurul iznini; anketler için gönüllülük, kurum izni, reşit olmayan öğrencilere veli onayı ve gizlilik koşullarını anlatıyor. Çağrı sayfası MEB paydaşlarını kapsayan araştırmada MEB Araştırma Uygulama İzin Belgesini istiyor.
+- Aynı sayfanın TYBS kılavuzu bağlantısı dosya adı 2025–2026 olan 2026 TYBS kılavuzuna gidiyor. §2.4, başvuru ana sayfasında KVKK aydınlatma metni ve “Yapay Zekâ kullanım beyanı” adımı bulunduğunu belirtiyor. Genel beyan adımı doğrulandı; 2027 formunun tam metni/seçenekleri ve bu ekibin yapay zekâ katkısına uygulanma biçimi doğrulanmadı.
+- MEB öğrenci başvurusu TTKB kılavuzundaki etik kurul belgesi istisnasıyla TÜBİTAK Proje Rehberindeki insan deneyi koşulu arasındaki kapsam, kısa öğrenme quizine göre danışman/izin merciiyle teyit edilmek üzere açık backlog'a taşındı. İzin/onam olmadan uygulama ve veri toplama yapılmadı.
+- Değişenler: `research/tubitak/2027-2204-a.md`, `research/tubitak/evaluation-alignment-2027.md`, `notes.md`, `backlog.md`, bu günlük. Resmî kaynaklar: [çağrı ve proje rehberi](https://tubitak.gov.tr/tr/yarismalar/2204-lise-ogrencileri-arastirma-projeleri-yarismasi), [bağlı TYBS kılavuzu](https://tubitak.gov.tr/sites/default/files/2025-10/tybs_basvuru_kilavuzu_2025-2026_son_0.pdf).
