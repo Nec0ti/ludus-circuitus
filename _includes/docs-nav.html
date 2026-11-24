@@ -12,11 +12,15 @@
   </details>
   <details class="docs-nav-group" {% if page.url contains '/docs/kullanim/' or page.url contains '/docs/bloklar/' %}open{% endif %}>
     <summary>Atölyede uygula <small>2 rehber</small></summary>
-    <a href="{{ '/docs/kullanim/' | relative_url }}" {% if page.url contains '/docs/kullanim' %}aria-current="page"{% endif %}>Atölye kullanımı <small>8 dk</small></a>
+    <a href="{{ '/docs/kullanim/' | relative_url }}" {% if page.url contains '/docs/kullanim' %}aria-current="page"{% endif %}>Atölye kullanımı <small>9 dk</small></a>
     <a href="{{ '/docs/bloklar/' | relative_url }}" {% if page.url contains '/docs/bloklar' %}aria-current="page"{% endif %}>Blok kataloğu <small>9 dk</small></a>
   </details>
   <details class="docs-nav-group" {% if page.url contains '/docs/yerel-kurulum' %}open{% endif %}>
     <summary>Katkıda bulun <small>1 rehber</small></summary>
     <a href="{{ '/docs/yerel-kurulum/' | relative_url }}" {% if page.url contains '/docs/yerel-kurulum' %}aria-current="page"{% endif %}>Yerel kurulum ve test <small>6 dk</small></a>
+  </details>
+  <details class="docs-nav-group" {% if page.url contains '/docs/errors/' %}open{% endif %}>
+    <summary>Hata kodları <small>tanıla ve düzelt</small></summary>
+    <a href="{{ '/docs/errors/' | relative_url }}" {% if page.url == '/docs/errors/' %}aria-current="page"{% endif %}>Hata kataloğu <small>3 dk</small></a>
   </details>
 </nav>

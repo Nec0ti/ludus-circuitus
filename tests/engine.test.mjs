@@ -165,6 +165,7 @@ test("validates vector widths, values, and equal-width connections without coerc
   const mismatch = structuredClone(wide);
   mismatch.nodes[1].width = 31;
   assert.throws(() => validateBlueprint(mismatch), /port genişlikleri eşleşmeli/);
+  assert.throws(() => validateBlueprint(mismatch), (error) => error.code === "VL0001");
 });
 
 test("constants, vector mux and unknown-select bit merging follow Verilog semantics", () => {

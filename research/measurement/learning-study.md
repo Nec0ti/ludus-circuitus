@@ -40,6 +40,12 @@ Verilog/dijital mantığa daha önce maruz kalmamış öğrencileri hedefleyin. 
 - Quiz'de ad-soyad toplanmayacak. Tam yaş yerine, gerekli görülür ve MEB'e sunulan araçta onaylanırsa yalnızca kaba sınıf/eğitim düzeyi bandı alınması kabul edildi. Kesin kategori ve gereklilik danışmanla kararlaştırılacak.
 - Örneklem Adil Karaağaç MTAL'deki lise öğrencileridir; bu örneklem ortaokul öğrencilerinde etki iddiasını desteklemez.
 
+### Necati'nin 2026-11-24 kararları ve örneklem tahmini
+
+- Kullanıcı birincil paralel-yol tahmini kazanımını ve iki ikincil kazanımı (blok↔Verilog eşlemesi; clock/yazmaç davranışı) kabul etti. Kazanım seçimi kabul edilmiştir; quizin ölçme geçerliği ve puanlaması onaylanmış değildir.
+- Kullanıcı okuldan yaklaşık 20 öğrenciye ulaşılabileceğini tahmin ediyor. Bu bir erişim öngörüsüdür; kesin örneklem veya istatistiksel güç hesabı değildir. İki koşula bölünürse yaklaşık 10 kişi/koşul olur; böyle bir karşılaştırmanın yeterliliği mevcut kayıtlardan çıkarılamaz. Danışman, gerçek katılım beklentisine ve ölçülebilir fark varsayımına göre tasarımı belirlemelidir.
+- Katılımcı ve okul izinleri çıkmadan önce tasarım kararı ve gönüllü çağrısı uygulanmamalı. Gerçek katılım düşük kalırsa tek grup pilotu, keşfedici sonuçlar ve nedensel etki iddiası olmadan raporlama değerlendirilebilir.
+
 Bu kararlar araştırma tasarımına yön verir; okul/MEB izni, danışman onayı ve katılımcı belgelerinin yerine geçmez.
 
 1. **Ön-test/son-test:** Lise başlangıç grubunda aynı kazanımı ölçen, eşdeğer zorlukta fakat aynı soruları ezberletmeyen iki form hazırla. Belirtke tablosu, cevap anahtarı, her boyutun puanı ve 100'lük ölçek önceden sabitlensin.
@@ -60,7 +66,7 @@ Kılavuzun önemli uygulama kuralı: katılımcı/veli adı imzalı bilgilendirm
 
 ## Açık ölçüm kararları
 
-- Örneklem okulu Adil Karaağaç MTAL olarak netleşti. Hangi sınıf düzeyi ve yaklaşık kaç gönüllü uygun olur; iki koşula ayıracak kadar katılımcı bulunur mu?
+- Örneklem okulu Adil Karaağaç MTAL olarak netleşti. Yaklaşık 20 kişi yalnız erişim tahminidir; danışman gerçek sayı ve iki koşullu tasarımın istatistiksel gerekçesini değerlendirmeli.
 - Araştırma “araç uygulaması/deneysel etkinlik” olarak planlanacak. Bu, Konya İl MEM başvurusunda uygulama okulunun belirtilmesi seçeneğini etkileyebilir. TTKB SSS, araç/deney uygulamasında okulun özel bilgiler bölümünde belirtilmesine imkân tanırken anket/ölçek/görüşme uygulamalarında okul adı yazılmamasını söylüyor. Nihai sınıflandırmayı danışman/Konya İl MEM teyit etmeli.
 - Ludus'u neyle karşılaştıracağız; aynı başlangıç görevi tüm koşullarda adil ve uygulanabilir olacak mı?
 - Ön-son eşleştirme için rastgele çalışma kodu kullanmak gerekli mi ve kod/çekilme akışı nasıl işleyecek?

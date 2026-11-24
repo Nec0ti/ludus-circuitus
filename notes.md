@@ -12,6 +12,27 @@ Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde ö
 
 ## Atölye genişletme ve görsel yenileme: 2026-11-24
 
+### Sürükle-bağla ve hata yardım sistemi: 2026-11-24 kullanıcı isteği
+
+- Kullanıcı, çıkış portundan giriş portuna sürükleyip bırakarak kablo bağlanmasını istedi; iki ayrı porta tıklayıp bağlama akışı kaldırılmalı. Tuvalde kablo önizlemesi imleci izler. Boş/yanlış porta bırakma ya da Escape bağlantıyı iptal eder. Bağlantı başarılı olduğunda sinyal ve Verilog anında güncellenir.
+- Kullanıcı, çalışma alanında basit konsol görmek istedi. Doğrulama, bağlantı ve simülasyon hataları stabil `VL` kodu, kısa Türkçe açıklama ve çözüm yolu ile listelenir; hata kodu ayrı Jekyll hata sayfasını yeni sekmede açar. Kod-kategori örneği: `VL0001` bit genişliği uyuşmazlığı.
+- Dokümantasyon `docs/errors/` altında her desteklenen kod için ayrı `/docs/errors/vl0001/` sayfası içerir; katalog bağlantıları Atölye yardımından erişilir. Başlangıç kategorileri bağlantı/port, bit genişliği-değeri, adlandırma/sözdizimi, BP yapısı/modül birleştirme ve simülasyondur.
+- Sınır: uygulama Verilog parser'ı, sentez motoru veya harici simulator çalıştırmıyor. Bu nedenle derleyici/sentez hatası kodu uydurulmayacak; dokümantasyonda bu hata türlerinin hangi aşamada anlamlı olacağı açıklanacak.
+- Klavye erişimi korunmalı: port odağında Enter ile bağlantı başlatma/uyumlu hedefte tamamlama, Escape ile vazgeçme. Dolu girişe yeni bağlantı sessizce eski bağlantıyı silmemeli; kullanıcıya kodlu hata göstermeli.
+
+Değişiklik ve doğrulamalar backlog ve `backloglog.md` içinde izlenecek.
+
+### Araştırma ve katılımcı verisi yönü: 2026-11-24 kullanıcı kararları
+
+- **Bit genişliği teyit edildi:** Kullanıcının kastı 1–32 bit aralığıdır; mevcut uygulama ve `.bp` kapsamı sürer.
+- **Öğrenme kazanımları kabul edildi:** Birincil sonuç bağımsız paralel mantık yollarının çıktılarını tahmin etme; ikincil sonuçlar blok↔Verilog eşlemesi ve clock/yazmaç davranışını anlama. Bunlar önerilen ölçüm taslağı olarak kalır; danışman ve alan öğretmeni quiz aracını ve ölçüm planını gözden geçirmelidir.
+- **Örnekleme erişim tahmini:** Kullanıcı yaklaşık 20 öğrenciye ulaşılabileceğini düşünüyor. Bu doğrulanmış katılımcı sayısı veya güç hesabı değildir. Yaklaşık 20 kişi iki kola bölünürse grup başına yaklaşık 10 kişi kalır; karşılaştırmalı tasarımın yeterliliği danışmanla gerekçelendirilmeli, yetmezse nedensellik iddiası taşımayan pilot seçeneği değerlendirilmelidir.
+- **Veri ve yayımlama niyeti:** Kullanıcı, proje ekibinin veri sorumlusu olmasını, ham verilerin yarışma sonrasında imha edilmesini ve landing sayfasında istatistik paylaşılmasını istiyor. Bu, kullanıcı niyeti olarak kaydedilmiştir; veri sorumlusunun hukuken kim olduğu henüz doğrulanmış değildir. KVKK'ya göre bu rol, işleme amaç ve araçlarını belirleyen gerçek/tüzel kişiye aittir. Sorumlu kişi/kurum ve başvuru irtibatı danışman/okul ve uygun KVKK uzmanıyla belirlenmelidir.
+- Landing'de ham kayıt, bireysel puan, sınıf/yaş kırılımı veya küçük alt grup sonucu göstermeme yönünde güvenli tasarım önerisi benimsendi. Yaklaşık 20 kişilik tek okul örnekleminde toplu ortalama bile bağlam ve başka verilerle kişileri belirlenebilir kılabilir; yayımdan önce anonimlik değerlendirmesi gerekir. İstatistik yayımlama amacı katılımcı belgelerinde önceden açıklanmalı ve onaylı protokolle uyumlu olmalıdır.
+- “Yarışmadan sonra imha” niyeti henüz uygulanabilir saklama takvimi değildir. Kesin tarih/tetikleyici; ham yanıtlar, eşleştirme anahtarı, imzalı onam belgeleri, yedekler ve yayımlanacak anonim sonuçlar için ayrı ayrı tanımlanmalıdır. Bu ayrım ve imha yöntemi netleşmeden aydınlatma metni, API ve katılımcı veri toplama açılmayacak.
+
+Detay ve açık KVKK/MEB işleri: [`research/measurement/learning-study.md`](research/measurement/learning-study.md) ve [`research/privacy/data-collection-plan.md`](research/privacy/data-collection-plan.md).
+
 **Necati'nin güncel yönlendirmesi:** Devre Atölyesi simülasyonundaki Oynat/Duraklat/Durdur, sağdaki devre görünümünde mantıksal sinyallerin hareketini canlandırmalı. Oynat giriş bitlerini çevirmemeli ve clock/register tiki üretmemeli; yazmaçlar yalnızca Tek tik veya Reset eylemiyle değişmeli. Animasyon hızı kullanıcı tarafından ayarlanabilir.
 
 **Kapsam düzeltmesi:** RISC-V yalnızca örnekti. Assembly dili, tam işlemci veya ISA projesi istenmiyor. Ürün dijital mantık ve Verilog öğrenimine odaklanır. Eski `.bp` belgelerindeki genişlik belirtilmemiş sinyaller 1 bit kalır; yeni tasarımlarda 1–32 bit genişlik desteklenir. Giriş onluk girilebilir, bit dizisi de görünür. Sabit ve seçici (MUX) blokları eklenmiştir; veri genişliği uyumsuz bağlantılar doğrulamada reddedilir. Sinyal benzetimi, devre görünümü ve üretilen Verilog aynı çok-bitli tasarımı temsil eder. Davranış motoru, Icarus oracle'ları ve E2E ile sınanır.
@@ -21,8 +42,6 @@ Verilog'da modüller, bağlantılar ve HDL sözdizimi başlangıç düzeyinde ö
 **Görsel kalite yönü ve sonucu:** CSS yenilendi. Tanıtım/docs/quiz için mineral alt tonlu grafit-yeşil, atölye için bunun daha araç odaklı koyu yüzeyleri ortak token ve kontrast testleriyle uygulanmıştır. Footer kısa marka tanımı, üç gerekli bağlantı ve saha çalışması iddiasının sınırıyla sadeleştirilmiştir. Landing'de genel şablon kartları yerine etkileşimli yarım-toplayıcı devresi ve ürünün gerçek kod çıktısı öne çıkar. Renkler okunabilirlik ve durum ayrımı için seçilmiştir; eğitim başarısını artırdığı iddia edilmez. Görsel inceleme mobil taşma ve etiketlerin okunurluğu için bağımsız geri kontrolle yürütülür.
 
 **Durum:** Tuval seçim kutusu, sağ tıkla aramalı blok çağırma, dışarı/Escape ile iptal, sağ tuş sürükleme/orta tuş pan, grid snap, imleç merkezli yakınlaştırma ve seçili düğümde genişlik düzenleme uygulandı. Blueprint yeniden adlandırma bağlı modül örneklerini günceller; silme bağımlılıkları açıkça temizler. Silme öncesi kullanıcı onayıyla bağlı tasarımın değişmesi bilerek görünürdür. Süreçler E2E ile sınanır. Güncel geçerli blok listesi `docs/bloklar.md`'de tutulur.
-
-**Bit genişliği kapsamı için açık teyit:** “Sadece 1 bitin dışına çık” ifadesi tek-bit ile sınırlı kalma ya da tek bitten çok-bit desteğine geçme şeklinde anlaşılabilir. Geçmiş kapsam kaydı ve uygulama 1–32 bit olarak yorumlamıştır; güncel ürün ve `.bp` biçimi bu desteği kullanır. Kullanıcıdan teyit gelene kadar 1–32 bit kapsamını koru, mevcut tasarımları daraltma ve açık genişlikli `.bp` verisine dönüştürme uygulama. Tek-bit istenirse geçiş/uyumluluk ayrıca tasarlanmalıdır.
 
 **TÜBİTAK ile ilişki:** Güncel erişilebilir 2204-A değerlendirme formlarının proje kanıtlarıyla eşlemesi [`research/tubitak/evaluation-alignment-2027.md`](research/tubitak/evaluation-alignment-2027.md) içinde. Tasarım kalitesi ve otomatik oracle testleri ürünün çalışırlığını destekler; öğrenme artışını kanıtlamaz. Başvuru materyali öğrencilerin gerçekte verdiği kararları doğru yansıtmalı; araç kullanımı veya dış katkı olduğundan farklı gösterilmemeli. Ekip üyelerinin sunduğu tasarımı, kod akışını ve testlerin sınırlarını kendilerinin anlayıp açıklaması gerekir.
 
@@ -291,3 +310,11 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 - ChipXpert ürün sayfası öğrenme laboratuvarları, Verilog simülasyonu, waveform ve HDL sentez/netlist özelliklerini listeliyor; canlı aynı görev çalıştırılmadı.
 - VeriSim README'si canlı denemede görülmeyen, HDL'den sentezlenen Gate/RTL şemalarını da belgeledi. Ludus'un aday farkı “şema ve kodu bir arada göstermek” kadar geniş tutulmamalı: kullanıcı bağlantı grafiğinin kaynak olması ve aynı öğrenme adımında üretilen Verilog ile mantıksal sinyal değerlerinin beraber gösterilmesi, denenen akışlarda gözlenmeyen bir hipotezdir; alan yazını/pazar taraması tam değildir ve benzersizlik kanıtı değildir.
 - Ayrıntı ve kaynaklar [`research/references/index.md`](research/references/index.md) ile [`research/references/related-tools.md`](research/references/related-tools.md) içinde. Canlı araç bakışlarında katılımcı veya kişisel veri kullanılmadı.
+
+### 2026-11-24 — Hata konsolu ve porttan porta bağlantı
+
+- Atölye bağlantıları artık çıkış portundan giriş portuna sürükle-bırak ile kurulur; önizleme çizgisi, boş alan/Escape iptali ve klavyeyle Enter akışı vardır. Geçersiz yön, bit genişliği uyuşmazlığı, dolu hedef ve kombinasyonel döngü bağlantıyı değiştirmeden kararlı hata kodu verir.
+- Alt tuval konsolu tanılamaları geçici olarak bellekte listeler (en fazla 40 kayıt); kodu yeni sekmede o hatanın Türkçe dokümanına gider. Eksik giriş gibi taslak durumu, kullanıcı simülasyonu başlatmayı deneyene kadar konsolu açmaz. Yeni BP açılırken kamera o devreye göre yeniden kadrajlanır.
+- Hata kataloğu bağlantı/port, bit genişliği/değer, blueprint/adlandırma, modül birleştirme, simülasyon ve dosya/uygulama başlıklarına ayrılır; 19 kodun her birinin bağımsız `/docs/errors/vlxxxx/` sayfası vardır. Ürün harici Verilog compiler veya sentez çalıştırmadığı için bu alanlara sahte hata kodları eklenmez; sinyal adı denetimi kullanıcı-Verilog sözdizimi denetimi değildir.
+- `VL9999` beklenmeyen çalışma zamanı hataları için güvenli genel mesajdır. Bozuk `.bp` JSON'u ham tarayıcı istisnasını konsola yazmaz.
+- Değişiklik uygulandı; doğrulama/PR/deploy durumu [`backlog.md`](backlog.md) ve [`backloglog.md`](backloglog.md) içindeki aynı tarihli kayıtta tutulur.

@@ -621,3 +621,23 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 
 - PR #54 (`702acf5`) CI `45323331670` ve Pages main run [`45323463002`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45323463002) başarılı. CI Node, Icarus Verilog, Jekyll ve Playwright adımlarını tamamladı; Pages build/deploy tamamlandı.
 - Yayındaki tanıtım, docs ve atölye rotaları HTTP 200 verdi. Bu değişiklik yalnız proje notlarını ve iş listesini düzenledi; uygulama kodu değişmedi. `git diff --check` PR öncesinde çalıştırılacak.
+
+## 2026-11-24 — Kapsam, örneklem ve istatistik yayımlama kararları
+
+- Kullanıcı sinyal genişliği kapsamını açıkça **1–32 bit** olarak teyit etti. Tek-bit/çok-bit belirsizliği kapatıldı.
+- Kullanıcı bir birincil (paralel mantık yollarının çıkışlarını tahmin etme) ve iki ikincil (blok↔Verilog eşlemesi; clock/yazmaç davranışı) öğrenme sonucunu kabul etti. Araç ve puanlama danışman/alan öğretmeni incelemesine açık tutuldu.
+- Erişilebilir katılımcı sayısı yaklaşık 20 olarak tahmin edildi; kesin örneklem veya güç hesabı diye kaydedilmedi. Yaklaşık 10/kol gibi bir bölünmenin yeterliliği danışmanla değerlendirilecek.
+- Kullanıcı ekibin veri sorumlusu olmasını, ham verilerin yarışma sonrasında imhasını ve landing'de istatistik yayımlamayı istiyor. Bu niyet `notes.md` ve KVKK planına işlendi; gerçek/tüzel sorumlu kimliği, irtibatı, hukuki dayanak, kesin saklama-imha takvimi ve yayın istatistiğinin anonimliği açık kaldı.
+- Resmî KVKK kaynaklarına göre veri sorumluluğu amaç/araçları fiilen belirleyen gerçek/tüzel kişiye bağlı; anonimleştirme ise başka verilerle ilişkilendirme ihtimali dâhil kişiyi belirlenemez kılmalı. Tek okul/az sayılı örneklemde alt grup istatistiği yayımlamama ve genel toplamı da yayından önce yeniden tanınma açısından inceleme önerisi kaydedildi.
+- Değişenler: `notes.md`, `backlog.md`, `research/measurement/learning-study.md`, `research/privacy/data-collection-plan.md` ve bu günlük. `git diff --check` geçti; kod/test/uygulama değişmedi. Quiz API'si ve katılımcı verisi kapalı kaldı.
+- Kalan: danışman/okul ile örneklem ve araştırma yöntemi; veri sorumlusunun gerçek kimliği ve aydınlatma irtibatı; kamuya istatistik açıklamanın onaylı protokoldeki yeri; ham kayıt ve onam belgeleri için kesin imha planı.
+
+## 2026-11-24 — Atölye bağlantı sürüklemesi ve hata konsolu
+
+- Porttan porta sürükleme eklendi: canlı kablo önizlemesi, görünür port sınırından bırakma eşlemesi, yanlış yön/genişlik/dolu giriş/döngü reddi, boş alan ve Escape iptali. Klavye Enter bağlantısı korundu; seçilebilir kablo Delete ile kaldırılabilir.
+- Tanılamalar `VLxxxx` kodlarıyla konsolda listelenir. Kod bağlantısı yeni sekmede kendi yardım sayfasını açar. 19 kod için ayrı Jekyll sayfası ve kategorili dizin eklendi; ham JSON parser metni yerine güvenli Türkçe mesaj gösterilir. Eksik giriş taslağı konsolu kendiliğinden açmaz; simülasyon başlatma isteğinde VL1003 gösterilir.
+- Yeni BP oluşturulurken kamera kadrajı yeniden hesaplanır; aksi durumda giriş portu araçlığın arkasında kalabiliyordu. Dokümantasyona sürükleme/klavye/konsol akışı eklendi.
+- Değişen başlıca yollar: `assets/js/errors.mjs`, `assets/js/engine.mjs`, `assets/js/project.mjs`, `assets/js/playground.mjs`, `playground/index.html`, `assets/css/input.css`, üretilen `assets/css/site.css`, `docs/errors/`, docs nav/içerik ve engine/docs/playground testleri.
+- Doğrulama: `npm run build:css`; `nix shell nixpkgs#jekyll -c jekyll build`; `npm test` 29/29; `nix shell nixpkgs#iverilog -c npm run test:verilog` geçti (seeded 40-gate seti, hiyerarşik modül ve 1/2/7/31/32-bit 1920 oracle çıktısı); Nix Chromium ile `npm run test:e2e -- --workers=2` 45/45 geçti. E2E; genişlik hatası ve VL0001 sayfasını, yanlış yön VL1001'i, dolu giriş VL1002'yi, döngü VL1004'ü, VL1003 başlatma uyarısını, Escape, klavye, modül portları, rotaları ve 390 px taşma kontrolünü kapsadı. Masaüstü konsol görünümü ekran görüntüsünde incelendi; mobil görünüm yatay taşma testiyle doğrulandı. `git diff --check` geçti.
+- İki izole worktree incelemesinin önerileri uygulandı: giriş genişliğini değişmezden önce kontrol et, hedefi pointerup noktasındaki gerçek port sınırına göre bul, kabloyu erişilebilir bırak, Jekyll `relative_url` kullan ve sentez/derleme yapılıyormuş gibi göstermeme.
+- Yerel çalışma dalı `docs/research-publication-decisions` (`e8ee342` tabanında). Bu kayıtta commit, push, PR CI/merge veya canlı deploy henüz yoktur; test kapıları temiz olduğu için sıradaki adım ürün PR'ını açmaktır. Öğrenme kazanımı, katılımcı/API/veri toplama kapsamına girilmedi.

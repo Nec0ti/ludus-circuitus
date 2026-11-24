@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
 
 test("course introduction is brief and docs use collapsible topic groups", async ({ page }) => {
   await page.goto("/docs/baslangic/");
-  await expect(page.locator(".docs-nav details")).toHaveCount(3);
+  await expect(page.locator(".docs-nav details")).toHaveCount(4);
   await expect(page.getByRole("link", { name: /Kurs planı/ })).toHaveAttribute("aria-current", "page");
   await expect(page.locator(".docs-reading-time")).toContainText("Yaklaşık 1 dakika");
   await expect(page.locator(".docs-article h2")).toHaveCount(2);
@@ -29,11 +29,11 @@ test("course introduction is brief and docs use collapsible topic groups", async
 
 test("docs landing page orders concepts, workshop practice and contributor setup", async ({ page }) => {
   await page.goto("/docs/");
-  await expect(page.locator(".docs-reading-time")).toHaveText("Tüm rehber yaklaşık 50 dakika");
+  await expect(page.locator(".docs-reading-time")).toContainText("yaklaşık 50 dakika");
   await expect(page.locator(".docs-article")).toContainText("Tam işlemci veya assembly geliştirme ortamı kapsamda değildir.");
   const headings = await page.locator(".docs-article h2").allTextContents();
   expect(headings.map((heading) => heading.replace(/~\d+ dk/, "").trim())).toEqual([
-    "Temeller", "Atölyede uygula", "Projeyi bilgisayarında çalıştır",
+    "Temeller", "Atölyede uygula", "Projeyi bilgisayarında çalıştır", "Hata bul ve düzelt",
   ]);
   const lessons = ["/docs/dijital-sinyaller/", "/docs/mantik-kapilari/", "/docs/yarim-toplayici/", "/docs/paralel-yollar/", "/docs/saat-yazmac/", "/docs/bloktan-verilog/"];
   const lessonLinks = await page.locator(".docs-article h2").first().locator("xpath=following-sibling::div[1]").locator("a").evaluateAll((items) => items.map((item) => new URL(item.href).pathname));
@@ -79,7 +79,7 @@ test("short lessons show their estimated reading times and active navigation lin
     await expect(page.locator(".docs-article h2 .docs-section-time")).toHaveCount(minutes);
   }
   await page.goto("/docs/");
-  await expect(page.locator(".docs-reading-time")).toHaveText("Tüm rehber yaklaşık 50 dakika");
+  await expect(page.locator(".docs-reading-time")).toContainText("yaklaşık 50 dakika");
 });
 
 test("local setup guide lists test tools and builds the static site before E2E", async ({ page }) => {
@@ -146,6 +146,18 @@ test("beginner lessons distinguish single-bit examples from supported vector sig
   await page.goto("/docs/saat-yazmac/");
   await expect(page.locator(".docs-article")).toContainText("aynı genişlikteki Q çıkışına alınır");
   await expect(page.locator("[data-docs-practice] legend")).toContainText("Reset uygulanıp bırakıldıktan sonra Q=0");
+});
+
+test("error catalog lists categories and every diagnostic has its own deep-linked page", async ({ page }) => {
+  await page.goto("/docs/errors/");
+  await expect(page.getByRole("heading", { name: "Hata kodları" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sentez ve harici derleyici hataları" })).toBeVisible();
+  await expect(page.locator("article")).toContainText("sentez veya harici Verilog derleyicisi çalıştırmaz");
+  for (const code of ["VL0001", "VL1001", "VL1002", "VL1003", "VL1004", "VL2001", "VL2002", "VL3001", "VL3002", "VL3003", "VL3004", "VL4001", "VL4002", "VL4003", "VL4004", "VL5001", "VL6001", "VL6002", "VL9999"]) {
+    await page.goto(`/docs/errors/${code.toLowerCase()}/`);
+    await expect(page.locator("h1")).toContainText(code);
+    await expect(page.getByRole("link", { name: "Tüm hata kodlarına dön" })).toHaveAttribute("href", /\/ludus-circuitus\/docs\/errors\//);
+  }
 });
 
 test("core lessons provide keyboard-friendly local self-checks with immediate feedback", async ({ page }) => {

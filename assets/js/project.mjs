@@ -1,4 +1,5 @@
 import { createState, evaluate, generateVerilog, isValidSignalName, nodeWidth, reset, tick, validateBlueprint } from "./engine.mjs";
+import { ludusError } from "./errors.mjs";
 
 const validName = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 const key = (node, port) => node + ":" + port;
@@ -18,33 +19,33 @@ const portWidth = (node, port, modules) => {
 };
 
 function inspectBlueprint(bp, modules) {
-  if (!bp || bp.version !== 1 || typeof bp.name !== "string" || !validName.test(bp.name) || !Array.isArray(bp.nodes) || !Array.isArray(bp.wires) || bp.nodes.length > 500 || bp.wires.length > 2000) throw new Error("Blueprint biçimi, adı, boyutu veya sürümü geçersiz.");
+  if (!bp || bp.version !== 1 || typeof bp.name !== "string" || !validName.test(bp.name) || !Array.isArray(bp.nodes) || !Array.isArray(bp.wires) || bp.nodes.length > 500 || bp.wires.length > 2000) throw ludusError("VL3001", "Blueprint biçimi, adı, boyutu veya sürümü geçersiz.");
   const nodes = new Map(), names = new Set(), allowed = new Set(["input", "output", "constant", "and", "nand", "or", "nor", "xor", "xnor", "not", "signal", "register", "mux", "module"]);
   for (const node of bp.nodes) {
-    if (!node || typeof node.id !== "string" || !node.id || node.id.length > 100 || nodes.has(node.id) || !allowed.has(node.type)) throw new Error("Blok türü veya kimliği geçersiz.");
-    if (node.type === "module" && (!modules.has(node.module) || !validName.test(node.name || "instance"))) throw new Error("Modül bloğu geçerli bir blueprint modülünü göstermeli.");
+    if (!node || typeof node.id !== "string" || !node.id || node.id.length > 100 || nodes.has(node.id) || !allowed.has(node.type)) throw ludusError("VL3002", "Blok türü veya kimliği geçersiz.");
+    if (node.type === "module" && (!modules.has(node.module) || !validName.test(node.name || "instance"))) throw ludusError("VL4001", "Modül bloğu geçerli bir blueprint modülünü göstermeli.");
     if (["input", "output", "signal"].includes(node.type)) {
-      if (!isValidSignalName(node.name) || node.name.length > 40 || names.has(node.name)) throw new Error("Giriş, çıkış ve ara sinyal adları geçerli ve benzersiz olmalı.");
+      if (!isValidSignalName(node.name) || node.name.length > 40 || names.has(node.name)) throw ludusError("VL3003", "Giriş, çıkış ve ara sinyal adları geçerli ve benzersiz olmalı.");
       names.add(node.name);
     }
     nodes.set(node.id, node);
   }
-  if (bp.nodes.some((node) => node.type === "register") && ["clk", "reset"].some((name) => names.has(name))) throw new Error("Sinyal adları clk/reset ile çakışamaz.");
-  if (!bp.nodes.some((node) => node.type === "output")) throw new Error("Blueprint en az bir çıkış içermeli.");
+  if (bp.nodes.some((node) => node.type === "register") && ["clk", "reset"].some((name) => names.has(name))) throw ludusError("VL3003", "Sinyal adları clk/reset ile çakışamaz.");
+  if (!bp.nodes.some((node) => node.type === "output")) throw ludusError("VL3004", "Blueprint en az bir çıkış içermeli.");
   for (const node of bp.nodes.filter((item) => item.type === "module")) {
     const child = modules.get(node.module);
-    if (child.nodes.filter((item) => item.type === "input").length > 8 || child.nodes.filter((item) => item.type === "output").length > 8) throw new Error("Bir BP modülü en fazla 8 giriş ve 8 çıkış portu kullanabilir.");
+    if (child.nodes.filter((item) => item.type === "input").length > 8 || child.nodes.filter((item) => item.type === "output").length > 8) throw ludusError("VL4002", "Bir BP modülü en fazla 8 giriş ve 8 çıkış portu kullanabilir.");
   }
   const destinations = new Set();
   for (const wire of bp.wires) {
     const from = nodes.get(wire?.from?.node), to = nodes.get(wire?.to?.node);
-    if (!from || !to || !outputsOf(from, modules).includes(wire.from.port) || !inputsOf(to, modules).includes(wire.to.port)) throw new Error("Bağlantı geçersiz bir blok girişine veya çıkışına ulaşıyor.");
-    if (portWidth(from, wire.from.port, modules) !== portWidth(to, wire.to.port, modules)) throw new Error("Bağlantıdaki port genişlikleri eşleşmeli; genişlik dönüştürme otomatik yapılmaz.");
+    if (!from || !to || !outputsOf(from, modules).includes(wire.from.port) || !inputsOf(to, modules).includes(wire.to.port)) throw ludusError("VL1001", "Bağlantı geçersiz bir blok girişine veya çıkışına ulaşıyor.");
+    if (portWidth(from, wire.from.port, modules) !== portWidth(to, wire.to.port, modules)) throw ludusError("VL0001", `Bağlantıdaki port genişlikleri eşleşmeli: kaynak ${portWidth(from, wire.from.port, modules)} bit, hedef ${portWidth(to, wire.to.port, modules)} bit. Genişlik dönüşümü otomatik yapılmaz.`);
     const destination = key(to.id, wire.to.port);
-    if (destinations.has(destination)) throw new Error("Bir blok girişine birden fazla sinyal bağlanamaz.");
+    if (destinations.has(destination)) throw ludusError("VL1002", "Bir blok girişine birden fazla sinyal bağlanamaz.");
     destinations.add(destination);
   }
-  for (const node of bp.nodes) for (const port of inputsOf(node, modules)) if (!destinations.has(key(node.id, port))) throw new Error("Her blok girişi bir sinyale bağlı olmalı.");
+  for (const node of bp.nodes) for (const port of inputsOf(node, modules)) if (!destinations.has(key(node.id, port))) throw ludusError("VL1003", "Her blok girişi bir sinyale bağlı olmalı.");
 }
 
 function expand(top, modules) {
@@ -108,10 +109,10 @@ function expand(top, modules) {
   };
   visit(top, true, {});
   const resolve = (ref, seen = new Set()) => {
-    if (!ref) throw new Error("Modül çıkışı çözümlenemedi.");
+    if (!ref) throw ludusError("VL4004", "Modül çıkışı çözümlenemedi.");
     const aliasKey = key(ref.node, ref.port), alias = result.aliases.get(aliasKey);
     if (!alias) return { node: ref.node, port: "out" };
-    if (seen.has(aliasKey)) throw new Error("Modül bağlantılarında döngü var.");
+    if (seen.has(aliasKey)) throw ludusError("VL4003", "Modül bağlantılarında döngü var.");
     seen.add(aliasKey);
     return resolve(alias, seen);
   };
@@ -138,12 +139,12 @@ function expandedNodeCount(bp, modules, includePorts, memo) {
 }
 
 export function validateProject(documents) {
-  if (!Array.isArray(documents) || documents.length < 1 || documents.length > 8) throw new Error("Bir projede 1–8 blueprint bulunmalı.");
+  if (!Array.isArray(documents) || documents.length < 1 || documents.length > 8) throw ludusError("VL3001", "Bir projede 1–8 blueprint bulunmalı.");
   const modules = new Map(), filenames = new Set();
   for (const doc of documents) {
-    if (!doc || typeof doc.name !== "string" || !doc.name.endsWith(".bp") || filenames.has(doc.name)) throw new Error("Blueprint dosya adları .bp uzantılı ve benzersiz olmalı.");
+    if (!doc || typeof doc.name !== "string" || !doc.name.endsWith(".bp") || filenames.has(doc.name)) throw ludusError("VL3001", "Blueprint dosya adları .bp uzantılı ve benzersiz olmalı.");
     filenames.add(doc.name);
-    if (!doc.bp || typeof doc.bp.name !== "string" || !Array.isArray(doc.bp.nodes) || !Array.isArray(doc.bp.wires) || modules.has(doc.bp.name)) throw new Error("Blueprint modül adları benzersiz olmalı.");
+    if (!doc.bp || typeof doc.bp.name !== "string" || !Array.isArray(doc.bp.nodes) || !Array.isArray(doc.bp.wires) || modules.has(doc.bp.name)) throw ludusError("VL3001", "Blueprint modül adları benzersiz olmalı.");
     modules.set(doc.bp.name, doc.bp);
   }
   const dependencies = new Map();
@@ -153,7 +154,7 @@ export function validateProject(documents) {
   }
   const visiting = new Set(), visited = new Set();
   const visit = (name) => {
-    if (visiting.has(name)) throw new Error("Blueprint modülleri birbirini döngüsel olarak çağıramaz.");
+    if (visiting.has(name)) throw ludusError("VL4003", "Blueprint modülleri birbirini döngüsel olarak çağıramaz.");
     if (visited.has(name)) return;
     visiting.add(name);
     for (const dependency of dependencies.get(name) || []) visit(dependency);
@@ -163,7 +164,7 @@ export function validateProject(documents) {
   for (const name of modules.keys()) visit(name);
   const expansionCounts = new Map();
   for (const bp of modules.values()) {
-    if (expandedNodeCount(bp, modules, true, expansionCounts) > maxExpandedNodes) throw new Error("Birleşmiş blueprint en fazla 500 blok içerebilir.");
+    if (expandedNodeCount(bp, modules, true, expansionCounts) > maxExpandedNodes) throw ludusError("VL4004", "Birleşmiş blueprint en fazla 500 blok içerebilir.");
     validateBlueprint(expand(bp, modules).bp);
   }
   return modules;
@@ -171,7 +172,7 @@ export function validateProject(documents) {
 
 export function flattenProject(documents, topName) {
   const modules = validateProject(documents), top = modules.get(topName);
-  if (!top) throw new Error("Üst blueprint bulunamadı.");
+  if (!top) throw ludusError("VL4001", "Üst blueprint bulunamadı.");
   return expand(top, modules);
 }
 
