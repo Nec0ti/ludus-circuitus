@@ -4,6 +4,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
+- [x] 2026-11-24 son Pages yayını 1440×900 masaüstünde ve Devre Atölyesi 390×844 mobilde görsel olarak yeniden incelendi. Landing, docs, atölye ve quiz 200; atölyede yatay taşma ve JavaScript sayfa hatası yok. Ekran görüntüleri geçici `/tmp` QA dosyaları.
 - [x] 2026-11-24 2027 2204-A Proje Rehberi ve çağrı sayfasının bağladığı TYBS kılavuzu yeniden incelendi: MEB/veli/gönüllü onam şartları ile TYBS'teki genel Yapay Zekâ kullanım beyanı adımı kaynaklandı. Quiz/anketin etik kurul kapsamına girip girmediği ve 2027 beyanının tam metni ayrı danışman sorusu olarak açık. Ayrıntı: `research/tubitak/2027-2204-a.md` ve `research/tubitak/evaluation-alignment-2027.md`.
 - [x] 2026-11-24 canlı mobil QA'sında bulunan bağlantı sonrası eski yönerge sorunu düzeltildi. PR #26 `d29c018` yeşil CI ile birleştirildi; Pages deploy `45296241658` ve canlı mobil bağlantı/verilog kontrolü başarılı. Ayrıntı: `backloglog.md`.
 - [x] 2026-11-24 canlı tarayıcı QA'sında kök `favicon.ico` için tek bir 404 görüldü. Marka işaretine uyan vektör favicon iki sayfa kabuğuna eklendi; PR #23 `97056b0` ile birleştirildi. CI Node 27/27, Icarus, Jekyll ve E2E 38/38 geçti; Pages run `45292033268` başarılı. Canlı favicon `image/svg+xml` 200 dönüyor ve dört ana rotada ağ/JavaScript hatası kalmadı.
