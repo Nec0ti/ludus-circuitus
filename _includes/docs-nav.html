@@ -1,6 +1,6 @@
 <nav class="docs-nav" aria-label="Dokümantasyon bölümleri">
   <p class="docs-nav-heading">Öğrenme yolu</p>
-  <details class="docs-nav-group" {% if page.url contains '/docs/' and page.url != '/docs/kullanim/' and page.url != '/docs/bloklar/' and page.url != '/docs/yerel-kurulum/' %}open{% endif %}>
+  <details class="docs-nav-group" {% if page.url == '/docs/' or page.url contains '/docs/baslangic' or page.url contains '/docs/dijital-sinyaller' or page.url contains '/docs/mantik-kapilari' or page.url contains '/docs/yarim-toplayici' or page.url contains '/docs/paralel-yollar' or page.url contains '/docs/saat-yazmac' or page.url contains '/docs/bloktan-verilog' %}open{% endif %}>
     <summary>Temeller <small>6 kısa ders</small></summary>
     <a href="{{ '/docs/baslangic/' | relative_url }}" {% if page.url contains '/docs/baslangic' %}aria-current="page"{% endif %}>Kurs planı <small>2 dk</small></a>
     <a href="{{ '/docs/dijital-sinyaller/' | relative_url }}" {% if page.url contains '/docs/dijital-sinyaller' %}aria-current="page"{% endif %}>1 · Dijital sinyaller <small>4 dk</small></a>
@@ -22,5 +22,39 @@
   <details class="docs-nav-group" {% if page.url contains '/docs/errors/' %}open{% endif %}>
     <summary>Hata kodları <small>tanıla ve düzelt</small></summary>
     <a href="{{ '/docs/errors/' | relative_url }}" {% if page.url == '/docs/errors/' %}aria-current="page"{% endif %}>Hata kataloğu <small>3 dk</small></a>
+    <details class="docs-nav-subgroup" {% if page.url contains '/docs/errors/vl100' %}open{% endif %}>
+      <summary>Bağlantı ve portlar <small>4</small></summary>
+      <a href="{{ '/docs/errors/vl1001/' | relative_url }}" {% if page.url == '/docs/errors/vl1001/' %}aria-current="page"{% endif %}>VL1001 · Geçersiz bağlantı</a>
+      <a href="{{ '/docs/errors/vl1002/' | relative_url }}" {% if page.url == '/docs/errors/vl1002/' %}aria-current="page"{% endif %}>VL1002 · Giriş zaten bağlı</a>
+      <a href="{{ '/docs/errors/vl1003/' | relative_url }}" {% if page.url == '/docs/errors/vl1003/' %}aria-current="page"{% endif %}>VL1003 · Boş giriş</a>
+      <a href="{{ '/docs/errors/vl1004/' | relative_url }}" {% if page.url == '/docs/errors/vl1004/' %}aria-current="page"{% endif %}>VL1004 · Mantık döngüsü</a>
+    </details>
+    <details class="docs-nav-subgroup" {% if page.url == '/docs/errors/vl0001/' or page.url contains '/docs/errors/vl200' %}open{% endif %}>
+      <summary>Bit genişliği ve değerler <small>3</small></summary>
+      <a href="{{ '/docs/errors/vl0001/' | relative_url }}" {% if page.url == '/docs/errors/vl0001/' %}aria-current="page"{% endif %}>VL0001 · Genişlik uyuşmuyor</a>
+      <a href="{{ '/docs/errors/vl2001/' | relative_url }}" {% if page.url == '/docs/errors/vl2001/' %}aria-current="page"{% endif %}>VL2001 · Geçersiz genişlik</a>
+      <a href="{{ '/docs/errors/vl2002/' | relative_url }}" {% if page.url == '/docs/errors/vl2002/' %}aria-current="page"{% endif %}>VL2002 · Değer genişliğe uymuyor</a>
+    </details>
+    <details class="docs-nav-subgroup" {% if page.url contains '/docs/errors/vl300' %}open{% endif %}>
+      <summary>Blueprint ve adlandırma <small>4</small></summary>
+      <a href="{{ '/docs/errors/vl3001/' | relative_url }}" {% if page.url == '/docs/errors/vl3001/' %}aria-current="page"{% endif %}>VL3001 · Blueprint biçimi</a>
+      <a href="{{ '/docs/errors/vl3002/' | relative_url }}" {% if page.url == '/docs/errors/vl3002/' %}aria-current="page"{% endif %}>VL3002 · Blok kimliği/konumu</a>
+      <a href="{{ '/docs/errors/vl3003/' | relative_url }}" {% if page.url == '/docs/errors/vl3003/' %}aria-current="page"{% endif %}>VL3003 · Verilog sinyal adı</a>
+      <a href="{{ '/docs/errors/vl3004/' | relative_url }}" {% if page.url == '/docs/errors/vl3004/' %}aria-current="page"{% endif %}>VL3004 · Çıkış bloğu eksik</a>
+    </details>
+    <details class="docs-nav-subgroup" {% if page.url contains '/docs/errors/vl400' %}open{% endif %}>
+      <summary>Modül birleştirme <small>4</small></summary>
+      <a href="{{ '/docs/errors/vl4001/' | relative_url }}" {% if page.url == '/docs/errors/vl4001/' %}aria-current="page"{% endif %}>VL4001 · Modül bulunamadı</a>
+      <a href="{{ '/docs/errors/vl4002/' | relative_url }}" {% if page.url == '/docs/errors/vl4002/' %}aria-current="page"{% endif %}>VL4002 · Modül port sınırı</a>
+      <a href="{{ '/docs/errors/vl4003/' | relative_url }}" {% if page.url == '/docs/errors/vl4003/' %}aria-current="page"{% endif %}>VL4003 · Modül döngüsü</a>
+      <a href="{{ '/docs/errors/vl4004/' | relative_url }}" {% if page.url == '/docs/errors/vl4004/' %}aria-current="page"{% endif %}>VL4004 · Birleştirme sınırı</a>
+    </details>
+    <details class="docs-nav-subgroup" {% if page.url == '/docs/errors/vl5001/' or page.url contains '/docs/errors/vl600' or page.url == '/docs/errors/vl9999/' %}open{% endif %}>
+      <summary>Simülasyon ve dosyalar <small>4</small></summary>
+      <a href="{{ '/docs/errors/vl5001/' | relative_url }}" {% if page.url == '/docs/errors/vl5001/' %}aria-current="page"{% endif %}>VL5001 · Simülasyon değeri</a>
+      <a href="{{ '/docs/errors/vl6001/' | relative_url }}" {% if page.url == '/docs/errors/vl6001/' %}aria-current="page"{% endif %}>VL6001 · Dosya açılamadı</a>
+      <a href="{{ '/docs/errors/vl6002/' | relative_url }}" {% if page.url == '/docs/errors/vl6002/' %}aria-current="page"{% endif %}>VL6002 · Dosya boyutu</a>
+      <a href="{{ '/docs/errors/vl9999/' | relative_url }}" {% if page.url == '/docs/errors/vl9999/' %}aria-current="page"{% endif %}>VL9999 · Beklenmeyen hata</a>
+    </details>
   </details>
 </nav>

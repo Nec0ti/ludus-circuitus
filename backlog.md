@@ -2,6 +2,10 @@
 
 Bu dosya güncel iş panosudur. Yalnızca açık kararları ve son doğrulama durumunu gösterir; tamamlanan işlerin tarihçesi `backloglog.md` içindedir.
 
+## Aktif görev
+
+- [~] Hata sayfalarında HTML içindeki Markdown bağlantılarını düzelt; hata kodlarını sol menüde mevcut kategoriler altında açılır ve tıklanabilir yap; sayfa başlığı/hiyerarşisini denetle. Worktree: `/tmp/ludus-error-docs`. Kod ve yerel doğrulama tamamlandı; PR/CI/merge bekliyor. Doğrulama: tüm hata rotaları, mobil taşma, masaüstü/mobil görsel incelemesi, Jekyll ve proje testleri.
+
 ## Açık işler
 
 ### Danışmanla netleştir

@@ -643,3 +643,12 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR #56 (`8941104`) `main`e squash merge edildi; merge commit `2970a2e`. PR build [`45384667043`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45384667043) geçti. Merge sonrası Pages build/deploy [`45384922831`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45384922831) başarılı oldu.
 - Canlı `https://nec0ti.github.io/ludus-circuitus/playground/`, `/docs/errors/` ve `/docs/errors/vl0001/` rotaları HTTP 200 döndürdü; VL0001 sayfasındaki 8 bit giriş → 1 bit NOT örneği ve konsol bağlantısı sayfa içeriğinde bulundu.
 - Katılımcı/quiz API'si, veri toplama veya ölçülmüş öğrenme etkisi bu göreve dahil edilmedi. Çalışma ağacı merge sonrası temizdi; bu yayına ilişkin son durum kayıtları `backlog.md` ve `notes.md` içinde.
+
+
+## 2026-11-24 — Hata sayfası bağlantıları ve kod içindekileri
+
+- 19 hata sayfasındaki HTML paragrafı içinde Markdown olarak kalan yardım bağlantıları HTML anchor'a dönüştürüldü. Hata sayfalarında başlık boyutu/kod vurgusu ve bölüm aralığı düzenlendi; katalog dönüşü düğme görünümü aldı.
+- Sol dokümantasyonda hata kataloğundan sonra var olan beş kategori açılır gruplara ayrıldı; her bir hata kodu kendi sayfasına bağlandı, etkin sayfa `aria-current` ile işaretlendi. Hata sayfasında yalnız hata navigasyonu ve ilgili kategori açık kalıyor. Menü ok göstergeleri yalnızca kendi açılır grubunu yansıtıyor.
+- Görsel incelemede mobil hata sayfasında Temeller grubunun hata sayfasıyla birlikte açık kalıp menüyü gereksiz uzattığı görüldü; etkin bölüm koşulu daraltılarak düzeltildi. Ekran görüntüleri 1280×900 ve 390×844 ölçülerinde yeniden incelendi.
+- Doğrulama: `npm run build:css`, `jekyll build`, `npm test` (29/29), `npm run test:e2e -- --workers=2` (45/45), `git diff --check`. E2E testi 19 hata rotasının hepsinde doğru etkin bağlantıyı, açık kategori/grubu, ham Markdown kalmamasını ve 320/390/768 px yatay taşma olmamasını denetliyor.
+- Değişenler: `_includes/docs-nav.html`, `assets/css/input.css`, üretilmiş `assets/css/site.css`, 19 `docs/errors/vl*.md` sayfası, `tests/e2e/docs.spec.mjs`, `backlog.md` ve bu günlük. Worktree dalı `fix/error-docs-navigation`; PR/CI/merge ve Pages canlı kontrolü bekleniyor.
