@@ -1,81 +1,33 @@
 # İş listesi
 
-Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri açıkça yaz.
+Bu dosya güncel iş panosudur. Yalnızca açık kararları ve son doğrulama durumunu gösterir; tamamlanan işlerin tarihçesi `backloglog.md` içindedir.
 
-## Devam ediyor
+## Açık işler
 
-- [x] PR #42 sonrasındaki bağımsız kaynak incelemesi, CI ve Pages yayın kanıtlarını ana proje kayıtlarına geçir. İnceleme 2024 başlıklarını doğruladı ve “cerrahi eğitim” çıkarımını desteklenmediği için daralttı. PR #42 CI 40/40 E2E; merge `b95c0f8`; Pages run `45314541714` build/deploy başarılı. Araştırma sonucu sınırlı 2024–2025 Konya derece başlıkları taramasıdır; özgünlük kanıtı değildir.
-- [x] Altı dersin kapsam tutarlılığını düzelt: tek-bit başlangıç anlatımı ile isteğe bağlı çok-bit örneklerini ayır; yazmaç alıştırmasında bilinen 0 durumunun resetten geldiğini belirt. PR #40 (`b00df83`) merge edildi; tam CI 40/40 E2E ve Pages run `45312962052` başarılı. Canlı altı ders 390 px smoke kontrolü geçti.
-- [x] Altı temel dersin tamamında aynı yerel öz-kontrolü kullan; saat/yazmaç ve blok→Verilog dersleri dâhil, kurs haritası 50 dakikaya eşlendi. PR #39 birleştirildi; Pages run `45311425041` başarılı. Canlı altı rota/390 px doğrulamasında doğru/yanlış geri bildirim, sıfır saklama/yazma isteği ve sıfır JS hatası görüldü. Cevaplar saklanmaz/gönderilmez; araştırma ölçme geçerliği/öğrenme etkisi iddiası yok.
-- [x] Dört temel derse klavyeyle kullanılabilen, anlık doğru/yeniden dene geri bildirimi veren öz-kontrol ekle; ders içi cevaplar ağa gönderilmiyor ve saklanmıyor. Okuma süreleri ve ders içi gezinme güncellendi. PR #37 CI, belge E2E 9/9, 320/390/768 px ve klavye smoke kontrolleri, bağımsız gerçek Jekyll artifact görsel incelemesi geçti. `8713ef7` Pages deploy `45309389309` ve canlı dört ders/390 px doğrulaması başarılı. Bunlar araştırma ölçme aracı geçerliği veya öğrenme etkisi kanıtı değildir.
-- [x] Atölye bloklarına klavye odağı, seçim, 20 px grid taşıma ve silme yolu eklendi; odak yeniden çizim sonrası korunuyor. Kaynak/diff incelemesi ve 39/39 E2E geçti; canlı Pages'te odak/taşıma/silme/boşlukla seçim ve sıfır sayfa hatası doğrulandı. Tam ekran okuyucu audit'i yapılamadı. Ayrıntı `backloglog.md`.
-- [x] 2026-11-24 CircuitVerse anonim görev denemesini resmî Input/kablo/junction yönergeleriyle son kez yaptım; devre ve 00/01/10/11 sonuçları güvenilir doğrulanamadı. Aynı-görev karşılaştırması açık bırakıldı; ayrıntı/kaynaklar `research/references/related-tools.md`.
-- [x] 2026-11-24 son Pages yayını 1440×900 masaüstünde ve Devre Atölyesi 390×844 mobilde görsel olarak yeniden incelendi. Landing, docs, atölye ve quiz 200; atölyede yatay taşma ve JavaScript sayfa hatası yok. Ekran görüntüleri geçici `/tmp` QA dosyaları.
-- [x] 2026-11-24 2027 2204-A Proje Rehberi ve çağrı sayfasının bağladığı TYBS kılavuzu yeniden incelendi: MEB/veli/gönüllü onam şartları ile TYBS'teki genel Yapay Zekâ kullanım beyanı adımı kaynaklandı. Quiz/anketin etik kurul kapsamına girip girmediği ve 2027 beyanının tam metni ayrı danışman sorusu olarak açık. Ayrıntı: `research/tubitak/2027-2204-a.md` ve `research/tubitak/evaluation-alignment-2027.md`.
-- [x] 2026-11-24 canlı mobil QA'sında bulunan bağlantı sonrası eski yönerge sorunu düzeltildi. PR #26 `d29c018` yeşil CI ile birleştirildi; Pages deploy `45296241658` ve canlı mobil bağlantı/verilog kontrolü başarılı. Ayrıntı: `backloglog.md`.
-- [x] 2026-11-24 canlı tarayıcı QA'sında kök `favicon.ico` için tek bir 404 görüldü. Marka işaretine uyan vektör favicon iki sayfa kabuğuna eklendi; PR #23 `97056b0` ile birleştirildi. CI Node 27/27, Icarus, Jekyll ve E2E 38/38 geçti; Pages run `45292033268` başarılı. Canlı favicon `image/svg+xml` 200 dönüyor ve dört ana rotada ağ/JavaScript hatası kalmadı.
-- [x] Türkçe sayfa metadatası: Jekyll SEO Tag kaynaklı yinelenen `<title>`/description ve `og:locale=en_US` düzeltildi. PR #17 Pages run `45286285879` build/deploy başarılı; landing, docs, playground ve quiz sayfalarında birer başlık/açıklama ve `og:locale=tr_TR` doğrulandı.
-- [x] 2026-11-24 mobil Devre Atölyesi `.bp` dışa aktarımı: gizlenen `#export-bp` düğmesi görünür kılındı; 390 px görünürlük ve `top.bp` indirmesi E2E ile doğrulandı. PR #18 `492a008` birleştirildi; Pages run `45287278491` başarılı, canlı 390 px Playwright indirme kontrolü geçti.
-- [x] 2026-11-24 gece kalite kapısı: PR #21 (`348d2de`) build ve Pages dağıtımı geçti. Node 27/27, Icarus scalar/vector/hiyerarşik oracle'ları ve CI Playwright 37/37 başarılı; yayımlanan artifact yerel Chromium ile ayrıca 37/37 geçti. Landing/docs masaüstü ve atölye masaüstü/mobil artifact'ı görsel incelendi. Canlı landing, docs, altı ders, atölye ve quiz 10/10 HTTP 200 ve tek `<title>` verdi. Ayrıntı: `backloglog.md`.
-- [x] 2026-11-24 yerel kayıt toparlanması: `.bp` JSON'u okunabilir olsa bile blueprint şeması geçersizse başlangıç örneğini ezmeden önce kayıt reddediliyor. Bozuk `nodes: null` kaydı için Playwright regresyonu ve tam ürün test kapıları geçti; PR/CI/Pages yayını bu görev günlüğünde ayrıca kaydedilecek.
-- [x] 2026-11-24 bütünleştirme: 1–32 bit simülasyon/Verilog, sabit ve seçici blokları; oynatmanın sinyal animasyonuyla sınırlanması; sağ tık arama/sol tık seçim/sağ veya orta tuş pan; grid snap; `.bp` modül çağırma/yeniden adlandırma/silme; sıralı modüler docs ve koyu tema/footer yenilemesi uygulandı. Mobil araçlık katlanır hâle geldi. Node 27/27, Icarus scalar/vector + hiyerarşik/1.920 vektör-çıkış oracle, CSS/Jekyll build ve Playwright 35/35 geçti. Bağımsız desktop/mobile/docs görsel incelemesi bloklayıcı bulmadı. PR #13 `5a7bf999` ile birleştirildi; Pages run `45279402440` build ve deploy başarılı. Canlı landing, `/docs/`, `/playground/` ve `/quiz/` HTTP 200 verdi. Ayrıntı: `raports/workbench-redesign-2026-11-23.md` ve bu görev günlüğü.
-- [x] Devre Atölyesi etkileşimlerini endüstriyel çalışma alanına yaklaştır: sonsuz düzlem, imleç merkezli tekerlek yakınlaştırma, yumuşatılmış ortogonal sinyal yolları, araçlıktan sürükle-bırak ve boş tuvalde yazarak blok çağırma. Ana SVG görünürlüğü/port hizası E2E ve bağımsız desktop/mobile QA ile doğrulandı; Node, Icarus, Playwright ve PR CI geçti. PR #11 birleştirildi; Pages dağıtımı `45261362299` başarılı ve doğru `nec0ti.github.io` adresindeki landing/docs/atölye 200 döndürüyor. Ayrıntı: `raports/workbench-redesign-2026-11-23.md`.
-- [x] Başlangıç dijital elektronik eğitim yolunu kurs haritası ve altı kısa derse ayır: sinyaller, kapılar, yarım toplayıcı, paralellik, saat/yazmaç ve Verilog eşlemesi. Kullanıcı geri bildirimiyle tek uzun Başlangıç sayfası küçük modüllere bölündü; Jekyll, E2E ve masaüstü/mobil QA geçti. Ayrıntı: `raports/docs-curriculum-review-2026-11-23.md`.
+### Danışmanla netleştir
 
-- İlk çalışan uygulama MVP'si: tam ekran Devre Atölyesi, pure graph motoru, çok modüllü `.bp` bileşimi, yerel anonim quiz, modüler docs ve Türkçe landing hazır; görsel QA, ana CI kapıları ve Pages yayını doğrulandı. Kalan: içerik/öğrenme aracı kapsamı ile ölçüm planının danışmanla kesinleştirilmesi.
-- `.bp` modül bileşimi uygulandı ve doğrulandı. Quiz prototipi tamamlandı; araştırma ölçüm aracı olarak kullanımı için danışman/okul incelemesi bekliyor.
+- [ ] Danışman öğretmeni belirle; iki ekip üyesinin 2204-A lise/yaş uygunluğunu ve danışman koşullarını doğrula.
+- [ ] Bir birincil kazanımı ve en fazla iki ikincil sonucu, sınıf düzeyini ve erişilebilir örneklem büyüklüğünü danışmanla kesinleştir. Mevcut adaylar: bağımsız paralel yolların sonucunu tahmin etme; blok↔Verilog eşlemesi; clock kenarında yazmaç davranışı.
+- [ ] Araştırma düzenini seç: yeterli gönüllü varsa eşit süreli Ludus/metin-şema karşılaştırması; örneklem küçükse nedensellik iddiası taşımayan tek grup pilotu. Gönüllüleri okulda tarafsız ve baskısız çağırma yolunu yönetimle belirle.
+- [ ] Quiz maddelerini, cevap anahtarını ve A/B formlarını danışman/alan öğretmeniyle gözden geçir. Mevcut `/quiz/` geri bildirimli bir ürün alıştırmasıdır; geçerliği kanıtlı araştırma aracı değildir ve doğrudan ön-test/son-test aracı olarak kullanılmamalıdır.
+- [ ] Başvuru öncesi 2204-A çağrı sayfasındaki değerlendirme formlarının yeni dönem sürümünü ve 2027 TYBS yapay zekâ beyanının kapsamını yeniden kontrol et.
 
-## Sıradaki işler
+### İzin ve veri koruma
 
-- [~] Geçmiş 2204-A örneklerini resmî erişilebilir başlık düzeyinde araştır. 2024–2025 Konya derece listeleri ve 2026 Konya başlıksız davet listesi tarandı; sonuçlar `research/tubitak/past-award-title-scan.md` içinde. Konya'daki yayımlanmış derece başlıklarında doğrudan eşleşme görülmedi, fakat bu tam arşiv/özgünlük sonucu değildir; danışmanla alan yazını ve benzer araç kıyası sürmeli.
-- [ ] Birincil kazanım ve ikincil quiz alt sonuçlarını (paralel yollar; blok↔Verilog; clock/register) danışmanla ve örneklem düzeyiyle uyumlu kesinleştir.
-- [x] 2026–2027 2204-A için erişilebilir resmî kriterleri Ludus'un kanıtları ve eksikleriyle eşle; teknik doğruluk testlerini öğrenme etkisinden ayır, etik/onam ve öğrenci projeye hâkimiyet koşullarını görünür kıl. Ayrıntı: [`research/tubitak/evaluation-alignment-2027.md`](research/tubitak/evaluation-alignment-2027.md); çağrı sayfası 24.11.2026'da tekrar kontrol edildi ve kriter bağlantılarının 2025 adlı dosyalara gittiği doğrulandı.
-- [x] Quiz ve atölye kodundaki mevcut veri akışını bağımsız kaynak incelemesiyle doğrula. Quiz cevap/puan/süre sunucuya gitmiyor; atölye `.bp` belgeleri yerel tarayıcı belleğinde kalabilir. Yayın sağlayıcısı erişim günlükleri incelenmedi. Ayrıntı: [`raports/privacy-flow-review-2026-11-24.md`](raports/privacy-flow-review-2026-11-24.md).
-- [x] Final değerlendirme formunda görünen projeye hâkimiyet ölçütü için öğrencilerin kendi cevaplarıyla kullanacağı teknik prova kartı hazırla; hazır savunma metni yazma. Kriter dosyasının 2025 adlı sürüm olduğu ve 2027 için tekrar doğrulanması gerektiği not edildi: [`research/tubitak/project-mastery-rehearsal.md`](research/tubitak/project-mastery-rehearsal.md).
-- [~] Yakın araçları aynı başlangıç göreviyle karşılaştır ve Ludus'un ölçülü ürün katkısını araştırma sorusuna bağla. HDLBoard, VeriSim ve Verilog Labs'te yarım-toplayıcı görevi canlı çalıştı; Verilog Labs'ın self-checking testbench'i 00/01/10/11 için `PASS` verdi. Kaynaklar/kısıtlar `research/references/related-tools.md` içinde. VeriSim'in sentezlenmiş şeması kullanıcı tarafından çizilen kaynak blueprint değildir; Verilog Labs'taki half-adder çizimi sabit açıklama görselidir. CircuitVerse'te aynı devre güvenilir kurulup doğrulanamadı; HDLPath'in half-adder görevi çalıştırılmadı; VPLAS incelemesi makaleyle sınırlı. “İlk/tek” iddiası yok. Kalan: araç kıyasının sınırlarını koru ve danışmanla öğrenme kazanımı/karşılaştırma yöntemini belirle.
-- [x] Kaynaklı renk/okunabilirlik araştırmasına göre koyu-yumuşak paleti seçip landing'e ve dokümantasyona uygula; atölye temasını ayrı tut. Öğrenme etkisi iddiası değil, okunabilirlik ve durum ayrımı gerekçesiyle seçildi.
-- [x] Landing'i somut devre etkileşimli bir hikâyeye dönüştür; tamamlanan görev ve merak ilerlemesi kullan, baskılı streak/infinite scroll ekleme. Yarım toplayıcı 4 giriş durumunu sayfa belleğinde gösterir; ağ/kalıcı izleme yok.
-- [x] Docs'u eğitim portalı olarak yeniden kur: açılır/kapanır ana gruplar, alt başlıklar, içerik içi gezinme ve her sayfa/bölüm için yaklaşık okuma süresi.
-- [x] Modül bileşimi uygulandıktan sonra `.bp` oluşturma/yeniden kullanma kılavuzunu gerçek kullanım adımlarına geçir.
-- [x] Ana sayfa, docs ve atölye için ayrı iş-kopyası worktree'lerinde görsel alt ajan incelemesi yap; hizalama/taşma/kontrast benchmarklarını CI'a ekle. Üç bağımsız inceleme ve son düzeltme geri kontrolleri geçti; eşikler CI testlerine bağlandı. Ayrıntı: [`raports/visual-review-2026-11-23.md`](raports/visual-review-2026-11-23.md).
-- [x] Araçlık bloklarının yanındaki yardım işaretleri hover/focus özeti gösterir ve hedef docs anchor'ını yeni sekmede açar; E2E kapsamı ve canlı Pages HTML'i doğrulandı.
-- [x] Çocuklara uygun ama manipülatif olmayan motivasyon etkileşimlerini öğrenme kanıtı hipoteziyle eşleştir. (Özerklik, yetkinlik, sınırlı görev ve sağlıklı durma önerileri araştırma notunda; Ludus etkisi kanıtlanmış değil.)
-- [x] Quiz belirtke tablosu, madde beceri eşlemesi, dengeli cevap anahtarı ve puanlama protokolü taslağını oluştur; A/B formları hâlâ araştırma geçerliği/eşdeğerliği kanıtlı değildir. Ayrıntı: [`research/measurement/quiz-blueprint.md`](research/measurement/quiz-blueprint.md).
-- [ ] Danışman/alan öğretmeniyle kazanımları ve maddeleri gözden geçir; okul içinde gönüllü/karşılaştırma koşulunu belirle ve MEB izin dosyasında onaylat.
-- [x] MVP blok kümesini ve port sözleşmesini tanımla. Giriş/çıkış, sabit, AND/OR/XOR/NOT, seçici (MUX), adlandırılmış ara sinyal, yazmaç ve dinamik `.bp` modülü; yeni sinyaller 1–32 bit, genişliği eksik eski `.bp` sinyalleri 1 bit.
-- [x] `.bp` dosya modeli, birden fazla blueprint'in açılması ve modül çağırma/port kurallarını belirle ve çalışan editör akışına bağla.
-- [x] Onluk kullanıcı değerleri, Verilog bit genişliği ve ikilik gösterim eşlemesini MVP için belirle: girişler onluk gösterilebilir; bit genişliği 1–32 arasıdır; taşan/uyumsuz değerler doğrulanır; başlangıç yazmaç değeri bilinmiyorsa `X` korunur.
-- [x] Değişken paneli kapsamını belirle ve adlandırılmış Ara Sinyal bloğunu ekle. Giriş/çıkış/yazmaç ve ara sinyallerin canlı değerleri görünür; sabit bloğu sabit değer üretir, parametre yönetimi kapsam dışıdır.
-- [x] Zorlayıcı test/benchmark şartnamesi, veri kümesi ve eşikleri belirle; main için PR + yeşil build zorunlu kuralını açıp GitHub API'den doğrula. Ayrıntı: [`research/quality/benchmark-gates.md`](research/quality/benchmark-gates.md).
-- [x] Verilog üretimi, benzetim ve `.bp` içe/dışa aktarma/kayıt akışını kapılardan geçir: 12 × 40 kapılı sabit tohumlu corpus, 252 Icarus karşılaştırması, 500 birleşmiş blok ve 1 MiB aktarım sınırı, yerel saklama/yeniden yükleme E2E.
-- [x] Yerel kurulum, önizleme, katkı ve yayın akışını son MVP'ye göre tamamla; Node 22, Python 3, Icarus Verilog ve `_site`/E2E sıralaması belgelendi, Playwright kontrolü eklendi.
-- [ ] TÜBİTAK ÜYZ rehberine göre proje geliştirme ve başvuru hazırlığında kullanılan üretken yapay zekâ desteğini danışmanla doğru beyan et. Çağrı sayfasının bağladığı 2026 TYBS kılavuzunda genel “Yapay Zekâ kullanım beyanı” adımı var; 2027 formundaki tam soru/format ve projeye uygulanması hâlâ doğrulanmalı.
-- [ ] 2027 Proje Rehberi §2.3'teki insan davranışı deneyi/etik kurul koşulunun eğitim amaçlı quiz/ön-son testimize uygulanıp uygulanmadığını danışman ve ilgili izin merciyle netleştir; bu soruyu TTKB öğrenci başvurusu kılavuzundaki etik kurul belgesi açıklamasıyla birlikte değerlendir. Açıkça teyit edilmeden katılımcı çalışması başlatma.
-- [ ] İki öğrencinin 2204-A lise/yaş uygunluğunu ve varsa danışman koşulunu teyit et.
-- [ ] Danışman öğretmeni belirle; Adil Karaağaç MTAL'deki örneklem sınıfı, tarafsız gönüllü çağrısı ve iki çalışma koşulu için okul yönetimiyle plan yap.
-- [ ] Öğrencilerle öğrenme testi yapılacaksa MEB izni, veli onamı ve gönüllü katılım akışını başlat.
-- [ ] İnsan katılımcılı quiz için KVKK aydınlatma, gerekiyorsa ayrı açık rıza, öğrenci/veli gönüllü katılım ve veri saklama-imha belgelerini danışmanla tamamla; quiz aracında katılımcı adı/kişisel bilgi isteme.
-- [ ] Veriyi alacak veri sorumlusunu, araştırma örneklemini, sunucu erişimini ve kişisel veri güvenliği tedbirlerini belirlemeden API endpoint'i veya canlı veri toplamayı açma.
-- [ ] Başvuruda yalnızca tamamlanmış proje sunulması şartına göre MVP, quiz, analiz ve rapor takvimini doğrula.
-- [ ] Tanıtım sayfasındaki öğrenme etkisi iddialarını araştırma/ölçüm sonuçlarıyla destekle; sonuç yoksa hedef olarak ifade et.
+- [ ] Quiz/ön-son test uygulamasının MEB araştırma izni ve etik kurul bakımından hangi yola girdiğini danışman, okul ve ilgili izin merciiyle teyit et. Bu sınıflandırma netleşmeden katılımcı uygulaması yapma.
+- [ ] Onaylı örneklem ve araçlara göre MEB izin dosyasını, tarafsız gönüllü davetini, 18 yaş altı için veli onamını ve öğrencinin kendi gönüllü katılımını hazırla.
+- [ ] Veri sorumlusunu, amaç ve hukuki işleme şartını, en az veri alanlarını, saklama/imha süresini ve başvuru/çekilme akışını netleştir; gerekiyorsa KVKK aydınlatmasını ve açık rızayı ayrı hazırla. Quiz'e ad-soyad koyma.
+- [ ] Sunucu, HTTPS erişimi, ağ günlükleri, güvenlik ve silme akışı onaylanmadan quiz API'sini veya canlı veri toplamayı açma. Şimdiki quiz puan/süre/yanıtları göndermiyor; bu hâlini koru.
 
-## Tamamlandı
+### Araştırma kanıtı
 
-- [x] Proje çalışma kılavuzunu ve kalıcı kayıtları oluştur.
-- [x] İlk proje fikrini, ilk sürüm önerisini ve açık soruları kaydet.
-- [x] Özel GitHub deposunu `Nec0ti/ludus-circuitus` adıyla oluştur, yerel klasörü bağla ve `main` dalını gönder.
-- [x] Playwright 1.56.1'i `npx` üzerinden çalıştırıp GitHub sayfasına ulaştığını doğrula.
-- [x] Üç bölümlü Türkçe site, Devre Atölyesi taslağı, referanslar ve geliştirme kalite kurallarını proje kayıtlarına işle.
-- [x] Sıralı mantığın kapsamda olduğunu, FPGA paralelliğinin öğretileceğini ve animasyonun mantıksal sinyalleri göstereceğini netleştir.
-- [x] Hedefi ortaokul düzeyine kadar erişilebilir olarak belirle; quiz/test ölçümünü, tarayıcı MVP'sini ve simülasyon varsayımlarını onayla.
-- [x] Öncelikli TÜBİTAK ve frontend becerileri araştırması için kapsam belirle.
-- [x] 2026–2027 TÜBİTAK 2204-A kurallarını ve etiketli ürün/dil kaynaklarını `research/` altında araştırıp düzenle.
-- [x] DaisyUI ve ek frontend-design becerilerini proje ortamına kur; ön koşulları ve Jekyll entegrasyon notlarını kaydet.
-- [x] TÜBİTAK öğrenme ölçümü, KVKK/MEB katılımcı verisi ve GitHub Pages POST sınırları için kaynaklı araştırma taslağı hazırla; özgün katkı hipotezini daralt.
-- [x] Jekyll/Tailwind iskeletini, Türkçe tanıtım ve dört docs sayfasını, responsive çok panelli playground prototipini ve Pages workflow'unu oluşturup yarım toplayıcı etkileşimini tarayıcıda doğrula.
-- [x] README ve sayfa metinlerini mevcut taslak durumunu doğru gösterecek şekilde güncelle; drag-drop, codegen, sıralı mantık ve kayıt özelliklerinin henüz olmadığını belirt.
-- [x] Öğrenme ölçümü için yeterli gönüllüde eşit süreli karşılaştırma, yetersiz örneklemde nedensel iddiasız tek grup pilotu ve ad-soyadsız kaba sınıf bandı tercihlerini kaydet.
-- [x] Pure grafik motorunun ilk katmanı: half-adder evaluation, X dahil kapı semantiği, döngü/eksik port/çoklu sürücü reddi, register reset ve toplu kenar güncellemesi, başlangıç Verilog codegen; Node test kapısı.
-- [x] `Nec0ti/ludus-circuitus` deposunu açıkça onaylanan şekilde public yap; Git geçmişindeki merge commit kişisel yazar metadatasını kullanıcıya bildir.
-- [x] Tam ekran çalışma alanı: blok ekleme, grid taşıma, port bağlama, canlı sinyal paneli, Verilog codegen, yerel belge kaydı ve `.bp` içe/dışa aktarma.
-- [x] Ağ isteği ve kalıcı kayıt olmadan yerel quiz prototipi; paralel mantık birincil, Verilog ve sıralı mantık alt puanları; eşlenmiş A/B soru formları.
+- [~] Yakın araçları aynı başlangıç göreviyle karşılaştır ve olası dar katkıyı sınamayı sürdür. HDLBoard, VeriSim ve Verilog Labs'te yarım-toplayıcı çalıştırıldı; CircuitVerse'te aynı görev güvenilir biçimde bitirilemedi, HDLPath görevi kilitli kaldı, VPLAS incelemesi makaleyle sınırlı. Bu gözlemler tam kıyas veya üstünlük kanıtı değildir. Ayrıntı: [`research/references/related-tools.md`](research/references/related-tools.md).
+- [~] Geçmiş yarışma örneklerini araştırmayı yalnızca erişilebilir kayıtlarla sürdür. 2024–2025 Konya derece başlıkları ve 2026 başlıksız Konya davet listesi tarandı; başlık düzeyindeki sonuç özgünlük kanıtı değildir. Ayrıntı ve sınırlar: [`research/tubitak/past-award-title-scan.md`](research/tubitak/past-award-title-scan.md).
+- [ ] Ölçüm yapılmadıkça tanıtımda öğrenme artışını sonuç gibi ileri sürme. İzinli çalışma biterse ölçüm, sınırlılık ve örneklemle birlikte raporla.
+- [ ] TÜBİTAK ÜYZ rehberine göre geliştirme ve başvuru hazırlığında kullanılan yapay zekâ/dış araç desteğini danışmanla doğru beyan et; öğrenci katkısını olduğundan farklı göstermeme. Ayrıntı: [`research/tubitak/2027-2204-a.md`](research/tubitak/2027-2204-a.md).
+
+## Son sürüm durumu
+
+- MVP'nin web uygulaması, Devre Atölyesi, altı modüllü başlangıç kursu ve yerel quiz'i GitHub Pages'te yayında. Teknik doğruluk benchmarkları ve Playwright kapıları geçmiştir; bunlar öğrenme etkisini kanıtlamaz.
+- Referans alınan son ana ürün yayını PR #43 (`f1d7f4b`). CI `45315138623` başarılı; Pages build/deploy tamamlandı. Son yayında Tanıtım, Dokümantasyon ve Devre Atölyesi rotaları HTTP 200 döndü.
+- Araştırma yöntemi, ölçme aracının geçerliği, katılımcı izinleri, KVKK veri akışı ve öğrenme etkisi hâlâ çözülmemiştir. Ayrıntılı kanıt ve geçmiş görevler [`backloglog.md`](backloglog.md) ile [`raports/overnight-quality-review-2026-11-24.md`](raports/overnight-quality-review-2026-11-24.md) içinde.

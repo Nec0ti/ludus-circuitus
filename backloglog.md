@@ -548,3 +548,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Root `main` dalı `origin/main` üzerine fast-forward edildi; çalışma ağacı temizdi. Bu kayıt güncellemesi ayrı PR'da tutuluyor.
 - Araştırmanın sınırı değişmedi: yalnız erişilebilir 2024–2025 Konya derece başlıkları (altı proje) incelendi; 2026 Konya listesinde Yazılım başlıkları görünmüyor. Tüm başvurular, rapor içerikleri, başka bölgeler/yıllar incelenmedi; özgünlük veya “ilk/tek” sonucu yok.
 - Değişenler: `backlog.md`, `backloglog.md`, `raports/overnight-quality-review-2026-11-24.md`. `git diff --check` ve markdown/Jekyll/CI kontrolü bu kayıt PR'ında çalışacak. İnsan katılımcı veya veri kullanılmadı.
+## 2026-11-24 — İş panosu durumlarını sadeleştirme
+
+- `backlog.md` içindeki tamamlanmış 20'den fazla madde “Devam ediyor”/“Sıradaki işler” altında görünüyordu. Geçmişi kaybetmeden açık danışman kararları, izin/veri koruma işleri, sınırlı araştırma işleri ve son sürüm kanıtı olarak yeniden düzenlendi; bitmiş görevlerin ayrıntısı bu dosyada kaldı.
+- Açık insan kararları tamamlandı gibi işaretlenmedi: danışman, örneklem, ölçüm aracı, MEB/etik sınıflandırması, KVKK sorumlusu ve AI beyanı bekliyor. API ve katılımcı verisi açılmadı.
+- `git diff --check` geçti. Referans alınan son main doğrulaması CI `45315138623` içinde Node, Icarus Verilog, Jekyll ve Playwright **40/40 E2E**; Pages run `45315138623` başarılı ve üç ana rota HTTP 200. Bu görev yalnız kayıt düzenidir, ürün/test davranışı değiştirmez.
+- Değişenler: `backlog.md` ve bu günlük. PR CI merge öncesi tekrarlanacak.
