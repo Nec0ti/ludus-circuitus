@@ -466,3 +466,10 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR #31 (`a07429e`, ek Verilog araçları ve ölçüm planı güncellemesi) CI build run'ı `45302122322` ile geçti ve `a7f3d28` olarak main'e birleştirildi.
 - Main Pages run `45302304568` build/deploy adımları başarılı tamamlandı. Canlı landing, docs, playground ve quiz rotaları tekrar HTTP 200 verdi.
 - Araştırma özgünlük/öğrenme etkisi sonucu oluşturmadı; aynı görev karşılaştırması, danışman onayı ve izinli öğrenme ölçümü açık kalıyor.
+
+## 2026-11-24 — CircuitVerse son anonim görev denemesi ve PR #32 yayını
+
+- PR #32 (`b1de899`) build/E2E run `45302632818` başarıyla geçti. Main Pages run `45302934279` build ve deploy'u başarıyla bitirdi; landing, docs, playground ve quiz HTTP 200 verdi.
+- CircuitVerse'ün resmî Input, wiring ve build yönergelerini izleyerek Button yerine iki Input ile XOR, AND ve iki Output yerleştirildi. Port kabloları ve Ctrl junction adımı denendi; A/B yolları güvenilir biçimde fan-out edilemedi. Dört giriş vektörü ölçülmedi, varsayılan değerler sonuç sayılmadı.
+- Console `transformCallback` TypeError'ları görüldü ancak sebep/etki kanıtlanmadı; CircuitVerse kusuru veya Ludus avantajı iddiası yok. Anonim oturumda katılımcı/veri kullanılmadı.
+- Değişenler: `research/references/related-tools.md`, `notes.md`, `backlog.md`, bu günlük ve kalite raporu. `git diff --check` yapıldı; ürün kodu değişmedi. Canlı aynı-görev karşılaştırması açık kalıyor.
