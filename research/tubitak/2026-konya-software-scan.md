@@ -4,7 +4,7 @@
 **Kaynak türü:** TÜBİTAK'ın resmî bölge sergisine davet edilen proje listesi  
 **Amaç:** Yerel geçmiş proje örnekleri hakkında erişilebilir kanıt olup olmadığını kontrol etmek; özgünlük iddiası kurmak değil.
 
-**Bağlantı durumu (24.11.2026):** Aşağıdaki resmî PDF URL'si doğrudan HTTP isteğinde 404 döndü. Altı kayıt ve tema sayısı PDF daha önce erişilebilirken alınan içerikten kaydedilmiş; doğrudan indirilebilir resmî kaynak bulunması açık iştir.
+**Bağlantı durumu (24.11.2026):** Aşağıdaki resmî PDF URL'si doğrudan HTTP isteğinde 404 döndü. Aynı URL için Internet Archive CDX sorgusunda başarılı snapshot kaydı bulunmadı. Altı kayıt ve tema sayısı PDF daha önce erişilebilirken alınan içerikten kaydedilmiş; doğrudan ya da tarihli arşiv kopyası bulunması açık iştir.
 
 ## Gözlenen kayıt
 

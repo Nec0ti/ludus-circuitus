@@ -4,7 +4,7 @@
 **Kaynak türü:** TÜBİTAK'ın yayımladığı derece listesi ve bölgeye davet listesi  
 **Amaç:** Erişilebilir proje başlıklarında Ludus Circuitus'a doğrudan yakın görünen bir örnek var mı diye sınırlı tarama yapmak. Bu bir özgünlük tescili veya tam literatür taraması değildir.
 
-> **Bağlantı durumu (24.11.2026):** Bu notta listelenen 2023, 2024, 2025 ve 2026 başlık PDF'leri ile 2024 aggregate istatistik PDF'si doğrudan HTTP isteğinde 404 döndü. Arama dizini 2023–2025 TÜBİTAK PDF'lerinden önceden alınmış metin parçalarını hâlâ gösteriyor. Erişilebilir Konya İl MEM kaynakları, 2024 TellCord ve 2025 TİDAP kayıtlarının başlık/alan/derece bilgisini kısmen doğruluyor; diğer başlıklar ve tam listeler için resmî arşiv bağlantısı hâlâ bulunamadı. TÜBİTAK dosyaları yeniden erişilebilir olmadan taramanın tamamı doğrudan doğrulanmış kaynak gibi sunulmamalı.
+> **Bağlantı durumu (24.11.2026):** Kayıtlı TÜBİTAK PDF URL'lerinin hepsi doğrudan HTTP GET isteğinde 404 döndü. Internet Archive CDX kaydı üzerinden 2023 ve 2024 derece listelerinin arşiv kopyaları bulundu, indirildi ve PDF imzası/SHA-256 ile doğrulandı; 2025 ve 2026 listeleri için aynı sorguda başarılı snapshot bulunmadı. Arşiv kopyaları özgün TÜBİTAK PDF'lerinin tarihli üçüncü taraf arşiv kayıtlarıdır, TÜBİTAK'tan canlı erişim değildir. Erişilebilir Konya MEM kaynakları ayrıca TellCord (2024) ve TİDAP (2025) kayıtlarını kısmen doğruluyor. Başvuru metninde kaynak durumunu bu ayrımla belirt.
 
 ## 2023 Konya derece listesi
 
@@ -60,9 +60,11 @@ Konya İl MEM'in Temmuz 2024 AR-GE bülteni **TellCord** başlığını ve bölg
 ## Kaynaklar
 
 - **PRIMARY:** TÜBİTAK, [2023 Yılı Lise Öğrencileri Araştırma Projeleri Yarışması bölge derece listesi](https://tubitak.gov.tr/sites/default/files/26487/bolge_asamasi_sonuc_lise_2023.pdf), Konya bölgesi/Yazılım derece kayıtları (PDF sıraları 376–378).
+- **ARCHIVED PRIMARY COPY:** [2023 derece listesinin Internet Archive kopyası (07.04.2023 snapshot)](https://web.archive.org/web/20230407154126id_/https://tubitak.gov.tr/sites/default/files/26487/bolge_asamasi_sonuc_lise_2023.pdf). 24.11.2026'da PDF olarak indirildi; SHA-256 `58da8fe33cce2a321bb1a92301d0e9fb1407b6f7e8d2c99245a970ae86c15435`.
 - **PRIMARY:** TÜBİTAK, [2024 Yılı Lise Öğrencileri Araştırma Projeleri Yarışması sonuç listesi](https://www.tubitak.gov.tr/sites/default/files/26487/bolge_sergisi_sonuc_lise_2024.pdf), PDF'deki Konya bölgesi/Yazılım derece kayıtları.
+- **ARCHIVED PRIMARY COPY:** [2024 sonuç listesinin Internet Archive kopyası (16.04.2024 snapshot)](https://web.archive.org/web/20240416101417id_/https://www.tubitak.gov.tr/sites/default/files/26487/bolge_sergisi_sonuc_lise_2024.pdf). 24.11.2026'da PDF olarak indirildi; SHA-256 `a50ad3009ecd19f2efb763f590e640fb2d5705a5562c100a420c3efad0b6b01a`.
 - **PRIMARY:** TÜBİTAK, [2025 Yılı Lise Öğrencileri Araştırma Projeleri Yarışması derece listesi](https://tubitak.gov.tr/sites/default/files/2025-03/2204-A_DERECE_LISTESI_LISTESI_1.pdf), PDF'deki Konya bölgesi/Yazılım derece kayıtları.
-- **PRIMARY:** TÜBİTAK, [2024 bölgeye davet edilen proje istatistikleri](https://www.tubitak.gov.tr/sites/default/files/26487/lise_bolgeye_davet_edilenlere_iliskin_istatistikler_2024_v2.pdf), 55. yarışma için bölge/ana alan düzeyinde toplam sayılar; başlık arşivi değildir.
+- **PRIMARY (URL 404):** TÜBİTAK, [2024 bölgeye davet edilen proje istatistikleri](https://www.tubitak.gov.tr/sites/default/files/26487/lise_bolgeye_davet_edilenlere_iliskin_istatistikler_2024_v2.pdf), 55. yarışma için bölge/ana alan düzeyinde toplam sayılar; başlık arşivi değildir. Internet Archive CDX'te 14.07.2024 tarihli 200 snapshot kaydı bulundu; 24.11.2026 indirme denemesi zaman aşımına uğradığı için içerik kopyası bu güncellemede doğrulanmış sayılmıyor.
 - **PRIMARY:** TÜBİTAK, [2026 Konya Bölge Sergisine Davet Edilen Projeler Listesi](https://tubitak.gov.tr/sites/default/files/2026-01/KONYA.pdf), Yazılım alanı kayıtları.
 - **PRIMARY:** [2204-A resmî yarışma sayfası](https://tubitak.gov.tr/tr/yarismalar/2204-lise-ogrencileri-arastirma-projeleri-yarismasi); dönem, başvuru ve araştırma izni koşullarının güncel kaynağı.
 - **ALTERNATE PUBLIC SOURCE:** Konya İl MEM, [Temmuz 2024 AR-GE Bülteni](https://konya.meb.gov.tr/meb_iys_dosyalar/2024_07/03131910_argebultenitemmuz2024.pdf), TellCord başlığı ve bölge üçüncülüğü (2024 listesi için kısmi teyit).
