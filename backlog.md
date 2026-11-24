@@ -4,6 +4,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
+- [~] 2026-11-24 canlı mobil QA'sında bağlantı tamamlanınca `#sim-status` eski port seçme yönergesinde kalıyor. `connectPort()` başarı durumuna kısa onay ekle; mevcut bağlantı akışı E2E'sine regresyon doğrulaması ekle. Ayrı worktree/PR; ana dala ancak CI geçerse al.
 - [x] 2026-11-24 canlı tarayıcı QA'sında kök `favicon.ico` için tek bir 404 görüldü. Marka işaretine uyan vektör favicon iki sayfa kabuğuna eklendi; PR #23 `97056b0` ile birleştirildi. CI Node 27/27, Icarus, Jekyll ve E2E 38/38 geçti; Pages run `45292033268` başarılı. Canlı favicon `image/svg+xml` 200 dönüyor ve dört ana rotada ağ/JavaScript hatası kalmadı.
 - [x] Türkçe sayfa metadatası: Jekyll SEO Tag kaynaklı yinelenen `<title>`/description ve `og:locale=en_US` düzeltildi. PR #17 Pages run `45286285879` build/deploy başarılı; landing, docs, playground ve quiz sayfalarında birer başlık/açıklama ve `og:locale=tr_TR` doğrulandı.
 - [x] 2026-11-24 mobil Devre Atölyesi `.bp` dışa aktarımı: gizlenen `#export-bp` düğmesi görünür kılındı; 390 px görünürlük ve `top.bp` indirmesi E2E ile doğrulandı. PR #18 `492a008` birleştirildi; Pages run `45287278491` başarılı, canlı 390 px Playwright indirme kontrolü geçti.

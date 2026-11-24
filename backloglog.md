@@ -421,3 +421,11 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - `transformCallback` konsol mesajları ve bir 401 yanıtı iki tarama oturumunda da görüldü; bu, tek başına ürün kusuru iddiası değildir. Katılımcı/veri yok.
 - Sonuç hâlâ açık: Ludus'un aynı görevde canlı rakibe göre üstünlüğü/özgünlüğü kanıtlanmadı. Ayrıntı ve resmî UI yönergeleri: `research/references/related-tools.md`.
 - Değişenler: `research/references/related-tools.md`, `backlog.md`, bu günlük.
+
+## 2026-11-24 — Bağlantı durumu metni
+
+- Mobil dokunmatik QA'sında iki port seçimiyle bağlantı kurulmasına rağmen `#sim-status` satırında çıkıştan giriş seçme yönergesi kalıyordu. `connectPort()` içindeki başarılı bağlantı yolu, mevcut erişilebilir duyuru yardımcısıyla “Bağlantı eklendi.” mesajını gösteriyor; geçersiz bağlantıdaki hata yolu değişmedi.
+- Mevcut blueprint oluşturma/kaydetme E2E'sine başarılı bağlantı sonrası durum metnini doğrulayan tek regresyon beklentisi eklendi. Bağımsız inceleme `#sim-status` rol/status live region kullanımını uygun buldu ve diğer çağrı noktası/fixture ihtiyacı olmadığını doğruladı.
+- Yerel kontroller: Node **27/27**, Icarus Verilog scalar/hiyerarşik/vector oracle'ları başarılı, güncel Pages artifact'ına uygulanan Playwright E2E **38/38** ve `git diff --check` başarılı. Playwright sistem Chromium'u eksik `libglib-2.0.so.0` nedeniyle açılamadı; Nix Chromium ile aynı E2E tekrarı geçti.
+- PR/CI ve Pages canlı doğrulaması henüz bekliyor; tamamlanınca burada kaydedilecek.
+- Değişenler: `assets/js/playground.mjs`, `tests/e2e/playground.spec.mjs`, `backlog.md`, bu günlük. Kullanıcı verisi veya ağ API'si yok.
