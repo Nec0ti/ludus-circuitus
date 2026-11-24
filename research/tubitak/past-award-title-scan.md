@@ -4,6 +4,8 @@
 **Kaynak türü:** TÜBİTAK'ın yayımladığı derece listesi ve bölgeye davet listesi  
 **Amaç:** Erişilebilir proje başlıklarında Ludus Circuitus'a doğrudan yakın görünen bir örnek var mı diye sınırlı tarama yapmak. Bu bir özgünlük tescili veya tam literatür taraması değildir.
 
+> **Bağlantı durumu (24.11.2026):** Bu notta listelenen 2023, 2024, 2025 ve 2026 başlık PDF'leri ile 2024 aggregate istatistik PDF'si doğrudan HTTP isteğinde 404 döndü. Arama dizini 2023–2025 TÜBİTAK PDF'lerinden önceden alınmış metin parçalarını hâlâ gösteriyor; bu not ve bağımsız incelemeler o içerik kayıtlarına dayanıyor, fakat bağlantıdan dosyayı bugün indirmek mümkün olmadı. Resmî dosya arşivi veya kalıcı bir TÜBİTAK kaynağı bulunmadan bu tarama başvuru için güncel/doğrudan doğrulanmış kaynak gibi sunulmamalı. Başlık ve kapsam sonuçları bu erişim sınırlamasıyla okunmalı.
+
 ## 2023 Konya derece listesi
 
 TÜBİTAK'ın 2023 bölge sonucu listesinde Konya bölgesi/Yazılım alanındaki üç derece başlığı şunlar:

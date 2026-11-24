@@ -560,3 +560,8 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Bağımsız inceleme PDF sıraları 376–378'i doğruladı ve bölge adı ile il sütununun ayrı olduğunu vurguladı. Not yalnız başlık/alan/tema/derece içeriyor; okul, kişi ve başvuru kimliklerini eklemedim.
 - Sonuç notu 2023–2025 Konya bölgesi derece listelerinde toplam dokuz Yazılım başlığına genişledi. Tam raporlar, derece almayan başvurular, diğer bölgeler ve başlıksız 2026 Konya kayıtları bu sonuçtan dışarıda; özgünlük iddiası yok.
 - Değişenler: `research/tubitak/past-award-title-scan.md`, `research/references/index.md`, `notes.md`, `backlog.md`, `backloglog.md`, gece kalite raporu. `git diff --check` geçti; CI/Pages PR ile doğrulanacak. İnsan katılımcı veya veri kullanılmadı.
+## 2026-11-24 — Geçmiş yarışma PDF bağlantılarının erişim kontrolü
+
+- `curl -I` ile TÜBİTAK'ın 2023, 2024, 2025 ve 2026 başlık/davet PDF'leri ile 2024 davet istatistik PDF'si kontrol edildi; tümü doğrudan 404 döndürdü. Web arama dizininde bazı eski PDF metin parçaları hâlâ görünüyor, fakat bu bugün indirilebilir birincil dosya değildir.
+- Önceki notlardaki dokuz 2023–2025 başlığı, altı 2026 yazılım kaydı ve tematik etiket bulguları silinmedi; mevcut kaynak sınırlaması eklendi. Başvuruda kullanmadan önce kalıcı resmî kaynağı yeniden bulma işi açık kaldı. Bu arşiv taraması özgünlük kanıtı değildir.
+- Değişenler: `research/tubitak/past-award-title-scan.md`, `research/tubitak/2026-konya-software-scan.md`, `research/references/index.md`, `notes.md`, `backlog.md`, gece kalite raporu ve bu günlük. `git diff --check` geçti; önceki sürümün CI/Pages kapıları run `45316552886` ile başarılı (40/40 E2E). Bu kayıt değişikliği CI/Pages PR'ında tekrarlanacak. Katılımcı verisi yok.

@@ -4,6 +4,8 @@
 **Kaynak türü:** TÜBİTAK'ın resmî bölge sergisine davet edilen proje listesi  
 **Amaç:** Yerel geçmiş proje örnekleri hakkında erişilebilir kanıt olup olmadığını kontrol etmek; özgünlük iddiası kurmak değil.
 
+**Bağlantı durumu (24.11.2026):** Aşağıdaki resmî PDF URL'si doğrudan HTTP isteğinde 404 döndü. Altı kayıt ve tema sayısı PDF daha önce erişilebilirken alınan içerikten kaydedilmiş; doğrudan indirilebilir resmî kaynak bulunması açık iştir.
+
 ## Gözlenen kayıt
 
 TÜBİTAK'ın [2026 Konya Bölge Sergisine Davet Edilen Projeler Listesi](https://tubitak.gov.tr/sites/default/files/2026-01/KONYA.pdf) içerisinde 95–100 sıra numaralı altı kayıt ana alan olarak `YAZILIM` şeklinde listeleniyor. Görünen tematik etiketler Yapay Zekâ (iki), Biyomedikal Cihaz Teknolojileri (bir), Makine Öğrenmesi (iki) ve Erişilebilir Yaşam Teknolojileri (bir).
@@ -17,6 +19,6 @@ TÜBİTAK'ın [2026 Konya Bölge Sergisine Davet Edilen Projeler Listesi](https:
 
 ## Kaynaklar
 
-- TÜBİTAK, [2026 Konya Bölge Sergisine Davet Edilen Projeler Listesi](https://tubitak.gov.tr/sites/default/files/2026-01/KONYA.pdf), PDF içindeki `YAZILIM` kayıtları 95–100.
+- TÜBİTAK, [2026 Konya Bölge Sergisine Davet Edilen Projeler Listesi](https://tubitak.gov.tr/sites/default/files/2026-01/KONYA.pdf), daha önce alınan PDF içindeki `YAZILIM` kayıtları 95–100; URL 24.11.2026'da 404 verdi.
 - Güncel çağrı ve katılım koşulları için [2204-A resmî yarışma sayfası](https://tubitak.gov.tr/tr/yarismalar/2204-lise-ogrencileri-arastirma-projeleri-yarismasi).
 - Yakın eğitim araçları ve doğrudan kıyas sınırları: [`../references/related-tools.md`](../references/related-tools.md).
