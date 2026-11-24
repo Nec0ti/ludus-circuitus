@@ -482,3 +482,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Canlı Pages'te Nix Chromium/Playwright ile açılmış atölyede `focus-visible` halka 2 px, Enter seçimi, ok tuşuyla 20 px hareket, Delete ile silme, boşlukla seçim ve sıfır `pageerror` doğrulandı. Dört canlı rota HTTP 200 verdi.
 - Tam ekran okuyucu/sesli kullanım ve tüm arayüz boyunca klavye turu yapılmadı; bu kontrol çekirdek blok akışıyla sınırlıdır. Atölye değişikliği blueprint/internet verisini sunucuya göndermez.
 - Değişenler: `assets/js/playground.mjs`, `assets/css/input.css`, derlenmiş `assets/css/site.css`, `tests/e2e/playground.spec.mjs`, `backlog.md` ve bu günlük. Yerel CSS/Node/Icarus/E2E ve `git diff --check` sonuçları yukarıda.
+
+## 2026-11-24 — Geçmiş 2204-A yazılım projeleri taraması
+
+- TÜBİTAK'ın 2026 Konya Bölge Sergisine davet edilenler PDF'sinde 95–100 kayıt numaralı altı `YAZILIM` alanı projesi ve bunların tematik etiketleri gözlendi. İsimler/başvuru numaraları araştırma notuna kopyalanmadı.
+- Listede başlık/özet bulunmadığı için Verilog/FPGA/eğitim benzerliği belirlenemedi; geçmişte aynı projenin bulunmadığı sonucu çıkarılamaz. Bu sınırlı kanıt ve kaynak `research/tubitak/2026-konya-software-scan.md`, kaynak indeksine ve `notes.md`'ye eklendi.
+- Doğrulama: resmî TÜBİTAK PDF ve çağrı sayfası okundu; `git diff --check` geçti. Yeni proje/özgünlük iddiası veya öğrenci verisi üretilmedi.
