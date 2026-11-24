@@ -2,10 +2,6 @@
 
 Bu dosya güncel iş panosudur. Yalnızca açık kararları ve son doğrulama durumunu gösterir; tamamlanan işlerin tarihçesi `backloglog.md` içindedir.
 
-## Aktif görev
-
-- [~] Hata sayfalarında HTML içindeki Markdown bağlantılarını düzelt; hata kodlarını sol menüde mevcut kategoriler altında açılır ve tıklanabilir yap; sayfa başlığı/hiyerarşisini denetle. Worktree: `/tmp/ludus-error-docs`. Kod ve yerel doğrulama tamamlandı; PR/CI/merge bekliyor. Doğrulama: tüm hata rotaları, mobil taşma, masaüstü/mobil görsel incelemesi, Jekyll ve proje testleri.
-
 ## Açık işler
 
 ### Danışmanla netleştir
@@ -40,5 +36,6 @@ Bu dosya güncel iş panosudur. Yalnızca açık kararları ve son doğrulama du
 - MVP'nin web uygulaması, Devre Atölyesi, altı modüllü başlangıç kursu ve yerel quiz'i GitHub Pages'te yayında. Teknik doğruluk benchmarkları ve Playwright kapıları geçmiştir; bunlar öğrenme etkisini kanıtlamaz.
 - Referans alınan son ana ürün yayını PR #43 (`f1d7f4b`). CI `45315138623` başarılı; Pages build/deploy tamamlandı. Son yayında Tanıtım, Dokümantasyon ve Devre Atölyesi rotaları HTTP 200 döndü.
 - Pages concurrency PR #49 (`db10412`) ile workflow/ref'e göre ayrıldı. En son kapsam notu PR #54 (`702acf5`) build CI `45323331670` ve main Pages build/deploy [`45323463002`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45323463002) ile geçti. Değişiklik kayıt düzeyindedir; sonrasında tanıtım, docs ve atölye rotaları HTTP 200 döndü.
+- Hata dokümantasyonu navigasyonu ve görünümü PR #58 (`28c140f`) ile güncellendi; PR CI [`45393047000`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45393047000) ve Pages yayını [`45393398657`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45393398657) başarılı. Canlı `/docs/errors/vl5001/` rotası HTTP 200 verdi; kategori/kod bağlantıları bulundu, ham Markdown kalmadı.
 - Hata konsolu ve sürükleyerek bağlantı PR #56 (`2970a2e`) ile `main`e alındı. PR CI [`45384667043`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45384667043) ve main Pages build/deploy [`45384922831`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45384922831) geçti; canlı atölye, hata kataloğu ve VL0001 sayfası HTTP 200 verdi. Ayrıntı [`backloglog.md`](backloglog.md) içindeki 2026-11-24 kaydında.
 - Araştırma yöntemi, yaklaşık 20 kişilik tahminin yeterliliği, ölçme aracının geçerliği, katılımcı izinleri, KVKK veri akışı, veri sorumlusunun kimliği, istatistik yayımlama güvenliği ve öğrenme etkisi hâlâ çözülmemiştir. Ayrıntılı kanıt ve geçmiş görevler [`backloglog.md`](backloglog.md) ile [`raports/overnight-quality-review-2026-11-24.md`](raports/overnight-quality-review-2026-11-24.md) içinde.
