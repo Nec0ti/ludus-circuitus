@@ -4,6 +4,8 @@
 **Kaynak türü:** TÜBİTAK'ın yayımladığı derece listesi ve bölgeye davet listesi  
 **Amaç:** Erişilebilir proje başlıklarında Ludus Circuitus'a doğrudan yakın görünen bir örnek var mı diye sınırlı tarama yapmak. Bu bir özgünlük tescili veya tam literatür taraması değildir.
 
+> **Bağlantı durumu (24.11.2026):** Bu notta listelenen 2023, 2024, 2025 ve 2026 başlık PDF'leri ile 2024 aggregate istatistik PDF'si doğrudan HTTP isteğinde 404 döndü. Arama dizini 2023–2025 TÜBİTAK PDF'lerinden önceden alınmış metin parçalarını hâlâ gösteriyor. Erişilebilir Konya İl MEM kaynakları, 2024 TellCord ve 2025 TİDAP kayıtlarının başlık/alan/derece bilgisini kısmen doğruluyor; diğer başlıklar ve tam listeler için resmî arşiv bağlantısı hâlâ bulunamadı. TÜBİTAK dosyaları yeniden erişilebilir olmadan taramanın tamamı doğrudan doğrulanmış kaynak gibi sunulmamalı.
+
 ## 2023 Konya derece listesi
 
 TÜBİTAK'ın 2023 bölge sonucu listesinde Konya bölgesi/Yazılım alanındaki üç derece başlığı şunlar:
@@ -40,6 +42,10 @@ Başlıklarda Ludus'un dijital mantık/Verilog öğretim amacıyla açık bir ö
 
 Bu başlıklar da Ludus'un dijital mantık/Verilog öğretim odağıyla doğrudan örtüşmüyor. Yalnızca başlık, ana alan ve tematik etiket karşılaştırıldı; proje içerik raporları incelenmedi.
 
+Konya İl MEM'in Temmuz 2024 AR-GE bülteni **TellCord** başlığını ve bölge üçüncülüğünü ayrıca listeliyor. Bu, 2024 tablosundaki bir kaydı bağımsız erişilebilir kamu kurumu kaynağıyla kısmen doğrular; tam TÜBİTAK listesi yerine geçmez.
+
+2025 için Konya İl MEM'in ödül töreni duyurusu **TİDAP** adını, Yazılım alanını ve bölge üçüncülüğünü doğruluyor. Bu da üç 2025 kaydından yalnızca birini kısmen destekler.
+
 ## 2026 Konya davet listesi
 
 2026 Konya bölge sergisine davet edilenler PDF'inde altı `YAZILIM` kaydı sayılabiliyor; fakat proje başlıkları ve özetleri yayımlanmamış. Tematik etiketler proje konusunu Verilog eğitimiyle karşılaştırmaya yetmiyor. Kişi adı, okul adı veya başvuru numarası bu notta tutulmuyor. Ayrıntı: [`2026-konya-software-scan.md`](2026-konya-software-scan.md).
@@ -59,4 +65,6 @@ Bu başlıklar da Ludus'un dijital mantık/Verilog öğretim odağıyla doğruda
 - **PRIMARY:** TÜBİTAK, [2024 bölgeye davet edilen proje istatistikleri](https://www.tubitak.gov.tr/sites/default/files/26487/lise_bolgeye_davet_edilenlere_iliskin_istatistikler_2024_v2.pdf), 55. yarışma için bölge/ana alan düzeyinde toplam sayılar; başlık arşivi değildir.
 - **PRIMARY:** TÜBİTAK, [2026 Konya Bölge Sergisine Davet Edilen Projeler Listesi](https://tubitak.gov.tr/sites/default/files/2026-01/KONYA.pdf), Yazılım alanı kayıtları.
 - **PRIMARY:** [2204-A resmî yarışma sayfası](https://tubitak.gov.tr/tr/yarismalar/2204-lise-ogrencileri-arastirma-projeleri-yarismasi); dönem, başvuru ve araştırma izni koşullarının güncel kaynağı.
+- **ALTERNATE PUBLIC SOURCE:** Konya İl MEM, [Temmuz 2024 AR-GE Bülteni](https://konya.meb.gov.tr/meb_iys_dosyalar/2024_07/03131910_argebultenitemmuz2024.pdf), TellCord başlığı ve bölge üçüncülüğü (2024 listesi için kısmi teyit).
+- **ALTERNATE PUBLIC SOURCE:** Konya İl MEM, [TÜBİTAK bölge finallerinde dereceye giren öğrencilerin ödül töreni](https://konya.meb.gov.tr/www/tubitak-bolge-finallerinde-dereceye-giren-ogrencilerimizin-odul-toreni-gerceklestirildi/icerik/3834), TİDAP'ın Yazılım alanı ve bölge üçüncülüğü (2025 listesi için kısmi teyit).
 - Yakın öğrenme araçları ve kıyas sınırları: [`../references/related-tools.md`](../references/related-tools.md).
