@@ -413,3 +413,11 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - `tests/e2e/visual.spec.mjs` iki layout'ta da favicon URL'sini alıp `fetch` ile 200 döndüğünü kontrol ediyor. PR #23'ün ilk tam CI run'ı `45291562074`: Node 27/27, Icarus oracle, Jekyll build ve Playwright 38/38 başarılı.
 - PR #23 `97056b0` ile birleştirildi ve Pages run `45292033268` başarılı. Canlı `https://nec0ti.github.io/ludus-circuitus/assets/favicon.svg` `image/svg+xml` ve HTTP 200 döndü. Doğrudan Playwright taramasında landing, docs, atölye ve quiz açıldı; önceden görülen favicon 404'ü ve diğer ağ/JavaScript hataları tekrar oluşmadı.
 - Değişenler: `_layouts/default.html`, `_layouts/workbench.html`, `assets/favicon.svg`, `tests/e2e/visual.spec.mjs`, `backlog.md`. Katılımcı veya kişisel veri kullanılmadı.
+
+## 2026-11-24 — CircuitVerse görev denemesinin yeniden kaydı
+
+- Misafir arayüzünde palette sürükleme ve AND/XOR/Output yerleşimi doğrulandı. Başlangıç 00 görünümünde iki çıkış 0/0 gösterdi; diğer vektörler, ortak girişlerin dallandırılması ve iki bağımsız yolun aynı devrede doğru çalışması kesinleştirilemedi.
+- Yanlışlıkla Button öğesinin kullanıldığı belirlendi; CircuitVerse'ün resmî rehberine göre Button yalnız basılıyken HIGH, Input tıklamayla LOW/HIGH değiştirir. Input ile sonraki deneme özellik paneli rehber katmanına takıldı. Rehberdeki Ctrl tel dalı adımı bir sonraki kontrollü UI denemesi için not edildi.
+- `transformCallback` konsol mesajları ve bir 401 yanıtı iki tarama oturumunda da görüldü; bu, tek başına ürün kusuru iddiası değildir. Katılımcı/veri yok.
+- Sonuç hâlâ açık: Ludus'un aynı görevde canlı rakibe göre üstünlüğü/özgünlüğü kanıtlanmadı. Ayrıntı ve resmî UI yönergeleri: `research/references/related-tools.md`.
+- Değişenler: `research/references/related-tools.md`, `backlog.md`, bu günlük.
