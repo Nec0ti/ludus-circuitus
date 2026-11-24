@@ -460,3 +460,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - VeriSim README'si sentezlenmiş gate-level ve RTL şema görünümünü de açıkladığı için karşılaştırma notu düzeltildi: kullanıcı çizimi kaynak blok grafiğinin denenen akışta görünmemesi, aracın başka şematik görünümü olmadığı anlamına gelmez.
 - Bağımsız görsel incelemesi landing/docs, masaüstü atölye ve mobil atölyede hizalama, tema, taşma veya kullanılabilirlik bloklayıcısı bulmadı. İzleme notu: 390 px'de blok metinleri küçük olabilir; yakınlaştırma mevcut. Ürün kodu değiştirilmedi.
 - Kaynak ve katkı sınırı `research/references/index.md`, `research/references/related-tools.md`, `research/measurement/learning-study.md`, `notes.md`, `backlog.md` ve [`raports/overnight-quality-review-2026-11-24.md`](raports/overnight-quality-review-2026-11-24.md) içine işlendi. `git diff --check` geçti. İnsan katılımcı veya veri kullanılmadı.
+
+## 2026-11-24 — Araştırma PR #31 ve son Pages yayını
+
+- PR #31 (`a07429e`, ek Verilog araçları ve ölçüm planı güncellemesi) CI build run'ı `45302122322` ile geçti ve `a7f3d28` olarak main'e birleştirildi.
+- Main Pages run `45302304568` build/deploy adımları başarılı tamamlandı. Canlı landing, docs, playground ve quiz rotaları tekrar HTTP 200 verdi.
+- Araştırma özgünlük/öğrenme etkisi sonucu oluşturmadı; aynı görev karşılaştırması, danışman onayı ve izinli öğrenme ölçümü açık kalıyor.
