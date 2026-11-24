@@ -4,7 +4,7 @@ Bu dosya güncel iş panosudur. İşleri bitebilir parçalara ayır ve engelleri
 
 ## Devam ediyor
 
-- [x] Atölye bloklarına klavye odağı, seçim, 20 px grid taşıma ve silme yolu eklendi; odak yeniden çizim sonrası korunuyor. Kaynak/diff incelemesi ve yeni fare kullanmayan E2E geçti; tam ekran okuyucu/klavye audit'i yapılmadı. Ayrıntı `backloglog.md`.
+- [x] Atölye bloklarına klavye odağı, seçim, 20 px grid taşıma ve silme yolu eklendi; odak yeniden çizim sonrası korunuyor. Kaynak/diff incelemesi ve 39/39 E2E geçti; canlı Pages'te odak/taşıma/silme/boşlukla seçim ve sıfır sayfa hatası doğrulandı. Tam ekran okuyucu audit'i yapılamadı. Ayrıntı `backloglog.md`.
 - [x] 2026-11-24 CircuitVerse anonim görev denemesini resmî Input/kablo/junction yönergeleriyle son kez yaptım; devre ve 00/01/10/11 sonuçları güvenilir doğrulanamadı. Aynı-görev karşılaştırması açık bırakıldı; ayrıntı/kaynaklar `research/references/related-tools.md`.
 - [x] 2026-11-24 son Pages yayını 1440×900 masaüstünde ve Devre Atölyesi 390×844 mobilde görsel olarak yeniden incelendi. Landing, docs, atölye ve quiz 200; atölyede yatay taşma ve JavaScript sayfa hatası yok. Ekran görüntüleri geçici `/tmp` QA dosyaları.
 - [x] 2026-11-24 2027 2204-A Proje Rehberi ve çağrı sayfasının bağladığı TYBS kılavuzu yeniden incelendi: MEB/veli/gönüllü onam şartları ile TYBS'teki genel Yapay Zekâ kullanım beyanı adımı kaynaklandı. Quiz/anketin etik kurul kapsamına girip girmediği ve 2027 beyanının tam metni ayrı danışman sorusu olarak açık. Ayrıntı: `research/tubitak/2027-2204-a.md` ve `research/tubitak/evaluation-alignment-2027.md`.

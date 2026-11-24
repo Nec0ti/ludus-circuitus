@@ -30,6 +30,7 @@ Bağımsız içerik kontrolü canlı kurs dizinini, kurs planını, altı dersi,
 - Güncel Pages yayını `45299489446` başarılı. Nix Chromium ile güncel Pages artifact'ında Playwright 38/38, Node 27/27, Icarus scalar/hiyerarşik ve 1.920 vektör-çıkış karşılaştırması geçti. Live landing/docs/workbench/quiz 200. Desktop 1440×900 ve workbench mobile 390×844 görüntüleri hizalama/taşma bakımından incelendi; bağımsız görsel incelemesi bloklayıcı bulmadı. Küçük ekran devre etiketleri küçük olabilir; yakınlaştırma mevcut.
 - Araştırma güncellemeleri PR #29 (`1cdeee8`), #30 (`0771490`) ve #31 (`a7f3d28`) ile yeşil CI sonrası birleştirildi. PR #31'in build run'ı `45302122322`; main Pages run `45302304568` build ve deploy'u tamamladı. Sonrasında canlı landing, docs, atölye ve quiz yeniden HTTP 200 verdi.
 - PR #32 (`b1de899`, bu rapordaki son dağıtım kaydını kapatma) CI run `45302632818` ile geçti ve merge edildi. Main Pages run `45302934279` build ve deploy adımlarıyla başarılı tamamlandı; sonrasında canlı dört rota HTTP 200 verdi.
+- Devre Atölyesi bloklarına klavye seçme/taşıma/silme ve görünür odak eklendi. PR #34 (`a0610e3`) CI run `45304445007`, Pages run `45304613058` başarılı. Canlı Playwright kontrolü 2 px odak halkası, 20 px taşıma, silme, boşlukla seçim ve sıfır sayfa hatası gördü; tüm ekran okuyucu akışı test edilmedi.
 
 ## Üretken yapay zekâ şeffaflığı
 
