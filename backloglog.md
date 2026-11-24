@@ -604,3 +604,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - TTKB'nin canlı SSS'si izin portalını, tek il için en fazla 15 günlük değerlendirme süresini ve eylem/deney/belirli araç uygulamalarında okulun özel bilgi alanında belirtilebilmesini açıklıyor; anket/ölçek/görüşme için okul adı belirtilmemesi ayrımı da not edildi. TTKB'de 2026'da yayımlanmış/güncellenmiş ayrı izin sayfası bulundu ancak açılan gövde metni boş olduğundan oradan yeni kural çıkarılmadı; teyit edilebilen ayrıntılar 2025 yönerge/kılavuzu ve canlı SSS'ye dayandırıldı.
 - Bu, okulda planlanan aracın hangi MEB izin sınıfına girdiğini çözmüyor. Danışman, okul ve izin mercii teyidi olmadan katılımcı uygulaması/API açılmayacak. Kaynak ve ayrıntı: [`research/tubitak/2027-2204-a.md`](research/tubitak/2027-2204-a.md).
 - Değişenler: 2027 çağrı/izin notu, kaynak haritası, bu günlük ve son sürüm backlog kaydı. `git diff --check` CI öncesinde çalıştırılacak; PR CI/Pages dağıtımı bekleniyor.
+
+## 2026-11-24 — İzin araştırması PR'ının yayın doğrulaması
+
+- PR #52 (`cd4f456`) build kontrolü `45322307642` ile geçti. Main Pages run [`45322453097`](https://github.com/Nec0ti/ludus-circuitus/actions/runs/45322453097) build ve deploy adımlarını tamamladı.
+- Canlı `https://nec0ti.github.io/ludus-circuitus/`, `/docs/` ve `/playground/` rotaları HTTP 200 verdi. Çalışma ağacı temiz; açık PR bulunmuyor.
+- Değişenler yalnızca `backlog.md` ve bu günlük. Kalan insan kararları ve izin/veri koruma kapıları değişmedi; katılımcı verisi veya API açılmadı. `git diff --check` PR öncesi çalıştırılacak.
