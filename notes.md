@@ -284,7 +284,7 @@ Sürekli tümleşim (CI) ve push engeli bu taslaklar kararlaştırıldıktan son
 
 ### 2026-11-24 — Ek eğitim aracı taraması ve katkı sınırı
 
-- Verilog Labs'ın 4-bit sayaç dersinde tarayıcı Icarus/WASM, editör, testbench, çıktı/waveform, eğitim yönergesi, statik diyagram ve quiz akışı görüldü. Half-adder bölümü 00/01/10/11 görevinde çalıştırılamadı.
+- Verilog Labs'ın 4-bit sayaç ve half-adder dataflow dersleri tarayıcı Icarus/WASM ile açıldı. Half-adder'a aynı Verilog kaynakları girilip çalıştırıldı; platform testbench'i 00/01/10/11 çıktılarının hepsini doğru buldu ve PASS verdi. Kaynaklar kod editörü, waveform ve quiz içeriyor; half-adder çizimi kullanıcı tarafından düzenlenen kaynak blueprint'i değil, sabit açıklama diyagramıydı.
 - HDLPath paneli adaptif problem önerisi, konu ilerleme/hâkimiyet ve 182 problem iddiası gösterdi; Half-adder sorusu listede kilitliydi, çalıştırılmadı.
 - ChipXpert ürün sayfası öğrenme laboratuvarları, Verilog simülasyonu, waveform ve HDL sentez/netlist özelliklerini listeliyor; canlı aynı görev çalıştırılmadı.
 - VeriSim README'si canlı denemede görülmeyen, HDL'den sentezlenen Gate/RTL şemalarını da belgeledi. Ludus'un aday farkı “şema ve kodu bir arada göstermek” kadar geniş tutulmamalı: kullanıcı bağlantı grafiğinin kaynak olması ve aynı öğrenme adımında üretilen Verilog ile mantıksal sinyal değerlerinin beraber gösterilmesi, denenen akışlarda gözlenmeyen bir hipotezdir; alan yazını/pazar taraması tam değildir ve benzersizlik kanıtı değildir.
