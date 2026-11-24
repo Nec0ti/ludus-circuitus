@@ -554,3 +554,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - Açık insan kararları tamamlandı gibi işaretlenmedi: danışman, örneklem, ölçüm aracı, MEB/etik sınıflandırması, KVKK sorumlusu ve AI beyanı bekliyor. API ve katılımcı verisi açılmadı.
 - `git diff --check` geçti. Referans alınan son main doğrulaması CI `45315138623` içinde Node, Icarus Verilog, Jekyll ve Playwright **40/40 E2E**; Pages run `45315138623` başarılı ve üç ana rota HTTP 200. Bu görev yalnız kayıt düzenidir, ürün/test davranışı değiştirmez.
 - Değişenler: `backlog.md` ve bu günlük. PR CI merge öncesi tekrarlanacak.
+## 2026-11-24 — 2023 Konya bölgesi Yazılım derece başlıkları
+
+- TÜBİTAK'ın 2023 resmî bölge sonuç PDF'inde Konya bölgesi/Yazılım kayıtlarının üç başlığı ve derecesi incelendi: OCR tabanlı öğrenci değerlendirme sistemi (1.), beyin kanaması analizi (2.) ve tweet duygu/düşünce analizi (3.). İlk başlık eğitimle genel anlamda ilişkilidir; hiçbirinde başlık düzeyinde Verilog/dijital mantık eğitimi görülmüyor.
+- Bağımsız inceleme PDF sıraları 376–378'i doğruladı ve bölge adı ile il sütununun ayrı olduğunu vurguladı. Not yalnız başlık/alan/tema/derece içeriyor; okul, kişi ve başvuru kimliklerini eklemedim.
+- Sonuç notu 2023–2025 Konya bölgesi derece listelerinde toplam dokuz Yazılım başlığına genişledi. Tam raporlar, derece almayan başvurular, diğer bölgeler ve başlıksız 2026 Konya kayıtları bu sonuçtan dışarıda; özgünlük iddiası yok.
+- Değişenler: `research/tubitak/past-award-title-scan.md`, `research/references/index.md`, `notes.md`, `backlog.md`, `backloglog.md`, gece kalite raporu. `git diff --check` geçti; CI/Pages PR ile doğrulanacak. İnsan katılımcı veya veri kullanılmadı.
