@@ -21,7 +21,7 @@ docs_practice: true
     <table class="mini-truth-table"><caption>Temel kapıların çıkışları</caption><thead><tr><th scope="col">A</th><th scope="col">B</th><th scope="col">AND</th><th scope="col">OR</th><th scope="col">XOR</th></tr></thead><tbody>
       <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td><td class="truth-one">1</td><td class="truth-one">1</td></tr><tr><td>1</td><td>0</td><td>0</td><td class="truth-one">1</td><td class="truth-one">1</td></tr><tr><td>1</td><td>1</td><td class="truth-one">1</td><td class="truth-one">1</td><td>0</td></tr>
     </tbody></table>
-    <p>Tablo tek bit içindir. Daha geniş bir yolda kapı aynı kuralı her bit konumuna ayrı uygular. Örneğin <code>0101 AND 0011</code> sonucu <code>0001</code> olur; bu işlem sayıları toplamaz ve bitler arasında taşıma üretmez.</p>
+    <p><b>İsteğe bağlı, biraz ileri:</b> Bu tablo tek bit içindir. Daha geniş bir yolda kapı aynı kuralı her bit konumuna ayrı uygular. Örneğin <code>0101 AND 0011</code> sonucu <code>0001</code> olur; bu işlem sayıları toplamaz ve bitler arasında taşıma üretmez.</p>
     <h2 id="terslenen-kapilar">NAND, NOR ve XNOR <span class="docs-section-time">~1 dk</span></h2>
     <p>NOT, bir girişin değerini tersine çevirir: 0'ı 1, 1'i 0 yapar. İki girişli kapı adının başındaki N de çıkışın terslendiğini hatırlatır: NAND, AND'in; NOR, OR'un; XNOR, XOR'un tersidir.</p>
     <table class="mini-truth-table"><caption>Terslenmiş kapı çıkışları</caption><thead><tr><th scope="col">A</th><th scope="col">B</th><th scope="col">NAND</th><th scope="col">NOR</th><th scope="col">XNOR</th></tr></thead><tbody>

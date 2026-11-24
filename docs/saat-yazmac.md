@@ -26,7 +26,7 @@ docs_practice: true
     <h2 id="kendini-dene">Kendini dene <span class="docs-section-time">~1 dk</span></h2>
     <form class="docs-practice" data-docs-practice data-answer="holds-zero" data-correct-text="Doğru. D değişti, fakat yükselen saat kenarı gelene kadar Q saklanan 0 değerini korur." data-retry-text="Yazmaç D'yi sürekli kopyalamaz; yeni değeri yükselen saat kenarında alır.">
       <fieldset>
-        <legend>Q başlangıçta 0. D, saat kenarı gelmeden 1 oldu. Q kaçtır?</legend>
+        <legend>Reset uygulanıp bırakıldıktan sonra Q=0. D, sonraki yükselen kenardan önce 1 oldu. Q kaçtır?</legend>
         <div class="docs-practice-options">
           <label class="docs-practice-option"><input type="radio" name="register-check" value="updates-now" required> 1; Q, D değişir değişmez değişir</label>
           <label class="docs-practice-option"><input type="radio" name="register-check" value="holds-zero" required> 0; Q, saat kenarına kadar aynı kalır</label>

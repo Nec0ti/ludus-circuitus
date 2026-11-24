@@ -139,10 +139,13 @@ test("block catalog documents exact ports and distinguishes named wires from reg
 test("beginner lessons distinguish single-bit examples from supported vector signals", async ({ page }) => {
   await page.goto("/docs/dijital-sinyaller/");
   await expect(page.locator(".docs-article")).toContainText("Atölye daha geniş yolları da destekler");
+  await expect(page.locator(".docs-callout")).toContainText("Önce tek bitli örneklerle başlayalım");
   await page.goto("/docs/mantik-kapilari/");
   await expect(page.locator(".docs-article")).toContainText("kapı aynı kuralı her bit konumuna ayrı uygular");
+  await expect(page.locator(".docs-article")).toContainText("İsteğe bağlı, biraz ileri");
   await page.goto("/docs/saat-yazmac/");
   await expect(page.locator(".docs-article")).toContainText("aynı genişlikteki Q çıkışına alınır");
+  await expect(page.locator("[data-docs-practice] legend")).toContainText("Reset uygulanıp bırakıldıktan sonra Q=0");
 });
 
 test("core lessons provide keyboard-friendly local self-checks with immediate feedback", async ({ page }) => {
