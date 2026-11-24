@@ -591,3 +591,9 @@ Her görevden sonra tarihli bir kayıt ekle. Nelerin değiştiğini, hangi kontr
 - PR #47'nin test workflow'u ve ana dal Pages workflow'u aynı global `pages` concurrency grubunu kullanıyordu. PR #48 açılınca çalışan main dağıtım run'ı `45318637625` iptal edildi; PR #48'in kendi testleri yeşil olsa da dağıtım kapısı kesildi.
 - Çözüm: grubu `${{ github.workflow }}-${{ github.ref }}` yapıp aynı ref'teki eski run'ları iptal etme davranışını koru. Böylece güncel PR testleri main branch run'larını iptal etmemeli; değişikliği PR testinde ve merge sonrası Pages run'ında doğrula.
 - Değişenler: `.github/workflows/pages.yml`, `backlog.md` ve bu günlük. `git diff --check` geçti. PR #49 (`db10412`) tam CI run `45320410289` ile geçti. Yeni main run `45320584351` Jekyll, Node, Icarus Verilog, Playwright E2E ve Pages deploy adımlarını başarıyla tamamladı. Sonrasında landing/docs/playground HTTP 200 doğrulandı; çalışma ağacı temiz.
+
+## 2026-11-24 — En son Pages yayın kanıtını kaydetme
+
+- `backlog.md` içindeki son sürüm satırı PR #50 (`f781ff1`) ve onu izleyen main Pages run `45321050779` ile güncellendi. PR #50 CI `45320899184` başarılıydı; Pages run build/deploy adımlarını tamamladı ve tanıtım/docs/atölye rotaları HTTP 200 döndü.
+- Yalnızca proje kayıtları değişti; ürün kodu ve araştırma yöntemi değişmedi. `git diff --check` ve diff kapsamı kontrol edildi. PR CI merge öncesinde yeniden çalışacak.
+- Açık kalanlar aynı: öğrenme etkisi, karşılaştırma yöntemi, danışman, MEB/etik sınıflandırması ve veri koruma onayı.
