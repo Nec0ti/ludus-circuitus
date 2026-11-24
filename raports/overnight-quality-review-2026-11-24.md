@@ -16,6 +16,8 @@
 
 Bağımsız içerik kontrolü canlı kurs dizinini, kurs planını, altı dersi, kullanım rehberini ve blok kataloğunu açtı. İç sayfa gezinme hedefleri mevcut, sayfa hatası gözlenmedi. Ders yolu tutarlı: sinyal → kapı/doğruluk tablosu → yarım toplayıcı → paralel ve veri bağımlı yollar → clock/yazmaç → Verilog eşlemesi. AND/OR/XOR tabloları, `0101 AND 0011 = 0001` örneği, `1+1=10` yarım toplayıcı sonucu, yükselen clock kenarı ve `X` açıklaması denetlendi; üretilen aktif-yüksek asenkron reset açıklamayla eşleşiyor. Somut kavram veya sıra hatası bulunmadı.
 
+2026-11-24'te ilk dört temel derse 1 dakikalık klavyeyle yanıtlanan öz kontrol ve anlık açıklama eklendi; tüm rehber tahmini 48 dakika oldu. PR #37 CI build/Jekyll/Playwright tam kapısı geçti; CI'dan indirilen gerçek Jekyll artifact'ında ders E2E **9/9** ve bağımsız 1440/390 px görsel incelemesi başarılı. Yerel smoke doğru/yanlış/tekrar/klavye akışını, 320 px taşmasızlığı ve JS hatası olmadığını doğruladı. Alıştırmalar yanıtı ağa göndermez ve saklamaz. Bunlar yalnızca ders içi pratik; quiz belirtkesinin geçerliği veya öğrenme etkisi kanıtı değildir. PR birleştirme ve canlı yayın doğrulaması henüz bekliyor.
+
 ## TÜBİTAK ve rakip kanıtlarının sınırı
 
 - Canlı [2204-A 2026–2027 çağrı sayfası](https://tubitak.gov.tr/tr/yarismalar/2204-lise-ogrencileri-arastirma-projeleri-yarismasi) 4 Ocak 2027 saat 17.30 kapanışını gösteriyor. Ön değerlendirme ve bölge/final bağlantıları hâlâ adında `2025` taşıyan PDF'lere gidiyor. Bu ağırlıklar erişilebilir son formlardır; 2027 formu oldukları doğrulanmış değildir. Ayrıntı: [`research/tubitak/evaluation-alignment-2027.md`](../research/tubitak/evaluation-alignment-2027.md).
